@@ -32,7 +32,7 @@ Route::resource('references', 'ReferenceController');
 
 /*Route::resource('accounts', 'AccountController');*/
 
-Route::get('user/search', 'UserController@search');
+Route::post('user/search', 'UserController@search');
 
 Route::resource('user', 'UserController');
 

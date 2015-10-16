@@ -46,7 +46,7 @@
 				<ul class="nav navbar-nav">
 					@if (Auth::guest())
 					@else
-						<li><a href="{{ url('/') }}">Home</a></li>
+						<li><a href="{{ url('home') }}">Home</a></li>
 						<!-- Users Administrator -->
 						@if (Auth::user()->profile == 1)
 							<li class="dropdown">

@@ -8,21 +8,23 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<div class="col-sm-6">List of users</div>
-							<div class="col-sm-6">
-								<!-- <a class="btn btn-danger pull-right btn-xs" style="margin-right:2px" href="" role="button">Modify</a> -->
+							<div class="col-sm-3 pull-right">
+								<form action="{{ action('UserController@search') }}" method="POST">
+									<?php echo csrf_field(); ?>
+									<div class="input-group">
+									  <input type="text" class="form-control" name="search_inp" placeholder="Search for...">
+									  <span class="input-group-btn">
+									    <button class="btn btn-default" type="submit">Search</button>
+									  </span>
+									</div><!-- /input-group -->
+								</form>
+							</div>
+							<div class="col-sm-3">
 						      	<form action="{{ action('UserController@destroy', $users->last()->id) }}" method="POST">
-									<input class="btn btn-danger pull-right btn-xs" type="submit" name="_method" value="Delete">
-									<a class="btn btn-success pull-right btn-xs" href="{{ action('UserController@create') }}" role="button">Create</a>
+									<input class="btn btn-danger pull-right btn-sm" type="submit" name="_method" value="Delete">
+									<a class="btn btn-success pull-right btn-sm" href="{{ action('UserController@create') }}" role="button">Create</a>
 							    	<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-								    <div class="col-lg-6">
-										<div class="input-group">
-											<input type="text" class="form-control" placeholder="Search for...">
-											<span class="input-group-btn">
-												<a class="btn btn-success pull-right btn-xs" href="{{ action('UserController@search') }}" role="button">Search</a>
-											</span>
-										</div><!-- /input-group -->
-									</div><!-- /.col-lg-6 -->
 							</div>
 						</div>
 					</h3>
@@ -51,7 +53,7 @@
 											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->username}}</a>
 										</td> -->
 										<td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->first_name}}</a>	
+											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user['first_name']}}</a>	
 										</td>
 										<td>
 											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->last_name}}</a>	

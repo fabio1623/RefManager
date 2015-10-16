@@ -23,10 +23,33 @@ class UserController extends Controller
         return $view;
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        $users = User::where('profile', 1)->paginate(1);
-        $users->setPath('user');
+        /*dd($_POST);*/
+        $profil = $request->input('search_inp');
+        switch ($profil) {
+            case 'User administrator':
+                $profil = 1;
+                break;
+
+            case 'Reference administrator':
+                $profil = 2;
+                break;
+
+            case 'Basic user':
+                $profil = 3;
+                break;
+            
+            default:
+                $profil = 'User administrator';
+                break;
+        }
+        
+        $users = User::where('first_name', 'LIKE', '%'.$request->input('search_inp').'%')
+                        ->orWhere('last_name', 'LIKE', '%'.$request->input('search_inp').'%')
+                        ->orWhere('profile', 'LIKE', '%'.$profil.'%')
+                        ->paginate(4);
+        $users->setPath('search');
         $view = view('auth.index')->with('users', $users);
         return $view;
     }
