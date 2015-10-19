@@ -20,7 +20,7 @@
 								</form>
 							</div>
 							<div class="col-sm-3">
-						      	<form action="{{ action('UserController@destroy', $users->last()->id) }}" method="POST">
+						      	<form action="{{ action('UserController@destroy') }}" method="POST">
 									<input class="btn btn-danger pull-right btn-sm" type="submit" name="_method" value="Delete">
 									<a class="btn btn-success pull-right btn-sm" href="{{ action('UserController@create') }}" role="button">Create</a>
 							    	<?php echo method_field('DELETE'); ?>

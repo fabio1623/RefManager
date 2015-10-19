@@ -1,6 +1,3 @@
-<h3>Description</h3>
-						    <div class="panel panel-default col-sm-10">
-							  <div class="panel-body">
 <!-- Form -->
         	<form class="form-horizontal">
 				<!-- Line -->
@@ -89,8 +86,6 @@
 			  <!-- EO line -->
 			</form>
 			<!-- EO Form -->
-		</div>
-	</div>
 
 <script>
 	$('#date_picker_start').datepicker({
