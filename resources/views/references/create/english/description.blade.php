@@ -1,65 +1,28 @@
-<ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="#">Description</a></li>
-  <li role="presentation"><a href="#">Criteria</a></li>
-  <li role="presentation"><a href="#">Measures</a></li>
-</ul>
-
-<!-- Content menu -->
-<div class="tab-content col-sm-12">
-	
-	<!-- Dropdown menu -->
-	<div id="description_menu" class="tab-pane fade in active">
-		<div class="col-sm-2">
-			
-		</div>
-		<div class="col-sm-5">
-			@include("references.create.french.description")
-		</div>
-	</div>
-	<div id="criteria_menu" class="tab-pane fade">
-		<h3>Criteria</h3>
-		<p>Some content in menu 1.</p>
-	</div>
-	<div id="measure_menu" class="tab-pane fade">
-		<h3>Measure</h3>
-		<p>Some content in menu 1.</p>
-	</div>
-
-	<!-- Other menus -->
-	<div id="english_menu" class="tab-pane fade">
-		<h3>English menu</h3>
-		<p>Some content in menu 1.</p>
-	</div>
-
-</div>
-
-<!-- Form -->
-        	<form class="form-horizontal">
-				<!-- Line -->
+<!-- Line -->
 			  <div class="form-group">
-			    <label for="project_numb" class="col-sm-2 control-label">Project number</label>
-			    <div class="col-sm-4">
+			    <label for="project_numb" class="col-sm-2 col-sm-offset-1 control-label">Project number</label>
+			    <div class="col-sm-3">
 			      <input type="text" class="form-control" id="project_numb" placeholder="1 95 75 32 01">
 			    </div>
-			      <div class="checkbox col-sm-offset-2 col-sm-4">
-			        <label>
-			          <input id= "confidential_check" type="checkbox"> Confidentiel
-			        </label>
-			      </div>
+				<div class="checkbox col-sm-offset-2 col-sm-4">
+					<label>
+					  <input id= "confidential_check" type="checkbox"> <b>Confidential</b>
+					</label>
+				</div>
 			  </div>
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="dfac" class="col-sm-2 control-label">Nom DFAC</label>
-			    <div class="col-sm-6">
+			    <label for="dfac" class="col-sm-2 col-sm-offset-1 control-label">Name of DFAC project</label>
+			    <div class="col-sm-4">
 			      <input type="text" class="form-control" id="dfac" placeholder="***************">
 			    </div>
 			  </div>
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="country" class="col-sm-2 control-label">Pays</label>
-			    <div class="col-sm-3">
+			    <label for="country" class="col-sm-2 col-sm-offset-1 control-label">Country</label>
+			    <div class="col-sm-2">
 				    <select class="form-control" id="country_input">
 						<option>France</option>
 					    <option>Allemagne</option>
@@ -71,8 +34,8 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="location" class="col-sm-2 control-label">Localité</label>
-			    <div class="col-sm-3">
+			    <label for="location" class="col-sm-2 col-sm-offset-1 control-label">Location</label>
+			    <div class="col-sm-2">
 				    <select class="form-control" id="location_input">
 						<option>France</option>
 					    <option>Allemagne</option>
@@ -84,8 +47,8 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="start_date" class="col-sm-2 control-label">Début de projet</label>
-			    <div class="col-sm-3">
+			    <label for="start_date" class="col-sm-2 col-sm-offset-1 control-label">Project start date</label>
+			    <div class="col-sm-2">
 				    <div id="date_picker_start" class="input-group input-append date">
 				      <input type="text" class="form-control" id="start_date" readonly>
 				      <span class="input-group-btn">
@@ -95,8 +58,8 @@
 				      </span>
 				    </div>
 			    </div>
-			    <label for="end_date" class="col-sm-2 control-label">Fin de projet</label>
-			    <div class="col-sm-3">
+			    <label for="end_date" class="col-sm-2 col-sm-offset-1 control-label">Project completion</label>
+			    <div class="col-sm-2">
 				    <div id="date_picker_end" class="input-group input_append date">
 				      <input type="text" class="form-control" id="end_date" readonly>
 				      <span class="input-group-btn">
@@ -109,6 +72,34 @@
 			  </div>
 			  <!-- EO line -->
 			  <!-- Line -->
+			  <div class="form-group">
+			    <label for="estimated_duration" class="col-sm-2 col-sm-offset-1 control-label">Estimated duration</label>
+			    <div class="col-sm-2">
+			      <input type="text" class="form-control" id="estimated_duration" placeholder="***************">
+			    </div>
+			  </div>
+			  <!-- EO line -->
+			  <!-- Line -->
+			  <div class="form-group">
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Type of services</label>
+			    <div class="col-sm-2">
+			      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#services_modal">
+					Modify services
+				</button>
+				@include("references.create.english.services_modal")
+			    </div>
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Type of contract for Veolia</label>
+			    <div class="col-sm-2">
+			      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract_modal">
+					Modify contract
+				</button>
+				@include("references.create.english.contract_modal")
+			    </div>
+			  </div>
+			  <!-- EO line -->
+			
+
+			  <!-- Line -->
 			  <!-- <div class="form-group">
 				<label class="col-xs-3 control-label">Date</label>
 				<div class="col-xs-5 date">
@@ -119,8 +110,6 @@
 				</div>
 				</div> -->
 			  <!-- EO line -->
-			</form>
-			<!-- EO Form -->
 
 <script>
 	$('#date_picker_start').datepicker({

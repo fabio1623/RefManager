@@ -1,73 +1,88 @@
 @extends('templates.template')
 
 @section('content')
-<div class="container col-sm-10 col-sm-offset-1">
-	<div class="row">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Reference</h3>
-				</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
+
+<!-- Content row -->
+<div class="row col-sm-12">
+
+	<!-- Division -->
+	<div class="col-sm-12">
+		<!-- Content -->
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<div class="row">
+						<div class="col-sm-1">
+							<h4>Reference</h4>
 						</div>
-					@endif
-
-					<form class="form-horizontal" role="form" method="POST" action="">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-						<!-- Menu -->
-						<ul class="nav nav-tabs">
-						  <li class="dropdown active">
-						    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Base
-						    <span class="caret"></span></a>
-						    <ul class="dropdown-menu">
-						      <li class="drop_description"><a href="#description_menu">Description</a></li>
-						      <li class="drop_criteria"><a href="#criteria_menu">Criteria</a></li>
-						      <li class="drop_measure"><a href="#measure_menu">Measure</a></li> 
-						    </ul>
-						  </li>
-						  <li class="pull-right"><a data-toggle="tab" href="#menu1">Portuguese</a></li>
-						  <li class="pull-right"><a data-toggle="tab" href="#menu1">Spanish</a></li>
-						  <li class="pull-right"><a data-toggle="tab" href="#menu1">French</a></li>
-						  <li class="pull-right"><a data-toggle="tab" href="#english_menu">English</a></li>
-						</ul>
-
-						<!-- Content menu -->
-						<div class="tab-content col-sm-12">
-							
-							<!-- Dropdown menu -->
-							<div id="description_menu" class="tab-pane fade in active">
-								@include("references.create.french.description")
+						<!-- Button toolbar -->
+						<div class="col-sm-4 pull-right">
+							<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+								<div class="btn-group" role="group" aria-label="...">
+									<button type="button" class="btn btn-primary" data-toggle="tab" href="#english_menu">English</button>
+									<button type="button" class="btn btn-primary" data-toggle="tab" href="#french_menu">French</button>
+									<button type="button" class="btn btn-primary" data-toggle="tab" href="#spanish_menu">Spanish</button>
+									<button type="button" class="btn btn-primary" data-toggle="tab" href="#portuguese_menu">Portuguese</button>
+								</div>
 							</div>
-							<div id="criteria_menu" class="tab-pane fade">
-								<h3>Criteria</h3>
-								<p>Some content in menu 1.</p>
-							</div>
-							<div id="measure_menu" class="tab-pane fade">
-								<h3>Measure</h3>
-								<p>Some content in menu 1.</p>
-							</div>
-
-							<!-- Other menus -->
-							<div id="english_menu" class="tab-pane fade">
-								<h3>English menu</h3>
-								<p>Some content in menu 1.</p>
-							</div>
-
 						</div>
-						
-
-					</form>
-				</div>
+						<!-- /#button toolbar -->
+						<div class="sm-1 pull-right">
+							<button type="button" class="btn btn-primary" data-toggle="tab" href="#base_menu">Base</button>
+						</div>				
+					</div>
+				</h3>
 			</div>
+			<div class="panel-body">
+				@if (count($errors) > 0)
+					<div class="alert alert-danger">
+						<strong>Whoops!</strong> There were some problems with your input.<br><br>
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+				@endif
+
+				<form class="form-horizontal" role="form" method="POST" action="">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+					<!-- Menu content -->
+					<div class="tab-content col-sm-12">
+						<!-- Base menu content -->
+						<div id="base_menu" class="tab-pane fade in active">
+							@include("references.create.english.layout")
+						</div>
+						<!-- /#base menu content -->
+						<div id="english_menu" class="tab-pane fade">
+							@include("references.create.french.domains")
+						</div>
+						<div id="french_menu" class="tab-pane fade">
+							<h3>French</h3>
+							<p>Some content in menu 1.</p>
+						</div>
+						<div id="spanish_menu" class="tab-pane fade">
+							<h3>Spanish</h3>
+							<p>Some content in menu 1.</p>
+						</div>
+
+						<!-- Other menus -->
+						<div id="portuguese_menu" class="tab-pane fade">
+							<h3>Portuguese</h3>
+							<p>Some content in menu 1.</p>
+						</div>
+
+					</div>
+					<!-- /#menu content -->
+				</form>
+			</div>
+		</div>
 	</div>
+	<!-- /#division -->	
 </div>
+<!-- /#content row -->
 
 <script>
 	// Show description pane
