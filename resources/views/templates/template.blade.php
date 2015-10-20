@@ -49,23 +49,23 @@
 					<ul class="nav navbar-nav">
 						@if (Auth::guest())
 						@else
-							<li><a href="{{ url('home') }}">Home</a></li>
+							<li><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 							<!-- Users Administrator -->
 							@if (Auth::user()->profile == 1)
 								<li class="dropdown">
-						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
+						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> References<span class="caret"></span></a>
 						          <ul class="dropdown-menu">
-						            <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li>
-						            <li><a href="{{ action('ReferenceController@index') }}">List of references</a></li>
+						            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a reference</a></li>
+						            <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
 						            <li role="separator" class="divider"></li>
-						            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
+						            <li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search a reference</a></li>
 						          </ul>
 						        </li>
 						        <li class="dropdown">
-						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Users<span class="caret"></span></a>
 						          <ul class="dropdown-menu">
-						            <li><a href="{{ action ('UserController@create') }}">Add an account</a></li>
-						            <li><a href="{{ action('UserController@index') }}">List of accounts</a></li>
+						            <li><a href="{{ action ('UserController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a user</a></li>
+						            <li><a href="{{ action('UserController@index') }}"><span class="glyphicon glyphicon-list"></span> List of users</a></li>
 						          </ul>
 						        </li>
 					        @endif

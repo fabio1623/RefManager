@@ -6,7 +6,10 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Internal Market only: type of contract for Veolia</h4>
       </div>
+      <!-- Modal body -->
       <div class="modal-body">
+        <!-- Form -->
+      <form class="form-horizontal">
         <!-- Line -->
         <div class="form-group">
 		      <div class="checkbox col-sm-6">
@@ -80,7 +83,9 @@
 		      </div>
 	  	</div>
 		<!-- EO line -->
+      </form>
       </div>
+      <!-- /#modal body -->
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
@@ -124,10 +129,4 @@
 			$('#db_check').hide("fast");
 		}
 	})
-
-	/*var hidden_content = ["management_check", "lease_check", "concession_check", "bot_check", "db_check"];
-
-	for	(var i = 0; i < hidden_content.length; i++) {
-	    $('#' + hidden_content[i]).hide();
-	}*/
 </script>
