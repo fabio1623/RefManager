@@ -20,6 +20,7 @@
 						<div class="col-sm-4 pull-right">
 							<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 								<div class="btn-group" role="group" aria-label="...">
+									<button id="glob_icon" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></button>
 									<button type="button" class="btn btn-primary" data-toggle="tab" href="#english_menu">English</button>
 									<button type="button" class="btn btn-primary" data-toggle="tab" href="#french_menu">French</button>
 									<button type="button" class="btn btn-primary" data-toggle="tab" href="#spanish_menu">Spanish</button>
@@ -29,7 +30,9 @@
 						</div>
 						<!-- /#button toolbar -->
 						<div class="sm-1 pull-right">
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#base_menu">Base</button>
+							<button type="button" class="btn btn-primary" aria-label="Left Align" data-toggle="tab" href="#base_menu">
+							  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
+							</button>
 						</div>				
 					</div>
 				</h3>
@@ -91,12 +94,14 @@
 		// Select tab by name
 		$('.nav-tabs a[href="#description_menu"]').tab('show')
 	})
+
 	// Show criteria pane
 	$('.drop_criteria').click(function (e) {
 		/*e.preventDefault()*/
 		// Select tab by name
 		$('.nav-tabs a[href="#criteria_menu"]').tab('show')
 	})
+
 	// Show measure pane
 	$('.drop_measure').click(function (e) {
 		e.preventDefault()

@@ -15,7 +15,7 @@
 			  <div class="form-group">
 			    <label for="dfac" class="col-sm-2 col-sm-offset-1 control-label">Name of DFAC project</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="dfac" placeholder="***************">
+			      <input type="text" class="form-control" id="dfac" placeholder="">
 			    </div>
 			  </div>
 			  <!-- EO line -->
@@ -47,7 +47,7 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="start_date" class="col-sm-2 col-sm-offset-1 control-label">Project start date</label>
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Project start date</label>
 			    <div class="col-sm-2">
 				    <div id="date_picker_start" class="input-group input-append date">
 				      <input type="text" class="form-control" id="start_date" readonly>
@@ -75,7 +75,7 @@
 			  <div class="form-group">
 			    <label for="estimated_duration" class="col-sm-2 col-sm-offset-1 control-label">Estimated duration</label>
 			    <div class="col-sm-2">
-			      <input type="text" class="form-control" id="estimated_duration" placeholder="***************">
+			      <input type="text" class="form-control" id="estimated_duration" placeholder="">
 			    </div>
 			  </div>
 			  <!-- EO line -->
@@ -84,42 +84,39 @@
 			    <label class="col-sm-2 col-sm-offset-1 control-label">Type of services</label>
 			    <div class="col-sm-2">
 			      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#services_modal">
-					Modify services
+					<span class="glyphicon glyphicon-import" aria-hidden="true"></span> Show services
 				</button>
 				@include("references.create.english.services_modal")
 			    </div>
-			    <label class="col-sm-2 col-sm-offset-1 control-label">Type of contract for Veolia</label>
-			    <div class="col-sm-2">
-			      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract_modal">
-					Modify contract
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Veolia's tenders</label>
+			    <div class="checkbox col-sm-1">
+					<label>
+					  <input id= "veolia_check" type="checkbox">
+					</label>
+				</div>
+				<div class="col-sm-2">
+			      <button id="contract_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract_modal">
+					<span class="glyphicon glyphicon-link" aria-hidden="true"></span> Show contract
 				</button>
 				@include("references.create.english.contract_modal")
 			    </div>
 			  </div>
 			  <!-- EO line -->
-			
-
-			  <!-- Line -->
-			  <!-- <div class="form-group">
-				<label class="col-xs-3 control-label">Date</label>
-				<div class="col-xs-5 date">
-				    <div class="input-group input-append date" id="datePicker">
-				        <input type="text" class="form-control" name="date" />
-				        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-				    </div>
-				</div>
-				</div> -->
-			  <!-- EO line -->
 
 <script>
 	$('#date_picker_start').datepicker({
-	    format: 'dd/mm/yyyy'
-	});
-	$('#date_picker_end').datepicker({
-	    format: 'dd/mm/yyyy'
+	    format: "mm-yyyy",
+	    startView: "months", 
+	    minViewMode: "months"
 	});
 
-	$('#confidential_check').change(function () {
+	$('#date_picker_end').datepicker({
+	    format: "mm-yyyy",
+	    startView: "months", 
+	    minViewMode: "months",
+	});
+
+	/*$('#confidential_check').change(function () {
 		if (this.checked) {
 			$('#domains').hide("fast");
 			$('#measures').hide("fast");
@@ -129,6 +126,47 @@
 			$('#domains').show("fast");
 			$('#measures').show("fast");
 			$('#details').show("fast");
+		}
+	});*/
+
+	// Array of checkboxes and their children
+	var checkboxs = [
+		["supervision_check", "fidic_check"],
+		["analyse_op_check", "analyse_check"],
+		["veolia_check", "contract_button"]
+	];
+
+	// Hiding the children checkboxes
+	for	(var i = 0; i < checkboxs.length; i++) {
+		for (var j = 1; j < checkboxs[i].length; j++) {
+			$('#' + checkboxs[i][j]).hide();
+		}
+	}
+
+	$('#supervision_check').change(function () {
+		if (this.checked) {
+			$('#fidic_check').show("fast");
+		}
+		else {
+			$('#fidic_check').hide("fast");
+		}
+	});
+
+	$('#analyse_op_check').change(function () {
+		if (this.checked) {
+			$('#analyse_check').show("fast");
+		}
+		else {
+			$('#analyse_check').hide("fast");
+		}
+	});
+
+	$('#veolia_check').change(function () {
+		if (this.checked) {
+			$('#contract_button').show("fast");
+		}
+		else {
+			$('#contract_button').hide("fast");
 		}
 	});
 </script>

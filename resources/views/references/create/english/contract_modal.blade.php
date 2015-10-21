@@ -83,6 +83,15 @@
 		      </div>
 	  	</div>
 		<!-- EO line -->
+		<!-- Line -->
+          <div class="form-group">
+            <div class="checkbox col-sm-6">
+              <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+              </button>
+            </div>
+          </div>
+          <!-- EO line -->
       </form>
       </div>
       <!-- /#modal body -->

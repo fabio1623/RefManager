@@ -1,8 +1,8 @@
 <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a data-toggle="tab" href="#description_menu">Description</a></li>
-  <li role="presentation"><a data-toggle="tab" href="#criteria_menu">Criteria</a></li>
-  <li role="presentation"><a data-toggle="tab" href="#measure_menu">Measures</a></li>
-  <li role="presentation"><a data-toggle="tab" href="#detail_menu">Details</a></li>
+  <li role="presentation" class="active"><a data-toggle="tab" href="#description_menu"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Description</a></li>
+  <li role="presentation"><a data-toggle="tab" href="#criteria_menu"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Criteria</a></li>
+  <li role="presentation"><a data-toggle="tab" href="#measure_menu"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Measures</a></li>
+  <li role="presentation"><a data-toggle="tab" href="#detail_menu"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Details</a></li>
 </ul>
 
 <!-- Content menu -->

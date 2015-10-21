@@ -53,16 +53,21 @@
           <!-- EO line -->
           <!-- Line -->
           <div class="form-group">
-            <div class="checkbox col-sm-6 col-sm-offset-6">
+            <div class="checkbox col-sm-6">
               <label>
                 <input id="supervision_check" type="checkbox"> Supervision des travaux
+              </label>
+            </div>
+            <div class="checkbox col-sm-6">
+              <label>
+                <input type="checkbox"> Assistance technique
               </label>
             </div>
           </div>
           <!-- EO line -->
           <!-- Line -->
           <div id="fidic_check" class="form-group">
-            <div class="checkbox col-sm-6 col-sm-offset-7">
+            <div class="checkbox col-sm-6 col-sm-offset-1">
               <label>
                 <input type="checkbox"> FIDIC
               </label>
@@ -73,12 +78,12 @@
           <div class="form-group">
             <div class="checkbox col-sm-6">
               <label>
-                <input type="checkbox"> Assistance technique
+                <input type="checkbox"> Formation
               </label>
             </div>
             <div class="checkbox col-sm-6">
               <label>
-                <input type="checkbox"> Formation
+                <input type="checkbox"> Renforcement des capacités
               </label>
             </div>
           </div>
@@ -87,19 +92,19 @@
           <div class="form-group">
             <div class="checkbox col-sm-6">
               <label>
-                <input type="checkbox"> Renforcement des capacités
+                <input id="analyse_op_check" type="checkbox"> Analyse opérationnelle et financière (audit, Due diligence, FOPIP …)
               </label>
             </div>
             <div class="checkbox col-sm-6">
               <label>
-                <input id="analyse_op_check" type="checkbox"> Analyse opérationnelle et financière (audit, Due diligence, FOPIP …)
+                <input type="checkbox"> Institutionnel (Etudes PPP/SPP, restructuration sectorielle, réglementation,…)
               </label>
             </div>
           </div>
           <!-- EO line -->
           <!-- Line -->
           <div id="analyse_check" class="form-group">
-            <div class="checkbox col-sm-5 col-sm-offset-7">
+            <div class="checkbox col-sm-5 col-sm-offset-1">
               <label>
                 <input type="checkbox"> Analyse coûts-bénéfices
               </label>
@@ -109,23 +114,10 @@
           <!-- Line -->
           <div class="form-group">
             <div class="checkbox col-sm-6">
-              <label>
-                <input type="checkbox"> Institutionnel (Etudes PPP/SPP, restructuration sectorielle, réglementation,…)
-              </label>
+              <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+              </button>
             </div>
-            <div class="checkbox col-sm-6">
-              <label>
-                <input type="checkbox"> Offre Veolia
-              </label>
-            </div>
-          </div>
-          <!-- EO line -->
-          <!-- Line -->
-          <div class="form-group">
-            <label for="dfac" class="col-sm-2 control-label">Autre (préciser)</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" rows="5" id="comment"></textarea>
-            </div>  
           </div>
           <!-- EO line -->
           </form>

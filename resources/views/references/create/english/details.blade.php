@@ -2,11 +2,11 @@
 			  <div class="form-group">
 			    <label for="project_name" class="col-sm-2 col-sm-offset-1 control-label">Name of the project</label>
 			    <div class="col-sm-3">
-			      <input type="text" class="form-control" id="project_name" placeholder="***************">
+			      <input type="text" class="form-control" id="project_name" placeholder="">
 			    </div>
 			    <label for="service_name" class="col-sm-2 control-label">Name of the project</label>
 			    <div class="col-sm-3">
-			      <input type="text" class="form-control" id="project_name" placeholder="***************">
+			      <input type="text" class="form-control" id="project_name" placeholder="">
 			    </div>
 			  </div>
 			  <!-- EO line -->
@@ -48,41 +48,87 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label class="col-sm-2 col-sm-offset-1 control-label">Total number man/months (Seureca)</label>
-			    <div class="col-sm-1">
-			      <input type="text" class="form-control" id="staff_number" placeholder="">
-			      <span>
-				    <select class="form-control" id="location_input">
-						<option>France</option>
-					    <option>Allemagne</option>
-					    <option>Portugal</option>
-					    <option>USA</option>
-					</select>
-			      </span>
-			    </div>
-			    <label class="col-sm-2 col-sm-offset-2 control-label">Total number man/months (Associated consultants)</label>
-			    <div class="col-sm-1">
-			      <input type="text" class="form-control" id="staff_number" placeholder="">
+			  	<label class="col-sm-2 col-sm-offset-1 control-label">Total number man/months (Seureca)</label>
+			    <div class="col-sm-2">
+				    <div class="input-group">
+					  <input type="text" class="form-control" id="seureca_man_months" placeholder="" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">Euros</span>
+					</div>
+				  </div>
+
+				<label class="col-sm-2 col-sm-offset-1 control-label">Total number man/months (Associated consultants)</label>
+			    <div class="col-sm-2">
+				    <div class="input-group">
+					  <input type="text" class="form-control" id="consultants_man_months" placeholder="" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">Euros</span>
+					</div>
+				  </div><!-- /.col-lg-6 -->
+			  </div>
+			  <!-- EO line -->
+			  <!-- Line -->
+			  <div class="form-group">
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Name of associated consultants</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control" id="employed_experts" placeholder="">
 			    </div>
 			  </div>
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			  	<label class="col-sm-2 col-sm-offset-1 control-label">Total number man/months (Seureca)</label>
-			    <div class="input-group col-sm-2">
-					<input type="text" class="form-control" name="search_inp" placeholder="">
-					<span class="input-group-btn">
-						<select class="form-control" id="location_input">
-						<option>France</option>
-					    <option>Allemagne</option>
-					    <option>Portugal</option>
-					    <option>USA</option>
-					</select>
-					</span>
-				</div><!-- /input-group -->
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Contact details of the client</label>
+			    <div class="col-sm-3">
+			      <textarea class="form-control" rows="3" id="detailed_service" placeholder=""></textarea>
+			    </div>
 			  </div>
 			  <!-- EO line -->
+			  <!-- Line -->
+			  <div class="form-group">
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Name of the client</label>
+			    <div class="col-sm-3">
+			      <input type="text" class="form-control" id="client_name" placeholder="">
+			    </div>
+			  </div>
+			  <!-- EO line -->
+			  <!-- Line -->
+			  <div class="form-group">
+			    <label class="col-sm-2 col-sm-offset-1 control-label">Financing</label>
+			    <div class="col-sm-3">
+			      <input type="text" class="form-control" id="financing" placeholder="">
+			    </div>
 
+			    <label class="col-sm-2 control-label">Total project cost</label>
+			    <div class="col-sm-2">
+				    <div class="input-group">
+					  <input type="text" class="form-control" id="project_cost" placeholder="" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">Euros</span>
+					</div>
+			    </div>
+			  </div>
+			  <!-- EO line -->
+			  <!-- Line -->
+			  <div class="form-group">
+			  	<label class="col-sm-2 col-sm-offset-1 control-label">Cost of services provided by Seureca</label>
+			    <div class="col-sm-2">
+				    <div class="input-group">
+					  <input type="text" class="form-control" id="services_cost" placeholder="" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">Euros</span>
+					</div>
+			    </div>
 
-
-
+				<label class="col-sm-2 col-sm-offset-1 control-label">Works cost</label>
+			    <div class="col-sm-2">
+				    <div class="input-group">
+					  <input type="text" class="form-control" id="works_cost" placeholder="" aria-describedby="basic-addon2">
+					  <span class="input-group-addon" id="basic-addon2">Euros</span>
+					</div>
+			    </div>
+			  </div>
+			  <!-- EO line -->
+			  <!-- Line -->
+			  <div class="form-group">
+			    <label class="col-sm-2 col-sm-offset-1 control-label">General comments / Key words</label>
+			    <div class="col-sm-7">
+			      <textarea class="form-control" rows="3" id="general_comments" placeholder=""></textarea>
+			    </div>
+			  </div>
+			  <!-- EO line -->
