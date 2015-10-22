@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'google' => [
+        'client_id' => '492336318810-bqgtop5ngojh8no7cskhjh1qois176b8.apps.googleusercontent.com',
+        'client_secret' => 'Fy__USrkNbN0yP5Dv0fADyWS',
+        'redirect' => 'http://localhost/veolia/public/references/create',
+    ],
+
 ];

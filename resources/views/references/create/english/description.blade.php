@@ -106,28 +106,24 @@
 <script>
 	$('#date_picker_start').datepicker({
 	    format: "mm-yyyy",
-	    startView: "months", 
-	    minViewMode: "months"
+	    viewMode: "months", 
+	    minViewMode: "months",
+	    autoclose: true,
+	    clearBtn: true,
+	}).on('changeDate', function (e) {
+		$('#date_picker_end').datepicker('setStartDate', $('#date_picker_start').datepicker('getDate'));
+		$('#end_date').focus();
 	});
 
 	$('#date_picker_end').datepicker({
 	    format: "mm-yyyy",
-	    startView: "months", 
+	    viewMode: "months", 
 	    minViewMode: "months",
+	    autoclose: true,
+	    clearBtn: true,
+	}).on('changeDate', function (e) {
+		$('#date_picker_start').datepicker('setEndDate', $('#date_picker_end').datepicker('getDate'));
 	});
-
-	/*$('#confidential_check').change(function () {
-		if (this.checked) {
-			$('#domains').hide("fast");
-			$('#measures').hide("fast");
-			$('#details').hide("fast");
-		}
-		else {
-			$('#domains').show("fast");
-			$('#measures').show("fast");
-			$('#details').show("fast");
-		}
-	});*/
 
 	// Array of checkboxes and their children
 	var checkboxs = [

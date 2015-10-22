@@ -11,28 +11,32 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+//Authentication route through google API
+Route::get('/', 'Auth\AuthController@redirectToProvider');
+Route::get('/callback', 'Auth\AuthController@handleProviderCallback');
 
+//Home route
 Route::get('home', 'HomeController@index');
 
+//References routes
 Route::get('references/index', 'ReferenceController@index');
-
 Route::get('references/search', 'ReferenceController@search');
-
 Route::get('references/results', 'ReferenceController@results');
+Route::resource('references', 'ReferenceController');
+
+//User routes
+Route::post('user/search', 'UserController@search');
+Route::resource('user', 'UserController');
+
+
 
 /*Route::get('auth/index', 'UserController@index');*/
 
-Route::controllers([
+/*Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-]);
-
-Route::resource('references', 'ReferenceController');
+]);*/
 
 /*Route::resource('accounts', 'AccountController');*/
 
-Route::post('user/search', 'UserController@search');
-
-Route::resource('user', 'UserController');
-
+/*Route::get('/', 'WelcomeController@index');*/
