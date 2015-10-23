@@ -96,7 +96,7 @@
 							<li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 						@else
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}<span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span> {{ Auth::user()->email }} {{ Auth::user()->last_name }}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 								</ul>

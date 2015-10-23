@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(4);
-        $users->setPath('user');
+        $users->setPath('index');
         $view = view('auth.index')->with('users', $users);
         return $view;
     }
@@ -155,6 +155,15 @@ class UserController extends Controller
         dd($_POST);
         $ids = $request->input('id');
         User::destroy($ids);
+
+        return redirect()->action('UserController@index');
+    }
+
+    public function destroyOne(Request $request)
+    {
+        dd($_POST);
+        $id = $request->input('hidden_field');
+        User::destroy($id);
 
         return redirect()->action('UserController@index');
     }

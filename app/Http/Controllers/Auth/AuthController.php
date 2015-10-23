@@ -62,51 +62,51 @@ class AuthController extends Controller
     |
     */
 
-    // use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    // /**
-    //  * Create a new authentication controller instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('guest', ['except' => 'getLogout']);
-    // }
+    /**
+     * Create a new authentication controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => 'getLogout']);
+    }
 
-    // /**
-    //  * Get a validator for an incoming registration request.
-    //  *
-    //  * @param  array  $data
-    //  * @return \Illuminate\Contracts\Validation\Validator
-    //  */
-    // protected function validator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'first_name' => 'required|max:255',
-    //         'last_name'  => 'required|max:255',
-    //         'email'     => 'required|email|max:255|unique:users',
-    //         'password'  => 'required|confirmed|min:6',
-    //         'profile'    => 'required',
-    //     ]);
-    // }
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'first_name' => 'required|max:255',
+            'last_name'  => 'required|max:255',
+            'email'     => 'required|email|max:255|unique:users',
+            'password'  => 'required|confirmed|min:6',
+            'profile'    => 'required',
+        ]);
+    }
 
-    // /**
-    //  * Create a new user instance after a valid registration.
-    //  *
-    //  * @param  array  $data
-    //  * @return User
-    //  */
-    // protected function create(array $data)
-    // {
-    //     /*dd($_POST);*/
-    //     return User::create([
-    //         'username'  => $data['username'],
-    //         'first_name' => $data['first_name'],
-    //         'last_name'  => $data['last_name'],
-    //         'email'     => $data['email'],
-    //         'password'  => bcrypt($data['password']),
-    //         'profile'    => $data['profile'],
-    //     ]);
-    // }
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return User
+     */
+    protected function create(array $data)
+    {
+        /*dd($_POST);*/
+        return User::create([
+            'username'  => $data['username'],
+            'first_name' => $data['first_name'],
+            'last_name'  => $data['last_name'],
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'profile'    => $data['profile'],
+        ]);
+    }
 }

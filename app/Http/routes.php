@@ -12,31 +12,83 @@
 */
 
 //Authentication route through google API
-Route::get('/', 'Auth\AuthController@redirectToProvider');
-Route::get('/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('auth/google', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
+
 
 //Home route
 Route::get('home', 'HomeController@index');
 
+
 //References routes
-Route::get('references/index', 'ReferenceController@index');
-Route::get('references/search', 'ReferenceController@search');
-Route::get('references/results', 'ReferenceController@results');
-Route::resource('references', 'ReferenceController');
+Route::get('references/index', [
+	'middleware' => 'auth',
+	'uses' => 'ReferenceController@index'
+]);
+Route::get('references/search', [
+	'middleware' => 'auth',
+	'uses' => 'ReferenceController@search'
+]);
+Route::get('references/results', [
+	'middleware' => 'auth',
+	'uses' => 'ReferenceController@results'
+]);
+Route::get('references/create', [
+	'middleware' => 'auth',
+	'uses' => 'ReferenceController@create'
+]);
+
+
+//Route protection not implemented
+/*Route::resource('references', 'ReferenceController');*/
+
 
 //User routes
+Route::get('user/index', [
+	'middleware' => 'auth',
+	'uses' => 'UserController@index'
+]);
+Route::get('user/create', [
+	'middleware' => 'auth',
+	'uses' => 'UserController@create'
+]);
+Route::get('user/{id}/edit', [
+	'middleware' => 'auth',
+	'uses' => 'UserController@edit'
+]);
+Route::put('user/update/{id}', [
+	'middleware' => 'auth',
+	'uses' => 'UserController@update'
+]);
+Route::post('user/store', [
+	'middleware' => 'auth',
+	'uses' => 'UserController@store'
+]);
+Route::delete('user/destroy/{id}', [
+	'middleware' => 'auth',
+	'uses' => 'UserController@destroy'
+]);
+Route::delete('user/destroyOne/{id}', [
+	'middleware' => 'auth',
+	'uses' => 'UserController@destroyOne'
+]);
 Route::post('user/search', 'UserController@search');
-Route::resource('user', 'UserController');
+/*Route::resource('user', 'UserController');*/
 
 
 
 /*Route::get('auth/index', 'UserController@index');*/
 
-/*Route::controllers([
+Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-]);*/
+]);
 
 /*Route::resource('accounts', 'AccountController');*/
 
 /*Route::get('/', 'WelcomeController@index');*/
+
+// Authentication routes...
+Route::get('/', 'Auth\AuthController@getLogin');
+/*Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');*/

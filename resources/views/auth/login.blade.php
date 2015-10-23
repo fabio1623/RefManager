@@ -37,6 +37,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-4 control-label">Social authentication</label>
+                            <div class="col-sm-4">
+                                <a class="btn btn-default" href="{{ url('/auth/google') }}" role="button">Google</a>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-sm-6 col-sm-offset-4">
                                 <div class="checkbox">
                                     <label>

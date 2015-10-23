@@ -10,9 +10,11 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $user->first_name }} {{ $user->last_name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('UserController@destroy', $user->id) }}" method="POST">
+								<form action="{{ action('UserController@destroyOne') }}" method="POST">
 									<input class="btn btn-danger pull-right btn-xs" type="submit" name="_method" value="Delete">
+								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
+								    <input type="hidden" name="hidden_field" value="{{ $user->id}}">
 								</form>
 							</div>
 						</div>
