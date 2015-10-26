@@ -68,9 +68,9 @@
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-4">
 							  <select class="form-control" id="profile_type" name="profile">
-							    <option value="1">Accounts administrator</option>
-							    <option value="2">References administrator</option>
-							    <option value="3">End user</option>
+							    <option value="1">User administrator</option>
+							    <option value="2">Reference administrator</option>
+							    <option value="3">Basic user</option>
 							  </select>
 							</div>
 						</div>

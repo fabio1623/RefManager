@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name', 15);
             $table->string('email')->unique();
             $table->string('password', 60);
-            $table->integer('profil');
+            $table->enum('profile', ['User administrator', 'Reference administrator', 'Basic user']);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

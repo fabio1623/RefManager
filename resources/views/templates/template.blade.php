@@ -54,7 +54,7 @@
 						@else
 							<li><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 							<!-- Users Administrator -->
-							@if (Auth::user()->profile == 1)
+							@if (Auth::user()->profile == 'User administrator')
 								<li class="dropdown">
 						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> References<span class="caret"></span></a>
 						          <ul class="dropdown-menu">
@@ -73,7 +73,7 @@
 						        </li>
 					        @endif
 					        <!-- References Administrator -->
-					        @if (Auth::user()->profile == 2)
+					        @if (Auth::user()->profile == 'Reference administrator')
 								<li class="dropdown">
 						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
 						          <ul class="dropdown-menu">
@@ -85,7 +85,7 @@
 						        </li>
 					        @endif
 					        <!-- End User -->
-					        @if (Auth::user()->profile == 3)
+					        @if (Auth::user()->profile == 'Basic user')
 					        	<li><a href="{{ url('/') }}">List of references</a></li>
 					        @endif
 				        @endif
@@ -94,9 +94,10 @@
 					<ul class="nav navbar-nav navbar-right">
 						@if (Auth::guest())
 							<li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+							<li><a href="{{ url('/auth/register') }}"><span class="glyphicon glyphicon-registration-mark"></span> Register</a></li>
 						@else
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span> {{ Auth::user()->email }} {{ Auth::user()->last_name }}<span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 								</ul>

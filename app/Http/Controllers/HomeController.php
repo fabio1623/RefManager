@@ -35,17 +35,17 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		switch (Auth::user()->profile) {
-			case 1:
+		/*switch (Auth::user()->profile) {
+			case 'User administrator':
 				$view = view('home');
 				break;
 
-			case 2:
+			case 'Reference administrator':
 				$users = User::all();
         		$view = view('auth.index')->with('users', $users);
 				break;
 
-			case 3:
+			case 'Basic user':
 				$users = User::all();
         		$view = view('auth.index')->with('users', $users);
 				break;
@@ -53,7 +53,9 @@ class HomeController extends Controller {
 			default:
 				# code...
 				break;
-		}
+		}*/
+
+		$view = view('home');
 		return $view;
 	}
 

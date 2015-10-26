@@ -9,6 +9,23 @@
       <!-- Modal body -->
       <div class="modal-body">
         <form class="form-horizontal">
+        @foreach($services as $service)
+          <!-- Line -->
+          <div class="form-group">
+            <div class="checkbox col-sm-6">
+              <label>
+                <input type="checkbox"> {{$service->service_name}}
+              </label>
+            </div>
+            <div class="checkbox col-sm-6">
+              <label>
+                <input type="checkbox"> Etude de faisabilité / d'identification
+              </label>
+            </div>
+          </div>
+          <!-- EO line -->
+        @endforeach
+
           <!-- Line -->
           <div class="form-group">
             <div class="checkbox col-sm-6">

@@ -58,21 +58,8 @@
 										<td>
 											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->last_name}}</a>	
 										</td>
-										<!-- <td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->email}}</a>	
-										</td> -->
 										<td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">
-												@if ($user->profile === 1)
-													User administrator
-												@endif
-												@if ($user->profile === 2)
-													Reference administrator
-												@endif
-												@if ($user->profile === 3)
-													Basic user
-												@endif
-											</a>	
+											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->profile}}</a>	
 										</td>
 										<td class="check">
 											<input class="checkbox" type="checkbox" value="{{$user->id}}" name=id[]>

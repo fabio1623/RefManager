@@ -11,6 +11,9 @@
 |
 */
 
+// Authentication routes...
+Route::get('/', 'Auth\AuthController@getLogin');
+
 //Authentication route through google API
 Route::get('auth/google', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
@@ -60,10 +63,11 @@ Route::put('user/update/{id}', [
 	'middleware' => 'auth',
 	'uses' => 'UserController@update'
 ]);
-Route::post('user/store', [
+/*Route::post('user/store', [
 	'middleware' => 'auth',
 	'uses' => 'UserController@store'
-]);
+]);*/
+Route::post('user/store', 'UserController@store');
 Route::delete('user/destroy/{id}', [
 	'middleware' => 'auth',
 	'uses' => 'UserController@destroy'
@@ -89,6 +93,9 @@ Route::controllers([
 /*Route::get('/', 'WelcomeController@index');*/
 
 // Authentication routes...
-Route::get('/', 'Auth\AuthController@getLogin');
 /*Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
+
+Route::get('link/store', 'SubServiceServiceController@store');
+
+Route::get('references/services', 'SubServiceServiceController@index');

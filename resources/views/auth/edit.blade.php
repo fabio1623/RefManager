@@ -61,20 +61,20 @@
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-4">
 							  <select class="form-control" id="profile_type" name="profile">
-							  	@if ($user->profile == 1)
-							    	<option value="1" selected>Users administrator</option>
+							  	@if ($user->profile == 'User administrator')
+							    	<option value="1" selected>User administrator</option>
 						    	@else
-						    		<option value="1">Users administrator</option>
+						    		<option value="1">User administrator</option>
 						    	@endif
-						    	@if ($user->profile == 2)
-							    	<option value="2" selected>References administrator</option>
+						    	@if ($user->profile == 'Reference administrator')
+							    	<option value="2" selected>Reference administrator</option>
 							    @else
-							    	<option value="2">References administrator</option>
+							    	<option value="2">Reference administrator</option>
 							    @endif
-							    @if ($user->profile == 3)
-							    	<option value="3" selected>End user</option>
+							    @if ($user->profile == 'Basic user')
+							    	<option value="3" selected>Basic user</option>
 							    @else
-							    	<option value="3">End user</option>
+							    	<option value="3">Basic user</option>
 							    @endif
 							  </select>
 							</div>
