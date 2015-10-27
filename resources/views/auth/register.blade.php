@@ -57,13 +57,7 @@
 								<input type="password" class="form-control" name="password_confirmation">
 							</div>
 						</div>
-
-						<div class="form-group">
-							<label class="col-sm-4 control-label">User Name</label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" id="user_name" name="username" value="{{ old('username') }}">
-							</div>
-						</div>
+						
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-4">

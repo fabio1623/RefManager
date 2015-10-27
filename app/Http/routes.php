@@ -15,8 +15,8 @@
 Route::get('/', 'Auth\AuthController@getLogin');
 
 //Authentication route through google API
-Route::get('auth/google', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
+Route::get('auth/google/callback', 'Auth\OAuthController@handleProviderCallback');
 
 
 //Home route
@@ -46,38 +46,38 @@ Route::get('references/create', [
 /*Route::resource('references', 'ReferenceController');*/
 
 
-//User routes
-Route::get('user/index', [
-	'middleware' => 'auth',
-	'uses' => 'UserController@index'
-]);
-Route::get('user/create', [
-	'middleware' => 'auth',
-	'uses' => 'UserController@create'
-]);
-Route::get('user/{id}/edit', [
-	'middleware' => 'auth',
-	'uses' => 'UserController@edit'
-]);
-Route::put('user/update/{id}', [
-	'middleware' => 'auth',
-	'uses' => 'UserController@update'
-]);
-/*Route::post('user/store', [
-	'middleware' => 'auth',
-	'uses' => 'UserController@store'
-]);*/
-Route::post('user/store', 'UserController@store');
-Route::delete('user/destroy/{id}', [
-	'middleware' => 'auth',
-	'uses' => 'UserController@destroy'
-]);
-Route::delete('user/destroyOne/{id}', [
-	'middleware' => 'auth',
-	'uses' => 'UserController@destroyOne'
-]);
+// //User routes
+// Route::get('user/index', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'UserController@index'
+// ]);
+// Route::get('user/create', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'UserController@create'
+// ]);
+// Route::get('user/{id}/edit', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'UserController@edit'
+// ]);
+// Route::put('user/update/{id}', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'UserController@update'
+// ]);
+// Route::post('user/store', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'UserController@store'
+// ]);
+// Route::post('user/store', 'UserController@store');
+// Route::delete('user/destroy/{id}', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'UserController@destroy'
+// ]);
+// Route::delete('user/destroyOne/{id}', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'UserController@destroyOne'
+// ]);
 Route::post('user/search', 'UserController@search');
-/*Route::resource('user', 'UserController');*/
+Route::resource('user', 'UserController');
 
 
 

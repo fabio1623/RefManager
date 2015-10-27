@@ -24,14 +24,12 @@
 
 					<table style="width:100%">
 						<tr>
-						    <th>Username</th>
 						    <th>First Name</th>
 						    <th>Last Name</th>
 						    <th>Email</th>
 						    <th>Profile</th>
 						</tr>
 						<tr>
-							<td>{{$user->username}}</td>
 							<td>{{$user->first_name}}</td>
 							<td>{{$user->last_name}}</td>
 							<td>{{$user->email}}</td>

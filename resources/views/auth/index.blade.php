@@ -49,9 +49,6 @@
 						<tbody>
 							@foreach ($users as $user)
 									<tr data-href="{{ action('UserController@edit', $user->id) }}">
-										<!-- <td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->username}}</a>
-										</td> -->
 										<td>
 											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user['first_name']}}</a>	
 										</td>

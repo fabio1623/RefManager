@@ -8,49 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-use Socialite;/*
-use Illuminate\Routing\Controller;*/
-
 class AuthController extends Controller
 {
-
-    /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return Response
-     */
-    public function redirectToProvider()
-    {
-        return Socialite::driver('google')->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return Response
-     */
-    public function handleProviderCallback()
-    {
-        $user = Socialite::driver('google')->user();
-
-        // $user->token;
-
-        // OAuth Two Providers
-        $token = $user->token;
-
-        // OAuth One Providers
-        $token = $user->token;
-        $tokenSecret = $user->tokenSecret;
-
-        // All Providers
-        $user->getId();
-        $user->getNickname();
-        $user->getName();
-        $user->getEmail();
-        $user->getAvatar();
-    }
-
-
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -85,7 +44,7 @@ class AuthController extends Controller
         return Validator::make($data, [
             'first_name' => 'required|max:255',
             'last_name'  => 'required|max:255',
-            'email'     => 'required|email|max:255|unique:users',
+            'email'     => 'required|email|max:320|unique:users',
             'password'  => 'required|confirmed|min:6',
             'profile'    => 'required',
         ]);
@@ -101,7 +60,6 @@ class AuthController extends Controller
     {
         /*dd($_POST);*/
         return User::create([
-            'username'  => $data['username'],
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
             'email'     => $data['email'],

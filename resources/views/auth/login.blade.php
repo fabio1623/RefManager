@@ -23,9 +23,9 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Username</label>
+                            <label class="col-sm-4 control-label">Email</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" placeholder="firstName.lastName" name="username" id="username" value="{{ old('username') }}" data-toggle="popover" data-trigger="focus" title="Wrong format" data-content="Please, fill a correct username (ex:fabio.pedro)">
+                                <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}" data-toggle="popover" data-trigger="focus" title="Wrong format" data-content="Please, fill a correct email (ex:fabio.pedro)">
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
     </div>
 </div>
 <script> 
-    $( "#username" ).blur(function() {
+    $( "#email" ).blur(function() {
         $(this).popover('animation');
     });
 </script>
