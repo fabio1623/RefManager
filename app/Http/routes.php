@@ -96,6 +96,7 @@ Route::controllers([
 /*Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
 
-Route::get('link/store', 'SubServiceServiceController@store');
-
-Route::get('references/services', 'SubServiceServiceController@index');
+Route::post('subservice/storeExternal', 'SubServiceController@storeExternal');
+Route::post('subservice/storeInternal', 'SubServiceController@storeInternal');
+Route::get('subservice/index', 'SubServiceController@index');
+Route::delete('subservice/destroy', 'SubServiceController@destroy');

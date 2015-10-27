@@ -15,7 +15,7 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subsidiary', 20);
-            $table->boolean('service_type');
+            $table->enum('service_type', ['external', 'internal']);
             $table->timestamps();
             $table->softDeletes();
         });

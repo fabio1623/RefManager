@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Service;
 use App\SubService;
 
 class SubServiceController extends Controller
@@ -17,7 +18,10 @@ class SubServiceController extends Controller
      */
     public function index()
     {
-        //
+        $sub_services = SubService::paginate(4);
+        $sub_services->setPath('index');
+        $view = view('services.index')->with('services', $sub_services);
+        return $view;
     }
 
     /**
@@ -36,13 +40,52 @@ class SubServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeExternal(Request $request)
     {
+        /*dd($_POST);*/
+
+        //Validate the input value
+        $this->validate($request, [
+            'service_name' => 'required|unique:sub_services',
+        ]);
+
+        //Create new sub service
         $sub_service = new subservice;
-        $sub_service->service_name = 'Feasibility of identification study';
-        $sub_service->checked = 0;
+        $sub_service->service_name = $request->input('service_name');
 
         $sub_service->save();
+
+        //Attach the sub service to the service group
+        $service = Service::where('subsidiary','Seureca')
+                                        ->where('service_type', 'external')
+                                        ->first();
+        $service->subServices()->attach($sub_service->id);
+
+        return redirect()->action('ReferenceController@create');
+    }
+
+    public function storeInternal(Request $request)
+    {
+        /*dd($_POST);*/
+
+        //Validate the input value
+        $this->validate($request, [
+            'service_name' => 'required|unique:sub_services',
+        ]);
+
+        //Create new sub service
+        $sub_service = new subservice;
+        $sub_service->service_name = $request->input('service_name');
+
+        $sub_service->save();
+
+        //Attach the sub service to the service group
+        $service = Service::where('subsidiary','Seureca')
+                                        ->where('service_type', 'internal')
+                                        ->first();
+        $service->subServices()->attach($sub_service->id);
+
+        return redirect()->action('ReferenceController@create');
     }
 
     /**
@@ -85,8 +128,18 @@ class SubServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        /*dd($_POST);*/
+        $ids = $request->input('id');
+        foreach ($ids as $id) {
+            $sub_service = SubService::where('id',$id)->first();
+            $sub_service->services()->detach();
+
+        }
+        
+        Service::destroy($ids);
+
+        return redirect()->action('SubServiceController@index');
     }
 }

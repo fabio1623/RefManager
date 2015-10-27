@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Service;
+
 class ReferenceController extends Controller
 {
     /**
@@ -26,7 +28,17 @@ class ReferenceController extends Controller
      */
     public function create()
     {
-        $view = view('references.create');
+        $internal_services = Service::where('subsidiary','Seureca')
+                                        ->where('service_type', 'external')
+                                        ->first()
+                                        ->subServices()->get();
+        $external_services = Service::where('subsidiary','Seureca')
+                                        ->where('service_type', 'internal')
+                                        ->first()
+                                        ->subServices()->get();
+
+        /*dd($internal_services);*/
+        $view = view('references.create', ['internal_services'=>$internal_services, 'external_services'=>$external_services]);
         return $view;
     }
 

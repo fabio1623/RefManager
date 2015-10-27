@@ -15,7 +15,7 @@ class CreateSubServicesTable extends Migration
         Schema::create('sub_services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('service_name', 80);
-            $table->boolean('checked');
+            $table->boolean('value')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -8,6 +8,6 @@ class SubService extends Model
 {
     public function services()
     {
-        return $this->belongsToMany('App\Services');
+        return $this->belongsToMany('App\Services', 'sub_service_service');
     }
 }

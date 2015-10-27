@@ -18,8 +18,6 @@ class CreateSubServiceServiceTable extends Migration
             $table->foreign('sub_service_id')->references('id')->on('sub_services');
             $table->integer('service_id')->unsigned();
             $table->foreign('service_id')->references('id')->on('services');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

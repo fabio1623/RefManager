@@ -4,7 +4,7 @@
 			    <div class="col-sm-3">
 			      <input type="text" class="form-control" id="project_name" placeholder="">
 			    </div>
-			    <label for="service_name" class="col-sm-2 control-label">Name of the project</label>
+			    <label for="service_name" class="col-sm-2 control-label">Title of services provided by Seureca</label>
 			    <div class="col-sm-3">
 			      <input type="text" class="form-control" id="project_name" placeholder="">
 			    </div>

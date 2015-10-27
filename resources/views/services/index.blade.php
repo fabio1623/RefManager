@@ -7,7 +7,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-6">List of users</div>
+							<div class="col-sm-6">List of services</div>
 							<div class="col-sm-3 pull-right">
 								<form action="{{ action('UserController@search') }}" method="POST">
 									<?php echo csrf_field(); ?>
@@ -20,7 +20,7 @@
 								</form>
 							</div>
 							<div class="col-sm-3">
-						      	<form action="{{ action('UserController@destroy') }}" method="POST">
+						      	<form action="{{ action('SubServiceController@destroy') }}" method="POST">
 									<input class="btn btn-danger pull-right btn-sm" type="submit" name="_method" value="Delete">
 									<a class="btn btn-success pull-right btn-sm" href="{{ action('UserController@create') }}" role="button">Create</a>
 							    	<?php echo method_field('DELETE'); ?>
@@ -35,11 +35,8 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<!-- <th>User Name</th> -->
-								<th>First Name</th>
-						    	<th>Last Name</th>
-						    	<!-- <th>Email</th> -->
-						    	<th>Profile</th>
+								<th>Service name</th>
+						    	<th>Subsidiary</th>
 						    	<th><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
@@ -47,22 +44,16 @@
 
 						</tfoot>
 						<tbody>
-							@foreach ($users as $user)
-									<tr data-href="{{ action('UserController@edit', $user->id) }}">
-										<!-- <td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->username}}</a>
-										</td> -->
+							@foreach ($services as $service)
+									<tr data-href="{{ action('UserController@edit') }}">
 										<td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user['first_name']}}</a>	
+											<a class="btn btn-link" href="{{ action('UserController@edit') }}">{{$service->service_name}}</a>	
 										</td>
 										<td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->last_name}}</a>	
-										</td>
-										<td>
-											<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->profile}}</a>	
+											<a class="btn btn-link" href="{{ action('UserController@edit') }}"></a>	
 										</td>
 										<td class="check">
-											<input class="checkbox" type="checkbox" value="{{$user->id}}" name=id[]>
+											<input class="checkbox" type="checkbox" value="{{$service->id}}" name=id[]>
 										</td>
 									</tr>
 							@endforeach
@@ -71,7 +62,7 @@
 					</table>
 				</div>
 				<div class="pull-right">
-					{!! $users->render() !!}
+					{!! $services->render() !!}
 				</div>
 			</div>
 	</div>

@@ -86,8 +86,7 @@
 			      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#services_modal">
 					<span class="glyphicon glyphicon-import" aria-hidden="true"></span> Show services
 				</button>
-				{{ action('SubServiceServiceController@index') }}
-				<!-- @include("references.create.english.services_modal") -->
+				@include("references.create.english.services_modal")
 			    </div>
 			    <label class="col-sm-2 col-sm-offset-1 control-label">Veolia's tenders</label>
 			    <div class="checkbox col-sm-1">
