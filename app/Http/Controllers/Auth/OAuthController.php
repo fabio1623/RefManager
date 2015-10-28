@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 
 use Socialite;
+use Auth;
 
 class OAuthController extends Controller
 {
@@ -27,11 +28,37 @@ class OAuthController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('google')->user();
+        /*try {
+            $user = Socialite::driver('google')->user();
+            $user->getName();
+            $user->getEmail();
+            $user->getAvatar();
+        }
+        catch (GuzzleHttp\Exception\ClientException $e) {
+             dd($e->response);
+        }*/
 
+        $user = Socialite::driver('google')->user();
+        dd($user);
         // All Providers
         $user->getName();
         $user->getEmail();
         $user->getAvatar();
+
+
+        
+
+
+        /*if (Auth::attempt(['email' => $user->email])) {
+            // Authentication passed...
+            return redirect()->intended('subservice/index');
+        }*/
+
+
+        /*$ddb_user = User::where('email', $user->email)->first();
+
+        if ($ddb_user) {
+            return redirect()->intended('subservice/index');
+        }*/
     }
 }
