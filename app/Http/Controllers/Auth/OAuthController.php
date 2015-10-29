@@ -28,37 +28,29 @@ class OAuthController extends Controller
      */
     public function handleProviderCallback()
     {
-        /*try {
-            $user = Socialite::driver('google')->user();
-            $user->getName();
-            $user->getEmail();
-            $user->getAvatar();
-        }
-        catch (GuzzleHttp\Exception\ClientException $e) {
-             dd($e->response);
-        }*/
-
         $user = Socialite::driver('google')->user();
-        dd($user);
-        // All Providers
-        $user->getName();
-        $user->getEmail();
-        $user->getAvatar();
+        /*dd($user);*/
 
+        $value = ends_with($user->email, '@gmail.com');
 
-        
-
-
-        /*if (Auth::attempt(['email' => $user->email])) {
-            // Authentication passed...
-            return redirect()->intended('subservice/index');
-        }*/
-
-
-        /*$ddb_user = User::where('email', $user->email)->first();
-
-        if ($ddb_user) {
-            return redirect()->intended('subservice/index');
-        }*/
+        if ($value == true) {
+            $ddb_user = User::where('email', $user->email)->first();
+            if ($ddb_user) {
+                Auth::login($ddb_user);
+                return redirect()->intended('home');
+            }
+            else {
+                $new_user = new User;
+                $new_user->first_name = $user->name;
+                $new_user->email = $user->email;
+                $new_user->avatar = $user->avatar;
+                $new_user->save();
+                Auth::login($new_user);
+                return redirect()->intended('home');
+            }
+        }
+        else {
+            return redirect('auth/loginError');
+        }
     }
 }

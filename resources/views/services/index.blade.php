@@ -9,7 +9,7 @@
 						<div class="row">
 							<div class="col-sm-6">List of services</div>
 							<div class="col-sm-3 pull-right">
-								<form action="{{ action('UserController@search') }}" method="POST">
+								<form action="{{ action('SubServiceController@search') }}" method="POST">
 									<?php echo csrf_field(); ?>
 									<div class="input-group">
 									  <input type="text" class="form-control" name="search_inp" placeholder="Search for...">
@@ -45,12 +45,12 @@
 						</tfoot>
 						<tbody>
 							@foreach ($services as $service)
-									<tr data-href="{{ action('UserController@edit') }}">
+									<tr data-href="{{ action('SubServiceController@edit') }}">
 										<td>
-											<a class="btn btn-link" href="{{ action('UserController@edit') }}">{{$service->service_name}}</a>	
+											<a class="btn btn-link" href="{{ action('SubServiceController@edit') }}">{{$service->service_name}}</a>	
 										</td>
 										<td>
-											<a class="btn btn-link" href="{{ action('UserController@edit') }}"></a>	
+											<a class="btn btn-link" href="{{ action('SubServiceController@edit') }}"></a>	
 										</td>
 										<td class="check">
 											<input class="checkbox" type="checkbox" value="{{$service->id}}" name=id[]>

@@ -151,4 +151,9 @@ class UserController extends Controller
 
         return redirect()->action('UserController@index');
     }
+
+    /*public function throwError() {
+        $view = view('auth.loginError');
+        return $view;
+    }*/
 }

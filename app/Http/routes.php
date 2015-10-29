@@ -17,6 +17,7 @@ Route::get('/', 'Auth\AuthController@getLogin');
 //Authentication route through google API
 Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
 Route::get('auth/google/callback', 'Auth\OAuthController@handleProviderCallback');
+/*Route::post('user/loginError', 'UserController@throwError');*/
 
 
 //Home route
@@ -76,6 +77,7 @@ Route::get('references/create', [
 // 	'middleware' => 'auth',
 // 	'uses' => 'UserController@destroyOne'
 // ]);
+Route::delete('user/destroyOne/{id}', 'UserController@destroyOne');
 Route::post('user/search', 'UserController@search');
 Route::resource('user', 'UserController');
 
@@ -98,5 +100,10 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
 
 Route::post('subservice/storeExternal', 'SubServiceController@storeExternal');
 Route::post('subservice/storeInternal', 'SubServiceController@storeInternal');
+Route::post('subservice/search', 'SubServiceController@search');
 Route::get('subservice/index', 'SubServiceController@index');
 Route::delete('subservice/destroy', 'SubServiceController@destroy');
+Route::get('subservice/edit', 'SubServiceController@edit');
+/*Route::resource('subservice', 'SubServiceController');*/
+
+Route::resource('public/domain', 'DomainController');

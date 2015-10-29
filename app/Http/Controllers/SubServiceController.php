@@ -34,6 +34,18 @@ class SubServiceController extends Controller
         //
     }
 
+    public function store(Request $request) {
+        
+    }
+
+    public function search(Request $request) {
+        $subservices = SubService::where('service_name', 'LIKE', '%'.$request->input('search_inp').'%')
+                        ->paginate(4);
+        $subservices->setPath('search');
+        $view = view('services.index')->with('services', $subservices);
+        return $view;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -130,16 +142,25 @@ class SubServiceController extends Controller
      */
     public function destroy(Request $request)
     {
-        /*dd($_POST);*/
+        dd($_POST);
         $ids = $request->input('id');
+
         foreach ($ids as $id) {
             $sub_service = SubService::where('id',$id)->first();
             $sub_service->services()->detach();
-
         }
-        
-        Service::destroy($ids);
+
+        SubService::destroy($ids);
 
         return redirect()->action('SubServiceController@index');
+    }
+
+    public function destroyOne(Request $request)
+    {
+        dd($_POST);
+        $id = $request->input('hidden_field');
+        User::destroy($id);
+
+        return redirect()->action('UserController@index');
     }
 }
