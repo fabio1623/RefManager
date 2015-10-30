@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Domain;
+use App\Expertise;
 
-class DomainController extends Controller
+class ExpertiseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,18 +17,7 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains = Domain::paginate(4);
-        $domains->setPath('index');
-        $view = view('domains.index')->with('domains', $domains);
-        return $view;
-    }
-
-    public function search(Request $request) {
-        $domains = Domain::where('name', 'LIKE', '%'.$request->input('search_inp').'%')
-                        ->paginate(4);
-        $domains->setPath('search');
-        $view = view('domains.index')->with('domains', $domains);
-        return $view;
+        //
     }
 
     /**
@@ -49,11 +38,16 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
-        $domain = new Domain;
-        $domain->name = $request->input('name');
-        $domain->save();
+        //Validate the input value
+        /*$this->validate($request, [
+            'expertise_name' => 'required|unique:expertises',
+        ]);*/
+        dd($_POST);
+        //Create new sub service
+        $expertise = new expertise;
+        $expertise->name = $request->input('expertise_name');
 
-        return redirect()->action('DomainController@index');
+        $expertise->save();
     }
 
     /**
@@ -75,9 +69,7 @@ class DomainController extends Controller
      */
     public function edit($id)
     {
-        $domain = Domain::find($id);
-        $view = view('domains.edit')->with('domain', $domain);
-        return $view;
+        //
     }
 
     /**
@@ -89,10 +81,7 @@ class DomainController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $domain = Domain::find($id);
-        $domain->name = $request->input('name');
-
-        $user->save();
+        //
     }
 
     /**
@@ -101,12 +90,8 @@ class DomainController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        dd($_POST);
-        $ids = $request->input('id');
-        Domain::destroy($ids);
-
-        return redirect()->action('DomainController@index');
+        //
     }
 }

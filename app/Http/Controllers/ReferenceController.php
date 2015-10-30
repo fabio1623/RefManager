@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Service;
+use App\Domain;
+use App\Expertise;
 
 class ReferenceController extends Controller
 {
@@ -37,8 +39,12 @@ class ReferenceController extends Controller
                                         ->first()
                                         ->subServices()->get();
 
+        $domains = Domain::all();
+
+        $expertises = Expertise::all();
+
         /*dd($internal_services);*/
-        $view = view('references.create', ['internal_services'=>$internal_services, 'external_services'=>$external_services]);
+        $view = view('references.create', ['internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises]);
         return $view;
     }
 

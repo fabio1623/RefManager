@@ -106,4 +106,10 @@ Route::delete('subservice/destroy', 'SubServiceController@destroy');
 Route::get('subservice/edit', 'SubServiceController@edit');
 /*Route::resource('subservice', 'SubServiceController');*/
 
-Route::resource('public/domain', 'DomainController');
+/*Route::resource('domain', 'DomainController');*/
+Route::get('domain/index', 'DomainController@index');
+Route::delete('domain/destroy', 'DomainController@destroy');
+Route::post('domain/search', 'DomainController@search');
+
+Route::get('expertise/index', 'ExpertiseController@index');
+Route::post('expertise/store', 'ExpertiseController@store');

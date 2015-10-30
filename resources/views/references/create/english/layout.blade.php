@@ -15,7 +15,7 @@
 	</div>
 	<div id="criteria_menu" class="tab-pane fade">
 		<h3>Criteria</h3>
-		@include("references.create.french.resources")
+		@include("references.create.english.criteria")
 	</div>
 	<div id="measure_menu" class="tab-pane fade">
 		<h3>Measure</h3>
