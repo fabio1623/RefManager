@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->enum('profile', ['User administrator', 'Reference administrator', 'Basic user'])->default('Basic user');
+            $table->string('avatar', 255);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

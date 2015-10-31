@@ -106,6 +106,7 @@ Route::delete('subservice/destroy', 'SubServiceController@destroy');
 Route::get('subservice/edit', 'SubServiceController@edit');
 /*Route::resource('subservice', 'SubServiceController');*/
 
+
 /*Route::resource('domain', 'DomainController');*/
 Route::get('domain/index', 'DomainController@index');
 Route::delete('domain/destroy', 'DomainController@destroy');
