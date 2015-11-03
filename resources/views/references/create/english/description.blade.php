@@ -1,10 +1,10 @@
 <!-- Line -->
 			  <div class="form-group">
-			    <label for="project_numb" class="col-sm-2 col-sm-offset-1 control-label">Project number</label>
-			    <div class="col-sm-3">
+			    <label for="project_numb" class="col-sm-2 col-sm-offset-2 control-label">Project number</label>
+			    <div class="col-sm-4">
 			      <input type="text" class="form-control" id="project_numb" placeholder="1 95 75 32 01">
 			    </div>
-				<div class="checkbox col-sm-offset-2 col-sm-4">
+				<div class="checkbox col-sm-2">
 					<label>
 					  <input id= "confidential_check" type="checkbox"> <b>Confidential</b>
 					</label>
@@ -13,7 +13,7 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="dfac" class="col-sm-2 col-sm-offset-1 control-label">Name of DFAC project</label>
+			    <label for="dfac" class="col-sm-2 col-sm-offset-2 control-label">Name of DFAC project</label>
 			    <div class="col-sm-4">
 			      <input type="text" class="form-control" id="dfac" placeholder="">
 			    </div>
@@ -21,7 +21,7 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="country" class="col-sm-2 col-sm-offset-1 control-label">Country</label>
+			    <label for="country" class="col-sm-2 col-sm-offset-2 control-label">Country</label>
 			    <div class="col-sm-2">
 				    <select class="form-control" id="country_input">
 						<option>France</option>
@@ -34,7 +34,7 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="location" class="col-sm-2 col-sm-offset-1 control-label">Location</label>
+			    <label for="location" class="col-sm-2 col-sm-offset-2 control-label">Location</label>
 			    <div class="col-sm-2">
 				    <select class="form-control" id="location_input">
 						<option>France</option>
@@ -47,7 +47,7 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label class="col-sm-2 col-sm-offset-1 control-label">Project start date</label>
+			    <label class="col-sm-2 col-sm-offset-2 control-label">Project start date</label>
 			    <div class="col-sm-2">
 				    <div id="date_picker_start" class="input-group input-append date">
 				      <input type="text" class="form-control" id="start_date" readonly>
@@ -58,7 +58,11 @@
 				      </span>
 				    </div>
 			    </div>
-			    <label for="end_date" class="col-sm-2 col-sm-offset-1 control-label">Project completion</label>
+			  </div>
+			  <!-- EO line -->
+			  <!-- Line -->
+			  <div class="form-group">
+			    <label for="end_date" class="col-sm-2 col-sm-offset-2 control-label">Project completion</label>
 			    <div class="col-sm-2">
 				    <div id="date_picker_end" class="input-group input_append date">
 				      <input type="text" class="form-control" id="end_date" readonly>
@@ -73,35 +77,81 @@
 			  <!-- EO line -->
 			  <!-- Line -->
 			  <div class="form-group">
-			    <label for="estimated_duration" class="col-sm-2 col-sm-offset-1 control-label">Estimated duration</label>
+			    <label for="estimated_duration" class="col-sm-2 col-sm-offset-2 control-label">Estimated duration</label>
 			    <div class="col-sm-2">
 			      <input type="text" class="form-control" id="estimated_duration" placeholder="">
 			    </div>
 			  </div>
 			  <!-- EO line -->
-			  <!-- Line -->
-			  <div class="form-group">
-			    <label class="col-sm-2 col-sm-offset-1 control-label">Type of services</label>
-			    <div class="col-sm-2">
-			      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#services_modal">
-					<span class="glyphicon glyphicon-import" aria-hidden="true"></span> Show services
-				</button>
-				@include("references.create.english.services_modal")
-			    </div>
-			    <label class="col-sm-2 col-sm-offset-1 control-label">Veolia's tenders</label>
-			    <div class="checkbox col-sm-1">
-					<label>
-					  <input id= "veolia_check" type="checkbox">
-					</label>
+			  <hr></hr>
+			  <!-- List of external services -->
+	          <!-- Line -->
+				<div class="form-group" id="external_div"> 
+					<label class="col-sm-2 col-sm-offset-2 control-label">Type of services</label>
+					@foreach($external_services as $service)
+						<div id="test">
+							<div class="checkbox col-sm-8 col-sm-offset-4">
+							  <label>
+							    <input type="checkbox" id="external-{{$service->id}}"><b> {{$service->service_name}} </b>
+							  </label>
+							  <label id="lab-{{$service->id}}">
+							  	<span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+							  </label>
+							</div>
+						</div>
+					@endforeach
 				</div>
-				<div class="col-sm-2">
-			      <button id="contract_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract_modal">
-					<span class="glyphicon glyphicon-link" aria-hidden="true"></span> Show contract
-				</button>
-				@include("references.create.english.contract_modal")
+	          <!-- EO line -->
+
+	          <div class="form-group">
+			    <div class="col-sm-4 col-sm-offset-4">
+				    <div class="input-group">
+				      <input type="text" class="form-control" id="add_external_inp">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default" type="button" id="add_external_btn">
+				        	<span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+				        </button>
+				      </span>
+				    </div>
 			    </div>
 			  </div>
-			  <!-- EO line -->
+
+	          <!-- Line -->
+				<div class="form-group"> 
+					<div class="checkbox col-sm-8 col-sm-offset-4">
+					  <label>
+					    <input id="external_checkbox" type="checkbox"><b> Veolia's tenders (Internal Market only)</b>
+					  </label>
+					</div>
+				</div>
+				<!-- EO line -->
+				<hr></hr>
+				<!-- List of internal services -->
+				<!-- Line -->
+				<div class="form-group" id="internal_div"> 
+					<label class="col-sm-2 col-sm-offset-2 control-label">Veolia's contract type</label>
+					@foreach($internal_services as $service)
+					<div class="checkbox col-sm-12 col-sm-offset-4">
+					  <label>
+					    <input type="checkbox"><b> {{$service->service_name}} </b>
+					  </label>
+					</div>
+					@endforeach
+				</div>
+	          <!-- EO line -->
+
+	          <div class="form-group" id="add_internal_div">
+			    <div class="col-sm-4 col-sm-offset-4">
+				    <div class="input-group">
+				      <input type="text" class="form-control" id="add_internal_inp">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default" type="button" id="add_internal_btn">
+				        	<span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+				        </button>
+				      </span>
+				    </div>
+			    </div>
+			  </div>
 
 <script>
 	$('#date_picker_start').datepicker({
@@ -129,7 +179,7 @@
 	var checkboxs = [
 		["supervision_check", "fidic_check"],
 		["analyse_op_check", "analyse_check"],
-		["veolia_check", "contract_button"]
+		["external_checkbox", "internal_div", "add_internal_div"]
 	];
 
 	// Hiding the children checkboxes
@@ -157,12 +207,42 @@
 		}
 	});
 
-	$('#veolia_check').change(function () {
+	$('#external_checkbox').change(function () {
 		if (this.checked) {
-			$('#contract_button').show("fast");
+			$('#internal_div').show("fast");
+			$('#add_internal_div').show("fast");
 		}
 		else {
-			$('#contract_button').hide("fast");
+			$('#internal_div').hide("fast");
+			$('#add_internal_div').hide("fast");
+		}
+	});
+
+	$("#add_external_btn").click(function() {
+		var service = $("#add_external_inp").val();
+		$("#external_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label><label><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></label></div>');
+	});
+
+	$("#add_internal_btn").click(function() {
+		var service = $("#add_internal_inp").val();
+		$("#internal_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label></div>');
+	});
+
+	var i;
+	$("label[id|='lab']").bind("click", function () {
+		var current_element = this;
+		if(i){
+			i = $(this).after('<div id="add_external_sub_div"><p></p><div id="" class="col-sm-4"><div class="input-group"><input type="text" class="form-control" id="add_external_sub_inp"><span class="input-group-btn"><button class="btn btn-default" type="button" id="add_external_sub_btn"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></button></span></div></div></div>');
+			$("#add_external_sub_btn").click(function(){
+				var service = $("#add_external_sub_inp").val();
+				alert(service);
+				$("#add_external_sub_div").before('<div class="checkbox col-sm-12"><label><input type="checkbox"><b>' + service + '</b></label></div>');
+			});
+			i = null;
+		}
+		else{
+			$("#add_external_sub_div").detach();
+			i = 1;
 		}
 	});
 </script>

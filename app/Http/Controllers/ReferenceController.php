@@ -31,11 +31,11 @@ class ReferenceController extends Controller
     public function create()
     {
         $internal_services = Service::where('subsidiary','Seureca')
-                                        ->where('service_type', 'external')
+                                        ->where('service_type', 'internal')
                                         ->first()
                                         ->subServices()->get();
         $external_services = Service::where('subsidiary','Seureca')
-                                        ->where('service_type', 'internal')
+                                        ->where('service_type', 'external')
                                         ->first()
                                         ->subServices()->get();
 

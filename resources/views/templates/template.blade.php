@@ -36,82 +36,97 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle Navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#"><img alt="Brand" src="{{ asset('/veolia_logo.png') }}"></a>
-				</div>
+		<!-- Body container -->
+		<div class="container-fluid">
+			<!-- Navbar -->
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle Navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#"><img alt="Brand" src="{{ asset('/veolia_logo.png') }}"></a>
+					</div>
 
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						@if (Auth::guest())
-						@else
-							<li><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-							<!-- Users Administrator -->
-							@if (Auth::user()->profile == 'User administrator')
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							@if (Auth::guest())
+							@else
+								<li><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+								<!-- Users Administrator -->
+								@if (Auth::user()->profile == 'User administrator')
+									<li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> References<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a reference</a></li>
+							            <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
+							            <li role="separator" class="divider"></li>
+							            <li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search a reference</a></li>
+							          </ul>
+							        </li>
+							        <li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Users<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action ('UserController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a user</a></li>
+							            <li><a href="{{ action('UserController@index') }}"><span class="glyphicon glyphicon-list"></span> List of users</a></li>
+							          </ul>
+							        </li>
+							        <li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Services<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action ('SubServiceController@index') }}"><span class="glyphicon glyphicon-plus"></span> Add a service</a></li>
+							            <li><a href="{{ action('SubServiceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of services</a></li>
+							          </ul>
+							        </li>
+						        @endif
+						        <!-- References Administrator -->
+						        @if (Auth::user()->profile == 'Reference administrator')
+									<li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li>
+							            <li><a href="{{ action('ReferenceController@index') }}">List of references</a></li>
+							            <li role="separator" class="divider"></li>
+							            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
+							          </ul>
+							        </li>
+						        @endif
+						        <!-- End User -->
+						        @if (Auth::user()->profile == 'Basic user')
+						        @endif
+					        @endif
+						</ul>
+
+						<ul class="nav navbar-nav navbar-right">
+							@if (Auth::guest())
+								<li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+								<li><a href="{{ url('/auth/register') }}"><span class="glyphicon glyphicon-registration-mark"></span> Register</a></li>
+							@else
+								<img src="{{Auth::user()->avatar}}" class="profile-image img-circle">
 								<li class="dropdown">
-						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> References<span class="caret"></span></a>
-						          <ul class="dropdown-menu">
-						            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a reference</a></li>
-						            <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
-						            <li role="separator" class="divider"></li>
-						            <li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search a reference</a></li>
-						          </ul>
-						        </li>
-						        <li class="dropdown">
-						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Users<span class="caret"></span></a>
-						          <ul class="dropdown-menu">
-						            <li><a href="{{ action ('UserController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a user</a></li>
-						            <li><a href="{{ action('UserController@index') }}"><span class="glyphicon glyphicon-list"></span> List of users</a></li>
-						          </ul>
-						        </li>
-					        @endif
-					        <!-- References Administrator -->
-					        @if (Auth::user()->profile == 'Reference administrator')
-								<li class="dropdown">
-						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
-						          <ul class="dropdown-menu">
-						            <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li>
-						            <li><a href="{{ action('ReferenceController@index') }}">List of references</a></li>
-						            <li role="separator" class="divider"></li>
-						            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
-						          </ul>
-						        </li>
-					        @endif
-					        <!-- End User -->
-					        @if (Auth::user()->profile == 'Basic user')
-					        @endif
-				        @endif
-					</ul>
-
-					<ul class="nav navbar-nav navbar-right">
-						@if (Auth::guest())
-							<li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-							<li><a href="{{ url('/auth/register') }}"><span class="glyphicon glyphicon-registration-mark"></span> Register</a></li>
-						@else
-							<img src="{{Auth::user()->avatar}}" class="profile-image img-circle">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{ Auth::user()->first_name }}<span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-								</ul>
-							</li>
-						@endif
-					</ul>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{ Auth::user()->first_name }}<span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+									</ul>
+								</li>
+							@endif
+						</ul>
+					</div>
 				</div>
-			</div>
-		</nav>
+			</nav>
+			<!-- #./Navbar -->
 
+			<style>
+				body { padding-top: 60px; }
+			</style>
 
-		@yield('content')
+			@yield('content')
 
-		
+		</div>
+		<!-- #./Body container -->
 
 	</body>
 

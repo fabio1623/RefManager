@@ -17,16 +17,16 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains = Domain::paginate(4);
-        $domains->setPath('index');
+        $domains = Domain::paginate(2);
+        // $domains->setPath('index');
         $view = view('domains.index')->with('domains', $domains);
         return $view;
     }
 
     public function search(Request $request) {
-        $domains = Domain::where('name', 'LIKE', '%'.$request->input('search_inp').'%')
-                        ->paginate(4);
-        $domains->setPath('search');
+        $domains = Domain::where('name', 'LIKE', $request->input('search_inp').'%')
+                            ->paginate(2);
+        $domains->setPath('/domains');
         $view = view('domains.index')->with('domains', $domains);
         return $view;
     }
@@ -76,7 +76,10 @@ class DomainController extends Controller
     public function edit($id)
     {
         $domain = Domain::find($id);
-        $view = view('domains.edit')->with('domain', $domain);
+
+        $expertises = $domain->expertises()->paginate(2);
+
+        $view = view('domains.edit', ['domain' => $domain, 'expertises' => $expertises]);
         return $view;
     }
 
@@ -92,7 +95,9 @@ class DomainController extends Controller
         $domain = Domain::find($id);
         $domain->name = $request->input('name');
 
-        $user->save();
+        $domain->save();
+
+        return redirect()->action('DomainController@index');
     }
 
     /**
@@ -105,7 +110,22 @@ class DomainController extends Controller
     {
         dd($_POST);
         $ids = $request->input('id');
+
+        foreach ($ids as $id) {
+            $domain = Domain::where('id',$id)->first();
+            $domain->expertises()->detach();
+        }
+
         Domain::destroy($ids);
+
+        return redirect()->action('DomainController@index');
+    }
+
+    public function destroyOne(Request $request)
+    {
+        dd($_POST);
+        $id = $request->input('hidden_field');
+        Domain::destroy($id);
 
         return redirect()->action('DomainController@index');
     }

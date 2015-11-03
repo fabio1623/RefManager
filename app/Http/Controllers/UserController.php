@@ -152,8 +152,13 @@ class UserController extends Controller
         return redirect()->action('UserController@index');
     }
 
-    /*public function throwError() {
-        $view = view('auth.loginError');
-        return $view;
-    }*/
+    public function authenticate(Request $request)
+    {
+        dd($_POST);
+        $ddb_user = User::where('email', $request->input('email'))->first();
+            if ($ddb_user) {
+                Auth::login($ddb_user);
+                return redirect()->intended('home');
+            }
+    }
 }

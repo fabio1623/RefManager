@@ -18,8 +18,20 @@ class SubServiceController extends Controller
      */
     public function index()
     {
-        $sub_services = SubService::paginate(4);
-        $sub_services->setPath('index');
+        $sub_services = Service::where('subsidiary', 'Seureca')
+                                    ->where('service_type', 'external')
+                                    ->first()->subServices()
+                                        ->paginate(4);
+        $view = view('services.index')->with('services', $sub_services);
+        return $view;
+    }
+
+    public function veoliaIndex()
+    {
+        $sub_services = Service::where('subsidiary', 'Seureca')
+                                    ->where('service_type', 'internal')
+                                    ->first()->subServices()
+                                        ->paginate(2);
         $view = view('services.index')->with('services', $sub_services);
         return $view;
     }
@@ -39,9 +51,12 @@ class SubServiceController extends Controller
     }
 
     public function search(Request $request) {
-        $subservices = SubService::where('service_name', 'LIKE', '%'.$request->input('search_inp').'%')
-                        ->paginate(4);
-        $subservices->setPath('search');
+        $subservices = Service::where('subsidiary', 'Seureca')
+                                ->where('service_type', 'external')
+                                ->first()->subServices()
+                                    ->where('service_name', 'LIKE', '%'.$request->input('search_inp').'%')
+                                    ->paginate(4);
+        $subservices->setPath('/services');
         $view = view('services.index')->with('services', $subservices);
         return $view;
     }
@@ -54,16 +69,16 @@ class SubServiceController extends Controller
      */
     public function storeExternal(Request $request)
     {
-        /*dd($_POST);*/
+        dd($_POST);
 
         //Validate the input value
         $this->validate($request, [
-            'service_name' => 'required|unique:sub_services',
+            'service-name' => 'required|unique:sub_services',
         ]);
 
         //Create new sub service
         $sub_service = new subservice;
-        $sub_service->service_name = $request->input('service_name');
+        $sub_service->service_name = $request->input('service-name');
 
         $sub_service->save();
 
@@ -159,8 +174,8 @@ class SubServiceController extends Controller
     {
         dd($_POST);
         $id = $request->input('hidden_field');
-        User::destroy($id);
+        SubService::destroy($id);
 
-        return redirect()->action('UserController@index');
+        return redirect()->action('SubServiceController@index');
     }
 }

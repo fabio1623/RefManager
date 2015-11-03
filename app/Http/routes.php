@@ -13,6 +13,7 @@
 
 // Authentication routes...
 Route::get('/', 'Auth\AuthController@getLogin');
+Route::post('login', 'UserController@authenticate');
 
 //Authentication route through google API
 Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
@@ -25,26 +26,28 @@ Route::get('home', 'HomeController@index');
 
 
 //References routes
-Route::get('references/index', [
-	'middleware' => 'auth',
-	'uses' => 'ReferenceController@index'
-]);
-Route::get('references/search', [
-	'middleware' => 'auth',
-	'uses' => 'ReferenceController@search'
-]);
-Route::get('references/results', [
-	'middleware' => 'auth',
-	'uses' => 'ReferenceController@results'
-]);
-Route::get('references/create', [
-	'middleware' => 'auth',
-	'uses' => 'ReferenceController@create'
-]);
+// Route::get('references/index', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'ReferenceController@index'
+// ]);
+Route::get('references/search', 'ReferenceController@search');
+// Route::get('references/search', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'ReferenceController@search'
+// ]);
+Route::get('references/results', 'ReferenceController@results');
+// Route::get('references/results', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'ReferenceController@results'
+// ]);
+// Route::get('references/create', [
+// 	'middleware' => 'auth',
+// 	'uses' => 'ReferenceController@create'
+// ]);
 
 
 //Route protection not implemented
-/*Route::resource('references', 'ReferenceController');*/
+Route::resource('references', 'ReferenceController');
 
 
 // //User routes
@@ -100,17 +103,23 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
 
 Route::post('subservice/storeExternal', 'SubServiceController@storeExternal');
 Route::post('subservice/storeInternal', 'SubServiceController@storeInternal');
-Route::post('subservice/search', 'SubServiceController@search');
-Route::get('subservice/index', 'SubServiceController@index');
-Route::delete('subservice/destroy', 'SubServiceController@destroy');
-Route::get('subservice/edit', 'SubServiceController@edit');
-/*Route::resource('subservice', 'SubServiceController');*/
+Route::post('services/search', 'SubServiceController@search');
+Route::get('services/veolia', 'SubServiceController@veoliaIndex');
+// Route::get('subservice/index', 'SubServiceController@index');
+// Route::delete('subservice/destroy', 'SubServiceController@destroy');
+// Route::get('subservice/edit', 'SubServiceController@edit');
+Route::resource('services', 'SubServiceController');
 
 
 /*Route::resource('domain', 'DomainController');*/
-Route::get('domain/index', 'DomainController@index');
-Route::delete('domain/destroy', 'DomainController@destroy');
-Route::post('domain/search', 'DomainController@search');
+// Route::get('domain/index', 'DomainController@index');
+// Route::delete('domain/destroy', 'DomainController@destroy');
+Route::post('domains/search', 'DomainController@search');
+Route::delete('domains/destroyOne/{id}', 'DomainController@destroyOne');
+
+Route::resource('domains', 'DomainController');
 
 Route::get('expertise/index', 'ExpertiseController@index');
 Route::post('expertise/store', 'ExpertiseController@store');
+
+Route::resource('expertises', 'ExpertiseController');
