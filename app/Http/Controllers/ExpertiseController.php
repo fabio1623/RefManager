@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Expertise;
+use App\Domain;
 
 class ExpertiseController extends Controller
 {
@@ -17,7 +18,10 @@ class ExpertiseController extends Controller
      */
     public function index()
     {
-        //
+        $expertises = Expertise::paginate(2);
+        // $domains->setPath('index');
+        $view = view('expertises.index')->with('expertises', $expertises);
+        return $view;
     }
 
     /**
@@ -25,9 +29,13 @@ class ExpertiseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // dd($_POST);
+        $domain = Domain::find($request->input('domain_id_hidden'));
+
+        $view = view('expertises.create')->with('domain', $domain);
+        return $view;
     }
 
     /**
@@ -38,16 +46,21 @@ class ExpertiseController extends Controller
      */
     public function store(Request $request)
     {
-        //Validate the input value
-        /*$this->validate($request, [
-            'expertise_name' => 'required|unique:expertises',
-        ]);*/
-        dd($_POST);
-        //Create new sub service
-        $expertise = new expertise;
-        $expertise->name = $request->input('expertise_name');
+        $dd_expertise = Expertise::find($request->input('name'));
+        $domain = Domain::find($request->input('domain_id_hidden'));
 
-        $expertise->save();
+        if ($dd_expertise) {
+            $domain->expertises()->attach($expertise->id);
+        }
+        else {
+            $expertise = new expertise;
+            $expertise->name = $request->input('name');
+
+            $expertise->save();    
+            $domain->expertises()->attach($expertise->id);
+        }
+
+        return redirect()->action('DomainController@edit', $domain);
     }
 
     /**
@@ -67,9 +80,14 @@ class ExpertiseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($domain_id, $expertise_id)
     {
-        //
+        $expertise = Expertise::find($expertise_id);
+        $domain = Domain::find($domain_id);
+
+        // $view = view('expertises.edit', ['expertise'=>$expertise, 'domain'=>$domain]);
+        $view = view('expertises.edit', ['domain'=>$domain, 'expertise'=>$expertise]);
+        return $view;
     }
 
     /**
@@ -79,9 +97,14 @@ class ExpertiseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $domain_id, $expertise_id)
     {
-        //
+        $expertise = Expertise::find($expertise_id);
+        $expertise->name = $request->input('name');
+
+        $expertise->save();
+
+        return redirect()->action('DomainController@edit', $domain_id);
     }
 
     /**
@@ -90,8 +113,18 @@ class ExpertiseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $domain_id)
     {
-        //
+        dd($_POST);
+        $ids = $request->input('id');
+
+        foreach ($ids as $id) {
+            $expertise = Expertise::where('id',$id)->first();
+            $expertise->domains()->detach();
+        }
+
+        Expertise::destroy($ids);
+
+        return redirect()->action('DomainController@edit', $domain_id);
     }
 }

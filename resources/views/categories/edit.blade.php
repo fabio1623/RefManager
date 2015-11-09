@@ -8,7 +8,7 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<div class="col-sm-9">
-								{{ $domain->name }}
+								{{ $category->name }}
 							</div>
 							<div class="col-sm-1">
 								<button form="form_update" type="submit" class="btn btn-primary btn-sm">
@@ -16,17 +16,17 @@
 								</button>
 							</div>
 							<div class="col-sm-1">
-								<form action="{{ action('DomainController@destroyOne') }}" method="POST">
+								<form action="{{ action('CategoryController@destroy') }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" class="btn btn-danger btn-sm">
 										Delete
 									</button>
-								    <input type="hidden" name="hidden_field" value="{{ $domain->id}}">
+								    <input type="hidden" name="hidden_field" value="{{ $category->id}}">
 								</form>
 							</div>
 							<div class="col-sm-1">
-								<form action="{{ action('DomainController@index') }}" method="GET">
+								<form action="{{ action('CategoryController@index') }}" method="GET">
 									<?php echo csrf_field(); ?>
 									<button type="submit" class="btn btn-primary btn-sm">
 										Back
@@ -48,37 +48,37 @@
 						</div>
 					@endif
 
-					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('DomainController@update', $domain->id) }}">
+					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('CategoryController@update', $category->id) }}">
 						<input type="hidden" name="_method" value="PUT">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Name</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="first_name" value="{{$domain->name}}">
+								<input type="text" class="form-control" name="name" value="{{$category->name}}">
 							</div>
 						</div>
 
 					</form>
-					<form class="form-horizontal" action="{{ action('ExpertiseController@create') }}" method="GET">
+					<form class="form-horizontal" action="{{ action('MeasureController@create') }}" method="GET">
 						<?php echo csrf_field(); ?>
 						<div class="form-group">
-							<label class="col-md-4 control-label">Add expertise</label>
+							<label class="col-md-4 control-label">Add measure</label>
 							<div class="col-md-4">
 								<button type="submit" id="add_btn" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</button>
-								<input type="hidden" name="domain_id_hidden" value="{{ $domain->id}}">
+								<input type="hidden" name="category_id_hidden" value="{{ $category->id}}">
 							</div>
 						</div>
 					</form>
 					<div class="row">
 						<!-- Left column -->
-						<div class="col-sm-4"><h4>Associated expertises</h4></div>
+						<div class="col-sm-4"><h4>Associated measures</h4></div>
 						<!-- #./Left column -->
 						<!-- Right column -->
 						<div class="col-sm-3 pull-right">
-							<button form="form_expertises" type="submit" id="remove_btn" class="btn btn-danger btn-sm pull-right">
+							<button form="form_measures" type="submit" id="remove_btn" class="btn btn-danger btn-sm pull-right">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -91,21 +91,33 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-10">Expertise name</th>
+								<th class="col-sm-10">Measure name</th>
+								<th></th>
+								<th></th>
 						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
-							<form id="form_expertises" action="{{ action('ExpertiseController@destroy', $domain->id) }}" method="POST">
+							<form id="form_measures" action="{{ action('MeasureController@destroy', $category->id) }}" method="POST">
 							    <?php echo method_field('DELETE'); ?>
 							    <?php echo csrf_field(); ?>
-								@foreach ($expertises as $expertise)
-										<tr data-href="{{ action('ExpertiseController@edit', [$domain->id, $expertise->id]) }}">
+								@foreach ($measures as $measure)
+										<tr data-href="{{ action('MeasureController@edit', [$category->id, $measure->id]) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('ExpertiseController@edit', [$domain->id, $expertise->id]) }}">{{$expertise->name}}</a>
+												<a class="btn btn-link" href="{{ action('MeasureController@edit', [$category->id, $measure->id]) }}">{{$measure->name}}</a>
+											</td>
+											<td>
+												<button form="form_measures" type="button" id="remove_btn" class="btn btn-danger btn-sm pull-right">
+													<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+												</button>
+											</td>
+											<td>
+												<button form="form_measures" type="submit" id="remove_btn" class="btn btn-danger btn-sm pull-right">
+													<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+												</button>
 											</td>
 											<td class="check">
-												<input class="checkbox" type="checkbox" value="{{$expertise->id}}" name=id[]>
+												<input class="checkbox" type="checkbox" value="{{$measure->id}}" name=id[]>
 											</td>
 										</tr>
 								@endforeach
@@ -114,7 +126,7 @@
 					</table>
 					<!-- #./Expertises table -->
 					<div class="pull-right">
-						{!! $expertises->render() !!}
+						{!! $measures->render() !!}
 					</div>
 				</div>
 

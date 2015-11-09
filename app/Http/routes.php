@@ -11,115 +11,54 @@
 |
 */
 
-// Authentication routes...
+//Authentication
 Route::get('/', 'Auth\AuthController@getLogin');
 Route::post('login', 'UserController@authenticate');
 
-//Authentication route through google API
+//Google Authentication
 Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
 Route::get('auth/google/callback', 'Auth\OAuthController@handleProviderCallback');
-/*Route::post('user/loginError', 'UserController@throwError');*/
 
-
-//Home route
+//Home
 Route::get('home', 'HomeController@index');
 
 
-//References routes
-// Route::get('references/index', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'ReferenceController@index'
-// ]);
+//References
 Route::get('references/search', 'ReferenceController@search');
-// Route::get('references/search', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'ReferenceController@search'
-// ]);
 Route::get('references/results', 'ReferenceController@results');
-// Route::get('references/results', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'ReferenceController@results'
-// ]);
-// Route::get('references/create', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'ReferenceController@create'
-// ]);
-
-
-//Route protection not implemented
 Route::resource('references', 'ReferenceController');
 
-
-// //User routes
-// Route::get('user/index', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'UserController@index'
-// ]);
-// Route::get('user/create', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'UserController@create'
-// ]);
-// Route::get('user/{id}/edit', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'UserController@edit'
-// ]);
-// Route::put('user/update/{id}', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'UserController@update'
-// ]);
-// Route::post('user/store', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'UserController@store'
-// ]);
-// Route::post('user/store', 'UserController@store');
-// Route::delete('user/destroy/{id}', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'UserController@destroy'
-// ]);
-// Route::delete('user/destroyOne/{id}', [
-// 	'middleware' => 'auth',
-// 	'uses' => 'UserController@destroyOne'
-// ]);
+//Users
 Route::delete('user/destroyOne/{id}', 'UserController@destroyOne');
 Route::post('user/search', 'UserController@search');
 Route::resource('user', 'UserController');
 
-
-
-/*Route::get('auth/index', 'UserController@index');*/
-
+//Middleware
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
-/*Route::resource('accounts', 'AccountController');*/
-
-/*Route::get('/', 'WelcomeController@index');*/
-
-// Authentication routes...
-/*Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
-
+//Services
 Route::post('subservice/storeExternal', 'SubServiceController@storeExternal');
 Route::post('subservice/storeInternal', 'SubServiceController@storeInternal');
 Route::post('services/search', 'SubServiceController@search');
-Route::get('services/veolia', 'SubServiceController@veoliaIndex');
-// Route::get('subservice/index', 'SubServiceController@index');
-// Route::delete('subservice/destroy', 'SubServiceController@destroy');
-// Route::get('subservice/edit', 'SubServiceController@edit');
+Route::get('services/internal', 'SubServiceController@veoliaIndex');
+Route::delete('services/destroyOne/{id}', 'SubServiceController@destroyOne');
+Route::get('services/create_internal', 'SubServiceController@internalCreate');
 Route::resource('services', 'SubServiceController');
 
-
-/*Route::resource('domain', 'DomainController');*/
-// Route::get('domain/index', 'DomainController@index');
-// Route::delete('domain/destroy', 'DomainController@destroy');
-Route::post('domains/search', 'DomainController@search');
+//Domains
 Route::delete('domains/destroyOne/{id}', 'DomainController@destroyOne');
-
 Route::resource('domains', 'DomainController');
 
-Route::get('expertise/index', 'ExpertiseController@index');
-Route::post('expertise/store', 'ExpertiseController@store');
+//Expertises
+// Route::post('domains{id}/expertises/create', 'ExpertiseController@create');
+Route::resource('domains.expertises', 'ExpertiseController');
 
-Route::resource('expertises', 'ExpertiseController');
+//Categories
+Route::resource('categories', 'CategoryController');
+
+//Measures
+// Route::post('measures/create', 'MeasureController@create');
+Route::resource('categories.measures', 'MeasureController');

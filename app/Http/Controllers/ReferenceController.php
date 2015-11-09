@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Service;
 use App\Domain;
 use App\Expertise;
+use App\Category;
 
 class ReferenceController extends Controller
 {
@@ -38,13 +39,12 @@ class ReferenceController extends Controller
                                         ->where('service_type', 'external')
                                         ->first()
                                         ->subServices()->get();
-
         $domains = Domain::all();
-
         $expertises = Expertise::all();
+        $categories = Category::all();
 
         /*dd($internal_services);*/
-        $view = view('references.create', ['internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises]);
+        $view = view('references.create', ['internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories]);
         return $view;
     }
 

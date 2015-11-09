@@ -59,7 +59,7 @@
 								<!-- Users Administrator -->
 								@if (Auth::user()->profile == 'User administrator')
 									<li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> References<span class="caret"></span></a>
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> References<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
 							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a reference</a></li>
 							            <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
@@ -75,10 +75,29 @@
 							          </ul>
 							        </li>
 							        <li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Services<span class="caret"></span></a>
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-retweet"></span> Services<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
-							            <li><a href="{{ action ('SubServiceController@index') }}"><span class="glyphicon glyphicon-plus"></span> Add a service</a></li>
-							            <li><a href="{{ action('SubServiceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of services</a></li>
+							          	<li class="dropdown-header">External services</li>
+							            <li><a href="{{ action ('SubServiceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
+							            <li><a href="{{ action('SubServiceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of external services</a></li>
+							            <li role="separator" class="divider"></li>
+							            <li class="dropdown-header">Internal services</li>
+							            <li><a href="{{ action ('SubServiceController@internalCreate') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
+							            <li><a href="{{ action('SubServiceController@veoliaIndex') }}"><span class="glyphicon glyphicon-list"></span> List of internal services</a></li>
+							          </ul>
+							        </li>
+							        <li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-indent-left"></span> Domains<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action ('DomainController@create') }}"><span class="glyphicon glyphicon-plus"></span> New domain</a></li>
+							            <li><a href="{{ action('DomainController@index') }}"><span class="glyphicon glyphicon-list"></span> List of domains</a></li>
+							          </ul>
+							        </li>
+							        <li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-inbox"></span> Categories<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action ('CategoryController@create') }}"><span class="glyphicon glyphicon-plus"></span> New category</a></li>
+							            <li><a href="{{ action('CategoryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of categories</a></li>
 							          </ul>
 							        </li>
 						        @endif

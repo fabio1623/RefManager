@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Domain;
+use App\category;
 
-class DomainController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +18,11 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains = Domain::paginate(2);
-        // $domains->setPath('index');
-        $view = view('domains.index')->with('domains', $domains);
+        $categories = Category::paginate(4);
+        $categories->setPath('index');
+
+        $view = view('categories.index')->with('categories', $categories);
+        
         return $view;
     }
 
@@ -30,7 +33,8 @@ class DomainController extends Controller
      */
     public function create()
     {
-        $view = view('domains.create');
+        $view = view('categories.create');
+        
         return $view;
     }
 
@@ -42,11 +46,17 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
-        $domain = new Domain;
-        $domain->name = $request->input('name');
-        $domain->save();
+        /*dd($_POST);*/
+        $this->validate($request, [
+            'name' => 'required|alpha|max:255|unique:categories',
+        ]);
 
-        return redirect()->action('DomainController@index');
+        $category = new Category;
+        $category->name = $request->input('name');
+        
+        $category->save();
+
+        return redirect()->action('CategoryController@index');
     }
 
     /**
@@ -68,11 +78,11 @@ class DomainController extends Controller
      */
     public function edit($id)
     {
-        $domain = Domain::find($id);
+        $category = Category::find($id);
+        $measures = $category->measures()->paginate(1);
 
-        $expertises = $domain->expertises()->paginate(1);
-
-        $view = view('domains.edit', ['domain' => $domain, 'expertises' => $expertises]);
+        $view = view('categories.edit', ['category'=>$category, 'measures'=>$measures]);
+        
         return $view;
     }
 
@@ -85,12 +95,16 @@ class DomainController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $domain = Domain::find($id);
-        $domain->name = $request->input('name');
+        $this->validate($request, [
+            'name' => 'required|alpha|max:255|unique:categories',
+        ]);
 
-        $domain->save();
+        $category = new Category;
+        $category->name = $request->input('name');
 
-        return redirect()->action('DomainController@index');
+        $user->save();
+
+        return redirect()->action('UserController@index');
     }
 
     /**
@@ -103,27 +117,8 @@ class DomainController extends Controller
     {
         dd($_POST);
         $ids = $request->input('id');
+        Category::destroy($ids);
 
-        foreach ($ids as $id) {
-            $domain = Domain::where('id',$id)->first();
-            $domain->expertises()->detach();
-        }
-
-        Domain::destroy($ids);
-
-        return redirect()->action('DomainController@index');
-    }
-
-    public function destroyOne(Request $request)
-    {
-        dd($_POST);
-        $id = $request->input('hidden_field');
-
-        $domain = Domain::where('id',$id)->first();
-        $domain->expertises()->detach();
-
-        Domain::destroy($id);
-
-        return redirect()->action('DomainController@index');
+        return redirect()->action('CategoryController@index');
     }
 }

@@ -1,4 +1,4 @@
-@for($i=0; $i < $domains->count(); $i++)
+@for($i=0; $i < $categories->count(); $i++)
   
   @if(($i % 2)==0)
     <div class="row">
@@ -7,13 +7,13 @@
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">{{ $domains[$i]->name }}</h3>
+        <h3 class="panel-title">{{ $categories[$i]->name }}</h3>
       </div>
       <div class="panel-body">
-        @foreach($domains[$i]->expertises as $expertise)
+        @foreach($categories[$i]->measures as $measure)
         <div class="checkbox col-sm-6">
           <label>
-            <input type="checkbox"> {{$expertise->name}}
+            <input type="checkbox"> {{$measure->name}}
           </label>
         </div>
         @endforeach
@@ -27,6 +27,6 @@
 
 @endfor
 
-@if(($domains->count() % 2) != 0)
+@if(($categories->count() % 2) != 0)
   </div>
 @endif

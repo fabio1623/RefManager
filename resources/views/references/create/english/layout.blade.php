@@ -18,8 +18,8 @@
 		@include("references.create.english.criteria")
 	</div>
 	<div id="measure_menu" class="tab-pane fade">
-		<h3>Measure</h3>
-		<p>Some content in menu 1.</p>
+		<h3></h3>
+		@include("references.create.english.categories")
 	</div>
 	<div id="detail_menu" class="tab-pane fade">
 		<h3></h3>

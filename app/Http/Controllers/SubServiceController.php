@@ -43,14 +43,47 @@ class SubServiceController extends Controller
      */
     public function create()
     {
-        //
+        $view = view('services.external.create');
+        return $view;
     }
 
-    public function store(Request $request) {
-        
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function internalCreate()
+    {
+        $view = view('services.internal.create');
+        return $view;
+    }    
+
+    public function store(Request $request) 
+    {
+        // dd($_POST);
+
+        //Validate the input value
+        $this->validate($request, [
+            'service_name' => 'required|unique:sub_services',
+        ]);
+
+        //Create new sub service
+        $sub_service = new subservice;
+        $sub_service->service_name = $request->input('service_name');
+
+        $sub_service->save();
+
+        //Attach the sub service to the service group
+        $service = Service::where('subsidiary','Seureca')
+                                        ->where('service_type', 'external')
+                                        ->first();
+        $service->subServices()->attach($sub_service->id);
+
+        return redirect()->action('SubServiceController@index');
     }
 
-    public function search(Request $request) {
+    public function search(Request $request) 
+    {
         $subservices = Service::where('subsidiary', 'Seureca')
                                 ->where('service_type', 'external')
                                 ->first()->subServices()
@@ -134,7 +167,10 @@ class SubServiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = SubService::find($id);
+
+        $view = view('services.edit')->with('service', $service);
+        return $view;
     }
 
     /**
@@ -146,7 +182,13 @@ class SubServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($_POST);
+        $service = SubService::find($id);
+        $service->service_name = $request->input('name');
+
+        $service->save();
+
+        return redirect()->action('SubServiceController@index');
     }
 
     /**
