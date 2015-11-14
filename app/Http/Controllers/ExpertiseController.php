@@ -127,4 +127,20 @@ class ExpertiseController extends Controller
 
         return redirect()->action('DomainController@edit', $domain_id);
     }
+
+    public function destroyOne(Request $request)
+    {
+        dd($_POST);
+        $id = $request->input('hidden_field');
+        $expertise = Expertise::find($id);
+        $domain = $request->input('hidden_field_domain');
+
+        foreach ($expertise->domains as $domain) {
+            $domain->expertises()->detach($id);
+        }
+
+        Expertise::destroy($id);
+
+        return redirect()->action('DomainController@edit', $request->input('hidden_field_domain'));
+    }
 }

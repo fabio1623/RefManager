@@ -24,16 +24,18 @@
 
 				<div class="form-group">
 					<label class="col-sm-4 control-label">Service Name</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" id="serviceName" name="service_name" value="{{ old('service_name') }}">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-6 col-sm-offset-4">
 						<button type="submit" class="btn btn-primary">
-							Create
+							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 						</button>
-						<a class="btn btn-primary" style="margin-right:2px" href="{{ action('SubServiceController@index') }}" role="button">Back</a>
+						<a class="btn btn-primary" style="margin-right:2px" href="{{ URL::previous() }}" role="button">	
+							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+						</a>
 					</div>
 				</div>
 			</form>

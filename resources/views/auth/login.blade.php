@@ -1,9 +1,8 @@
 @extends('templates.template')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+
+    <div class="row col-sm-8 col-sm-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Login</h3>
@@ -58,15 +57,13 @@
                             <div class="col-sm-6 col-sm-offset-4">
                                 <button type="submit" class="btn btn-primary">Login</button>
 
-                                <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+                                <a class="btn btn-link" href="{{ url('/password/email') }}">Need To Ask Your Access?</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
     </div>
-</div>
 <script> 
     $( "#email" ).blur(function() {
         $(this).popover('animation');

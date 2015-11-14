@@ -1,12 +1,11 @@
 @extends('templates.template')
 
 @section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2">
+
+	<div class="row col-sm-8 col-sm-offset-2">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">Reset Password</h3>
+					<h3 class="panel-title">Ask your access</h3>
 				</div>
 				<div class="panel-body">
 					@if (session('status'))
@@ -39,14 +38,15 @@
 						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">
 								<button type="submit" class="btn btn-primary">
-									Send Password Reset Link
+									<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send
 								</button>
+								<a class="btn btn-primary" href="{{ URL::previous() }}" role="button">
+							    	<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Back
+							    </a>
 							</div>
 						</div>
 					</form>
 				</div>
-			</div>
 		</div>
 	</div>
-</div>
 @endsection

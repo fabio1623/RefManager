@@ -2,20 +2,19 @@
 
 @section('content')
 
-	<div class="row col-md-6 col-md-offset-3">
+	<div class="row col-sm-6 col-sm-offset-3">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-6">{{ $service->service_name }}</div>
+							<div class="col-sm-6">{{ $subsidiary->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('SubServiceController@destroyOne') }}" method="POST">
+								<form action="{{ action('SubsidiaryController@destroy', $subsidiary->id) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
-								    <input type="hidden" name="hidden_field" value="{{ $service->id}}">
 								</form>
 							</div>
 						</div>
@@ -33,14 +32,14 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('SubServiceController@update', $service->id) }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('SubsidiaryController@update', $subsidiary->id) }}">
 						<input type="hidden" name="_method" value="PUT">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Service Name</label>
+							<label class="col-md-4 control-label">Subsidiary Name</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{$service->service_name}}">
+								<input type="text" class="form-control" name="name" value="{{$subsidiary->name}}">
 							</div>
 						</div>
 
@@ -54,6 +53,20 @@
 							</div>
 						</div>
 					</form>
+				</div>
+				<!-- Table -->
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th class="col-sm-10">Users</th>
+						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
 				</div>
 			</div>
 	</div>

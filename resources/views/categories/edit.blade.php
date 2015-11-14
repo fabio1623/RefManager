@@ -7,31 +7,19 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-9">
+							<div class="col-sm-8">
 								{{ $category->name }}
 							</div>
-							<div class="col-sm-1">
+							<div class="col-sm-4 btn-group" role="group" aria-label="...">
 								<button form="form_update" type="submit" class="btn btn-primary btn-sm">
-									Update
+									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-							</div>
-							<div class="col-sm-1">
-								<form action="{{ action('CategoryController@destroy') }}" method="POST">
-								    <?php echo method_field('DELETE'); ?>
-								    <?php echo csrf_field(); ?>
-								    <button type="submit" class="btn btn-danger btn-sm">
-										Delete
-									</button>
-								    <input type="hidden" name="hidden_field" value="{{ $category->id}}">
-								</form>
-							</div>
-							<div class="col-sm-1">
-								<form action="{{ action('CategoryController@index') }}" method="GET">
-									<?php echo csrf_field(); ?>
-									<button type="submit" class="btn btn-primary btn-sm">
-										Back
-									</button>
-								</form>
+								<button form="form_delete" type="submit" class="btn btn-primary btn-sm">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+								</button>
+								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
+									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								</a>
 							</div>
 						</div>
 					</h3>
@@ -54,11 +42,17 @@
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Name</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<input type="text" class="form-control" name="name" value="{{$category->name}}">
 							</div>
 						</div>
 
+					</form>
+					<form id="form_delete" action="{{ action('CategoryController@destroy') }}" method="POST">
+					    <?php echo method_field('DELETE'); ?>
+					    <?php echo csrf_field(); ?>
+
+					    <input type="hidden" name="hidden_field" value="{{ $category->id}}">
 					</form>
 					<form class="form-horizontal" action="{{ action('MeasureController@create') }}" method="GET">
 						<?php echo csrf_field(); ?>
@@ -77,8 +71,8 @@
 						<div class="col-sm-4"><h4>Associated measures</h4></div>
 						<!-- #./Left column -->
 						<!-- Right column -->
-						<div class="col-sm-3 pull-right">
-							<button form="form_measures" type="submit" id="remove_btn" class="btn btn-danger btn-sm pull-right">
+						<div class="col-sm-8">
+							<button form="form_measures" type="submit" id="remove_btn" class="btn btn-danger btn-sm">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -92,7 +86,6 @@
 						<thead>
 							<tr>
 								<th class="col-sm-10">Measure name</th>
-								<th></th>
 								<th></th>
 						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
@@ -109,11 +102,6 @@
 											<td>
 												<button form="form_measures" type="button" id="remove_btn" class="btn btn-danger btn-sm pull-right">
 													<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-												</button>
-											</td>
-											<td>
-												<button form="form_measures" type="submit" id="remove_btn" class="btn btn-danger btn-sm pull-right">
-													<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 												</button>
 											</td>
 											<td class="check">

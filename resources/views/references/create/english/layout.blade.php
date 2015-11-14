@@ -14,7 +14,7 @@
 		@include("references.create.english.description")
 	</div>
 	<div id="criteria_menu" class="tab-pane fade">
-		<h3>Criteria</h3>
+		<h3></h3>
 		@include("references.create.english.criteria")
 	</div>
 	<div id="measure_menu" class="tab-pane fade">

@@ -1,9 +1,8 @@
 @extends('templates.template')
 
 @section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+
+	<div class="row col-sm-6 col-sm-offset-3">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -11,9 +10,11 @@
 							<div class="col-sm-6">{{ $user->first_name }} {{ $user->last_name }}</div>
 							<div class="col-sm-6">
 								<form action="{{ action('UserController@destroyOne') }}" method="POST">
-									<input class="btn btn-danger pull-right btn-xs" type="submit" name="_method" value="Delete">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
+								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+									</button>
 								    <input type="hidden" name="hidden_field" value="{{ $user->id}}">
 								</form>
 							</div>
@@ -38,28 +39,28 @@
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">First Name</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<input type="text" class="form-control" name="first_name" value="{{$user->first_name}}">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Last Name</label>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<input type="text" class="form-control" name="last_name" value="{{$user->last_name}}">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">E-Mail Address</label>
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<input type="email" class="form-control" name="email" value="{{ $user->email }}">
 							</div>
 						</div>
 
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
-						  <div class="col-sm-4">
+						  <div class="col-sm-6">
 							  <select class="form-control" id="profile_type" name="profile">
 							  	@if ($user->profile == 'User administrator')
 							    	<option value="1" selected>User administrator</option>
@@ -82,16 +83,15 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Update
+								<button type="submit" class="btn btn-primary btn-sm">
+									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-								<a class="btn btn-primary" style="margin-right:2px" href="{{ action('UserController@index') }}" role="button">Back</a>
+								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								</a>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-		</div>
 	</div>
-</div>
 @endsection

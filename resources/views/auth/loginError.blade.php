@@ -1,9 +1,8 @@
 @extends('templates.template')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+
+    <div class="row col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Login</h3>
@@ -69,9 +68,7 @@
                     </form>
                 </div>
             </div>
-        </div>
     </div>
-</div>
 <script> 
     $( "#email" ).blur(function() {
         $(this).popover('animation');

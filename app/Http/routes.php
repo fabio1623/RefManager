@@ -22,6 +22,9 @@ Route::get('auth/google/callback', 'Auth\OAuthController@handleProviderCallback'
 //Home
 Route::get('home', 'HomeController@index');
 
+//Subsidiaries
+Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti');
+Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
 Route::get('references/search', 'ReferenceController@search');
@@ -53,12 +56,11 @@ Route::delete('domains/destroyOne/{id}', 'DomainController@destroyOne');
 Route::resource('domains', 'DomainController');
 
 //Expertises
-// Route::post('domains{id}/expertises/create', 'ExpertiseController@create');
+Route::delete('expertises/destroyOne', 'ExpertiseController@destroyOne');
 Route::resource('domains.expertises', 'ExpertiseController');
 
 //Categories
 Route::resource('categories', 'CategoryController');
 
 //Measures
-// Route::post('measures/create', 'MeasureController@create');
 Route::resource('categories.measures', 'MeasureController');

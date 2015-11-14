@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Bootstrap 101 Template</title>
+		<title>References Manager</title>
 
 		<!-- Bootstrap -->
 		<!-- Latest compiled and minified CSS -->
@@ -17,6 +17,7 @@
 
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,6 +34,7 @@
 
 		<!-- Custom JS -->
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 	</head>
 
 	<body>
@@ -58,6 +60,13 @@
 								<li><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 								<!-- Users Administrator -->
 								@if (Auth::user()->profile == 'User administrator')
+									<li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-briefcase"></span> Subsidiaries<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action ('SubsidiaryController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a subsidiary</a></li>
+							            <li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of subsidiaries</a></li>
+							          </ul>
+							        </li>
 									<li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> References<span class="caret"></span></a>
 							          <ul class="dropdown-menu">

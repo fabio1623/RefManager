@@ -22,7 +22,7 @@ class SubServiceController extends Controller
                                     ->where('service_type', 'external')
                                     ->first()->subServices()
                                         ->paginate(4);
-        $view = view('services.index')->with('services', $sub_services);
+        $view = view('services.external.index')->with('services', $sub_services);
         return $view;
     }
 
@@ -32,7 +32,7 @@ class SubServiceController extends Controller
                                     ->where('service_type', 'internal')
                                     ->first()->subServices()
                                         ->paginate(2);
-        $view = view('services.index')->with('services', $sub_services);
+        $view = view('services.internal.index')->with('services', $sub_services);
         return $view;
     }
 
@@ -145,7 +145,7 @@ class SubServiceController extends Controller
                                         ->first();
         $service->subServices()->attach($sub_service->id);
 
-        return redirect()->action('ReferenceController@create');
+        return redirect()->action('SubServiceController@index');
     }
 
     /**

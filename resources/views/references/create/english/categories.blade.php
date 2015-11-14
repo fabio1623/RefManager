@@ -13,7 +13,7 @@
         @foreach($categories[$i]->measures as $measure)
         <div class="checkbox col-sm-6">
           <label>
-            <input type="checkbox"> {{$measure->name}}
+            <input name="category-{{$categories[$i]->id}}-measure-{{$measure->id}}" type="checkbox"> {{$measure->name}}
           </label>
         </div>
         @endforeach
@@ -30,3 +30,12 @@
 @if(($categories->count() % 2) != 0)
   </div>
 @endif
+
+<div class="form-group">
+  <button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
+    <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
+  </button>
+  <a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button"> 
+    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+  </a>
+</div>

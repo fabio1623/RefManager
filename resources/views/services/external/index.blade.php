@@ -8,10 +8,10 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<!-- Left column -->
-							<div class="col-sm-4">List of services</div>
+							<div class="col-sm-10">List of external services</div>
 							<!-- #./Left column -->
 							<!-- Center column -->
-							<div class="col-sm-7">
+							<div class="col-sm-1">
 								<form action="{{ action('SubServiceController@create') }}" method="GET">
 									<?php echo csrf_field(); ?>
 									<button type="submit" id="add_btn" class="btn btn-success btn-sm pull-right">

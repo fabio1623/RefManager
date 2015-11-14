@@ -82,25 +82,25 @@
 
 <script>
 	// Show description pane
-	// $('.drop_description').click(function (e) {
-	// 	e.preventDefault()
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#description_menu"]').tab('show')
-	// })
+	$('.drop_description').click(function (e) {
+		e.preventDefault()
+		// Select tab by name
+		$('.nav-tabs a[href="#description_menu"]').tab('show')
+	})
 
-	// // Show criteria pane
-	// $('.drop_criteria').click(function (e) {
-	// 	/*e.preventDefault()*/
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#criteria_menu"]').tab('show')
-	// })
+	// Show criteria pane
+	$('.drop_criteria').click(function (e) {
+		/*e.preventDefault()*/
+		// Select tab by name
+		$('.nav-tabs a[href="#criteria_menu"]').tab('show')
+	})
 
-	// // Show measure pane
-	// $('.drop_measure').click(function (e) {
-	// 	e.preventDefault()
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#measure_menu"]').tab('show')
-	// })
+	// Show measure pane
+	$('.drop_measure').click(function (e) {
+		e.preventDefault()
+		// Select tab by name
+		$('.nav-tabs a[href="#measure_menu"]').tab('show')
+	})
 </script>
 
 @endsection

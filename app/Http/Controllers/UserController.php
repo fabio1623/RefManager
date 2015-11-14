@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(4);
-        $users->setPath('index');
+        // $users->setPath('index');
         $view = view('auth.index')->with('users', $users);
         return $view;
     }
