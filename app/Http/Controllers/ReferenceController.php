@@ -12,7 +12,8 @@ use App\Domain;
 use App\Expertise;
 use App\Category;
 use App\Country;
-use App\Location;
+use App\Zone;
+use App\Contributor;
 
 class ReferenceController extends Controller
 {
@@ -23,8 +24,10 @@ class ReferenceController extends Controller
      */
     public function index()
     {
-        $references = Reference::paginate();
-        $view = view('references.index')->with('references', $references);
+        $references = Reference::paginate(8);
+        $countries = Country::all();
+
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries]);
         return $view;
     }
 
@@ -47,11 +50,29 @@ class ReferenceController extends Controller
         $expertises = Expertise::all();
         $categories = Category::all();
         $countries = Country::orderBy('name', 'asc')->get();
-        // $countries = Country::all();
-        $locations = Location::all();
+        $zones = Zone::orderBy('name','asc')->get();
+        // $countries = [];
+        // foreach ($zones as $zone) {
+        //     for ($i=0; $i < $zone->countries->count()-1; $i++) { 
+        //         $countries[] = $zone->countries[$i];
+        //     }
+        // }
+
+        $seniors = Contributor::where('profile', 'In-house')
+                                    ->orderBy('name', 'asc')
+                                    ->get();
+        $experts = Contributor::where('profile', 'In-house')
+                                    ->orWhere('profile', 'Sub-contractor')
+                                        ->orderBy('name', 'asc')
+                                        ->get();
+
+        $consultants = Contributor::where('profile', 'Consultant')
+                                        ->orderBy('name', 'asc')
+                                        ->get();
+
 
         /*dd($internal_services);*/
-        $view = view('references.create', ['internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'locations'=>$locations]);
+        $view = view('references.create', ['internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants]);
         return $view;
     }
 
@@ -61,11 +82,11 @@ class ReferenceController extends Controller
         return $view;
     }
 
-    public function results()
-    {
-        $view = view('references.results');
-        return $view;
-    }
+    // public function results()
+    // {
+    //     $view = view('references.results');
+    //     return $view;
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -89,16 +110,15 @@ class ReferenceController extends Controller
         }
 
         $reference->dfac_name = $request->input('dfac_name');
+        $reference->country_id = $request->input('country_input');
 
-        if ($request->input('start_date')) {
-            $reference->start_date = $request->input('start_date');
-        }
-
-        if ($request->input('end_date')) {
-            $reference->end_date = $request->input('end_date');
-        }
+        $reference->start_date = $request->input('start_date');
+        $reference->end_date = $request->input('end_date');
 
         $reference->estimated_duration = $request->input('estimated_duration');
+
+        
+
         $reference->project_name = $request->input('project_name');
         $reference->project_name_fr = $request->input('project_name_fr');
         $reference->project_name_es = $request->input('project_name_es');
@@ -135,6 +155,12 @@ class ReferenceController extends Controller
 
         $reference->save();
 
+        if($request->input('external')) {
+            for ($i=0; $i < count($request->input('external')); $i++) { 
+                $reference->services()->attach(37+$i);
+            }
+        }
+
         return redirect()->action('ReferenceController@index');
     }
 
@@ -159,9 +185,22 @@ class ReferenceController extends Controller
     {
         $reference = Reference::find($id);
 
-        // $expertises = $domain->expertises()->paginate(1);
+        $internal_services = Service::where('subsidiary','Seureca')
+                                        ->where('service_type', 'internal')
+                                        ->first()
+                                        ->subServices()->get();
+        $external_services = Service::where('subsidiary','Seureca')
+                                        ->where('service_type', 'external')
+                                        ->first()
+                                        ->subServices()->get();
+        $domains = Domain::all();
+        $expertises = Expertise::all();
+        $categories = Category::all();
+        $countries = Country::orderBy('name', 'asc')->get();
+        $zones = Zone::orderBy('name','asc')->get();
 
-        $view = view('references.edit', ['reference' => $reference, 'expertises' => $expertises]);
+        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones]);
+        
         return $view;
     }
 
@@ -183,8 +222,12 @@ class ReferenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        // dd($_POST);
+        $ids = $request->input('id');
+        Reference::destroy($ids);
+
+        return redirect()->action('ReferenceController@index');
     }
 }

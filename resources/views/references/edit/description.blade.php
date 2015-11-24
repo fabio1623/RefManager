@@ -2,11 +2,15 @@
 <div class="form-group">
 	<label for="project_numb" class="col-sm-4 control-label">Project number</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="project_number" name="project_number">
+	  <input type="text" class="form-control" id="project_number" name="project_number" value="{{ $reference->project_number }}">
 	</div>
 	<div class="checkbox col-sm-2">
 		<label>
-		  <input id= "confidential_check" name="confidential" type="checkbox"> <b>Confidential</b>
+			@if($reference->confidential == 1)
+				<input id="confidential_check" name="confidential" type="checkbox" checked> <b>Confidential</b>
+			@else
+				<input id="confidential_check" name="confidential" type="checkbox"> <b>Confidential</b>
+			@endif
 		</label>
 	</div>
 </div>
@@ -15,7 +19,7 @@
 <div class="form-group">
 	<label for="dfac_name" class="col-sm-4 control-label">Name of DFAC project</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="dfac_name" name="dfac_name" placeholder="">
+	  <input type="text" class="form-control" id="dfac_name" name="dfac_name" value="{{ $reference->dfac_name }}">
 	</div>
 </div>
 <!-- EO line -->
@@ -26,14 +30,14 @@
 	    <select class="form-control" id="country_input" name="country_input">
 	    	<option></option>
 	    	@foreach($countries as $country)
-	    		<option value="{{ $country->id }}">{{$country->name}}</option>
+	    		@if($country->id == $reference->country_id)
+	    			<option value="{{ $country->id }}" selected>{{$country->name}}</option>
+    			@else
+    				<option value="{{ $country->id }}">{{$country->name}}</option>
+	    		@endif
 	    	@endforeach
 		</select>
 	</div>
-	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#country_modal">
-		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-	</button>
-	@include("references.create.english.modals.countries_modal")
 </div>
 <!-- EO line -->
 <!-- Line -->
@@ -48,7 +52,7 @@
 <div class="form-group">
 	<label for="location_name" class="col-sm-4 control-label">Location</label>
 	<div class="col-sm-2">
-	  	<input type="text" class="form-control" id="location_name" name="location_name">
+	  	<input type="text" class="form-control" id="location_name" name="location_name" value="{{ $reference->location }}">
 	</div>
 </div>
 <!-- EO line -->
@@ -57,7 +61,7 @@
 	<label class="col-sm-4 control-label">Project start date</label>
 	<div class="col-sm-2">
 	    <div id="date_picker_start" class="input-group input-append date">
-	      <input type="text" class="form-control" id="start_date" name="start_date" readonly>
+	      <input type="text" class="form-control" id="start_date" name="start_date" value="{{ $reference->start_date }}" readonly>
 	      <span class="input-group-btn">
 	        <button class="btn btn-default" type="button">
 	        	<span class="glyphicon glyphicon glyphicon-calendar" aria-hidden="true"></span>
@@ -72,7 +76,7 @@
 	<label for="end_date" class="col-sm-4 control-label">Project completion</label>
 	<div class="col-sm-2">
 	    <div id="date_picker_end" class="input-group input_append date">
-	      <input type="text" class="form-control" id="end_date" name="end_date" readonly>
+	      <input type="text" class="form-control" id="end_date" name="end_date" value="{{ $reference->end_date }}" readonly>
 	      <span class="input-group-btn">
 	        <button class="btn btn-default" type="button">
 	        	<span class="glyphicon glyphicon glyphicon-calendar" aria-hidden="true"></span>
@@ -86,7 +90,7 @@
 <div class="form-group">
 	<label for="estimated_duration" class="col-sm-4 control-label">Estimated duration</label>
 	<div class="col-sm-2">
-	  <input type="text" class="form-control" id="estimated_duration" name="estimated_duration" placeholder="">
+	  <input type="text" class="form-control" id="estimated_duration" name="estimated_duration" value="{{ $reference->estimated_duration }}">
 	</div>
 </div>
 <!-- EO line -->

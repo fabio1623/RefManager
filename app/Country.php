@@ -10,4 +10,14 @@ class Country extends Model
     {
         return $this->hasMany('App\Location');
     }
+
+    public function zones()
+    {
+        return $this->belongsToMany('App\Zone');
+    }
+
+    public function references()
+    {
+    	return $this->hasMany('App\Reference');	
+    }
 }

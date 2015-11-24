@@ -17,7 +17,7 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains = Domain::paginate(2);
+        $domains = Domain::paginate(8);
         // $domains->setPath('index');
         $view = view('domains.index')->with('domains', $domains);
         return $view;
@@ -70,7 +70,7 @@ class DomainController extends Controller
     {
         $domain = Domain::find($id);
 
-        $expertises = $domain->expertises()->paginate(1);
+        $expertises = $domain->expertises()->paginate(4);
 
         $view = view('domains.edit', ['domain' => $domain, 'expertises' => $expertises]);
         return $view;
@@ -101,7 +101,7 @@ class DomainController extends Controller
      */
     public function destroy(Request $request)
     {
-        dd($_POST);
+        // dd($_POST);
         $ids = $request->input('id');
 
         foreach ($ids as $id) {

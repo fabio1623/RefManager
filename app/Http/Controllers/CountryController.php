@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\category;
-
-class CategoryController extends Controller
+class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(8);
-        $categories->setPath('index');
-
-        $view = view('categories.index')->with('categories', $categories);
-        
-        return $view;
+        //
     }
 
     /**
@@ -33,9 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $view = view('categories.create');
-        
-        return $view;
+        //
     }
 
     /**
@@ -46,17 +37,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        /*dd($_POST);*/
-        $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:categories',
-        ]);
-
-        $category = new Category;
-        $category->name = $request->input('name');
-        
-        $category->save();
-
-        return redirect()->action('CategoryController@index');
+        //
     }
 
     /**
@@ -78,12 +59,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-        $measures = $category->measures()->paginate(4);
-
-        $view = view('categories.edit', ['category'=>$category, 'measures'=>$measures]);
-        
-        return $view;
+        //
     }
 
     /**
@@ -95,16 +71,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:categories',
-        ]);
-
-        $category = new Category;
-        $category->name = $request->input('name');
-
-        $user->save();
-
-        return redirect()->action('UserController@index');
+        //
     }
 
     /**
@@ -113,12 +80,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        dd($_POST);
-        $ids = $request->input('id');
-        Category::destroy($ids);
-
-        return redirect()->action('CategoryController@index');
+        //
     }
 }

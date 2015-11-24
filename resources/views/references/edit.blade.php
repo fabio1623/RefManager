@@ -6,8 +6,8 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">
 			<div class="row">
-				<div class="col-sm-1">
-					<h4>Reference</h4>
+				<div class="col-sm-7">
+					<h4>{{ $reference->project_number }}</h4>
 				</div>
 				<!-- Button toolbar -->
 				<div class="col-sm-4 pull-right">
@@ -42,14 +42,14 @@
 			</div>
 		@endif
 
-		<form class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@store') }}">
+		<form class="form-horizontal" role="form" method="POST" action="">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 			<!-- Menu content -->
 			<div class="tab-content col-sm-12">
 				<!-- Base menu content -->
 				<div id="base_menu" class="tab-pane fade in active">
-					@include("references.create.english.layout")
+					@include("references.edit.layout")
 				</div>
 				<!-- /#base menu content -->
 				<div id="english_menu" class="tab-pane fade">

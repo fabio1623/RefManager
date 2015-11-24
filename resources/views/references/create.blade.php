@@ -6,7 +6,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">
 			<div class="row">
-				<div class="col-sm-1">
+				<div class="col-sm-7">
 					<h4>Reference</h4>
 				</div>
 				<!-- Button toolbar -->

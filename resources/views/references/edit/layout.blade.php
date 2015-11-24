@@ -11,7 +11,7 @@
 	<!-- Dropdown menu -->
 	<div id="description_menu" class="tab-pane fade in active">
 		<h3></h3>
-		@include("references.create.english.description")
+		@include("references.edit.description")
 	</div>
 	<div id="criteria_menu" class="tab-pane fade">
 		<h3></h3>

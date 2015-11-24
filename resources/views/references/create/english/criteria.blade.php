@@ -1,3 +1,11 @@
+<div class="form-group">
+  <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#domains_modal">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add domain
+  </button>
+</div>
+
+<div id="domains_div"> <!-- ICI pour l'ajout des domaines -->
+
 @for($i=0; $i < $domains->count(); $i++)
   
   @if(($i % 2)==0)
@@ -7,11 +15,25 @@
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">{{ $domains[$i]->name }}</h3>
+        <h3 class="panel-title">
+          
+          <div class="row">
+            <div class="col-sm-11">
+              {{ $domains[$i]->name }}
+            </div>
+            <div class="col-sm-1">
+              <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#criteria_modal" data-id="{{ $domains[$i]->id }}" data-name="{{ $domains[$i]->name }}">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+            </div>
+          </div>
+          
+          
+        </h3>
       </div>
-      <div class="panel-body">
+      <div id="domain-{{ $domains[$i]->id }}" class="panel-body">
         @foreach($domains[$i]->expertises as $expertise)
-        <div class="checkbox col-sm-6">
+        <div class="checkbox col-sm-5">
           <label>
             <input name="domain-{{$domains[$i]->id}}-expertise-{{$expertise->id}}" type="checkbox"> {{$expertise->name}}
           </label>
@@ -31,6 +53,8 @@
   </div>
 @endif
 
+</div> <!-- ICI -->
+
 <div class="form-group">
   <button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
     <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
@@ -39,3 +63,14 @@
     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
   </a>
 </div>
+
+<!-- Modals -->
+@include("references.create.english.modals.criteria_modal")
+@include("references.create.english.modals.domains_modal")
+
+<script>
+  var domains = {!! $domains->toJson() !!};
+  var expertises = {!! $expertises->toJson() !!};
+
+  
+</script>

@@ -64,3 +64,12 @@ Route::resource('categories', 'CategoryController');
 
 //Measures
 Route::resource('categories.measures', 'MeasureController');
+
+//Zones
+Route::put('zones/attach_country/{id}', 'ZoneController@attach_country');
+Route::put('zones/detach_country/{id}', 'ZoneController@detach_country');
+Route::delete('zones/destroy_multiple', 'ZoneController@destroyMultiple');
+Route::resource('zones', 'ZoneController');
+
+//Countries
+Route::resource('zones.countries', 'CountryController');

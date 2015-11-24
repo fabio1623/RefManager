@@ -7,10 +7,18 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-7">List of references</div>
+							<div class="col-sm-6">List of references</div>
 							<div class="col-sm-1">
-								<button type="button" class="btn btn-primary btn-sm pull-right">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								<form action="{{ action('ReferenceController@create') }}" method="GET">
+									<?php echo csrf_field(); ?>
+									<button type="submit" class="btn btn-primary btn-sm">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									</button>
+								</form>
+							</div>
+							<div class="col-sm-1">
+								<button type="submit" form="form_delete" id="remove_btn" class="btn btn-danger btn-sm">
+									<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 								</button>
 							</div>
 							<div class="col-sm-4">
@@ -43,11 +51,11 @@
 						</thead>
 						<tbody>
 
-							<form id="form_delete" action="" method="POST">
+							<form id="form_delete" action="{{ action('ReferenceController@destroy') }}" method="POST">
 					      		<?php echo method_field('DELETE'); ?>
 							    <?php echo csrf_field(); ?>
 								@foreach ($references as $reference)
-										<tr data-href="">
+										<tr data-href="{{ action('ReferenceController@edit', $reference->id) }}">
 											<td>
 												<a class="btn btn-link" href="">{{$reference->project_number}}</a>	
 											</td>
@@ -64,7 +72,13 @@
 												<a class="btn btn-link" href=""></a>	
 											</td>
 											<td>
-												<a class="btn btn-link" href=""></a>	
+												<a class="btn btn-link" href="">
+													@foreach($countries as $country)
+														@if($country->id == $reference->country_id)
+															{{ $country->name }}
+														@endif
+													@endforeach
+												</a>	
 											</td>
 											<td class="check">
 												<input class="checkbox" type="checkbox" value="{{$reference->id}}" name=id[]>
