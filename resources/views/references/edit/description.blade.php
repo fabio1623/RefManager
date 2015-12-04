@@ -27,7 +27,7 @@
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
 	<div class="col-sm-2">
-	    <select class="form-control" id="country_input" name="country_input">
+	    <select class="form-control" id="country_input" name="country_id">
 	    	<option></option>
 	    	@foreach($countries as $country)
 	    		@if($country->id == $reference->country_id)
@@ -45,6 +45,23 @@
 	<label for="continent_name" class="col-sm-4 control-label">Continent</label>
 	<div class="col-sm-2">
 	  	<input type="text" class="form-control" id="continent_name" name="continent_name">
+	</div>
+</div>
+<!-- EO line -->
+<!-- Line -->
+<div class="form-group">
+	<label for="zone" class="col-sm-4 control-label">Zone</label>
+	<div class="col-sm-2">
+	  	<select class="form-control" id="zone" name="zone">
+	  		<option></option>
+			@foreach($zones as $zone)
+				@if ($zone->id == $reference->zone)
+					<option value="{{ $zone->id }}" selected>{{$zone->name}}</option>
+				@else
+					<option value="{{ $zone->id }}">{{$zone->name}}</option>
+				@endif
+			@endforeach
+  		</select>
 	</div>
 </div>
 <!-- EO line -->
@@ -90,7 +107,10 @@
 <div class="form-group">
 	<label for="estimated_duration" class="col-sm-4 control-label">Estimated duration</label>
 	<div class="col-sm-2">
-	  <input type="text" class="form-control" id="estimated_duration" name="estimated_duration" value="{{ $reference->estimated_duration }}">
+		<div class="input-group">
+		  <input type="text" class="form-control" id="estimated_duration" name="estimated_duration" value="{{ $reference->estimated_duration }}">
+		  <span class="input-group-addon" id="basic-addon2">Months</span>
+		</div>
 	</div>
 </div>
 <!-- EO line -->
@@ -101,9 +121,13 @@
 	<hr></hr>
 	<label class="col-sm-4 control-label">Type of services</label>
 	@foreach($external_services as $service)
-			<div class="checkbox col-sm-8 col-sm-offset-4">
+			@if($service->parent_service_id != "")
+				<div class="checkbox col-sm-7 col-sm-offset-5">
+			@else
+				<div class="checkbox col-sm-8 col-sm-offset-4">
+			@endif
 			  <label>
-			    <input type="checkbox" id="external-{{$service->id}}" name="external[]"><b> {{$service->service_name}} </b>
+			    <input type="checkbox" id="external-{{$service->id}}" name="external[{{ $service->id }}]"><b> {{$service->name}} </b>
 			  </label>
 			</div>
 	@endforeach
@@ -122,13 +146,17 @@
 
 <!-- List of internal services -->
 <!-- Line -->
-<div class="form-group" id="internal_div"> 
+<div class="form-group hidden" id="internal_div"> 
 	<hr></hr>
 	<label class="col-sm-4 control-label">Veolia's contract type</label>
 	@foreach($internal_services as $service)
-		<div class="checkbox col-sm-12 col-sm-offset-4">
+		@if($service->parent_service_id != "")
+			<div class="checkbox col-sm-7 col-sm-offset-5">
+		@else
+			<div class="checkbox col-sm-8 col-sm-offset-4">
+		@endif
 		  <label>
-		    <input name="internal[]" type="checkbox"><b> {{$service->service_name}} </b>
+		    <input type="checkbox" id="internal-{{ $service->id }}" name="internal[{{ $service->id }}]"><b> {{$service->name}} </b>
 		  </label>
 		</div>
 	@endforeach
@@ -145,6 +173,7 @@
 </div>
 
 <script>
+
 	$('#date_picker_start').datepicker({
 	    format: "mm-yyyy",
 	    viewMode: "months", 
@@ -167,20 +196,21 @@
 	});
 
 	// Array of checkboxes and their children
-	var checkboxs = [
-		["internal_checkbox", "internal_div"]
-	];
+	// var checkboxs = [
+	// 	["internal_checkbox", "internal_div"]
+	// ];
 
-	// Hiding the children checkboxes
-	for	(var i = 0; i < checkboxs.length; i++) {
-		for (var j = 1; j < checkboxs[i].length; j++) {
-			$('#' + checkboxs[i][j]).hide();
-		}
-	};
+	// // Hiding the children checkboxes
+	// for	(var i = 0; i < checkboxs.length; i++) {
+	// 	for (var j = 1; j < checkboxs[i].length; j++) {
+	// 		$('#' + checkboxs[i][j]).hide();
+	// 	}
+	// };
 
 	$('#internal_checkbox').change(function () {
 		if (this.checked) {
-			$('#internal_div').show("fast");
+			// $('#internal_div').show("fast");
+			$('#internal_div').attr('class', 'form-group');
 			$("html, body").animate({ scrollTop: $(document).height() }, "slow");
 		}
 		else {
@@ -188,38 +218,27 @@
 			$('#internal_div input:checked').each(function() {
 			    $(this).removeAttr('checked');
 			});
-			$('#internal_div').hide("fast");
+			// $('#internal_div').hide("fast");
+			$('#internal_div').attr('class', 'form-group hidden');
 		}
 	});
 
-	// $("#add_external_btn").click(function() {
-	// 	var service = $("#add_external_inp").val();
-	// 	$("#external_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label><label><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></label></div>');
-	// });
-
-	// $("#add_internal_btn").click(function() {
-	// 	var service = $("#add_internal_inp").val();
-	// 	$("#internal_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label></div>');
-	// });
-
-	// var i;
-	// $("label[id|='lab']").bind("click", function () {
-	// 	var current_element = this;
-	// 	if(i){
-	// 		i = $(this).after('<div id="add_external_sub_div"><p></p><div id="" class="col-sm-4"><div class="input-group"><input type="text" class="form-control" id="add_external_sub_inp"><span class="input-group-btn"><button class="btn btn-default" type="button" id="add_external_sub_btn"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></button></span></div></div></div>');
-	// 		$("#add_external_sub_btn").click(function(){
-	// 			var service = $("#add_external_sub_inp").val();
-	// 			alert(service);
-	// 			$("#add_external_sub_div").before('<div class="checkbox col-sm-12"><label><input type="checkbox"><b>' + service + '</b></label></div>');
-	// 		});
-	// 		i = null;
-	// 	}
-	// 	else{
-	// 		$("#add_external_sub_div").detach();
-	// 		i = 1;
-	// 	}
-	// });
-
 	var countries = {!! $countries->toJson() !!};
+	var selected_external_services = {!! $reference->external_services !!};
+	var selected_internal_services = {!! $reference->internal_services !!};
+
+	if (selected_internal_services.length > 0) {
+		$('#internal_checkbox').attr('checked', true);
+		// $('#internal_div').show();
+		$('#internal_div').attr('class', 'form-group');
+	};
+
+	for(var i=0; i<selected_external_services.length; i++) {
+		$('#external-' + selected_external_services[i].id).attr('checked', true);
+	};
+
+	for(var i=0; i<selected_internal_services.length; i++) {
+		$('#internal-' + selected_internal_services[i].id).attr('checked', true);
+	};
 	
 </script>

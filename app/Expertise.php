@@ -9,8 +9,13 @@ class Expertise extends Model
     /**
      * The domains that belong to the expertise.
      */
-    public function domains()
+    public function domain()
     {
-        return $this->belongsToMany('App\Domain');
+        return $this->belongsTo('App\Domain');
+    }
+
+    public function references()
+    {
+        return $this->belongsToMany('App\Reference');
     }
 }

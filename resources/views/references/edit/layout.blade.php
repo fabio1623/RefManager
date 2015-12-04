@@ -15,15 +15,15 @@
 	</div>
 	<div id="criteria_menu" class="tab-pane fade">
 		<h3></h3>
-		@include("references.create.english.criteria")
+		@include("references.edit.criteria")
 	</div>
 	<div id="measure_menu" class="tab-pane fade">
 		<h3></h3>
-		@include("references.create.english.categories")
+		@include("references.edit.quantities")
 	</div>
 	<div id="detail_menu" class="tab-pane fade">
 		<h3></h3>
-		@include("references.create.english.details")
+		@include("references.edit.details")
 	</div>
 
 </div>

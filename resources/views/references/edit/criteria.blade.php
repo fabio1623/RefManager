@@ -35,7 +35,7 @@
         @foreach($domains[$i]->expertises as $expertise)
         <div class="checkbox col-sm-5">
           <label>
-            <input id="service-{{ $expertise->id }}" name="domains[{{ $domains[$i]->id }}][{{ $expertise->id }}]" type="checkbox"> {{$expertise->name}}
+            <input id="expertise-{{ $expertise->id }}" name="domains[{{ $domains[$i]->id }}][{{ $expertise->id }}]" type="checkbox"> {{$expertise->name}}
           </label>
         </div>
         @endforeach
@@ -64,12 +64,12 @@
   </a>
 </div>
 
-<!-- Modals -->
-@include("references.create.english.modals.criteria_modal")
-@include("references.create.english.modals.domains_modal")
-
 <script>
   var domains = {!! $domains->toJson() !!};
   var expertises = {!! $expertises->toJson() !!};
-  
+  var selected_expertises = {!! $reference->expertises !!};
+
+  for(var i=0; i<selected_expertises.length; i++) {
+    $('#expertise-' + selected_expertises[i].id).attr('checked', true);
+  };
 </script>

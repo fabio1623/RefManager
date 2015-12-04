@@ -46,7 +46,7 @@
 						    	<th class="col-sm-1">End date</th>
 								<th class="col-sm-2">Client</th>
 						    	<th class="col-sm-1">Country</th>
-						    	<th class="col-sm-1"><input type="checkbox"> All</th>
+						    	<th class="col-sm-1"><input id="select_all" type="checkbox"> All</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -103,5 +103,13 @@
 			window.location = href;
 		}
 	});
+	
+	$( ".check").click(function( event ) {
+	  event.stopImmediatePropagation();
+	});
+
+    $("#select_all").change(function(){
+      $(".checkbox").prop("checked", $(this).prop("checked"));
+    });
 </script>
 @endsection

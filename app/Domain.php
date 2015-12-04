@@ -11,6 +11,6 @@ class Domain extends Model
      */
     public function expertises()
     {
-        return $this->belongsToMany('App\Expertise');
+        return $this->hasMany('App\Expertise');
     }
 }

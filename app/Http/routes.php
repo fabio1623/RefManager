@@ -1,4 +1,11 @@
 <?php
+use App\Domain;
+use App\Expertise;
+use App\Qualifier;
+use App\Measure;
+use App\Reference;
+use App\MeasureValues;
+use App\Language;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +80,9 @@ Route::resource('zones', 'ZoneController');
 
 //Countries
 Route::resource('zones.countries', 'CountryController');
+
+Route::get('test', function () {
+    $language_in_db = Language::where('name', 'English')->first();
+
+    dd($language_in_db);
+});

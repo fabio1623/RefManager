@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExternalService extends Model
+class Qualifier extends Model
 {
-    public function parent_service()
+    public function measures()
     {
-        return $this->hasOne('App\ExternalService');
+        return $this->belongsToMany('App\Measure');
     }
 
     public function references()

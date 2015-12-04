@@ -9,8 +9,23 @@ class Measure extends Model
     /**
      * The categories that belong to the measure.
      */
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany('App\Category');
+        return $this->belongsTo('App\Category');
+    }
+
+    public function units()
+    {
+        return $this->belongsToMany('App\Unit');
+    }
+
+    public function references()
+    {
+        return $this->belongsToMany('App\Reference');
+    }
+
+    public function qualifiers()
+    {
+        return $this->belongsToMany('App\Qualifier');
     }
 }

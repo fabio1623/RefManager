@@ -11,6 +11,6 @@ class Category extends Model
      */
     public function measures()
     {
-        return $this->belongsToMany('App\Measure');
+        return $this->hasMany('App\Measure');
     }
 }

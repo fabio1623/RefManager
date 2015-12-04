@@ -13,10 +13,10 @@
 <div class="form-group">
 	<label for="detailed_project" class="col-sm-4 control-label">Detailed description of project</label>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_project" name="detailed_project" placeholder=""></textarea>
+	  <textarea class="form-control" rows="5" id="detailed_project" name="project_description" placeholder=""></textarea>
 	</div>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_project_fr" name="detailed_project_fr"></textarea>
+	  <textarea class="form-control" rows="5" id="detailed_project_fr" name="project_description_fr"></textarea>
 	</div>
 </div>
 <!-- EO line -->
@@ -24,10 +24,10 @@
 <div class="form-group">
 	<label for="service_name" class="col-sm-4 control-label">Title of services provided by Seureca</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" name="project_title" placeholder="">
+	  <input type="text" class="form-control" id="service_name" name="service_name" placeholder="">
 	</div>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="project_title_fr" name="project_title_fr">
+	  <input type="text" class="form-control" id="service_name_fr" name="service_name_fr">
 	</div>
 </div>
 <!-- EO line -->
@@ -35,44 +35,47 @@
 <div class="form-group">
 	<label for="detailed_service" class="col-sm-4 control-label">Detailed description of service</label>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_service" name="detailed_service" placeholder=""></textarea>
+	  <textarea class="form-control" rows="5" id="detailed_service" name="service_description" placeholder=""></textarea>
 	</div>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_service_fr" name="detailed_service_fr"></textarea>
+	  <textarea class="form-control" rows="5" id="detailed_service_fr" name="service_description_fr"></textarea>
 	</div>
 </div>
 <!-- EO line -->
 <hr></hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Staff involved</label>
+	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" name="involved_staff">
+	  <input type="text" class="form-control" id="involved_staff" name="involved_staff">
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Experts employed</label>
+	<label for="involved_experts" class="col-sm-4 control-label">Experts employed</label>
 	<div class="col-sm-4">
-		<input type="text" class="form-control" name="involved_experts">
+		<input type="text" class="form-control" id="involved_experts" name="involved_experts">
+	</div>
+	<div class="col-sm-4">
+		<input type="text" class="form-control" name="languages[French][]">
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Total number of staff</label>
+	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
 	<div class="col-sm-1">
-	  <input type="text" class="form-control" id="staff_number" name="staff_number" placeholder="">
+	  <input type="text" class="form-control" id="staff_number" name="staff_number">
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Total number man/months (Seureca)</label>
+	<label for="seureca_man_months" class="col-sm-4 control-label">Total number man/months (Seureca)</label>
 	<div class="col-sm-2">
 		<div class="input-group">
-			<input type="text" class="form-control" id="seureca_man_months" name="seureca_man_months" placeholder="" aria-describedby="basic-addon2">
+			<input type="text" class="form-control" id="seureca_man_months" name="seureca_man_months" aria-describedby="basic-addon2">
 			<span class="input-group-addon" id="basic-addon2">man/months</span>
 		</div>
 	</div>
@@ -80,10 +83,10 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Total number man/months (Associated consultants)</label>
+	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Associated consultants)</label>
 	<div class="col-sm-2">
 	    <div class="input-group">
-		  <input type="text" class="form-control" id="consultants_man_months" name="consultants_man_months" placeholder="" aria-describedby="basic-addon2">
+		  <input type="text" class="form-control" id="consultants_man_months" name="consultants_man_months" aria-describedby="basic-addon2">
 		  <span class="input-group-addon" id="basic-addon2">man/months</span>
 		</div>
 	  </div>
@@ -91,39 +94,42 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Name of associated consultants</label>
+	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 	<div class="col-sm-4">
-		<input type="text" class="form-control" name="involved_experts">
+		<input type="text" class="form-control" id="involved_consultants" name="involved_consultants">
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<div class="checkbox col-sm-2 col-sm-offset-4">
+	<div class="checkbox col-sm-4 col-sm-offset-4">
 		<label>
 		  <input id= "contact_check" type="checkbox"> <b>Any contact ?</b>
 		</label>
 	</div>
 </div>
 <!-- EO line -->
-
+<hr></hr>
 <div id="contact_info">
-	<hr></hr>
-	<label class="col-sm-4 control-label">Contact information</label>
+	<!-- <hr></hr> -->
+	<label for="contact_name" class="col-sm-4 control-label">Contact information</label>
 	<br></br>
 	<!-- Line -->
 	<div class="form-group">
-		<label class="col-sm-4 control-label">Name</label>
+		<label for="contact_name" class="col-sm-4 control-label">Name</label>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_name" name="contact_name">
+		  <input type="text" class="form-control" id="contact_name_en" name="contact_name">
+		</div>
+		<div class="col-sm-4">
+		  <input type="text" class="form-control" id="contact_name_fr">
 		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label class="col-sm-4 control-label">Department</label>
+		<label for="contact_department" class="col-sm-4 control-label">Department</label>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_department" name="contact_department">
+		  <input type="text" class="form-control" id="contact_department" name="contact_department_en">
 		</div>
 		<div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_department_fr" name="contact_department_fr">
@@ -132,35 +138,44 @@
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label class="col-sm-4 control-label">Phone</label>
+		<label for="contact_phone" class="col-sm-4 control-label">Phone</label>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_phone" name="contact_phone">
+		  <input type="text" class="form-control" id="contact_phone_en" name="contact_phone">
+		</div>
+		<div class="col-sm-4">
+		  <input type="text" class="form-control" id="contact_phone_fr">
 		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label class="col-sm-4 control-label">Email</label>
+		<label for="contact_email" class="col-sm-4 control-label">Email</label>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_email" name="contact_email">
+		  <input type="email" class="form-control" id="contact_email_en" name="contact_email">
+		</div>
+		<div class="col-sm-4">
+		  <input type="text" class="form-control" id="contact_email_fr">
 		</div>
 	</div>
 	<!-- EO line -->
+	<hr></hr>
 </div>
-<hr></hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Name of the client</label>
+	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="client_name" name="client_name" placeholder="">
+	  <input type="text" class="form-control" id="client_name" name="client_name_en">
+	</div>
+	<div class="col-sm-4">
+	  <input type="text" class="form-control" id="client_name_fr" name="client_name_fr">
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Financing</label>
+	<label for="financing" class="col-sm-4 control-label">Financing</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="financing" name="financing" placeholder="">
+	  <input type="text" class="form-control" id="financing" name="financing_en">
 	</div>
 	<div class="col-sm-4">
 	  <input type="text" class="form-control" id="financing_fr" name="financing_fr">
@@ -169,33 +184,45 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Total project cost</label>
+	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
 	<div class="col-sm-2">
 	    <div class="input-group">
-		  <input type="text" class="form-control" id="project_cost" name="project_cost" placeholder="" aria-describedby="basic-addon2">
-		  <span class="input-group-addon" id="basic-addon2">Euros</span>
+			<input type="text" class="form-control" id="project_cost" name="project_cost" aria-describedby="basic-addon2">
+			<select id="project_cost_select" name="project_currency" class="selectpicker" data-width="22%" data-size="100%">
+			  <option>Euros</option>
+			  <option>Dollars</option>
+			</select>
+		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->
 		</div>
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Cost of services provided by Seureca</label>
+	<label for="services_cost" class="col-sm-4 control-label">Cost of services provided by Seureca</label>
 	<div class="col-sm-2">
 	    <div class="input-group">
-		  <input type="text" class="form-control" id="services_cost" name="services_cost" placeholder="" aria-describedby="basic-addon2">
-		  <span class="input-group-addon" id="basic-addon2">Euros</span>
+		  	<input type="text" class="form-control" id="services_cost" name="services_cost" aria-describedby="basic-addon2">
+			<select id="services_cost_select" class="selectpicker" data-width="22%" data-size="100%">
+			  <option>Euros</option>
+			  <option>Dollars</option>
+			</select>
+		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->
 		</div>
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Works cost</label>
+	<label for="works_cost" class="col-sm-4 control-label">Works cost</label>
 	<div class="col-sm-2">
 	    <div class="input-group">
-		  <input type="text" class="form-control" id="works_cost" name="works_cost" placeholder="" aria-describedby="basic-addon2">
-		  <span class="input-group-addon" id="basic-addon2">Euros</span>
+		  	<input type="text" class="form-control" id="works_cost" name="works_cost" aria-describedby="basic-addon2">
+		  	<select id="works_cost_select" class="selectpicker" data-width="22%" data-size="100%">
+			  <option>Euros</option>
+			  <option>Dollars</option>
+			</select>
+		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->
 		</div>
 	</div>
 </div>
@@ -203,9 +230,9 @@
 <hr></hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">General comments / Key words</label>
+	<label for="general_comments" class="col-sm-4 control-label">General comments / Key words</label>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="3" id="general_comments" name="general_comments" placeholder=""></textarea>
+	  <textarea class="form-control" rows="3" id="general_comments" name="general_comments_en"></textarea>
 	</div>
 	<div class="col-sm-4">
 	  <textarea class="form-control" rows="3" id="general_comments_fr" name="general_comments_fr"></textarea>
@@ -286,5 +313,44 @@
 				$("#consultants_list").append('<a href="#" class="list-group-item">' + consultants[0][i] +'</a>');
 			};
 		};
+	});
+
+	$('#project_cost_select').change( function () {
+		$('#services_cost_select').selectpicker('val', $('#project_cost_select').val());
+		$('#works_cost_select').selectpicker('val', $('#project_cost_select').val());
+	});
+
+	$('#services_cost_select').change( function () {
+		$('#project_cost_select').selectpicker('val', $('#services_cost_select').val());
+		$('#works_cost_select').selectpicker('val', $('#services_cost_select').val());
+	});
+
+	$('#works_cost_select').change( function () {
+		$('#services_cost_select').selectpicker('val', $('#works_cost_select').val());
+		$('#project_cost_select').selectpicker('val', $('#works_cost_select').val());
+	});
+
+	$('#contact_name_en').keyup(function () {
+		$('#contact_name_fr').val($('#contact_name_en').val());
+	});
+
+	$('#contact_name_fr').keyup(function () {
+		$('#contact_name_en').val($('#contact_name_fr').val());
+	});
+
+	$('#contact_phone_en').keyup(function () {
+		$('#contact_phone_fr').val($('#contact_phone_en').val());
+	});
+
+	$('#contact_phone_fr').keyup(function () {
+		$('#contact_phone_en').val($('#contact_phone_fr').val());
+	});
+
+	$('#contact_email_en').keyup(function () {
+		$('#contact_email_fr').val($('#contact_email_en').val());
+	});
+
+	$('#contact_email_fr').keyup(function () {
+		$('#contact_email_en').val($('#contact_email_fr').val());
 	});
 </script>

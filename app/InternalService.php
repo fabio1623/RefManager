@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExternalService extends Model
+class InternalService extends Model
 {
     public function parent_service()
     {

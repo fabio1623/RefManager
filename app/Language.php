@@ -4,13 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExternalService extends Model
+class Language extends Model
 {
-    public function parent_service()
-    {
-        return $this->hasOne('App\ExternalService');
-    }
-
     public function references()
     {
         return $this->belongsToMany('App\Reference');

@@ -11,8 +11,33 @@ class Reference extends Model
         return $this->belongsToMany('App\Contributor');
     }
 
-    public function services()
+    public function external_services()
     {
-        return $this->belongsToMany('App\SubService');
+        return $this->belongsToMany('App\ExternalService');
+    }
+
+    public function internal_services()
+    {
+        return $this->belongsToMany('App\InternalService');
+    }
+
+    public function expertises()
+    {
+        return $this->belongsToMany('App\Expertise');
+    }
+
+    public function measures()
+    {
+        return $this->belongsToMany('App\Measure');
+    }
+
+    public function qualifiers()
+    {
+        return $this->belongsToMany('App\Qualifier');
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany('App\Language');
     }
 }
