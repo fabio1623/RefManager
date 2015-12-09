@@ -35,8 +35,36 @@ class ReferenceController extends Controller
     {
         $references = Reference::paginate(8);
         $countries = Country::all();
+        $clients = Client::all();
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients]);
+        return $view;
+    }
+
+    public function customize()
+    {
+        $languages = Language::all();
+        $external_services = ExternalService::all();
+        $internal_services = InternalService::all();
+        $domains = Domain::all();
+        $expertises = Expertise::all();
+        $categories = Category::all();
+        $countries = Country::orderBy('name', 'asc')->get();
+        $zones = Zone::orderBy('name','asc')->get();
+
+        $seniors = Contributor::where('profile', 'In-house')
+                                    ->orderBy('name', 'asc')
+                                    ->get();
+        $experts = Contributor::where('profile', 'In-house')
+                                    ->orWhere('profile', 'Sub-contractor')
+                                        ->orderBy('name', 'asc')
+                                        ->get();
+
+        $consultants = Contributor::where('profile', 'Consultant')
+                                        ->orderBy('name', 'asc')
+                                        ->get();
+
+        $view = view('references.customize', ['languages'=>$languages, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants]);
         return $view;
     }
 
@@ -89,17 +117,69 @@ class ReferenceController extends Controller
         return $view;
     }
 
-    public function search()
+    public function basic_search(Request $request)
     {
-        $view = view('references.search');
+        // dd($_POST);
+        $references = Reference::where('project_number', 'LIKE', '%'.$request->input('search_input').'%')
+                        ->orWhere('dfac_name', 'LIKE', '%'.$request->input('search_input').'%')
+                        ->orWhere('start_date', 'LIKE', '%'.$request->input('search_input').'%')
+                        ->orWhere('end_date', 'LIKE', '%'.$request->input('search_input').'%')
+                        // ->orWhere('client', 'LIKE', '%'.$request->input('search_input').'%')
+                        // ->orWhere('start_date', 'LIKE', '%'.$request->input('search_input').'%')
+                        ->paginate(4);
+        $countries = Country::all();
+        $clients = Client::all();
+        $references->setPath('basic_search');
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients]);
         return $view;
     }
 
-    // public function results()
-    // {
-    //     $view = view('references.results');
-    //     return $view;
-    // }
+    public function search()
+    {
+        $zones = Zone::all();
+        $external_services = ExternalService::all();
+        $internal_services = InternalService::all();
+        $domains = Domain::all();
+        $countries = Country::all();
+
+        $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries]);
+        return $view;
+    }
+
+    public function results(Request $request)
+    {
+        // dd($_GET);
+
+
+        $references = Reference::where('project_number', 'LIKE', '%'.$request->input('keyword').'%')
+                                    ->orWhere('start_date', 'LIKE', '%'.$request->input('keyword').'%');
+        if ($request->input('country')) {
+            // $references->where(function ($query) {
+            //     $query->where('country', 240)
+            //             ->orWhere('country', 241);
+            // });
+            foreach ($request->input('country') as $key => $value) {
+                $country = Country::where('name', $value)->first();
+                $references->where('country', $country->id);
+            }
+        }
+        
+        $references = $references->paginate(1);
+        
+        // $references = Reference::where('project_number', 'LIKE', '%'.$request->input('keyword').'%')
+        //                             ->where('country', 240)->paginate(1);
+
+        $zones = Zone::all();
+        $external_services = ExternalService::all();
+        $internal_services = InternalService::all();
+        $domains = Domain::all();
+        $countries = Country::all();
+        $clients = Client::all();
+
+        // $references->setPath('results');
+        $view = view('references.results', ['references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients]);
+        return $view;
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -112,9 +192,10 @@ class ReferenceController extends Controller
         // dd($_POST);
         $this->validate($request, [
             'project_number'    =>  'required|unique:references',
-            'country'           =>  'required',
-            'zone'              =>  'required'
-            // 'client'      => 'required'
+            // 'country'           =>  'required',
+            // 'zone'              =>  'required',
+            // 'client'            =>  'required',
+            // 'contact'           =>  'required',
         ]);
 
         $reference = new Reference;
@@ -130,8 +211,13 @@ class ReferenceController extends Controller
         }
 
         $reference->dfac_name = $request->input('dfac_name');
-        $reference->country = $request->input('country');
-        $reference->zone = $request->input('zone');
+        if ($request->input('country') != "") {
+            $reference->country = $request->input('country');
+        }
+        if ($request->input('zone') != "") {
+            $reference->zone = $request->input('zone');
+        }
+
         $reference->location = $request->input('location');
 
         $reference->start_date = $request->input('start_date');
@@ -178,13 +264,12 @@ class ReferenceController extends Controller
             }
         }
 
-        $reference->contact_department = $request->input('contact_department_en');
+        $reference->contact_department = $request->input('contact_department');
         $reference->contact_department_fr = $request->input('contact_department_fr');
         $reference->contact_phone = $request->input('contact_phone');
         $reference->contact_email = $request->input('contact_email');
         
-        // dd($_POST);
-
+        //Client infos
         if ($request->input('client_name_en') != "") {
             $client_in_db_en = Client::where('name', $request->input('client_name_en'))
                                         ->orWhere('name_fr', $request->input('client_name_en'))->first();
@@ -247,8 +332,7 @@ class ReferenceController extends Controller
             }
         }
 
-        // dd($_POST);
-
+        //Costs & currency infos
         $reference->total_project_cost = $request->input('total_project_cost');
         $reference->seureca_services_cost = $request->input('seureca_services_cost');
         $reference->work_cost = $request->input('work_cost');
@@ -262,7 +346,6 @@ class ReferenceController extends Controller
             $result = json_decode($result);
 
             if ($result->success) {
-
                 $reference->rate = $result->rate;
             }
         }
@@ -417,58 +500,135 @@ class ReferenceController extends Controller
 
         $reference = Reference::find($id);
 
+        //Description panel
         $reference->project_number = $request->input('project_number');
 
         if ($request->input('confidential')) {
             $reference->confidential = 1;
         }
+        else{
+            $reference->confidential = 0;   
+        }
 
         $reference->dfac_name = $request->input('dfac_name');
+        
+        if ($request->input('country') != "") {
+            $reference->country = $request->input('country');
+        }
 
+        if ($request->input('zone') != "") {
+            $reference->zone = $request->input('zone');
+        }
 
-        $reference->country_id = $request->input('country_id');
-
-
+        $reference->location = $request->input('location');
         $reference->start_date = $request->input('start_date');
         $reference->end_date = $request->input('end_date');
-
         $reference->estimated_duration = $request->input('estimated_duration');
-
         
+        //Details panel
+        $reference->project_name = $request->input('project_name');
+        $reference->project_name_fr = $request->input('project_name_fr');
+        $reference->project_description = $request->input('project_description');
+        $reference->project_description_fr = $request->input('project_description_fr');
+        $reference->service_name = $request->input('service_name');
+        $reference->service_name_fr = $request->input('service_name_fr');
+        $reference->service_description = $request->input('service_description');
+        $reference->service_description_fr = $request->input('service_description_fr');
+        $reference->staff_number = $request->input('staff_number');
+        $reference->seureca_man_months = $request->input('seureca_man_months');
+        $reference->consultants_man_months = $request->input('consultants_man_months');
 
-        // $reference->project_name = $request->input('project_name');
-        // $reference->project_name_fr = $request->input('project_name_fr');
-        // $reference->project_name_es = $request->input('project_name_es');
-        // $reference->project_name_pt = $request->input('project_name_pt');
-        // $reference->service_name = $request->input('service_name');
-        // $reference->service_name_fr = $request->input('service_name_fr');
-        // $reference->service_name_es = $request->input('service_name_es');
-        // $reference->service_name_pt = $request->input('service_name_pt');
-        // $reference->project_description = $request->input('project_description');
-        // $reference->project_description_fr = $request->input('project_description_fr');
-        // $reference->project_description_es = $request->input('project_description_es');
-        // $reference->project_description_pt = $request->input('project_description_pt');
-        // $reference->service_description = $request->input('service_description');
-        // $reference->service_description_fr = $request->input('service_description_fr');
-        // $reference->service_description_es = $request->input('service_description_es');
-        // $reference->service_description_pt = $request->input('service_description_pt');
-        
-        if ($request->input('staff_number')) {
-            $reference->staff_number = $request->input('staff_number');
+        //Contact infos
+        if ($request->input('contact_name') != "") {
+            $contact_in_db = Contact::where('name', $request->input('contact_name'))->first();
+
+            if ($contact_in_db == null) {
+                $new_contact = new Contact;
+                $new_contact->name = $request->input('contact_name');
+
+                $new_contact->save();
+
+                $reference->contact = $new_contact->id;
+            }
+            else {
+                $reference->contact = $contact_in_db->id;
+            }
         }
 
-        if ($request->input('seureca_man_months')) {
-            $reference->seureca_man_months = $request->input('seureca_man_months');
+        $reference->contact_department = $request->input('contact_department_en');
+        $reference->contact_department_fr = $request->input('contact_department_fr');
+        $reference->contact_phone = $request->input('contact_phone');
+        $reference->contact_email = $request->input('contact_email');
+
+        //Client infos
+        if ($request->input('client_name_en') != "") {
+            $client_in_db_en = Client::where('name', $request->input('client_name_en'))
+                                        ->orWhere('name_fr', $request->input('client_name_en'))->first();
+
+            if ($client_in_db_en == null) {
+                if ($request->input('client_name_fr') != "") {
+                    $client_in_db_fr = Client::where('name', $request->input('client_name_fr'))
+                                        ->orWhere('name_fr', $request->input('client_name_fr'))->first();
+                    if ($client_in_db_fr == null) {
+                        $new_client = new Client;
+                        $new_client->name = $request->input('client_name_en');
+                        $new_client->name_fr = $request->input('client_name_fr');
+
+                        $new_client->save();
+
+                        $reference->client = $new_client->id;
+                    }
+                    else {
+                        $reference->client = $client_in_db_fr->id;
+                        if ($client_in_db_fr->name == "") {
+                            $client_in_db_fr->name = $request->input('client_name_en');
+
+                            $client_in_db_fr->save();
+                        }
+                    }
+                }
+                else {
+                    $new_client = new Client;
+                    $new_client->name = $request->input('client_name_en');
+
+                    $new_client->save();
+
+                    $reference->client = $new_client->id;
+                }
+             }
+             else {
+                $reference->client = $client_in_db_en->id;
+                if ($client_in_db_en->name_fr == "") {
+                    $client_in_db_en->name_fr = $request->input('client_name_fr');
+
+                    $client_in_db_en->save(); 
+                }
+             }
+        }
+        else {
+            if ($request->input('client_name_fr') != "") {
+                $client_in_db_fr = Client::where('name', $request->input('client_name_fr'))
+                                            ->orWhere('name_fr', $request->input('client_name_fr'))->first();
+                if ($client_in_db_fr == null) {
+                    $new_client = new Client;
+                    $new_client->name_fr = $request->input('client_name_fr');
+
+                    $new_client->save();
+
+                    $reference->client = $new_client->id;
+                }
+                else {
+                    $reference->client = $client_in_db_fr->id;
+                }
+            }
         }
 
-        if ($request->input('consultants_man_months')) {
-            $reference->consultants_man_months = $request->input('consultants_man_months');
-        }
-        $reference->total_project_cost = $request->input('project_cost');
+        $reference->total_project_cost = $request->input('total_project_cost');
         $reference->seureca_services_cost = $request->input('seureca_services_cost');
         $reference->work_cost = $request->input('work_cost');
-        // $reference->service_description = $request->input('service_description');
-        // $reference->general_comments = $request->input('general_comments');
+        $reference->general_comments = $request->input('general_comments');
+        $reference->general_comments_fr = $request->input('general_comments_fr');
+
         $reference->currency = $request->input('project_cost_currency');
 
         if ($reference->currency == "Dollars") {

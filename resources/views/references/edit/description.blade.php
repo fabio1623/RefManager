@@ -1,6 +1,6 @@
 <!-- Line -->
 <div class="form-group">
-	<label for="project_numb" class="col-sm-4 control-label">Project number</label>
+	<label for="project_number" class="col-sm-4 control-label">Project number</label>
 	<div class="col-sm-4">
 	  <input type="text" class="form-control" id="project_number" name="project_number" value="{{ $reference->project_number }}">
 	</div>
@@ -26,11 +26,11 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
-	<div class="col-sm-2">
-	    <select class="form-control" id="country_input" name="country_id">
+	<div class="col-sm-3">
+	    <select class="form-control" id="country" name="country">
 	    	<option></option>
 	    	@foreach($countries as $country)
-	    		@if($country->id == $reference->country_id)
+	    		@if($country->id == $reference->country)
 	    			<option value="{{ $country->id }}" selected>{{$country->name}}</option>
     			@else
     				<option value="{{ $country->id }}">{{$country->name}}</option>
@@ -42,9 +42,9 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="continent_name" class="col-sm-4 control-label">Continent</label>
+	<label for="continent" class="col-sm-4 control-label">Continent</label>
 	<div class="col-sm-2">
-	  	<input type="text" class="form-control" id="continent_name" name="continent_name">
+	  	<input type="text" class="form-control" id="continent">
 	</div>
 </div>
 <!-- EO line -->
@@ -67,15 +67,23 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="location_name" class="col-sm-4 control-label">Location</label>
-	<div class="col-sm-2">
-	  	<input type="text" class="form-control" id="location_name" name="location_name" value="{{ $reference->location }}">
+	<label for="zone_manager" class="col-sm-4 control-label">Zone manager</label>
+	<div class="col-sm-4">
+	  	<input type="text" class="form-control" id="zone_manager" name="zone_manager" value="">
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Project start date</label>
+	<label for="location" class="col-sm-4 control-label">Location</label>
+	<div class="col-sm-4">
+	  	<input type="text" class="form-control" id="location_name" name="location" value="{{ $reference->location }}">
+	</div>
+</div>
+<!-- EO line -->
+<!-- Line -->
+<div class="form-group">
+	<label for="start_date" class="col-sm-4 control-label">Project start date</label>
 	<div class="col-sm-2">
 	    <div id="date_picker_start" class="input-group input-append date">
 	      <input type="text" class="form-control" id="start_date" name="start_date" value="{{ $reference->start_date }}" readonly>
@@ -240,5 +248,18 @@
 	for(var i=0; i<selected_internal_services.length; i++) {
 		$('#internal-' + selected_internal_services[i].id).attr('checked', true);
 	};
+
+	$('#confidential_check').change(function () {
+		if (this.checked) {
+			$('#criteria_pane').hide("fast");
+			$('#quantities_pane').hide("fast");
+			$('#details_pane').hide("fast");
+		}
+		else {
+			$('#criteria_pane').show("fast");
+			$('#quantities_pane').show("fast");
+			$('#details_pane').show("fast");	
+		}
+	});
 	
 </script>

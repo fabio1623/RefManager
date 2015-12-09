@@ -1,53 +1,45 @@
 @extends('templates.template')
 
 @section('content')
-
+<div class="col-sm-10 col-sm-offset-1">
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
 			<div class="row">
-				<div class="col-sm-7">
-					<h4>Reference</h4>
+				<div class="col-sm-8">
+					<h4>New reference</h4>
 				</div>
 				<!-- Button toolbar -->
 				<div class="col-sm-4 pull-right">
 					<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 						<div class="btn-group" role="group" aria-label="...">
-							<!-- <button id="glob_icon" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></button> -->
+
+							<button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
+							  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
+							</button>
+							<button id='btn_language_selector' type="button" class="btn btn-primary btn-sm">
+							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New translation
+							</button>
+
 							@if (count($languages) > 2)
-								@for ($i=2; $i < count($languages); $i++)
-									<button type="button" class="btn btn-primary" data-toggle="tab" href="#{{ strtolower($languages[$i]->name) }}_menu">{{ $languages[$i]->name }}</button>	
-								@endfor
-							@else
 								<div class="btn-group">
-								  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+								  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
 								    Languages <span class="caret"></span>
 								  </button>
 								  <ul class="dropdown-menu">
-								  	@foreach ($languages as $language)
-								  		<li><a data-toggle="tab" href="#{{ strtolower($language->name) }}_menu">{{ $language->name }}</a></li>
-								  	@endforeach
-								    <!-- <li><a href="#">Action</a></li>
-								    <li><a href="#">Another action</a></li>
-								    <li><a href="#">Something else here</a></li>
-								    <li role="separator" class="divider"></li>
-								    <li><a href="#">Separated link</a></li> -->
+								  	@for ($i=2; $i < count($languages); $i++)
+								  		<li id="language_{{ $languages[$i]->name }}"><a href="">{{ $languages[$i]->name }}</a></li>
+								  	@endfor
 								  </ul>
 								</div>
+							@else
+								@for ($i=2; $i < count($languages); $i++)
+									<button type="button" class="btn btn-primary btn-sm" data-toggle="tab" href="#{{ strtolower($languages[$i]->name) }}_menu">{{ $languages[$i]->name }}</button>	
+								@endfor
 							@endif
-							<!-- <button type="button" class="btn btn-primary" data-toggle="tab" href="#english_menu">English</button>
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#french_menu">French</button>
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#spanish_menu">Spanish</button>
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#portuguese_menu">Portuguese</button> -->
 						</div>
 					</div>
-				</div>
-				<!-- /#button toolbar -->
-				<div class="sm-1 pull-right">
-					<button type="button" class="btn btn-primary" aria-label="Left Align" data-toggle="tab" href="#base_menu">
-					  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
-					</button>
-				</div>				
+				</div>			
 			</div>
 		</h3>
 	</div>
@@ -87,6 +79,8 @@
 		</form>
 	</div>
 </div>
+</div>
+@include("references.create.english.modals.select_language_modal")
 
 <script>
 	// Show description pane
@@ -109,6 +103,10 @@
 	// 	// Select tab by name
 	// 	$('.nav-tabs a[href="#measure_menu"]').tab('show')
 	// })
+
+	$('#btn_language_selector').click(function () {
+		$('#select_language_modal').modal();
+	});
 </script>
 
 @endsection

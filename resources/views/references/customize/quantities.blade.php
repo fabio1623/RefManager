@@ -104,8 +104,8 @@
 </div>
 
 <!-- Modals -->
-@include("references.create.english.modals.categories_modal")
-@include("references.create.english.modals.measures_modal")
+@include("references.customize.modals.category_modal")
+@include("references.customize.modals.measure_modal")
 
 
 <script>

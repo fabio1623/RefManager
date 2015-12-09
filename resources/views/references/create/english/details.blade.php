@@ -1,3 +1,9 @@
+<div class="form-group">
+	<span class="label label-default col-sm-2 col-sm-offset-5">English</span>
+	<span class="label label-default col-sm-2 col-sm-offset-2">French</span>
+	<!-- <label for="" class="col-sm-3 col-sm-offset-3 control-label">English</label> -->
+	<!-- <label for="" class="col-sm-3 col-sm-offset-1 control-label">French</label> -->
+</div>
 <!-- Line -->
 <div class="form-group">
 	<label for="project_name" class="col-sm-4 control-label">Name of the project</label>
@@ -58,14 +64,14 @@
 		<input type="text" class="form-control" id="involved_experts" name="involved_experts">
 	</div>
 	<div class="col-sm-4">
-		<input type="text" class="form-control" name="languages[French][]">
+		<input type="text" class="form-control" name="">
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
 	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
-	<div class="col-sm-1">
+	<div class="col-sm-2">
 	  <input type="text" class="form-control" id="staff_number" name="staff_number">
 	</div>
 </div>
@@ -73,7 +79,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="seureca_man_months" class="col-sm-4 control-label">Total number man/months (Seureca)</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 		<div class="input-group">
 			<input type="text" class="form-control" id="seureca_man_months" name="seureca_man_months" aria-describedby="basic-addon2">
 			<span class="input-group-addon" id="basic-addon2">man/months</span>
@@ -84,7 +90,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Associated consultants)</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 	    <div class="input-group">
 		  <input type="text" class="form-control" id="consultants_man_months" name="consultants_man_months" aria-describedby="basic-addon2">
 		  <span class="input-group-addon" id="basic-addon2">man/months</span>
@@ -112,11 +118,11 @@
 <hr></hr>
 <div id="contact_info">
 	<!-- <hr></hr> -->
-	<label for="contact_name" class="col-sm-4 control-label">Contact information</label>
+	<label for="contact_name_en" class="col-sm-4 control-label">Contact information</label>
 	<br></br>
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_name" class="col-sm-4 control-label">Name</label>
+		<label for="contact_name_en" class="col-sm-4 control-label">Name</label>
 		<div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_name_en" name="contact_name">
 		</div>
@@ -129,7 +135,7 @@
 	<div class="form-group">
 		<label for="contact_department" class="col-sm-4 control-label">Department</label>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_department" name="contact_department_en">
+		  <input type="text" class="form-control" id="contact_department" name="contact_department">
 		</div>
 		<div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_department_fr" name="contact_department_fr">
@@ -138,7 +144,7 @@
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_phone" class="col-sm-4 control-label">Phone</label>
+		<label for="contact_phone_en" class="col-sm-4 control-label">Phone</label>
 		<div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_phone_en" name="contact_phone">
 		</div>
@@ -149,7 +155,7 @@
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_email" class="col-sm-4 control-label">Email</label>
+		<label for="contact_email_en" class="col-sm-4 control-label">Email</label>
 		<div class="col-sm-4">
 		  <input type="email" class="form-control" id="contact_email_en" name="contact_email">
 		</div>
@@ -185,7 +191,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 	    <div class="input-group">
 			<input type="text" class="form-control" id="project_cost" name="project_cost" aria-describedby="basic-addon2">
 			<select id="project_cost_select" name="project_currency" class="selectpicker" data-width="22%" data-size="100%">
@@ -200,7 +206,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="services_cost" class="col-sm-4 control-label">Cost of services provided by Seureca</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="services_cost" name="services_cost" aria-describedby="basic-addon2">
 			<select id="services_cost_select" class="selectpicker" data-width="22%" data-size="100%">
@@ -215,7 +221,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="works_cost" class="col-sm-4 control-label">Works cost</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="works_cost" name="works_cost" aria-describedby="basic-addon2">
 		  	<select id="works_cost_select" class="selectpicker" data-width="22%" data-size="100%">
@@ -232,7 +238,7 @@
 <div class="form-group">
 	<label for="general_comments" class="col-sm-4 control-label">General comments / Key words</label>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="3" id="general_comments" name="general_comments_en"></textarea>
+	  <textarea class="form-control" rows="3" id="general_comments" name="general_comments"></textarea>
 	</div>
 	<div class="col-sm-4">
 	  <textarea class="form-control" rows="3" id="general_comments_fr" name="general_comments_fr"></textarea>

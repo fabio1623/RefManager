@@ -35,7 +35,9 @@ Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
 Route::get('references/search', 'ReferenceController@search');
-Route::get('references/results', 'ReferenceController@results');
+Route::get('references/search/results', 'ReferenceController@results');
+Route::get('references/customize', 'ReferenceController@customize');
+Route::post('references/basic_search', 'ReferenceController@basic_search');
 Route::resource('references', 'ReferenceController');
 
 //Users

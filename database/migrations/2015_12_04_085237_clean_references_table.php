@@ -13,8 +13,32 @@ class CleanReferencesTable extends Migration
     public function up()
     {
         Schema::table('references', function (Blueprint $table) {
-            $table->dropColumn(['project_name_es', 'project_name_pt', 'service_name_es', 'service_name_pt', 'project_description_es', 'project_description_pt', 'service_description_es', 'service_description_pt']);
+            $table->dropColumn(['project_name_es', 'project_name_pt', 'service_name_es', 'service_name_pt', 'project_description_es', 'project_description_pt', 'service_description_es', 'service_description_pt', 'rate']);
 
+            $table->string('contact_department');
+            $table->string('contact_department_fr');
+            $table->string('contact_phone');
+            $table->string('contact_email');
+            $table->longText('general_comments_fr');
+        });
+        Schema::table('references', function (Blueprint $table) {
+            $table->integer('country')->unsigned()->nullable();
+            $table->foreign('country')->references('id')->on('countries');
+
+            $table->integer('contact')->unsigned()->nullable();
+            $table->foreign('contact')->references('id')->on('contacts');
+
+            $table->integer('client')->unsigned()->nullable();
+            $table->foreign('client')->references('id')->on('clients');
+
+            $table->double('rate', 15, 7);
+        });
+
+        Schema::table('clients', function (Blueprint $table) {
+            $table->string('name_fr');
+        });
+
+        Schema::table('references', function (Blueprint $table) {
             $table->dropForeign('references_country_id_foreign');
             $table->dropColumn('country_id');
 
@@ -23,25 +47,6 @@ class CleanReferencesTable extends Migration
 
             $table->dropForeign('references_client_id_foreign');
             $table->dropColumn('client_id');
-
-            $table->string('contact_department');
-            $table->string('contact_department_fr');
-            $table->string('contact_phone');
-            $table->string('contact_email');
-        });
-        Schema::table('references', function (Blueprint $table) {
-            $table->integer('country')->unsigned();
-            $table->foreign('country')->references('id')->on('countries');
-
-            $table->integer('contact')->unsigned();
-            $table->foreign('contact')->references('id')->on('contacts');
-
-            $table->integer('client')->unsigned()->nullable();
-            $table->foreign('client')->references('id')->on('clients');
-        });
-
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('name_fr');
         });
     }
 
@@ -62,7 +67,7 @@ class CleanReferencesTable extends Migration
             $table->text('service_description_es');
             $table->text('service_description_pt');
 
-            $table->dropColumn(['contact_department', 'contact_department_fr', 'contact_phone', 'contact_email']);
+            $table->dropColumn(['contact_department', 'contact_department_fr', 'contact_phone', 'contact_email', 'general_comments_fr', 'rate']);
 
             $table->dropForeign('references_country_foreign');
             $table->dropColumn('country');
@@ -72,8 +77,17 @@ class CleanReferencesTable extends Migration
 
             $table->dropForeign('references_client_foreign');
             $table->dropColumn('client');
+        });
 
+        Schema::table('references', function (Blueprint $table) {
+            $table->string('rate');            
+        });
+        
+        Schema::table('clients', function (Blueprint $table) {
+            $table->dropColumn('name_fr');
+        });
 
+        Schema::table('references', function (Blueprint $table) {
             $table->integer('country_id')->unsigned();
             $table->foreign('country_id')->references('id')->on('countries');
 
@@ -82,10 +96,7 @@ class CleanReferencesTable extends Migration
 
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
-        });
-        
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('name_fr');
+
         });
     }
 }

@@ -1,6 +1,6 @@
 <!-- Line -->
 <div class="form-group">
-	<label for="project_number" class="col-sm-4 control-label">Project number</label>
+	<label for="project_numb" class="col-sm-4 control-label">Project number</label>
 	<div class="col-sm-4">
 	  <input type="text" class="form-control" id="project_number" name="project_number" value="{{ old('project_number') }}">
 	</div>
@@ -23,26 +23,24 @@
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
 	<div class="col-sm-3">
-	    <select class="form-control" id="country" name="country">
+	    <select class="form-control" id="country_input" name="country">
 	    	<option></option>
 	    	@foreach($countries as $country)
 	    		<option value="{{ $country->id }}">{{$country->name}}</option>
 	    	@endforeach
 		</select>
 	</div>
-	@if (Auth::user()->profile == 'User administrator')
-		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#country_modal">
-			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button>
-		@include("references.create.english.modals.countries_modal")
-	@endif
+	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#country_modal">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	</button>
+	
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="continent" class="col-sm-4 control-label">Continent</label>
+	<label for="continent_name" class="col-sm-4 control-label">Continent</label>
 	<div class="col-sm-2">
-	  	<input type="text" class="form-control" id="continent">
+	  	<input type="text" class="form-control" id="continent_name">
 	</div>
 </div>
 <!-- EO line -->
@@ -61,14 +59,6 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="zone_manager" class="col-sm-4 control-label">Zone manager</label>
-	<div class="col-sm-4">
-	  	<input type="text" class="form-control" id="zone_manager">
-	</div>
-</div>
-<!-- EO line -->
-<!-- Line -->
-<div class="form-group">
 	<label for="location_name" class="col-sm-4 control-label">Location</label>
 	<div class="col-sm-4">
 	  	<input type="text" class="form-control" id="location_name" name="location" value="{{ old('location_name') }}">
@@ -77,7 +67,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="start_date" class="col-sm-4 control-label">Project start date</label>
+	<label class="col-sm-4 control-label">Project start date</label>
 	<div class="col-sm-2">
 	    <div id="date_picker_start" class="input-group input-append date">
 	      <input type="text" class="form-control" id="start_date" name="start_date" value="{{ old('start_date') }}" readonly>
@@ -165,14 +155,8 @@
 </div>
 <!-- EO line -->
 
-<div class="form-group">
-	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
-	</button>
-	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
-		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-	</a>
-</div>
+<!-- Modals -->
+@include("references.customize.modals.country_modal")
 
 <script>
 	$('#date_picker_start').datepicker({
@@ -219,47 +203,6 @@
 			    $(this).removeAttr('checked');
 			});
 			$('#internal_div').hide("fast");
-		}
-	});
-
-	// $("#add_external_btn").click(function() {
-	// 	var service = $("#add_external_inp").val();
-	// 	$("#external_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label><label><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></label></div>');
-	// });
-
-	// $("#add_internal_btn").click(function() {
-	// 	var service = $("#add_internal_inp").val();
-	// 	$("#internal_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label></div>');
-	// });
-
-	// var i;
-	// $("label[id|='lab']").bind("click", function () {
-	// 	var current_element = this;
-	// 	if(i){
-	// 		i = $(this).after('<div id="add_external_sub_div"><p></p><div id="" class="col-sm-4"><div class="input-group"><input type="text" class="form-control" id="add_external_sub_inp"><span class="input-group-btn"><button class="btn btn-default" type="button" id="add_external_sub_btn"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></button></span></div></div></div>');
-	// 		$("#add_external_sub_btn").click(function(){
-	// 			var service = $("#add_external_sub_inp").val();
-	// 			alert(service);
-	// 			$("#add_external_sub_div").before('<div class="checkbox col-sm-12"><label><input type="checkbox"><b>' + service + '</b></label></div>');
-	// 		});
-	// 		i = null;
-	// 	}
-	// 	else{
-	// 		$("#add_external_sub_div").detach();
-	// 		i = 1;
-	// 	}
-	// });
-
-	$('#confidential_check').change(function () {
-		if (this.checked) {
-			$('#criteria_pane').hide("fast");
-			$('#quantities_pane').hide("fast");
-			$('#details_pane').hide("fast");
-		}
-		else {
-			$('#criteria_pane').show("fast");
-			$('#quantities_pane').show("fast");
-			$('#details_pane').show("fast");	
 		}
 	});
 	
