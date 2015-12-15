@@ -12,31 +12,18 @@
 				<!-- Button toolbar -->
 				<div class="col-sm-4 pull-right">
 					<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
-						<div class="btn-group" role="group" aria-label="...">
+						<div id="toolbar" class="btn-group" role="group" aria-label="...">
 
-							<button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
+							<button id="base_btn" type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
 							  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
 							</button>
-							<button id='btn_language_selector' type="button" class="btn btn-primary btn-sm">
-							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New translation
+							<button id="language_btn" type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
+							  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Languages
+							</button>
+							<button id='btn_language_selector' type="button" class="btn btn-primary btn-sm hidden">
+							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 
-							@if (count($languages) > 2)
-								<div class="btn-group">
-								  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-								    Languages <span class="caret"></span>
-								  </button>
-								  <ul class="dropdown-menu">
-								  	@for ($i=2; $i < count($languages); $i++)
-								  		<li id="language_{{ $languages[$i]->name }}"><a href="">{{ $languages[$i]->name }}</a></li>
-								  	@endfor
-								  </ul>
-								</div>
-							@else
-								@for ($i=2; $i < count($languages); $i++)
-									<button type="button" class="btn btn-primary btn-sm" data-toggle="tab" href="#{{ strtolower($languages[$i]->name) }}_menu">{{ $languages[$i]->name }}</button>	
-								@endfor
-							@endif
 						</div>
 					</div>
 				</div>			
@@ -65,6 +52,9 @@
 					@include("references.create.english.layout")
 				</div>
 				<!-- /#base menu content -->
+				<div id="language_menu" class="tab-pane fade">
+					@include("references.create.english.lang_layout")
+				</div>
 
 				@for ($i=2; $i < count($languages); $i++)
 					<div id="{{ strtolower($languages[$i]->name) }}_menu" class="tab-pane fade">
@@ -104,8 +94,29 @@
 	// 	$('.nav-tabs a[href="#measure_menu"]').tab('show')
 	// })
 
+	// $('.lang_tab').click(function () {
+	// 	$('.lang_tab').removeClass('active');
+	// });
+
+	// $('#base_btn').click(function () {
+	// 	$('.lang_tab').removeClass('active');
+	// });
+
+	$('#language_btn').click( function () {
+		$('#base_btn').attr("class", "btn btn-primary btn-sm");
+		$(this).attr("class", "btn btn-primary btn-sm active");
+		$('#btn_language_selector').attr("class", "btn btn-primary btn-sm");
+	});
+
+	$('#base_btn').click( function () {
+		$('#language_btn').attr("class", "btn btn-primary btn-sm");
+		$(this).attr("class", "btn btn-primary btn-sm active");
+		$('#btn_language_selector').attr("class", "btn btn-primary btn-sm hidden");
+	});
+
 	$('#btn_language_selector').click(function () {
 		$('#select_language_modal').modal();
+		// $('.lang_tab').removeClass('active');
 	});
 </script>
 

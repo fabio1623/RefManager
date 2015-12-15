@@ -123,12 +123,21 @@
 	<!-- Line -->
 	<div class="form-group">
 		<label for="contact_name_en" class="col-sm-4 control-label">Name</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_name_en" name="contact_name" value="{{ $reference->contact }}">
-		</div>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_name_fr" value="{{ $reference->contact }}">
-		</div>
+		@if ($contact)
+			<div class="col-sm-4">
+			  <input type="text" class="form-control" id="contact_name_en" name="contact_name" value="{{ $contact->name }}">
+			</div>
+			<div class="col-sm-4">
+			  <input type="text" class="form-control" id="contact_name_fr" value="{{ $contact->name }}">
+			</div>	
+		@else
+			<div class="col-sm-4">
+			  <input type="text" class="form-control" id="contact_name_en" name="contact_name" value="">
+			</div>
+			<div class="col-sm-4">
+			  <input type="text" class="form-control" id="contact_name_fr" value="">
+			</div>
+		@endif
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
@@ -169,12 +178,21 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="client_name" name="client_name_en" value="{{ $reference->client }}">
-	</div>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="client_name_fr" name="client_name_fr" value="{{ $reference->client }}">
-	</div>
+	@if ($client != null)
+		<div class="col-sm-4">
+		  <input type="text" class="form-control" id="client_name" name="client_name_en" value="{{ $client->name }}">
+		</div>
+		<div class="col-sm-4">
+		  <input type="text" class="form-control" id="client_name_fr" name="client_name_fr" value="{{ $client->name }}">
+		</div>
+	@else
+		<div class="col-sm-4">
+		  <input type="text" class="form-control" id="client_name" name="client_name_en" value="">
+		</div>
+		<div class="col-sm-4">
+		  <input type="text" class="form-control" id="client_name_fr" name="client_name_fr" value="">
+		</div>
+	@endif
 </div>
 <!-- EO line -->
 <!-- Line -->

@@ -22,8 +22,7 @@
 						</button>
 					</div>
 					<div class="col-sm-4">
-						<form action="{{ action('ReferenceController@basic_search') }}" method="POST">
-							<?php echo csrf_field(); ?>
+						<form action="{{ action('ReferenceController@basic_search') }}" method="GET">
 					      	<div class="input-group input-group-sm">
 						      <input type="text" class="form-control" name="search_input" placeholder="Search for...">
 						      <span class="input-group-btn">
@@ -100,7 +99,11 @@
 			</table>
 		</div>
 		<div class="pull-right">
-			{!! $references->render() !!}
+			@if (isset($inputs))
+				{!! $references->appends($inputs)->render() !!}
+			@else
+				{!! $references->render() !!}
+			@endif
 		</div>
 	</div>
 </div>

@@ -126,11 +126,11 @@ class ReferenceController extends Controller
                         ->orWhere('end_date', 'LIKE', '%'.$request->input('search_input').'%')
                         // ->orWhere('client', 'LIKE', '%'.$request->input('search_input').'%')
                         // ->orWhere('start_date', 'LIKE', '%'.$request->input('search_input').'%')
-                        ->paginate(4);
+                        ->paginate(8);
+
         $countries = Country::all();
         $clients = Client::all();
-        $references->setPath('basic_search');
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
         return $view;
     }
 
@@ -141,8 +141,9 @@ class ReferenceController extends Controller
         $internal_services = InternalService::all();
         $domains = Domain::all();
         $countries = Country::all();
+        $categories = Category::all();
 
-        $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries]);
+        $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories]);
         return $view;
     }
 
@@ -150,24 +151,170 @@ class ReferenceController extends Controller
     {
         // dd($_GET);
 
+        //Get right references
+        $references = Reference::where(function ($query) use ($request) {
+                                    $countries = Country::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+                                    $contacts = Contact::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+                                    $clients = Client::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+                                    $query->where('project_number', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('estimated_duration', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('project_name', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('service_name', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('project_description', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('service_description', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('general_comments', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('location', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('project_name_fr', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('service_name_fr', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('project_description_fr', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('service_description_fr', 'LIKE', '%'.$request->keyword.'%')
+                                          ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%');
+                                          if ($countries) {
+                                            foreach ($countries as $country) {
+                                                $query->orWhere('country', $country->id);
+                                            }
+                                          }
+                                          if ($contacts) {
+                                            foreach ($contacts as $contact) {
+                                                $query->orWhere('contact', $contact->id);
+                                            }
+                                          }
+                                          if ($clients) {
+                                            foreach ($clients as $client) {
+                                                $query->orWhere('client', $client->id);
+                                            }
+                                          }
+                                });
 
-        $references = Reference::where('project_number', 'LIKE', '%'.$request->input('keyword').'%')
-                                    ->orWhere('start_date', 'LIKE', '%'.$request->input('keyword').'%');
-        if ($request->input('country')) {
-            // $references->where(function ($query) {
-            //     $query->where('country', 240)
-            //             ->orWhere('country', 241);
-            // });
-            foreach ($request->input('country') as $key => $value) {
-                $country = Country::where('name', $value)->first();
-                $references->where('country', $country->id);
+        //If country input set, add the right country to request
+        if ($request->country) {
+            $references->whereIn('country', $request->country);
+        }
+
+        //If zone input set, add the right zone to request
+        if ($request->zone) {
+            $references->whereIn('zone', $request->zone);
+        }
+
+        //If services input set, add the right services to request
+        if ($request->service) {
+            $external = [];
+            $internal = [];
+
+            foreach ($request->service as $value) {
+                if ($value[0] == 'e') {
+                    $external[] = substr($value, 1);
+                }
+                else {
+                    $internal[] = substr($value, 1);
+                }
+            }
+            if (count($external) > 0) {
+                $references->whereHas('external_services', function ($query) use ($external) {
+                    $query->whereIn('id', $external);
+                });
+            }
+            if (count($internal) > 0) {
+                $references->whereHas('internal_services', function ($query) use ($internal) {
+                    $query->whereIn('id', $internal);
+                });
             }
         }
+
+        //If domains input set, add the right domains to request
+        if ($request->domain) {
+            //Get list of selected domains
+            $selected_domains = [];
+            foreach ($request->domain as $value) {
+                $selected_domains[] = $value;
+            }
+
+            $nb_selected_domains = count($request->domain);
+            
+            //Filter request to remove references with less expertises than domains selected
+            $filtered_references = Reference::has('expertises', '>=', $nb_selected_domains)->get();
+            $references_to_get = [];
+
+            //For each filtered reference, check if there are at least linked to selected domains
+            foreach ($filtered_references as $ref) {
+                $domains_in_ref = [];
+
+                foreach ($ref->expertises as $exp) {
+                    if (in_array($exp->domain_id, $selected_domains) && (!in_array($exp->domain_id, $domains_in_ref))) {
+                        $domains_in_ref[] = $exp->domain_id;
+                    }
+                }
+
+                if (count($domains_in_ref) >= $nb_selected_domains) {
+                    $references_to_get[] = $ref->id;
+                }
+            }
+
+            $references->whereIn('id', $references_to_get);
+
+            ////Other version with ORM
+            // $references->whereHas('expertises', function ($query) use ($selected_domains) {
+            //     $query->whereIn('domain_id', $selected_domains);
+            // });
+        }
+
+        //Get the references corresponding to the selected measure value
+        if ($request->measure != '') {
+            $measure_type;
+            $references->whereHas('measures', function ($query) use ($request) {
+                $query->where('measure_id', $request->measure_type)
+                        ->where('value', $request->measure_symbol, $request->measure);
+            });
+        }
+
+        //If start date set with radio selected, get the corresponding references
+        if ($request->started != '' && $request->ended != '') {
+            $references->whereBetween('start_date', [$request->started, $request->ended])
+                        ->orWhereBetween('end_date', [$request->started, $request->ended]);
+        }
+        else {
+            if ($request->started != '') {
+                if ($request->started_radio) {
+                    $references->where('start_date', $request->started_radio, $request->started)
+                                ->orWhere('start_date', '');
+                }
+            }
+            else {
+                if ($request->ended != '') {
+                    if ($request->ended_radio) {
+                        $references->where('end_date', $request->ended_radio, $request->ended)
+                                    ->orWhere('end_date', '');
+                    }
+                }
+            }
+        }   
+
+        //Get the right references corresponding to the selected criteria
+        if ($request->cost != '') {
+            $cost_type;
+            $cost_symbol;
+            switch ($request->cost_type) {
+                case 'Total cost':
+                    $cost_type = 'total_project_cost';
+                    break;
+                case 'Seureca services':
+                    $cost_type = 'seureca_services_cost';
+                    break;
+                case 'Works':
+                    $cost_type = 'work_cost';
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            $references->where($cost_type, $request->cost_symbol, $request->cost);
+        }
+
         
-        $references = $references->paginate(1);
-        
-        // $references = Reference::where('project_number', 'LIKE', '%'.$request->input('keyword').'%')
-        //                             ->where('country', 240)->paginate(1);
+
+        $references = $references->paginate(8);
 
         $zones = Zone::all();
         $external_services = ExternalService::all();
@@ -176,8 +323,7 @@ class ReferenceController extends Controller
         $countries = Country::all();
         $clients = Client::all();
 
-        // $references->setPath('results');
-        $view = view('references.results', ['references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients]);
+        $view = view('references.results', ['references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
         return $view;
     }
 
@@ -458,6 +604,9 @@ class ReferenceController extends Controller
 
         $languagesValues = LanguageReference::where('reference_id', $id)->get();
 
+        $contact = Contact::find($reference->contact);
+        $client = Client::find($reference->client);
+
         // dd($languagesValues);
 
 
@@ -478,7 +627,7 @@ class ReferenceController extends Controller
         $countries = Country::orderBy('name', 'asc')->get();
         $zones = Zone::orderBy('name','asc')->get();
 
-        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues]);
+        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact]);
         
         return $view;
     }

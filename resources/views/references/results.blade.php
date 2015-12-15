@@ -65,7 +65,7 @@
 				</tbody>
 		</table>
 		<div class="pull-right">
-			{!! $references->render() !!}
+			{!! $references->appends($inputs)->render() !!}
 		</div>
 	</div>
 </div>
