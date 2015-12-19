@@ -14,6 +14,13 @@ class CreateFundingReferenceTable extends Migration
     {
         Schema::create('funding_reference', function (Blueprint $table) {
             $table->increments('id');
+    
+            $table->integer('reference_id')->unsigned();
+            $table->foreign('reference_id')->references('id')->on('references');
+
+            $table->integer('funding_id')->unsigned();
+            $table->foreign('funding_id')->references('id')->on('fundings');
+
             $table->timestamps();
         });
     }

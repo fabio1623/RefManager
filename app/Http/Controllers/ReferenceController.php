@@ -23,6 +23,7 @@ use App\LanguageReference;
 use App\Client;
 use App\Measure;
 use App\Contact;
+use App\Funding;
 
 class ReferenceController extends Controller
 {
@@ -565,10 +566,28 @@ class ReferenceController extends Controller
             }
         }
         //Attach the translations to the reference
-        foreach ($request->input('languages') as $key => $language) {
-            $language_in_db = Language::where('name', $key)->first();
+        // foreach ($request->input('languages') as $key => $language) {
+        //     $language_in_db = Language::where('name', $key)->first();
 
-            $reference->languages()->attach($language_in_db->id, ['project_name'=>$language[0], 'project_description'=>$language[1], 'service_name'=>$language[2], 'service_description'=>$language[3], 'experts'=>$language[4], 'contact_name'=>$language[5], 'contact_department'=>$language[6], 'contact_email'=>$language[7], 'client'=>$language[8], 'financing'=>$language[9], 'general_comments'=>$language[10]]);
+        //     $reference->languages()->attach($language_in_db->id, ['project_name'=>$language[0], 'project_description'=>$language[1], 'service_name'=>$language[2], 'service_description'=>$language[3], 'experts'=>$language[4], 'contact_name'=>$language[5], 'contact_department'=>$language[6], 'contact_email'=>$language[7], 'client'=>$language[8], 'financing'=>$language[9], 'general_comments'=>$language[10]]);
+        // }
+
+        //Attach the fundings
+        if ($request->financing) {
+            foreach ($request->financing as $f) {
+                $funding_in_db = Funding::where('name', $f)->first();
+                if ($funding_in_db) {
+                    $reference->fundings()->attach($funding_in_db->id);
+                }
+                else {
+                    $new_funding = new Funding;
+                    $new_funding->name = $f;
+
+                    $new_funding->save();
+
+                    $reference->fundings()->attach($new_funding->id);
+                }
+            }
         }
 
 
@@ -867,6 +886,75 @@ class ReferenceController extends Controller
             $reference->languages()->attach($language_in_db->id, ['project_name'=>$language[0], 'project_description'=>$language[1], 'service_name'=>$language[2], 'service_description'=>$language[3], 'experts'=>$language[4], 'contact_name'=>$language[5], 'contact_department'=>$language[6], 'contact_email'=>$language[7], 'client'=>$language[8], 'financing'=>$language[9], 'general_comments'=>$language[10]]);
         }
 
+        if ($request->financing) {
+            foreach ($request->financing as $f) {
+                $linked_funding = $reference->fundings()->where('name', $f)
+                                                        ->orWhere('name_fr', 'like', $f.'%')->first();
+                if ($linked_funding) {
+                    if ($linked_funding->name == '') {
+                        $linked_funding->name = $f;
+
+                        $linked_funding->save();
+                    }
+                }
+                else {
+                    $funding_in_db = Funding::where('name', $f)
+                                                ->orWhere('name_fr', 'like', $f.'%')->first();
+                    if ($funding_in_db) {
+                        if ($funding_in_db->name == '') {
+                            $funding_in_db->name = $f;
+
+                            $funding_in_db->save();
+                        }
+                        $reference->fundings()->attach($funding_in_db->id);
+                    }
+                    else {
+                        $new_funding = new Funding;
+                        $new_funding->name = $f;
+
+                        $new_funding->save();
+
+                        $reference->fundings()->attach($new_funding->id);
+                    }
+                }
+            }
+        }
+
+        if ($request->financing_fr) {
+            foreach ($request->financing_fr as $f) {
+                $linked_funding = $reference->fundings()->where('name', 'like', '%'.$f.'%')
+                                                        ->orWhere('name_fr', $f)->first();
+                dd($linked_funding);
+                if ($linked_funding) {
+                    if ($linked_funding->name_fr == '') {
+                        $linked_funding->name_fr = $f;
+
+                        $linked_funding->save();
+                    }
+                }
+                else {
+                    $funding_in_db = Funding::where('name', 'like', $f.'%')
+                                                ->orWhere('name_fr', $f)->first();
+                    if ($funding_in_db) {
+                        if ($funding_in_db->name_fr == '') {
+                            $funding_in_db->name_fr = $f;
+
+                            $linked_funding->save();
+                        }
+                        $reference->fundings()->attach($funding_in_db->id);
+                    }
+                    else {
+                        $new_funding = new Funding;
+                        $new_funding->name_fr = $f;
+
+                        $new_funding->save();
+
+                        $reference->fundings()->attach($new_funding->id);
+                    }
+                }
+            }
+        }
+
         return redirect()->action('ReferenceController@index');
     }
 
@@ -889,6 +977,7 @@ class ReferenceController extends Controller
             $reference->measures()->detach();
             $reference->qualifiers()->detach();
             $reference->languages()->detach();
+            $reference->fundings()->detach();
         }
 
         Reference::destroy($ids);

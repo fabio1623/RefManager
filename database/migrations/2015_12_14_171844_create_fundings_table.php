@@ -15,6 +15,7 @@ class CreateFundingsTable extends Migration
         Schema::create('fundings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('name_fr');
             $table->timestamps();
             $table->softDeletes();
         });

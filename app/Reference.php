@@ -40,4 +40,8 @@ class Reference extends Model
     {
         return $this->belongsToMany('App\Language');
     }
+    public function fundings()
+    {
+        return $this->belongsToMany('App\Funding');
+    }
 }

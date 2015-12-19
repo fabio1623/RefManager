@@ -199,10 +199,22 @@
 <div class="form-group">
 	<label for="financing" class="col-sm-4 control-label">Financing</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="financing" name="financing_en">
+		<select id="financing" multiple data-role="tagsinput" name="financing[]">
+			@foreach ($reference->fundings as $funding)
+				@if($funding->name != '')
+					<option value="{{ $funding->name }}">{{ $funding->name }}</option>
+				@endif
+			@endforeach
+		</select>
 	</div>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="financing_fr" name="financing_fr">
+		<select id="financing_fr" multiple data-role="tagsinput" name="financing_fr[]">
+			@foreach ($reference->fundings as $funding)
+				@if ($funding->name_fr != '')
+					<option value="{{ $funding->name_fr }}">{{ $funding->name_fr }}</option>
+				@endif
+			@endforeach
+		</select>
 	</div>
 </div>
 <!-- EO line -->
