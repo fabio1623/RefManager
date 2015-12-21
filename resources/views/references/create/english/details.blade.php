@@ -181,7 +181,7 @@
 <div class="form-group">
 	<label for="financing" class="col-sm-4 control-label">Financing</label>
 	<div class="col-sm-4">
-		<input id="typeahead_field" class="typeahead" type="text" placeholder="States of USA">
+		<input id="test" type="text" data-role="tagsinput">
 	  	<!-- <select id="financing" multiple data-role="tagsinput" name="financing[]">
 		</select> -->
 	</div>
@@ -257,49 +257,20 @@
 	</a>
 </div>
 
+<div id="the-basics">
+  <input class="typeahead" type="text" placeholder="States of USA">
+</div>
+
 <script>
-	var substringMatcher = function(strs) {
-	  return function findMatches(q, cb) {
-	    var matches, substringRegex;
+	var languages = {!! $languages->toJson() !!};
 
-	    // an array that will be populated with substring matches
-	    matches = [];
-
-	    // regex used to determine if a string contains the substring `q`
-	    substrRegex = new RegExp(q, 'i');
-
-	    // iterate through the pool of strings and for any string that
-	    // contains the substring `q`, add it to the `matches` array
-	    $.each(strs, function(i, str) {
-	      if (substrRegex.test(str)) {
-	        matches.push(str);
-	      }
-	    });
-
-	    cb(matches);
-	  };
-	};
-
-	var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-	  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-	  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-	  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-	  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-	  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-	  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-	  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-	  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-	];
-
-	$('#typeahead_field').typeahead({
-	  hint: true,
-	  highlight: true,
-	  minLength: 1
-	},
-	{
-	  name: 'states',
-	  source: substringMatcher(states)
+	$('#test').tagsinput({
+	  typeahead: {
+	  	// items: 4,
+	    source: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo']
+	  }
 	});
+
 
 	// Array of checkboxes and their children
 	var checkboxs = [
