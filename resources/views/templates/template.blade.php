@@ -37,7 +37,7 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script>
 		<script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.0/bootstrap3-typeahead.js"></script>
+		<script src="/js/bootstrap3-typeahead.js"></script>
 		<script src="//cdn.bootcss.com/typeahead.js/0.11.1/bloodhound.js"></script>
 		
 	</head>

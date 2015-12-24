@@ -63,7 +63,7 @@
 			</div>
 		@endif
 
-		<form class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@update', $reference->id) }}">
+		<form id="form" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@update', $reference->id) }}">
 			{{ method_field('PUT') }}
 			<?php echo csrf_field(); ?>
 

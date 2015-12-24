@@ -50,24 +50,231 @@
 <!-- EO line -->
 <hr></hr>
 <!-- Line -->
+@if (count($staff_involved) > 0)
+
+@for ($i=0; $i < count($staff_involved); $i++)
+		@if ($i == 0)
+			<div class="form-group">
+				<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
+				<div class="col-sm-4">
+		@else
+			<div class="template">
+				<div class="form-group">
+					<div class="col-sm-4 col-sm-offset-4">
+		@endif
+			<div class="input-group">
+			<input type="text" class="form-control" id="involved_staff" name="involved_staff[]" value="{{ $staff_names[$i]['name'] }}">
+			<span class="input-group-btn">
+				@if ($i == 0)
+					<button class="btn btn-default addButton" type="button">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+				@else
+					<button class="btn btn-default removeButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				@endif
+			</span>
+			</div>
+		</div>
+	</div>
+	<!-- EO line -->
+	<!-- Line -->
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+		  <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+				<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}">
+			</div>
+		</div>
+		<div class="col-sm-4">
+		  <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+				<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+			</div>
+		</div>
+	</div>
+	@if ($i != 0)
+		</div>
+	@endif
+@endfor
+
+@else
+
 <div class="form-group">
 	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="involved_staff" name="involved_staff">
+		<div class="input-group">
+			<input type="text" class="form-control" id="involved_staff" name="involved_staff[]">
+			<span class="input-group-btn">
+				<button class="btn btn-default addButton" type="button">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="involved_experts" class="col-sm-4 control-label">Experts employed</label>
-	<div class="col-sm-4">
-		<input type="text" class="form-control" id="involved_experts" name="involved_experts">
+	<div class="col-sm-4 col-sm-offset-4">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]">
+		</div>
 	</div>
 	<div class="col-sm-4">
-		<input type="text" class="form-control" name="">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+		</div>
+	</div>
+</div>
+
+@endif
+<!-- EO line -->
+<div class="hide template" id="optionTemplate">
+	<div class="form-group">
+	    <div class="col-sm-4 col-sm-offset-4">
+	    	<div class="input-group">
+	        <input id="name_input" class="form-control nameInput" type="text"/>
+	        <span class="input-group-btn">
+				<button class="btn btn-default removeButton" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
+			</div>
+	    </div>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-offset-4 col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+				<input id="function_input" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	    <div class="col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+				<input id="function_input_fr" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	</div>
+</div>
+<hr></hr>
+<!-- Line -->
+@if (count($experts) > 0)
+
+@for ($i=0; $i < count($experts); $i++)
+		@if ($i == 0)
+			<div class="form-group">
+				<label for="experts" class="col-sm-4 control-label">Experts employed</label>
+				<div class="col-sm-4">
+		@else
+			<div class="expertTemplate">
+				<div class="form-group">
+					<div class="col-sm-4 col-sm-offset-4">
+		@endif
+			<div class="input-group">
+			<input type="text" class="form-control" id="experts" name="experts[]" value="{{ $expert_names[$i]['name'] }}">
+			<span class="input-group-btn">
+				@if ($i == 0)
+					<button class="btn btn-default addExpertButton" type="button">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+				@else
+					<button class="btn btn-default removeExpertButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				@endif
+			</span>
+			</div>
+		</div>
+	</div>
+	<!-- EO line -->
+	<!-- Line -->
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+		  <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Profile</span>
+				<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}">
+			</div>
+		</div>
+		<div class="col-sm-4">
+		  <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Profile</span>
+				<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+			</div>
+		</div>
+	</div>
+	@if ($i != 0)
+		</div>
+	@endif
+@endfor
+
+@else
+<!-- Line -->
+<div class="form-group">
+	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
+	<div class="col-sm-4">
+		<div class="input-group">
+			<input type="text" class="form-control" id="experts" name="experts[]">
+			<span class="input-group-btn">
+				<button class="btn btn-default addExpertButton" type="button">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
 	</div>
 </div>
 <!-- EO line -->
+<!-- Line -->
+<div class="form-group">
+	<div class="col-sm-4 col-sm-offset-4">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Profile</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]">
+		</div>
+	</div>
+	<div class="col-sm-4">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Profile</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+		</div>
+	</div>
+</div>
+<!-- EO line -->
+@endif
+<!-- EO line -->
+<div class="hide expertTemplate" id="expertTemplate">
+	<div class="form-group">
+	    <div class="col-sm-4 col-sm-offset-4">
+	    	<div class="input-group">
+	        <input id="expert_name_input" class="form-control expertNameInput" type="text"/>
+	        <span class="input-group-btn">
+				<button class="btn btn-default removeExpertButton" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
+			</div>
+	    </div>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-offset-4 col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Profile</span>
+				<input id="expert_functions_input" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	    <div class="col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Profile</span>
+				<input id="expert_functions_input_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	</div>
+</div>
+<hr></hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
@@ -230,12 +437,14 @@
 			</select>
 		</div>
 	</div>
-	<div class="col-sm-4 col-sm-offset-1">
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Contract rate</span>
-		  <input type="text" class="form-control" placeholder="" aria-describedby="" value="{{ $reference->rate }}">
+	@if ($reference->rate != 1)
+		<div class="col-sm-4 col-sm-offset-1">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Contract rate</span>
+			  <input type="text" class="form-control" placeholder="" aria-describedby="" value="{{ $reference->rate }}">
+			</div>
 		</div>
-	</div>
+	@endif
 </div>
 <!-- EO line -->
 <!-- Line -->
@@ -356,10 +565,10 @@
 		};
 	});
 
-	if ($('#contact_name_english').val() != "") {
-		$('#contact_check').attr('checked', true);
-		$('#contact_info').show("fast");
-	};
+	// if ($('#contact_name_english').val() != "") {
+	// 	$('#contact_check').attr('checked', true);
+	// 	$('#contact_info').show("fast");
+	// };
 
 	$('#project_cost_select').change( function () {
 		$('#services_cost_select').selectpicker('val', $('#project_cost_select').val());
@@ -404,17 +613,58 @@
 	var languagesValues = {!! $languagesValues->toJson() !!}
 	var reference = {!! $reference->toJson() !!}
 
-	for (var i = 0; i < languages.length; i++) {
-		$('#project_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].project_name);
-		$('#project_description_' + (languages[i].name).toLowerCase()).val(languagesValues[i].project_description);
-		$('#service_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].service_name);
-		$('#service_description_' + (languages[i].name).toLowerCase()).val(languagesValues[i].service_description);
-		$('#experts_' + (languages[i].name).toLowerCase()).val(languagesValues[i].experts);
-		$('#contact_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_name);
-		$('#contact_department_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_department);
-		$('#contact_email_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_email);
-		$('#client_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].client);
-		$('#financing_' + (languages[i].name).toLowerCase()).val(languagesValues[i].financing);
-		$('#general_comments_' + (languages[i].name).toLowerCase()).val(languagesValues[i].general_comments);
+	// for (var i = 0; i < languages.length; i++) {
+	// 	$('#project_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].project_name);
+	// 	$('#project_description_' + (languages[i].name).toLowerCase()).val(languagesValues[i].project_description);
+	// 	$('#service_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].service_name);
+	// 	$('#service_description_' + (languages[i].name).toLowerCase()).val(languagesValues[i].service_description);
+	// 	$('#experts_' + (languages[i].name).toLowerCase()).val(languagesValues[i].experts);
+	// 	$('#contact_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_name);
+	// 	$('#contact_department_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_department);
+	// 	$('#contact_email_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_email);
+	// 	$('#client_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].client);
+	// 	$('#financing_' + (languages[i].name).toLowerCase()).val(languagesValues[i].financing);
+	// 	$('#general_comments_' + (languages[i].name).toLowerCase()).val(languagesValues[i].general_comments);
+	// };
+
+	if (reference.contact != null) {
+		$('#contact_check').attr('checked', true);
+		// $('#internal_div').show();
+		$('#contact_info').show("fast");
 	};
+
+	$('#form').on('click', '.addButton', function() {
+            var $template = $('#optionTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control nameInput"]').attr('name', 'involved_staff[]');
+            $('#function_input').attr('name', 'involved_staff_function[]');
+            $('#function_input_fr').attr('name', 'involved_staff_function_fr[]');
+        })
+		.on('click', '.removeButton', function() {
+            var $row    = $(this).closest('.template');
+
+            // Remove element containing the option
+            $row.remove();
+        });
+    $('#form').on('click', '.addExpertButton', function() {
+            var $template = $('#expertTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control expertNameInput"]').attr('name', 'experts[]');
+            $('#expert_functions_input').attr('name', 'expert_functions[]');
+            $('#expert_functions_input_fr').attr('name', 'expert_functions_fr[]');
+        })
+		.on('click', '.removeExpertButton', function() {
+            var $row    = $(this).closest('.expertTemplate');
+
+            // Remove element containing the option
+            $row.remove();
+        });
 </script>

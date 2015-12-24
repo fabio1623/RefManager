@@ -42,7 +42,7 @@
 			</div>
 		@endif
 
-		<form class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@store') }}">
+		<form id="form" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@store') }}">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 			<!-- Menu content -->

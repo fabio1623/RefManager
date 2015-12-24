@@ -24,6 +24,7 @@ use App\Client;
 use App\Measure;
 use App\Contact;
 use App\Funding;
+use App\ContributorReference;
 
 class ReferenceController extends Controller
 {
@@ -93,6 +94,7 @@ class ReferenceController extends Controller
         $categories = Category::all();
         $countries = Country::orderBy('name', 'asc')->get();
         $zones = Zone::orderBy('name','asc')->get();
+        $fundings = Funding::all();
         // $countries = [];
         // foreach ($zones as $zone) {
         //     for ($i=0; $i < $zone->countries->count()-1; $i++) { 
@@ -114,7 +116,7 @@ class ReferenceController extends Controller
 
 
         /*dd($internal_services);*/
-        $view = view('references.create', ['languages'=>$languages, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants]);
+        $view = view('references.create', ['languages'=>$languages, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants, 'fundings'=>$fundings]);
         return $view;
     }
 
@@ -575,8 +577,14 @@ class ReferenceController extends Controller
         //Attach the fundings
         if ($request->financing) {
             foreach ($request->financing as $f) {
-                $funding_in_db = Funding::where('name', $f)->first();
+                $funding_in_db = Funding::where('name', $f)
+                                            ->orWhere('name_fr', $f)->first();
                 if ($funding_in_db) {
+                    if ($funding_in_db->name == '') {
+                        $funding_in_db->name = $f;
+
+                        $funding_in_db->save();
+                    }
                     $reference->fundings()->attach($funding_in_db->id);
                 }
                 else {
@@ -586,6 +594,65 @@ class ReferenceController extends Controller
                     $new_funding->save();
 
                     $reference->fundings()->attach($new_funding->id);
+                }
+            }
+        }
+
+        if ($request->financing_fr) {
+            foreach ($request->financing_fr as $f) {
+                $funding_in_db = Funding::where('name', $f)
+                                            ->orWhere('name_fr', $f)->first();
+                if ($funding_in_db) {
+                    if ($funding_in_db->name_fr == '') {
+                        $funding_in_db->name_fr = $f;
+
+                        $funding_in_db->save();
+                    }
+                    $reference->fundings()->attach($funding_in_db->id);
+                }
+                else {
+                    $new_funding = new Funding;
+                    $new_funding->name_fr = $f;
+
+                    $new_funding->save();
+
+                    $reference->fundings()->attach($new_funding->id);
+                }
+            }
+        }
+
+        //Attach the involved staff
+        foreach ($request->involved_staff as $key => $value) {
+            if ($value != '') {
+                $staff_in_db = Contributor::where('name', $value)->first();
+
+                if ($staff_in_db) {
+                    $reference->contributors()->attach($staff_in_db->id, ['responsability_on_project'=>$request->involved_staff_function[$key]]);
+                }
+                else {
+                    $new_staff = new Contributor;
+                    $new_staff->name = $value;
+
+                    $new_staff->save();
+                    $reference->contributors()->attach($new_staff->id, ['responsability_on_project'=>$request->involved_staff_function[$key]]);
+                }
+            }
+        }
+
+        //Attach the experts
+        foreach ($request->experts as $key => $value) {
+            if ($value != '') {
+                $expert_in_db = Contributor::where('name', $value)->first();
+
+                if ($expert_in_db) {
+                    $reference->contributors()->attach($expert_in_db->id, ['responsability_on_project'=>$request->expert_functions[$key], 'function_on_project'=>'Expert']);
+                }
+                else {
+                    $new_staff = new Contributor;
+                    $new_staff->name = $value;
+
+                    $new_staff->save();
+                    $reference->contributors()->attach($new_staff->id, ['responsability_on_project'=>$request->expert_functions[$key], 'function_on_project'=>'Expert']);
                 }
             }
         }
@@ -626,17 +693,18 @@ class ReferenceController extends Controller
         $contact = Contact::find($reference->contact);
         $client = Client::find($reference->client);
 
-        // dd($languagesValues);
+        //Get contributors
+        $staff_involved = ContributorReference::where('reference_id', $reference->id)
+                                                ->where('function_on_project', 'Senior')->get();
 
+        $staff_names = $reference->contributors()->where('function_on_project', 'Senior')->get();
 
-        // $internal_services = Service::where('subsidiary','Seureca')
-        //                                 ->where('service_type', 'internal')
-        //                                 ->first()
-        //                                 ->subServices()->get();
-        // $external_services = Service::where('subsidiary','Seureca')
-        //                                 ->where('service_type', 'external')
-        //                                 ->first()
-        //                                 ->subServices()->get();
+        $experts = ContributorReference::where('reference_id', $reference->id)
+                                            ->where('function_on_project', 'Expert')->get();
+
+        $expert_names = $reference->contributors()->where('function_on_project', 'Expert')->get();
+        
+        // dd($staff_names);
 
         $external_services = ExternalService::all();
         $internal_services = InternalService::all();
@@ -646,7 +714,7 @@ class ReferenceController extends Controller
         $countries = Country::orderBy('name', 'asc')->get();
         $zones = Zone::orderBy('name','asc')->get();
 
-        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact]);
+        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_names'=>$staff_names, 'experts'=>$experts, 'expert_names'=>$expert_names]);
         
         return $view;
     }
@@ -886,74 +954,96 @@ class ReferenceController extends Controller
             $reference->languages()->attach($language_in_db->id, ['project_name'=>$language[0], 'project_description'=>$language[1], 'service_name'=>$language[2], 'service_description'=>$language[3], 'experts'=>$language[4], 'contact_name'=>$language[5], 'contact_department'=>$language[6], 'contact_email'=>$language[7], 'client'=>$language[8], 'financing'=>$language[9], 'general_comments'=>$language[10]]);
         }
 
+        //Detach all fundings
+        $reference->fundings()->detach();
+
+        //Attach the translations to the reference
         if ($request->financing) {
             foreach ($request->financing as $f) {
-                $linked_funding = $reference->fundings()->where('name', $f)
-                                                        ->orWhere('name_fr', 'like', $f.'%')->first();
-                if ($linked_funding) {
-                    if ($linked_funding->name == '') {
-                        $linked_funding->name = $f;
+                $funding_in_db = Funding::where('name', $f)
+                                            ->orWhere('name_fr', $f)->first();
+                if ($funding_in_db) {
+                    if ($funding_in_db->name == '') {
+                        $funding_in_db->name = $f;
 
-                        $linked_funding->save();
+                        $funding_in_db->save();
                     }
+                    $reference->fundings()->attach($funding_in_db->id);
                 }
                 else {
-                    $funding_in_db = Funding::where('name', $f)
-                                                ->orWhere('name_fr', 'like', $f.'%')->first();
-                    if ($funding_in_db) {
-                        if ($funding_in_db->name == '') {
-                            $funding_in_db->name = $f;
+                    $new_funding = new Funding;
+                    $new_funding->name = $f;
 
-                            $funding_in_db->save();
-                        }
-                        $reference->fundings()->attach($funding_in_db->id);
-                    }
-                    else {
-                        $new_funding = new Funding;
-                        $new_funding->name = $f;
+                    $new_funding->save();
 
-                        $new_funding->save();
-
-                        $reference->fundings()->attach($new_funding->id);
-                    }
+                    $reference->fundings()->attach($new_funding->id);
                 }
             }
         }
 
         if ($request->financing_fr) {
             foreach ($request->financing_fr as $f) {
-                $linked_funding = $reference->fundings()->where('name', 'like', '%'.$f.'%')
-                                                        ->orWhere('name_fr', $f)->first();
-                dd($linked_funding);
-                if ($linked_funding) {
-                    if ($linked_funding->name_fr == '') {
-                        $linked_funding->name_fr = $f;
+                $funding_in_db = Funding::where('name', $f)
+                                            ->orWhere('name_fr', $f)->first();
+                if ($funding_in_db) {
+                    if ($funding_in_db->name_fr == '') {
+                        $funding_in_db->name_fr = $f;
 
-                        $linked_funding->save();
+                        $funding_in_db->save();
                     }
+                    $reference->fundings()->attach($funding_in_db->id);
                 }
                 else {
-                    $funding_in_db = Funding::where('name', 'like', $f.'%')
-                                                ->orWhere('name_fr', $f)->first();
-                    if ($funding_in_db) {
-                        if ($funding_in_db->name_fr == '') {
-                            $funding_in_db->name_fr = $f;
+                    $new_funding = new Funding;
+                    $new_funding->name_fr = $f;
 
-                            $linked_funding->save();
-                        }
-                        $reference->fundings()->attach($funding_in_db->id);
-                    }
-                    else {
-                        $new_funding = new Funding;
-                        $new_funding->name_fr = $f;
+                    $new_funding->save();
 
-                        $new_funding->save();
-
-                        $reference->fundings()->attach($new_funding->id);
-                    }
+                    $reference->fundings()->attach($new_funding->id);
                 }
             }
         }
+
+        //Detach all contributors
+        $reference->contributors()->detach();
+
+        //Attach the contributors
+        //Attach the involved staff
+        foreach ($request->involved_staff as $key => $value) {
+            if ($value != '') {
+                $staff_in_db = Contributor::where('name', $value)->first();
+
+                if ($staff_in_db) {
+                    $reference->contributors()->attach($staff_in_db->id, ['responsability_on_project'=>$request->involved_staff_function[$key]]);
+                }
+                else {
+                    $new_staff = new Contributor;
+                    $new_staff->name = $value;
+
+                    $new_staff->save();
+                    $reference->contributors()->attach($new_staff->id, ['responsability_on_project'=>$request->involved_staff_function[$key]]);
+                }
+            }
+        }
+
+        //Attach the experts
+        foreach ($request->experts as $key => $value) {
+            if ($value != '') {
+                $expert_in_db = Contributor::where('name', $value)->first();
+
+                if ($expert_in_db) {
+                    $reference->contributors()->attach($expert_in_db->id, ['responsability_on_project'=>$request->expert_functions[$key], 'function_on_project'=>'Expert']);
+                }
+                else {
+                    $new_expert = new Contributor;
+                    $new_expert->name = $value;
+
+                    $new_expert->save();
+                    $reference->contributors()->attach($new_expert->id, ['responsability_on_project'=>$request->expert_functions[$key], 'function_on_project'=>'Expert']);
+                }
+            }
+        }
+
 
         return redirect()->action('ReferenceController@index');
     }
@@ -978,6 +1068,7 @@ class ReferenceController extends Controller
             $reference->qualifiers()->detach();
             $reference->languages()->detach();
             $reference->fundings()->detach();
+            $reference->contributors()->detach();
         }
 
         Reference::destroy($ids);

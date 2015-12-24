@@ -53,21 +53,141 @@
 <div class="form-group">
 	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="involved_staff" name="involved_staff">
+		<div class="input-group">
+			<input type="text" class="form-control" id="involved_staff" name="involved_staff[]">
+			<span class="input-group-btn">
+				<button class="btn btn-default addButton" type="button">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
 	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="involved_experts" class="col-sm-4 control-label">Experts employed</label>
-	<div class="col-sm-4">
-		<input type="text" class="form-control" id="involved_experts" name="involved_experts">
+	<div class="col-sm-4 col-sm-offset-4">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]">
+		</div>
 	</div>
 	<div class="col-sm-4">
-		<input type="text" class="form-control" name="">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+		</div>
 	</div>
 </div>
 <!-- EO line -->
+
+<!-- The option field template containing an option field and a Remove button -->
+<!-- <div class="form-group hide" id="optionTemplate">
+    <div class="col-sm-offset-4 col-sm-4">
+        <input class="form-control nameInput" type="text"/>
+    </div>
+    <div class="col-sm-4">
+        <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Function</span>
+			<input id="function_input" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
+			<span class="input-group-btn">
+				<button class="btn btn-default removeButton" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+    </div>
+</div> -->
+<div class="hide template" id="optionTemplate">
+	<div class="form-group">
+	    <div class="col-sm-4 col-sm-offset-4">
+	    	<div class="input-group">
+	        <input id="name_input" class="form-control nameInput" type="text"/>
+		        <span class="input-group-btn">
+					<button class="btn btn-default removeButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</span>
+			</div>
+	    </div>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-offset-4 col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+				<input id="function_input" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	    <div class="col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+				<input id="function_input_fr" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	</div>
+</div>
+<hr></hr>
+<!-- Line -->
+<div class="form-group">
+	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
+	<div class="col-sm-4">
+		<div class="input-group">
+			<input type="text" class="form-control" id="experts" name="experts[]">
+			<span class="input-group-btn">
+				<button class="btn btn-default addExpertButton" type="button">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
+<!-- EO line -->
+<!-- Line -->
+<div class="form-group">
+	<div class="col-sm-4 col-sm-offset-4">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Profile</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]">
+		</div>
+	</div>
+	<div class="col-sm-4">
+	  <div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Profile</span>
+			<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+		</div>
+	</div>
+</div>
+<!-- EO line -->
+<div class="hide expertTemplate" id="expertTemplate">
+	<div class="form-group">
+	    <div class="col-sm-4 col-sm-offset-4">
+	    	<div class="input-group">
+	        <input id="name_input" class="form-control expertNameInput" type="text"/>
+		        <span class="input-group-btn">
+					<button class="btn btn-default removeExpertButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</span>
+			</div>
+	    </div>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-offset-4 col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Profile</span>
+				<input id="expert_functions_input" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	    <div class="col-sm-4">
+	        <div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Profile</span>
+				<input id="expert_functions_input_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="">
+			</div>
+	    </div>
+	</div>
+</div>
+
+<hr></hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
@@ -181,12 +301,12 @@
 <div class="form-group">
 	<label for="financing" class="col-sm-4 control-label">Financing</label>
 	<div class="col-sm-4">
-		<input id="test" type="text" data-role="tagsinput">
-	  	<!-- <select id="financing" multiple data-role="tagsinput" name="financing[]">
-		</select> -->
+	  	<select id="financing" class="form-control" multiple data-role="tagsinput" name="financing[]">
+		</select>
 	</div>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="financing_fr" name="financing_fr">
+		<select id="financing_fr" class="form-control" multiple data-role="tagsinput" name="financing_fr[]">
+		</select>
 	</div>
 </div>
 <!-- EO line -->
@@ -257,19 +377,25 @@
 	</a>
 </div>
 
-<div id="the-basics">
-  <input class="typeahead" type="text" placeholder="States of USA">
-</div>
-
 <script>
 	var languages = {!! $languages->toJson() !!};
+	var fundings_in_db = {!! $fundings->toJson() !!}
 
-	$('#test').tagsinput({
-	  typeahead: {
-	  	// items: 4,
-	    source: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo']
-	  }
-	});
+	// var fundings = [];
+	// var fundings_fr = [];
+
+	// for (var i = 0; i < fundings_in_db.length; i++) {
+	// 	fundings.push(fundings_in_db[i].name);
+	// 	if (fundings_in_db[i].name_fr != '') {
+	// 		fundings_fr.push(fundings_in_db[i].name_fr);
+	// 	};
+	// }
+
+	// $('#financing').tagsinput({
+	// 	typeahead: {
+	// 		source: fundings
+	// 	}
+	// });
 
 
 	// Array of checkboxes and their children
@@ -375,4 +501,40 @@
 	$('#contact_email_fr').keyup(function () {
 		$('#contact_email_en').val($('#contact_email_fr').val());
 	});
+
+	$('#form').on('click', '.addButton', function() {
+            var $template = $('#optionTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control nameInput"]').attr('name', 'involved_staff[]');
+            $('#function_input').attr('name', 'involved_staff_function[]');
+            $('#function_input_fr').attr('name', 'involved_staff_function_fr[]');
+        })
+		.on('click', '.removeButton', function() {
+            var $row    = $(this).closest('.template');
+
+            // Remove element containing the option
+            $row.remove();
+        });
+
+    $('#form').on('click', '.addExpertButton', function() {
+            var $template = $('#expertTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control expertNameInput"]').attr('name', 'experts[]');
+            $('#expert_functions_input').attr('name', 'expert_functions[]');
+            $('#expert_functions_input_fr').attr('name', 'expert_functions_fr[]');
+        })
+		.on('click', '.removeExpertButton', function() {
+            var $row    = $(this).closest('.expertTemplate');
+
+            // Remove element containing the option
+            $row.remove();
+        });
 </script>
