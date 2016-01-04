@@ -59,22 +59,24 @@
 				<div class="col-sm-4">
 		@else
 			<div class="template">
+				<br></br>
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
 			<div class="input-group">
-			<input type="text" class="form-control" id="involved_staff" name="involved_staff[]" value="{{ $staff_names[$i]['name'] }}">
-			<span class="input-group-btn">
-				@if ($i == 0)
-					<button class="btn btn-default addButton" type="button">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-					</button>
-				@else
-					<button class="btn btn-default removeButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					</button>
-				@endif
-			</span>
+				<span class="input-group-addon" id="basic-addon2">Name</span>
+				<input type="text" class="form-control" id="involved_staff" name="involved_staff[]" value="{{ $staff_name[$i]['name'] }}">
+				<span class="input-group-btn">
+					@if ($i == 0)
+						<button class="btn btn-default addButton" type="button">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						</button>
+					@else
+						<button class="btn btn-default removeButton" type="button">
+							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						</button>
+					@endif
+				</span>
 			</div>
 		</div>
 	</div>
@@ -84,13 +86,27 @@
 		<div class="col-sm-4 col-sm-offset-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}">
+				@if ($i == 0)
+					<input id="staff_function" type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}">
+				@else
+					<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}">
+				@endif
+				
 			</div>
 		</div>
 		<div class="col-sm-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+				@if ($i == 0)
+					<input id="staff_function_fr" type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+					<span class="input-group-btn">
+						<button id="clean_staff_fields" class="btn btn-default" type="button">
+							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						</button>
+					</span>
+				@else
+					<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+				@endif
 			</div>
 		</div>
 	</div>
@@ -105,6 +121,7 @@
 	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
 		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
 			<input type="text" class="form-control" id="involved_staff" name="involved_staff[]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
@@ -133,16 +150,19 @@
 
 @endif
 <!-- EO line -->
+<!-- The option field template containing an option field and a Remove button -->
 <div class="hide template" id="optionTemplate">
+	<br></br>
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
-	        <input id="name_input" class="form-control nameInput" type="text"/>
-	        <span class="input-group-btn">
-				<button class="btn btn-default removeButton" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-				</button>
-			</span>
+	    		<span class="input-group-addon" id="basic-addon2">Name</span>
+		        <input id="name_input" class="form-control nameInput" type="text"/>
+		        <span class="input-group-btn">
+					<button class="btn btn-default removeButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</span>
 			</div>
 	    </div>
 	</div>
@@ -172,22 +192,24 @@
 				<div class="col-sm-4">
 		@else
 			<div class="expertTemplate">
+				<br></br>
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
 			<div class="input-group">
-			<input type="text" class="form-control" id="experts" name="experts[]" value="{{ $expert_names[$i]['name'] }}">
-			<span class="input-group-btn">
-				@if ($i == 0)
-					<button class="btn btn-default addExpertButton" type="button">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-					</button>
-				@else
-					<button class="btn btn-default removeExpertButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					</button>
-				@endif
-			</span>
+				<span class="input-group-addon" id="basic-addon2">Name</span>
+				<input type="text" class="form-control" id="experts" name="experts[]" value="{{ $experts_name[$i]['name'] }}">
+				<span class="input-group-btn">
+					@if ($i == 0)
+						<button class="btn btn-default addExpertButton" type="button">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						</button>
+					@else
+						<button class="btn btn-default removeExpertButton" type="button">
+							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						</button>
+					@endif
+				</span>
 			</div>
 		</div>
 	</div>
@@ -197,13 +219,26 @@
 		<div class="col-sm-4 col-sm-offset-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}">
+				@if ($i == 0)
+					<input id="expert_function" type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}">
+				@else
+					<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}">
+				@endif
 			</div>
 		</div>
 		<div class="col-sm-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+				@if ($i == 0)
+					<input id="expert_function_fr" type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+					<span class="input-group-btn">
+						<button id="clean_expert_fields" class="btn btn-default" type="button">
+							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						</button>
+					</span>
+				@else
+					<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+				@endif
 			</div>
 		</div>
 	</div>
@@ -218,6 +253,7 @@
 	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
 	<div class="col-sm-4">
 		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
 			<input type="text" class="form-control" id="experts" name="experts[]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addExpertButton" type="button">
@@ -246,16 +282,19 @@
 <!-- EO line -->
 @endif
 <!-- EO line -->
+<!-- The option field template containing an option field and a Remove button -->
 <div class="hide expertTemplate" id="expertTemplate">
+	<br></br>
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
-	        <input id="expert_name_input" class="form-control expertNameInput" type="text"/>
-	        <span class="input-group-btn">
-				<button class="btn btn-default removeExpertButton" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-				</button>
-			</span>
+	    		<span class="input-group-addon" id="basic-addon2">Name</span>
+		        <input id="expert_name_input" class="form-control expertNameInput" type="text"/>
+		        <span class="input-group-btn">
+					<button class="btn btn-default removeExpertButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</span>
 			</div>
 	    </div>
 	</div>
@@ -305,14 +344,82 @@
 	  </div>
 </div>
 <!-- EO line -->
+<hr></hr>
 <!-- Line -->
+@if (count($consultants) > 0)
+	@for ($i=0; $i < count($consultants); $i++)
+		@if ($i == 0)
+			<div class="form-group">
+				<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<input type="text" class="form-control" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}">
+						<span class="input-group-btn">
+							<button class="btn btn-default addConsultantButton" type="button">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<button id="clean_consultant" class="btn btn-default" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+		@else
+			<div class="form-group consultantsTemplate">
+			    <div class="col-sm-4 col-sm-offset-4">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<input type="text" class="form-control consultantInput" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}">
+						<span class="input-group-btn">
+							<button class="btn btn-default removeConsultantButton" type="button">
+								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		@endif
+	@endfor
+@else
 <div class="form-group">
 	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 	<div class="col-sm-4">
-		<input type="text" class="form-control" id="involved_consultants" name="involved_consultants">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control" id="involved_consultants" name="consultants[]">
+			<span class="input-group-btn">
+				<button class="btn btn-default addConsultantButton" type="button">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<button id="clean_consultant" class="btn btn-default hide" type="button">
+			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+		</button>
 	</div>
 </div>
 <!-- EO line -->
+@endif
+<!-- The option field template containing an option field and a Remove button -->
+<div class="form-group hide consultantsTemplate" id="consultantsTemplate">
+    <div class="col-sm-4 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control consultantInput" id="involved_consultants">
+			<span class="input-group-btn">
+				<button class="btn btn-default removeConsultantButton" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
 <!-- Line -->
 <div class="form-group">
 	<div class="checkbox col-sm-4 col-sm-offset-4">
@@ -387,44 +494,114 @@
 	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
 	@if ($client != null)
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="client_name" name="client_name_en" value="{{ $client->name }}">
+			<input type="text" class="form-control" id="client_name" name="client_name_en" value="{{ $client->name }}">
 		</div>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="client_name_fr" name="client_name_fr" value="{{ $client->name }}">
+		  	<input type="text" class="form-control" id="client_name_fr" name="client_name_fr" value="{{ $client->name }}">
 		</div>
 	@else
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="client_name" name="client_name_en" value="">
+		  	<input type="text" class="form-control" id="client_name" name="client_name_en" value="">
 		</div>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="client_name_fr" name="client_name_fr" value="">
+		  	<input type="text" class="form-control" id="client_name_fr" name="client_name_fr" value="">
 		</div>
 	@endif
 </div>
 <!-- EO line -->
+<hr></hr>
 <!-- Line -->
-<div class="form-group">
-	<label for="financing" class="col-sm-4 control-label">Financing</label>
-	<div class="col-sm-4">
-		<select id="financing" multiple data-role="tagsinput" name="financing[]">
-			@foreach ($reference->fundings as $funding)
-				@if($funding->name != '')
-					<option value="{{ $funding->name }}">{{ $funding->name }}</option>
-				@endif
-			@endforeach
-		</select>
+@if( count( $financings ) > 0 )
+	@for ($i = 0; $i < count( $financings ); $i++)
+		@if ($i == 0)
+			<div class="form-group">
+				<label for="financing" class="col-sm-4 control-label">Financing</label>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">Name</span>
+					  	<input type="text" class="form-control" name="financing[]" value="{{ $financings[$i]->name }}">
+				  	</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<input type="text" class="form-control" name="financing_fr[]" value="{{ $financings[$i]->name_fr }}">
+						<span class="input-group-btn">
+							<button class="btn btn-default addFinancingButton" type="button">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		@else
+			<div class="form-group financingsTemplate">
+				<div class="col-sm-4 col-sm-offset-4">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">Name</span>
+					  	<input type="text" class="form-control" name="financing[]" value="{{ $financings[$i]->name }}">
+				  	</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<input type="text" class="form-control" name="financing_fr[]" value="{{ $financings[$i]->name_fr }}">
+						<span class="input-group-btn">
+							<button class="btn btn-default removeFinancingButton" type="button">
+								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		@endif
+	@endfor
+@else
+	<div class="form-group">
+		<label for="financing" class="col-sm-4 control-label">Financing</label>
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Name</span>
+			  	<input type="text" class="form-control" name="financing[]">
+		  	</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">Name</span>
+				<input type="text" class="form-control" name="financing_fr[]">
+				<span class="input-group-btn">
+					<button class="btn btn-default addFinancingButton" type="button">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+@endif
+
+<!-- EO line -->
+<!-- The option field template containing an option field and a Remove button -->
+<div class="form-group hide financingsTemplate" id="financingsTemplate">
+    <div class="col-sm-4 col-sm-offset-4">
+    	<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control financingInput">
+		</div>
 	</div>
 	<div class="col-sm-4">
-		<select id="financing_fr" multiple data-role="tagsinput" name="financing_fr[]">
-			@foreach ($reference->fundings as $funding)
-				@if ($funding->name_fr != '')
-					<option value="{{ $funding->name_fr }}">{{ $funding->name_fr }}</option>
-				@endif
-			@endforeach
-		</select>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control financingFrInput" id="financing_fr_input">
+			<span class="input-group-btn">
+				<button class="btn btn-default removeFinancingButton" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
 	</div>
 </div>
 <!-- EO line -->
+<hr></hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
@@ -667,4 +844,62 @@
             // Remove element containing the option
             $row.remove();
         });
+
+    $('#form').on('click', '.addConsultantButton', function() {
+            var $template = $('#consultantsTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control consultantInput"]').attr('name', 'consultants[]');
+        })
+		.on('click', '.removeConsultantButton', function() {
+            var $row    = $(this).closest('.consultantsTemplate');
+
+            // Remove element containing the option
+            $row.remove();
+        });
+
+    $('#form').on('click', '.addFinancingButton', function() {
+            var $template = $('#financingsTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control financingInput"]').attr('name', 'financing[]');
+                $('#financing_fr_input').attr('name', 'financing_fr[]').removeAttr('id');
+        })
+		.on('click', '.removeFinancingButton', function() {
+            var $row    = $(this).closest('.financingsTemplate');
+
+            // Remove element containing the option
+            $row.remove();
+        });
+
+    $('#clean_staff_fields').click( function () {
+    	$('#involved_staff').val('');
+    	$('#staff_function').val('');
+    	$('#staff_function_fr').val('');
+    });
+
+    $('#clean_expert_fields').click( function () {
+    	$('#experts').val('');
+    	$('#expert_function').val('');
+    	$('#expert_function_fr').val('');
+    });
+
+    $('#involved_consultants').keyup( function () {
+    	if ($('#involved_consultants').val() != '') {
+			$('#clean_consultant').removeClass('hide');
+    	}
+    	else {
+    		$('#clean_consultant').addClass('hide');
+    	}
+    });
+
+    $('#clean_consultant').click( function () {
+    	$('#involved_consultants').val('');
+    });
 </script>

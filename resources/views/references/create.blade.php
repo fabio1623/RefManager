@@ -55,15 +55,6 @@
 				<div id="language_menu" class="tab-pane fade">
 					@include("references.create.english.lang_layout")
 				</div>
-
-				@for ($i=2; $i < count($languages); $i++)
-					<div id="{{ strtolower($languages[$i]->name) }}_menu" class="tab-pane fade">
-						<h3>{{ $languages[$i]->name }} translation</h3>
-						<hr></hr>
-						@include("references.create.english.languages")
-					</div>					
-				@endfor
-
 			</div>
 			<!-- /#menu content -->
 		</form>

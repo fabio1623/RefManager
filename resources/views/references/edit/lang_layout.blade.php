@@ -1,4 +1,4 @@
-<ul id="language_nav" class="nav nav-tabs">
+<ul class="nav nav-tabs">
 	@for ($i=0; $i < count($languages); $i++)
 		@if ($i==0)
 			<li role="presentation" class="active"><a data-toggle="tab" href="#{{ $languages[$i]->name }}_menu"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> {{ $languages[$i]->name }}</a></li>		
@@ -9,20 +9,19 @@
 </ul>
 
 <!-- Content menu -->
-<div id="language_menu" class="tab-content col-sm-12">
+<div class="tab-content col-sm-12">
 	
 	@for ($i=0; $i < count($languages); $i++)
 		@if($i==0)
 			<div id="{{ $languages[$i]->name }}_menu" class="tab-pane fade in active">
 				<h3></h3>
-				@include("references.create.english.languages")
+				@include("references.edit.languages")
 			</div>
 		@else
 			<div id="{{ $languages[$i]->name }}_menu" class="tab-pane fade">
 				<h3></h3>
-				@include("references.create.english.languages")
+				@include("references.edit.languages")
 			</div>
 		@endif
 	@endfor
-	
 </div>

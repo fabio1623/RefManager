@@ -54,6 +54,7 @@
 	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
 		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
 			<input type="text" class="form-control" id="involved_staff" name="involved_staff[]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
@@ -69,13 +70,18 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]">
+			<input id="staff_function" type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+			<input id="staff_function_fr" type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+			<span class="input-group-btn">
+				<button id="clean_staff_fields" class="btn btn-default" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
 		</div>
 	</div>
 </div>
@@ -98,16 +104,19 @@
 		</div>
     </div>
 </div> -->
+<!-- The option field template containing an option field and a Remove button -->
 <div class="hide template" id="optionTemplate">
+	<br></br>
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
+	    		<span class="input-group-addon" id="basic-addon2">Name</span>
 	        <input id="name_input" class="form-control nameInput" type="text"/>
-		        <span class="input-group-btn">
+		        <!-- <span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 					</button>
-				</span>
+				</span> -->
 			</div>
 	    </div>
 	</div>
@@ -122,6 +131,11 @@
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
 				<input id="function_input_fr" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="">
+				<span class="input-group-btn">
+					<button class="btn btn-default removeButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</span>
 			</div>
 	    </div>
 	</div>
@@ -132,6 +146,7 @@
 	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
 	<div class="col-sm-4">
 		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
 			<input type="text" class="form-control" id="experts" name="experts[]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addExpertButton" type="button">
@@ -147,27 +162,35 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]">
+			<input id="expert_function" type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+			<input id="expert_function_fr" type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+			<span class="input-group-btn">
+				<button id="clean_expert_fields" class="btn btn-default" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
 		</div>
 	</div>
 </div>
 <!-- EO line -->
+<!-- The option field template containing an option field and a Remove button -->
 <div class="hide expertTemplate" id="expertTemplate">
+	<br></br>
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
+	    		<span class="input-group-addon" id="basic-addon2">Name</span>
 	        <input id="name_input" class="form-control expertNameInput" type="text"/>
-		        <span class="input-group-btn">
+		        <!-- <span class="input-group-btn">
 					<button class="btn btn-default removeExpertButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 					</button>
-				</span>
+				</span> -->
 			</div>
 	    </div>
 	</div>
@@ -182,6 +205,11 @@
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
 				<input id="expert_functions_input_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="">
+				<span class="input-group-btn">
+					<button class="btn btn-default removeExpertButton" type="button">
+						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					</button>
+				</span>
 			</div>
 	    </div>
 	</div>
@@ -218,14 +246,42 @@
 	  </div>
 </div>
 <!-- EO line -->
+<hr></hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 	<div class="col-sm-4">
-		<input type="text" class="form-control" id="involved_consultants" name="involved_consultants">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control" id="involved_consultants" name="consultants[]">
+			<span class="input-group-btn">
+				<button class="btn btn-default addConsultantButton" type="button">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<button id="clean_consultant" class="btn btn-default hide" type="button">
+			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+		</button>
 	</div>
 </div>
 <!-- EO line -->
+<!-- The option field template containing an option field and a Remove button -->
+<div class="form-group hide consultantsTemplate" id="consultantsTemplate">
+    <div class="col-sm-4 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control consultantInput">
+			<span class="input-group-btn">
+				<button class="btn btn-default removeConsultantButton" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
 <!-- Line -->
 <div class="form-group">
 	<div class="checkbox col-sm-4 col-sm-offset-4">
@@ -297,19 +353,51 @@
 	</div>
 </div>
 <!-- EO line -->
+<hr></hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="financing" class="col-sm-4 control-label">Financing</label>
 	<div class="col-sm-4">
-	  	<select id="financing" class="form-control" multiple data-role="tagsinput" name="financing[]">
-		</select>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+		  	<input type="text" class="form-control" name="financing[]">
+	  	</div>
 	</div>
 	<div class="col-sm-4">
-		<select id="financing_fr" class="form-control" multiple data-role="tagsinput" name="financing_fr[]">
-		</select>
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control" name="financing_fr[]">
+			<span class="input-group-btn">
+				<button class="btn btn-default addFinancingButton" type="button">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
 	</div>
 </div>
 <!-- EO line -->
+<!-- The option field template containing an option field and a Remove button -->
+<div class="form-group hide financingsTemplate" id="financingsTemplate">
+    <div class="col-sm-4 col-sm-offset-4">
+    	<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control financingInput">
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<input type="text" class="form-control financingFrInput" id="financing_fr_input">
+			<span class="input-group-btn">
+				<button class="btn btn-default removeFinancingButton" type="button">
+					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
+
+<hr></hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
@@ -320,7 +408,6 @@
 			  <option>Euros</option>
 			  <option>Dollars</option>
 			</select>
-		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->
 		</div>
 	</div>
 </div>
@@ -381,7 +468,7 @@
 	var languages = {!! $languages->toJson() !!};
 	var fundings_in_db = {!! $fundings->toJson() !!}
 
-	// var fundings = [];
+	var fundings = ['hello', 'Welcome'];
 	// var fundings_fr = [];
 
 	// for (var i = 0; i < fundings_in_db.length; i++) {
@@ -390,12 +477,6 @@
 	// 		fundings_fr.push(fundings_in_db[i].name_fr);
 	// 	};
 	// }
-
-	// $('#financing').tagsinput({
-	// 	typeahead: {
-	// 		source: fundings
-	// 	}
-	// });
 
 
 	// Array of checkboxes and their children
@@ -424,44 +505,44 @@
 		}
 	});
 
-	var staff = [];
-	$('#involved_staff').change(function () {
-		$('#seniors_list').empty();
-		val = $('#involved_staff').selectpicker('val');
-		staff[0] = val;
+	// var staff = [];
+	// $('#involved_staff').change(function () {
+	// 	$('#seniors_list').empty();
+	// 	val = $('#involved_staff').selectpicker('val');
+	// 	staff[0] = val;
 
-		if (staff[0] != null) {
-			for (var i = 0; i < staff[0].length; i++) {
-				$("#seniors_list").append('<a href="#" class="list-group-item">' + staff[0][i] +'</a>');
-			};
-		};
-	});
+	// 	if (staff[0] != null) {
+	// 		for (var i = 0; i < staff[0].length; i++) {
+	// 			$("#seniors_list").append('<a href="#" class="list-group-item">' + staff[0][i] +'</a>');
+	// 		};
+	// 	};
+	// });
 
-	var experts = [];
-	$('#involved_experts').change(function () {
-		$('#experts_list').empty();
-		val = $('#involved_experts').selectpicker('val');
-		experts[0] = val;
+	// var experts = [];
+	// $('#involved_experts').change(function () {
+	// 	$('#experts_list').empty();
+	// 	val = $('#involved_experts').selectpicker('val');
+	// 	experts[0] = val;
 
-		if (experts[0] != null) {
-			for (var i = 0; i < experts[0].length; i++) {
-				$("#experts_list").append('<a href="#" class="list-group-item">' + experts[0][i] +'</a>');
-			};
-		};
-	});
+	// 	if (experts[0] != null) {
+	// 		for (var i = 0; i < experts[0].length; i++) {
+	// 			$("#experts_list").append('<a href="#" class="list-group-item">' + experts[0][i] +'</a>');
+	// 		};
+	// 	};
+	// });
 
-	var consultants = [];
-	$('#involved_consultants').change(function () {
-		$('#consultants_list').empty();
-		val = $('#involved_consultants').selectpicker('val');
-		consultants[0] = val;
+	// var consultants = [];
+	// $('#involved_consultants').change(function () {
+	// 	$('#consultants_list').empty();
+	// 	val = $('#involved_consultants').selectpicker('val');
+	// 	consultants[0] = val;
 
-		if (consultants[0] != null) {
-			for (var i = 0; i < consultants[0].length; i++) {
-				$("#consultants_list").append('<a href="#" class="list-group-item">' + consultants[0][i] +'</a>');
-			};
-		};
-	});
+	// 	if (consultants[0] != null) {
+	// 		for (var i = 0; i < consultants[0].length; i++) {
+	// 			$("#consultants_list").append('<a href="#" class="list-group-item">' + consultants[0][i] +'</a>');
+	// 		};
+	// 	};
+	// });
 
 	$('#project_cost_select').change( function () {
 		$('#services_cost_select').selectpicker('val', $('#project_cost_select').val());
@@ -510,8 +591,8 @@
                                 .removeAttr('id')
                                 .insertBefore($template)
                                 .find('[class="form-control nameInput"]').attr('name', 'involved_staff[]');
-            $('#function_input').attr('name', 'involved_staff_function[]');
-            $('#function_input_fr').attr('name', 'involved_staff_function_fr[]');
+            $('#function_input').attr('name', 'involved_staff_function[]').removeAttr('id');
+            $('#function_input_fr').attr('name', 'involved_staff_function_fr[]').removeAttr('id');
         })
 		.on('click', '.removeButton', function() {
             var $row    = $(this).closest('.template');
@@ -528,8 +609,8 @@
                                 .removeAttr('id')
                                 .insertBefore($template)
                                 .find('[class="form-control expertNameInput"]').attr('name', 'experts[]');
-            $('#expert_functions_input').attr('name', 'expert_functions[]');
-            $('#expert_functions_input_fr').attr('name', 'expert_functions_fr[]');
+            $('#expert_functions_input').attr('name', 'expert_functions[]').removeAttr('id');
+            $('#expert_functions_input_fr').attr('name', 'expert_functions_fr[]').removeAttr('id');
         })
 		.on('click', '.removeExpertButton', function() {
             var $row    = $(this).closest('.expertTemplate');
@@ -537,4 +618,64 @@
             // Remove element containing the option
             $row.remove();
         });
+
+    $('#form').on('click', '.addConsultantButton', function() {
+            var $template = $('#consultantsTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control consultantInput"]').attr('name', 'consultants[]');
+        })
+		.on('click', '.removeConsultantButton', function() {
+            var $row    = $(this).closest('.consultantsTemplate');
+
+            // Remove element containing the option
+            $row.remove();
+        });
+
+    $('#form').on('click', '.addFinancingButton', function() {
+            var $template = $('#financingsTemplate'),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertBefore($template)
+                                .find('[class="form-control financingInput"]').attr('name', 'financing[]');
+                $('#financing_fr_input').attr('name', 'financing_fr[]').removeAttr('id');
+        })
+		.on('click', '.removeFinancingButton', function() {
+            var $row    = $(this).closest('.financingsTemplate');
+
+            // Remove element containing the option
+            $row.remove();
+        });
+
+    $('#clean_staff_fields').click( function () {
+    	$('#involved_staff').val('');
+    	$('#staff_function').val('');
+    	$('#staff_function_fr').val('');
+    });
+
+    $('#clean_expert_fields').click( function () {
+    	$('#experts').val('');
+    	$('#expert_function').val('');
+    	$('#expert_function_fr').val('');
+    });
+
+    $('#involved_consultants').keyup( function () {
+    	if ($('#involved_consultants').val() != '') {
+			$('#clean_consultant').removeClass('hide');
+    	}
+    	else {
+    		$('#clean_consultant').addClass('hide');
+    	}
+    });
+
+    $('#clean_consultant').click( function () {
+    	$('#involved_consultants').val('');
+    	$('#clean_consultant').addClass('hide');
+    });
+    
 </script>

@@ -12,41 +12,20 @@
 				<!-- Button toolbar -->
 				<div class="col-sm-4 pull-right">
 					<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
-						<div class="btn-group" role="group" aria-label="...">
-							<!-- <button id="glob_icon" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></button>
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#english_menu">English</button>
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#french_menu">French</button>
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#spanish_menu">Spanish</button>
-							<button type="button" class="btn btn-primary" data-toggle="tab" href="#portuguese_menu">Portuguese</button> -->
-							@if (count($languages) > 2)
-								@for ($i=2; $i < count($languages); $i++)
-									<button type="button" class="btn btn-primary" data-toggle="tab" href="#{{ strtolower($languages[$i]->name) }}_menu">{{ $languages[$i]->name }}</button>	
-								@endfor
-							@else
-								<div class="btn-group">
-								  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-								    Languages <span class="caret"></span>
-								  </button>
-								  <ul class="dropdown-menu">
-								  	@foreach ($languages as $language)
-								  		<li><a data-toggle="tab" href="#{{ strtolower($language->name) }}_menu">{{ $language->name }}</a></li>
-								  	@endforeach
-								    <!-- <li><a href="#">Action</a></li>
-								    <li><a href="#">Another action</a></li>
-								    <li><a href="#">Something else here</a></li>
-								    <li role="separator" class="divider"></li>
-								    <li><a href="#">Separated link</a></li> -->
-								  </ul>
-								</div>
-							@endif
+						<div id="toolbar" class="btn-group" role="group" aria-label="...">
+
+							<button id="base_btn" type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
+							  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
+							</button>
+							<button id="language_btn" type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
+							  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Languages
+							</button>
+							<button id='btn_language_selector' type="button" class="btn btn-primary btn-sm hidden">
+							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</button>
+
 						</div>
 					</div>
-				</div>
-				<!-- /#button toolbar -->
-				<div class="sm-1 pull-right">
-					<button type="button" class="btn btn-primary" aria-label="Left Align" data-toggle="tab" href="#base_menu">
-					  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
-					</button>
 				</div>				
 			</div>
 		</h3>
@@ -74,17 +53,9 @@
 					@include("references.edit.layout")
 				</div>
 				<!-- /#base menu content -->
-
-				@for ($i=2; $i < count($languages); $i++)
-					<div id="{{ strtolower($languages[$i]->name) }}_menu" class="tab-pane fade">
-						<h3>{{ $languages[$i]->name }} translation</h3>
-						<hr></hr>
-						@include("references.create.english.languages")
-					</div>					
-				@endfor
-
-				
-
+				<div id="language_menu" class="tab-pane fade">
+					@include("references.edit.lang_layout")
+				</div>
 			</div>
 			<!-- /#menu content -->
 		</form>
@@ -94,25 +65,42 @@
 
 <script>
 	// Show description pane
-	$('.drop_description').click(function (e) {
-		e.preventDefault()
-		// Select tab by name
-		$('.nav-tabs a[href="#description_menu"]').tab('show')
-	})
+	// $('.drop_description').click(function (e) {
+	// 	e.preventDefault()
+	// 	// Select tab by name
+	// 	$('.nav-tabs a[href="#description_menu"]').tab('show')
+	// });
 
-	// Show criteria pane
-	$('.drop_criteria').click(function (e) {
-		/*e.preventDefault()*/
-		// Select tab by name
-		$('.nav-tabs a[href="#criteria_menu"]').tab('show')
-	})
+	// // Show criteria pane
+	// $('.drop_criteria').click(function (e) {
+	// 	/*e.preventDefault()*/
+	// 	// Select tab by name
+	// 	$('.nav-tabs a[href="#criteria_menu"]').tab('show')
+	// });
 
-	// Show measure pane
-	$('.drop_measure').click(function (e) {
-		e.preventDefault()
-		// Select tab by name
-		$('.nav-tabs a[href="#measure_menu"]').tab('show')
-	})
+	// // Show measure pane
+	// $('.drop_measure').click(function (e) {
+	// 	e.preventDefault()
+	// 	// Select tab by name
+	// 	$('.nav-tabs a[href="#measure_menu"]').tab('show')
+	// }):
+
+	$('#language_btn').click( function () {
+		$('#base_btn').attr("class", "btn btn-primary btn-sm");
+		$(this).attr("class", "btn btn-primary btn-sm active");
+		$('#btn_language_selector').attr("class", "btn btn-primary btn-sm");
+	});
+
+	$('#base_btn').click( function () {
+		$('#language_btn').attr("class", "btn btn-primary btn-sm");
+		$(this).attr("class", "btn btn-primary btn-sm active");
+		$('#btn_language_selector').attr("class", "btn btn-primary btn-sm hidden");
+	});
+
+	$('#btn_language_selector').click(function () {
+		$('#select_language_modal').modal();
+		// $('.lang_tab').removeClass('active');
+	});
 </script>
 
 @endsection

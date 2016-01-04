@@ -251,14 +251,14 @@
 
 	$('#confidential_check').change(function () {
 		if (this.checked) {
-			$('#criteria_pane').hide("fast");
-			$('#quantities_pane').hide("fast");
-			$('#details_pane').hide("fast");
+			$('#criteria_pane').addClass("hide");
+			$('#quantities_pane').addClass("hide");
+			$('#details_pane').addClass("hide");
 		}
 		else {
-			$('#criteria_pane').show("fast");
-			$('#quantities_pane').show("fast");
-			$('#details_pane').show("fast");	
+			$('#criteria_pane').removeClass("hide");
+			$('#quantities_pane').removeClass("hide");
+			$('#details_pane').removeClass("hide");
 		}
 	});
 	

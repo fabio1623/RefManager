@@ -86,6 +86,143 @@ class ReferenceController extends Controller
         //                                 ->first()
         //                                 ->subServices()->get();
 
+        $language_codes = array(
+        'en' => 'English' , 
+        'aa' => 'Afar' , 
+        'ab' => 'Abkhazian' , 
+        'af' => 'Afrikaans' , 
+        'am' => 'Amharic' , 
+        'ar' => 'Arabic' , 
+        'as' => 'Assamese' , 
+        'ay' => 'Aymara' , 
+        'az' => 'Azerbaijani' , 
+        'ba' => 'Bashkir' , 
+        'be' => 'Byelorussian' , 
+        'bg' => 'Bulgarian' , 
+        'bh' => 'Bihari' , 
+        'bi' => 'Bislama' , 
+        'bn' => 'Bengali/Bangla' , 
+        'bo' => 'Tibetan' , 
+        'br' => 'Breton' , 
+        'ca' => 'Catalan' , 
+        'co' => 'Corsican' , 
+        'cs' => 'Czech' , 
+        'cy' => 'Welsh' , 
+        'da' => 'Danish' , 
+        'de' => 'German' , 
+        'dz' => 'Bhutani' , 
+        'el' => 'Greek' , 
+        'eo' => 'Esperanto' , 
+        'es' => 'Spanish' , 
+        'et' => 'Estonian' , 
+        'eu' => 'Basque' , 
+        'fa' => 'Persian' , 
+        'fi' => 'Finnish' , 
+        'fj' => 'Fiji' , 
+        'fo' => 'Faeroese' , 
+        'fr' => 'French' , 
+        'fy' => 'Frisian' , 
+        'ga' => 'Irish' , 
+        'gd' => 'Scots/Gaelic' , 
+        'gl' => 'Galician' , 
+        'gn' => 'Guarani' , 
+        'gu' => 'Gujarati' , 
+        'ha' => 'Hausa' , 
+        'hi' => 'Hindi' , 
+        'hr' => 'Croatian' , 
+        'hu' => 'Hungarian' , 
+        'hy' => 'Armenian' , 
+        'ia' => 'Interlingua' , 
+        'ie' => 'Interlingue' , 
+        'ik' => 'Inupiak' , 
+        'in' => 'Indonesian' , 
+        'is' => 'Icelandic' , 
+        'it' => 'Italian' , 
+        'iw' => 'Hebrew' , 
+        'ja' => 'Japanese' , 
+        'ji' => 'Yiddish' , 
+        'jw' => 'Javanese' , 
+        'ka' => 'Georgian' , 
+        'kk' => 'Kazakh' , 
+        'kl' => 'Greenlandic' , 
+        'km' => 'Cambodian' , 
+        'kn' => 'Kannada' , 
+        'ko' => 'Korean' , 
+        'ks' => 'Kashmiri' , 
+        'ku' => 'Kurdish' , 
+        'ky' => 'Kirghiz' , 
+        'la' => 'Latin' , 
+        'ln' => 'Lingala' , 
+        'lo' => 'Laothian' , 
+        'lt' => 'Lithuanian' , 
+        'lv' => 'Latvian/Lettish' , 
+        'mg' => 'Malagasy' , 
+        'mi' => 'Maori' , 
+        'mk' => 'Macedonian' , 
+        'ml' => 'Malayalam' , 
+        'mn' => 'Mongolian' , 
+        'mo' => 'Moldavian' , 
+        'mr' => 'Marathi' , 
+        'ms' => 'Malay' , 
+        'mt' => 'Maltese' , 
+        'my' => 'Burmese' , 
+        'na' => 'Nauru' , 
+        'ne' => 'Nepali' , 
+        'nl' => 'Dutch' , 
+        'no' => 'Norwegian' , 
+        'oc' => 'Occitan' , 
+        'om' => '(Afan)/Oromoor/Oriya' , 
+        'pa' => 'Punjabi' , 
+        'pl' => 'Polish' , 
+        'ps' => 'Pashto/Pushto' , 
+        'pt' => 'Portuguese' , 
+        'qu' => 'Quechua' , 
+        'rm' => 'Rhaeto-Romance' , 
+        'rn' => 'Kirundi' , 
+        'ro' => 'Romanian' , 
+        'ru' => 'Russian' , 
+        'rw' => 'Kinyarwanda' , 
+        'sa' => 'Sanskrit' , 
+        'sd' => 'Sindhi' , 
+        'sg' => 'Sangro' , 
+        'sh' => 'Serbo-Croatian' , 
+        'si' => 'Singhalese' , 
+        'sk' => 'Slovak' , 
+        'sl' => 'Slovenian' , 
+        'sm' => 'Samoan' , 
+        'sn' => 'Shona' , 
+        'so' => 'Somali' , 
+        'sq' => 'Albanian' , 
+        'sr' => 'Serbian' , 
+        'ss' => 'Siswati' , 
+        'st' => 'Sesotho' , 
+        'su' => 'Sundanese' , 
+        'sv' => 'Swedish' , 
+        'sw' => 'Swahili' , 
+        'ta' => 'Tamil' , 
+        'te' => 'Tegulu' , 
+        'tg' => 'Tajik' , 
+        'th' => 'Thai' , 
+        'ti' => 'Tigrinya' , 
+        'tk' => 'Turkmen' , 
+        'tl' => 'Tagalog' , 
+        'tn' => 'Setswana' , 
+        'to' => 'Tonga' , 
+        'tr' => 'Turkish' , 
+        'ts' => 'Tsonga' , 
+        'tt' => 'Tatar' , 
+        'tw' => 'Twi' , 
+        'uk' => 'Ukrainian' , 
+        'ur' => 'Urdu' , 
+        'uz' => 'Uzbek' , 
+        'vi' => 'Vietnamese' , 
+        'vo' => 'Volapuk' , 
+        'wo' => 'Wolof' , 
+        'xh' => 'Xhosa' , 
+        'yo' => 'Yoruba' , 
+        'zh' => 'Chinese' , 
+        'zu' => 'Zulu' , 
+        );
         $languages = Language::all();
         $external_services = ExternalService::all();
         $internal_services = InternalService::all();
@@ -648,11 +785,30 @@ class ReferenceController extends Controller
                     $reference->contributors()->attach($expert_in_db->id, ['responsability_on_project'=>$request->expert_functions[$key], 'function_on_project'=>'Expert']);
                 }
                 else {
-                    $new_staff = new Contributor;
-                    $new_staff->name = $value;
+                    $new_expert = new Contributor;
+                    $new_expert->name = $value;
 
-                    $new_staff->save();
-                    $reference->contributors()->attach($new_staff->id, ['responsability_on_project'=>$request->expert_functions[$key], 'function_on_project'=>'Expert']);
+                    $new_expert->save();
+                    $reference->contributors()->attach($new_expert->id, ['responsability_on_project'=>$request->expert_functions[$key], 'function_on_project'=>'Expert']);
+                }
+            }
+        }
+
+        //Attach the consultants
+        foreach ($request->consultants as $key => $value) {
+            if ($value != '') {
+                $consultant_in_db = Contributor::where('name', $value)->first();
+
+                if ($consultant_in_db) {
+                    $reference->contributors()->attach($consultant_in_db->id, ['function_on_project'=>'Consultant']);
+                }
+                else {
+                    $new_consultant = new Contributor;
+                    $new_consultant->name = $value;
+
+                    $new_consultant->save();
+
+                    $reference->contributors()->attach($new_consultant->id, ['function_on_project'=>'Consultant']);
                 }
             }
         }
@@ -697,12 +853,16 @@ class ReferenceController extends Controller
         $staff_involved = ContributorReference::where('reference_id', $reference->id)
                                                 ->where('function_on_project', 'Senior')->get();
 
-        $staff_names = $reference->contributors()->where('function_on_project', 'Senior')->get();
+        $staff_name = $reference->contributors()->where('function_on_project', 'Senior')->get();
 
         $experts = ContributorReference::where('reference_id', $reference->id)
                                             ->where('function_on_project', 'Expert')->get();
 
-        $expert_names = $reference->contributors()->where('function_on_project', 'Expert')->get();
+        $experts_name = $reference->contributors()->where('function_on_project', 'Expert')->get();
+
+        $consultants = $reference->contributors()->where('function_on_project', 'Consultant')->get();
+
+        $financings = $reference->fundings()->get();
         
         // dd($staff_names);
 
@@ -714,7 +874,7 @@ class ReferenceController extends Controller
         $countries = Country::orderBy('name', 'asc')->get();
         $zones = Zone::orderBy('name','asc')->get();
 
-        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_names'=>$staff_names, 'experts'=>$experts, 'expert_names'=>$expert_names]);
+        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings]);
         
         return $view;
     }
@@ -957,7 +1117,7 @@ class ReferenceController extends Controller
         //Detach all fundings
         $reference->fundings()->detach();
 
-        //Attach the translations to the reference
+        //Attach the fundings to the reference
         if ($request->financing) {
             foreach ($request->financing as $f) {
                 $funding_in_db = Funding::where('name', $f)
@@ -991,7 +1151,11 @@ class ReferenceController extends Controller
 
                         $funding_in_db->save();
                     }
-                    $reference->fundings()->attach($funding_in_db->id);
+                    $linked_funding = $reference->fundings()->where('name', $funding_in_db->name)
+                                                            ->orWhere('name_fr', $funding_in_db->name_fr)->first();
+                    if (!$linked_funding) {
+                        $reference->fundings()->attach($funding_in_db->id);
+                    }
                 }
                 else {
                     $new_funding = new Funding;
@@ -1044,6 +1208,24 @@ class ReferenceController extends Controller
             }
         }
 
+        //Attach the consultants
+        foreach ($request->consultants as $key => $value) {
+            if ($value != '') {
+                $consultant_in_db = Contributor::where('name', $value)->first();
+
+                if ($consultant_in_db) {
+                    $reference->contributors()->attach($consultant_in_db->id, ['function_on_project'=>'Consultant']);
+                }
+                else {
+                    $new_consultant = new Contributor;
+                    $new_consultant->name = $value;
+
+                    $new_consultant->save();
+
+                    $reference->contributors()->attach($new_consultant->id, ['function_on_project'=>'Consultant']);
+                }
+            }
+        }
 
         return redirect()->action('ReferenceController@index');
     }
