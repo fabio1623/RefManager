@@ -22,8 +22,9 @@
                     <!-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}"> -->
                     <form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@authenticate') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Email</label>
+                            <label class="col-sm-4 control-label">Username</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}" data-toggle="popover" data-trigger="focus" title="Wrong format" data-content="Please, fill a correct email (ex:fabio.pedro)">
                             </div>
@@ -57,7 +58,7 @@
                             <div class="col-sm-6 col-sm-offset-4">
                                 <button type="submit" class="btn btn-primary">Login</button>
 
-                                <a class="btn btn-link" href="{{ url('/password/email') }}">Need To Ask Your Access?</a>
+                                <a class="btn btn-link" href="{{ action('AccessController@create') }}">Need To Ask Your Access?</a>
                             </div>
                         </div>
                     </form>

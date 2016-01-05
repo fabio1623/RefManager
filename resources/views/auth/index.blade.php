@@ -19,11 +19,13 @@
 									</div>
 								</form>
 							</div>
-							<div class="col-sm-4">
-							    <button form="form_delete" type="submit" id="remove_btn" class="btn btn-danger btn-sm pull-right">
+							<div class="col-sm-2">
+							    <!-- <button form="form_delete" type="submit" id="remove_btn" class="btn btn-danger btn-sm pull-right">
 									<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-								</button>
-							    <a class="btn btn-success btn-sm pull-right" href="{{ action('UserController@create') }}" role="button">
+								</button> -->
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-default btn-sm pull-right" href="{{ action('UserController@create') }}" role="button">
 							    	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							    </a>
 							</div>
@@ -36,9 +38,10 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>Name</th>
-						    	<th class="col-sm-3">Profile</th>
-						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-6">Name</th>
+						    	<th class="col-sm-5">Profile</th>
+						    	<th class="col-sm-1"></th>
+						    	<!-- <th class="col-sm-1"><input type="checkbox" id="select_all"> All</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -48,13 +51,16 @@
 								@foreach ($users as $user)
 										<tr data-href="{{ action('UserController@edit', $user->id) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user['first_name']}}</a>	
+												<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->username}}</a>	
 											</td>
 											<td>
 												<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->profile}}</a>	
 											</td>
 											<td class="check">
-												<input class="checkbox" type="checkbox" value="{{$user->id}}" name=id[]>
+												<a class="btn btn-danger btn-xs center-block" href="{{ action('UserController@destroyOne', $user->id) }}" role="button">
+											    	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+											    </a>
+												<!-- <input class="checkbox" type="checkbox" value="{{$user->id}}" name=id[]> -->
 											</td>
 										</tr>
 								@endforeach

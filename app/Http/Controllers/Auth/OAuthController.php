@@ -29,7 +29,7 @@ class OAuthController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('google')->user();
-        /*dd($user);*/
+        // dd($user);
 
         $value = ends_with($user->email, '@gmail.com');
 
@@ -41,16 +41,18 @@ class OAuthController extends Controller
             }
             else {
                 $new_user = new User;
-                $new_user->first_name = $user->name;
+                $new_user->username = $user->name;
                 $new_user->email = $user->email;
                 $new_user->avatar = $user->avatar;
+
                 $new_user->save();
+
                 Auth::login($new_user);
                 return redirect()->intended('home');
             }
         }
         else {
-            return redirect('auth/loginError');
+            return redirect()->action('UserController@getLoginError');
         }
     }
 }

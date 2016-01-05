@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+// use Auth;
+
 class AuthController extends Controller
 {
     /*
@@ -67,4 +69,12 @@ class AuthController extends Controller
             'profile'    => $data['profile'],
         ]);
     }
+
+    // public function authenticate()
+    // {
+    //     if (Auth::attempt(['email' => $email, 'password' => $password])) {
+    //         // Authentication passed...
+    //         return redirect()->intended('home');
+    //     }
+    // }
 }

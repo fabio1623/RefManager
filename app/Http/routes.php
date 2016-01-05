@@ -21,10 +21,14 @@ use App\Language;
 //Authentication
 Route::get('/', 'Auth\AuthController@getLogin');
 Route::post('login', 'UserController@authenticate');
+Route::get('loginError', 'UserController@getLoginError');
 
 //Google Authentication
 Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
 Route::get('auth/google/callback', 'Auth\OAuthController@handleProviderCallback');
+
+//Grant Access
+Route::resource('access_requests', 'AccessController');
 
 //Home
 Route::get('home', 'HomeController@index');
@@ -41,9 +45,9 @@ Route::get('references/basic_search', 'ReferenceController@basic_search');
 Route::resource('references', 'ReferenceController');
 
 //Users
-Route::delete('user/destroyOne/{id}', 'UserController@destroyOne');
+Route::get('user/destroyOne/{id}', 'UserController@destroyOne');
 Route::post('user/search', 'UserController@search');
-Route::resource('user', 'UserController');
+Route::resource('users', 'UserController');
 
 //Middleware
 Route::controllers([

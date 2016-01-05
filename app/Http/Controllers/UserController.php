@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -58,20 +59,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        /*dd($_POST);*/
+        // dd($_POST);
         $this->validate($request, [
-            'first_name' => 'required|alpha|max:255',
-            'last_name'  => 'required|alpha|max:255',
+            // 'first_name' => 'required|alpha|max:255',
+            // 'last_name'  => 'required|alpha|max:255',
+            'username'  =>  'required',
             'email'     => 'required|email|max:255|unique:users',
             'password'  => 'required|confirmed|min:6',
             'profile'    => 'required',
         ]);
         $user = new User;
-        $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
-        $user->email = $request->input('email');
-        $user->password  = bcrypt($request->input('password'));
-        $user->profile = $request->input('profile');
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password  = bcrypt($request->password);
+        $user->profile = $request->profile;
+        
         $user->save();
 
         return redirect()->action('UserController@index');
@@ -136,17 +138,25 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
-        dd($_POST);
+        // dd($_POST);
         $ids = $request->input('id');
         User::destroy($ids);
 
         return redirect()->action('UserController@index');
     }
 
-    public function destroyOne(Request $request)
+    // public function destroyOne(Request $request)
+    // {
+    //     // dd($_POST);
+    //     $id = $request->input('hidden_field');
+    //     User::destroy($id);
+
+    //     return redirect()->action('UserController@index');
+    // }
+
+    public function destroyOne($id)
     {
-        dd($_POST);
-        $id = $request->input('hidden_field');
+        // dd($_POST);
         User::destroy($id);
 
         return redirect()->action('UserController@index');
@@ -154,11 +164,25 @@ class UserController extends Controller
 
     public function authenticate(Request $request)
     {
-        dd($_POST);
-        $ddb_user = User::where('email', $request->input('email'))->first();
-            if ($ddb_user) {
-                Auth::login($ddb_user);
-                return redirect()->intended('home');
-            }
+        // dd($_POST);
+
+        if (Auth::attempt(['username' => $request->email, 'password' => $request->password])) {
+            // Authentication passed...
+            return redirect()->intended('home');
+        }
+        // $ddb_user = User::where('email', $request->input('email'))->first();
+        //     if ($ddb_user) {
+        //         Auth::login($ddb_user);
+        //         return redirect()->intended('home');
+        //     }
+            // else {
+            //     return redirect('auth/login');
+            // }
+    }
+
+    public function getLoginError(Request $request)
+    {
+        $view = view('auth.loginError');
+        return $view;
     }
 }

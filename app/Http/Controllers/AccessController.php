@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Category;
+use App\AccessRequest;
 
-class CategoryController extends Controller
+class AccessController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(8);
-        $categories->setPath('index');
+        $access = AccessRequest::paginate(8);
 
-        $view = view('categories.index')->with('categories', $categories);
-        
+        $view = view('requests.index')->with('access', $access);
         return $view;
     }
 
@@ -33,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $view = view('categories.create');
+        $view = view('auth.access_request');
         
         return $view;
     }
@@ -46,17 +44,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        /*dd($_POST);*/
+        // dd($_POST);
         $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:categories',
+            'email' => 'required|unique:access_requests',
         ]);
 
-        $category = new Category;
-        $category->name = $request->input('name');
+        $access = new AccessRequest;
+        $access->email = $request->email;
         
-        $category->save();
+        $access->save();
 
-        return redirect()->action('CategoryController@index');
+        return redirect('auth/login');
     }
 
     /**
@@ -78,12 +76,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-        $measures = $category->measures()->paginate(4);
-
-        $view = view('categories.edit', ['category'=>$category, 'measures'=>$measures]);
-        
-        return $view;
+        //
     }
 
     /**
@@ -95,16 +88,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:categories',
-        ]);
-
-        $category = new Category;
-        $category->name = $request->input('name');
-
-        $user->save();
-
-        return redirect()->action('UserController@index');
+        //
     }
 
     /**
@@ -113,12 +97,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        dd($_POST);
-        $ids = $request->input('id');
-        Category::destroy($ids);
-
-        return redirect()->action('CategoryController@index');
+        //
     }
 }

@@ -24,13 +24,13 @@
 
                         <div class="alert alert-danger alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>Warning!</strong> You are not allowed to log in.
+                          <strong>Warning!</strong> You are not allowed to connect.
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Email</label>
+                            <label class="col-sm-4 control-label">Username</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}" data-toggle="popover" data-trigger="focus" title="Wrong format" data-content="Please, fill a correct email (ex:fabio.pedro)">
+                                <input type="text" class="form-control" name="username" value="{{ old('username') }}" data-toggle="popover" data-trigger="focus" title="Wrong format" data-content="Please, fill a correct email (ex:fabio.pedro)">
                             </div>
                         </div>
 
