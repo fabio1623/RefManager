@@ -1,90 +1,39 @@
 <?php
-use App\Domain;
-use App\Expertise;
-use App\Qualifier;
-use App\Measure;
-use App\Reference;
-use App\MeasureValues;
-use App\Language;
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-//Authentication
-Route::get('/', 'Auth\AuthController@getLogin');
-Route::post('login', 'UserController@authenticate');
+use App\Country;
 
-//Google Authentication
-Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
-Route::get('auth/google/callback', 'Auth\OAuthController@handleProviderCallback');
+class AddContinentColumnCountries extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        $countries = Country::all();
 
-//Home
-Route::get('home', 'HomeController@index');
+        Schema::table('references', function (Blueprint $table) {
+            $table->dropForeign('references_country_foreign');
+        });
 
-//Subsidiaries
-Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti');
-Route::resource('subsidiaries', 'SubsidiaryController');
+        Schema::table('country_zone', function (Blueprint $table) {
+            $table->dropForeign('country_zone_country_id_foreign');
+        });
 
-//References
-Route::get('references/search', 'ReferenceController@search');
-Route::get('references/search/results', 'ReferenceController@results');
-Route::get('references/customize', 'ReferenceController@customize');
-Route::get('references/basic_search', 'ReferenceController@basic_search');
-Route::resource('references', 'ReferenceController');
+        foreach ($countries as $country) {
+            $country->zones()->detach();
+        }
+        DB::table('countries')->truncate();
 
-//Users
-Route::delete('user/destroyOne/{id}', 'UserController@destroyOne');
-Route::post('user/search', 'UserController@search');
-Route::resource('user', 'UserController');
+        Schema::table('countries', function (Blueprint $table) {
+            $table->enum('continent', ['','Africa', 'America', 'Asia', 'Europe', 'Oceanie']);
+        });
 
-//Middleware
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
-
-//Services
-Route::post('subservice/storeExternal', 'SubServiceController@storeExternal');
-Route::post('subservice/storeInternal', 'SubServiceController@storeInternal');
-Route::post('services/search', 'SubServiceController@search');
-Route::get('services/internal', 'SubServiceController@veoliaIndex');
-Route::delete('services/destroyOne/{id}', 'SubServiceController@destroyOne');
-Route::get('services/create_internal', 'SubServiceController@internalCreate');
-Route::resource('services', 'SubServiceController');
-
-//Domains
-Route::delete('domains/destroyOne/{id}', 'DomainController@destroyOne');
-Route::resource('domains', 'DomainController');
-
-//Expertises
-Route::delete('expertises/destroyOne', 'ExpertiseController@destroyOne');
-Route::resource('domains.expertises', 'ExpertiseController');
-
-//Categories
-Route::resource('categories', 'CategoryController');
-
-//Measures
-Route::resource('categories.measures', 'MeasureController');
-
-//Zones
-Route::put('zones/attach_country/{id}', 'ZoneController@attach_country');
-Route::put('zones/detach_country/{id}', 'ZoneController@detach_country');
-Route::delete('zones/destroy_multiple', 'ZoneController@destroyMultiple');
-Route::resource('zones', 'ZoneController');
-
-//Countries
-Route::resource('zones.countries', 'CountryController');
-
-Route::get('test', function () {
-    $countryList = array(
+        $countryList = array(
             "Africa" => array(
                 "DZ" => "Algeria",
                 "AO" => "Angola",
@@ -349,6 +298,39 @@ Route::get('test', function () {
                 "WF" => "Wallis and Futuna",
             ),
         );
-	
-	dd($countryList);
-});
+
+        foreach ($countryList as $key => $continent) {
+            foreach ($continent as $country) {
+                $new_country = new Country;
+                $new_country->name = $country;
+                $new_country->continent = $key;
+
+                $new_country->save();
+            }
+        }
+
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        DB::table('countries')->truncate();
+
+        $countries = array("Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao, People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia, The Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia (Slovak Republic)", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe");
+
+        foreach ($countries as $country) {
+            $new_country = new Country;
+            $new_country->name = $country;
+        
+            $new_country->save();
+        }
+
+        Schema::table('countries', function (Blueprint $table) {
+            $table->dropColumn('continent');
+        });
+    }
+}

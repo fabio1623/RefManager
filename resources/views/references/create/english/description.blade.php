@@ -22,8 +22,8 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
-	<div class="col-sm-3">
-	    <select class="form-control" id="country" name="country">
+	<div class="col-sm-4">
+	    <select class="form-control selectpicker" data-width="auto" data-live-search="true" id="country" name="country" data-live-search="true">
 	    	<option></option>
 	    	@foreach($countries as $country)
 	    		<option value="{{ $country->id }}">{{$country->name}}</option>
@@ -42,7 +42,7 @@
 <div class="form-group">
 	<label for="continent" class="col-sm-4 control-label">Continent</label>
 	<div class="col-sm-2">
-	  	<input type="text" class="form-control" id="continent">
+	  	<input type="text" class="form-control" id="continent" readonly>
 	</div>
 </div>
 <!-- EO line -->
@@ -50,7 +50,7 @@
 <div class="form-group">
 	<label for="zone" class="col-sm-4 control-label">Zone</label>
 	<div class="col-sm-2">
-	  	<select class="form-control" id="zone" name="zone">
+	  	<select class="form-control selectpicker" data-width="auto" id="zone" name="zone">
 	  		<option></option>
 			@foreach($zones as $zone)
 				<option value="{{ $zone->id }}">{{$zone->name}}</option>
@@ -260,6 +260,20 @@
 			$('#criteria_pane').removeClass("hide");
 			$('#quantities_pane').removeClass("hide");
 			$('#details_pane').removeClass("hide");
+		}
+	});
+
+	var countries = {!! $countries->toJson() !!};
+
+	$('#country').change( function () {
+		for (var i = 0; i < countries.length; i++) {
+			if (countries[i].id == $('#country').val()) {
+				$('#continent').val(countries[i].continent);
+				break;
+			}
+			else {
+				$('#continent').val('');
+			};
 		}
 	});
 	

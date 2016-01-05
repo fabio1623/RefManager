@@ -38,8 +38,9 @@ class ReferenceController extends Controller
         $references = Reference::paginate(8);
         $countries = Country::all();
         $clients = Client::all();
+        $zones = Zone::all();
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones]);
         return $view;
     }
 
@@ -260,17 +261,36 @@ class ReferenceController extends Controller
     public function basic_search(Request $request)
     {
         // dd($_POST);
-        $references = Reference::where('project_number', 'LIKE', '%'.$request->input('search_input').'%')
-                        ->orWhere('dfac_name', 'LIKE', '%'.$request->input('search_input').'%')
-                        ->orWhere('start_date', 'LIKE', '%'.$request->input('search_input').'%')
-                        ->orWhere('end_date', 'LIKE', '%'.$request->input('search_input').'%')
-                        // ->orWhere('client', 'LIKE', '%'.$request->input('search_input').'%')
-                        // ->orWhere('start_date', 'LIKE', '%'.$request->input('search_input').'%')
-                        ->paginate(8);
+
+        //If search input filed, search the corresponding references, otherwise get all references
+        if ($request->search_input) {
+            $references = Reference::where('project_number', 'LIKE', '%'.$request->search_input.'%')
+                            ->orWhere('dfac_name', 'LIKE', '%'.$request->search_input.'%')
+                            ->orWhere('start_date', 'LIKE', '%'.$request->search_input.'%')
+                            ->orWhere('end_date', 'LIKE', '%'.$request->search_input.'%')
+                            ->orWhere(function ($query) use ($request) {
+                                $query->where('total_project_cost', '=', floatval($request->search_input))
+                                      ->where('total_project_cost', '<>', 0);
+                            });
+
+            $searched_countries = Country::where('name', 'like', '%'.$request->search_input.'%')->get();
+            // dd($searched_countries);
+
+            foreach ($searched_countries as $value) {
+                // dd($value->id);
+                $references = $references->whereNotNull('country')->orWhere('country', $value->id);
+            }
+
+            $references = $references->paginate(8);
+        }
+        else {
+            $references = Reference::paginate(8);
+        }
 
         $countries = Country::all();
+        $zones = Zone::all();
         $clients = Client::all();
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'inputs'=>$request->except('page')]);
         return $view;
     }
 
@@ -282,8 +302,9 @@ class ReferenceController extends Controller
         $domains = Domain::all();
         $countries = Country::all();
         $categories = Category::all();
+        $zones = Zone::all();
 
-        $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories]);
+        $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories, 'zones'=>$zones]);
         return $view;
     }
 
@@ -911,9 +932,15 @@ class ReferenceController extends Controller
         if ($request->input('country') != "") {
             $reference->country = $request->input('country');
         }
+        else {
+            $reference->country = null;
+        }
 
         if ($request->input('zone') != "") {
             $reference->zone = $request->input('zone');
+        }
+        else {
+            $reference->zone = null;
         }
 
         $reference->location = $request->input('location');

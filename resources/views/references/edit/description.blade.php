@@ -27,7 +27,7 @@
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
 	<div class="col-sm-3">
-	    <select class="form-control" id="country" name="country">
+	    <select class="form-control selectpicker" data-width="auto" data-live-search="true" id="country" name="country">
 	    	<option></option>
 	    	@foreach($countries as $country)
 	    		@if($country->id == $reference->country)
@@ -44,7 +44,7 @@
 <div class="form-group">
 	<label for="continent" class="col-sm-4 control-label">Continent</label>
 	<div class="col-sm-2">
-	  	<input type="text" class="form-control" id="continent">
+	  	<input type="text" class="form-control" id="continent" readonly>
 	</div>
 </div>
 <!-- EO line -->
@@ -52,7 +52,7 @@
 <div class="form-group">
 	<label for="zone" class="col-sm-4 control-label">Zone</label>
 	<div class="col-sm-2">
-	  	<select class="form-control" id="zone" name="zone">
+	  	<select class="form-control selectpicker" data-width="auto" id="zone" name="zone">
 	  		<option></option>
 			@foreach($zones as $zone)
 				@if ($zone->id == $reference->zone)
@@ -173,7 +173,7 @@
 
 <div class="form-group">
 	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
+		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 	</button>
 	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
 		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
@@ -262,4 +262,17 @@
 		}
 	});
 	
+	var countries = {!! $countries->toJson() !!};
+
+	$('#country').change( function () {
+		for (var i = 0; i < countries.length; i++) {
+			if (countries[i].id == $('#country').val()) {
+				$('#continent').val(countries[i].continent);
+				break;
+			}
+			else {
+				$('#continent').val('');
+			};
+		}
+	});
 </script>

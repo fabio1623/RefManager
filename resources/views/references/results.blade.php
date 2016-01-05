@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-12">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<div class="row">
@@ -21,10 +21,12 @@
 				<tr>
 					<th class="col-sm-2">Project number</th>
 					<th class="col-sm-2">DFAC name</th>
-					<th class="col-sm-2">Start date</th>
-					<th class="col-sm-2">End date</th>
+					<th class="col-sm-1">Start date</th>
+					<th class="col-sm-1">End date</th>
 					<th class="col-sm-2">Client</th>
-					<th class="col-sm-2">Country</th>
+					<th class="col-sm-1">Country</th>
+					<th class="col-sm-1">Zone</th>
+			    	<th class="col-sm-1">Cost</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -58,6 +60,20 @@
 											{{ $country->name }}
 										@endif
 									@endforeach
+								</a>	
+							</td>
+							<td>
+								<a class="btn btn-link" href="">
+									@foreach ($zones as $zone)
+										@if ($zone->id == $reference->zone)
+											{{ $zone->name }}
+										@endif
+									@endforeach
+								</a>	
+							</td>
+							<td>
+								<a class="btn btn-link" href="">
+									{{ $reference->total_project_cost }}
 								</a>	
 							</td>
 						</tr>
