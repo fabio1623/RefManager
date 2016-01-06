@@ -37,6 +37,10 @@ class OAuthController extends Controller
             $ddb_user = User::where('email', $user->email)->first();
             if ($ddb_user) {
                 Auth::login($ddb_user);
+                
+                $ddb_user->avatar = $user->avatar;
+                $ddb_user->save();
+
                 return redirect()->intended('home');
             }
             else {

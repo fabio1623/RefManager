@@ -5,7 +5,7 @@
 	<div class="row col-sm-6 col-sm-offset-3">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">New Account</h3>
+					<h3 class="panel-title">Account Management</h3>
 				</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
@@ -19,45 +19,48 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@store') }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@updateAccount', $user->id) }}">
 						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Username</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="firstName" name="username" value="{{ old('username') }}">
+								<input type="text" class="form-control" id="firstName" value="{{ $user->username }}" readonly>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">E-Mail Address</label>
 							<div class="col-sm-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input type="email" class="form-control" value="{{ $user->email }}" readonly>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-sm-4 control-label">Password</label>
+							<label class="col-sm-4 control-label">Old Password</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" name="password">
+								<input type="password" class="form-control" name="old_password">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">New Password</label>
+							<div class="col-sm-6">
+								<input type="password" class="form-control" name="new_password">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Confirm Password</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" name="password_confirmation">
+								<input type="password" class="form-control" name="new_password_confirmation">
 							</div>
 						</div>
 						
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">
-							  <select class="form-control" id="profile_type" name="profile">
-							    <option value="3">Basic user</option>
-							    <option value="2">Reference administrator</option>
-							    <option value="1">User administrator</option>
-							  </select>
+							  <input type="text" class="form-control" value="{{ $user->profile }}" readonly>
 							</div>
 						</div>
 						<div class="form-group">
@@ -65,7 +68,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ action('UserController@index') }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="" role="button"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>
@@ -74,21 +77,6 @@
 			</div>
 	</div>
 <script>
-	$('#firstName').bind('keypress keyup blur', function() {
-		if($('#lastName').val() != ""){
-    		$('#user_name').val($(this).val() + "." + $('#lastName').val());	
-    	}
-    	else{
-    		$('#user_name').val($(this).val());	
-    	}
-	});
-	$('#lastName').bind('keypress keyup blur', function() {
-		if($('#firstName').val() != ""){
-    		$('#user_name').val($('#firstName').val() + "." + $(this).val());
-    	}
-    	else{
-    		$('#user_name').val($(this).val());		
-    	}
-	});
+	
 </script>
 @endsection

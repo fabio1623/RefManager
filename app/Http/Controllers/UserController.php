@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use Auth;
+use Hash;
 
 class UserController extends Controller
 {
@@ -31,11 +32,10 @@ class UserController extends Controller
     public function search(Request $request)
     {
         /*dd($_POST);*/
-        $users = User::where('first_name', 'LIKE', '%'.$request->input('search_inp').'%')
-                        ->orWhere('last_name', 'LIKE', '%'.$request->input('search_inp').'%')
+        $users = User::where('username', 'LIKE', '%'.$request->input('search_inp').'%')
                         ->orWhere('profile', 'LIKE', '%'.$request->input('search_inp').'%')
-                        ->paginate(4);
-        $users->setPath('search');
+                        ->paginate(8);
+        // $users->setPath('search');
         $view = view('auth.index')->with('users', $users);
         return $view;
     }
@@ -115,16 +115,15 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'first_name' => 'required|max:255',
-            'last_name'  => 'required|max:255',
+            'username' => 'required|max:255',
             'email'     => 'required|email|max:255',
         ]);
 
         $user = User::find($id);
-        $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
-        $user->email = $request->input('email');
-        $user->profile = $request->input('profile');
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->profile = $request->profile;
+
         $user->save();
 
         return redirect()->action('UserController@index');
@@ -166,7 +165,7 @@ class UserController extends Controller
     {
         // dd($_POST);
 
-        if (Auth::attempt(['username' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             // Authentication passed...
             return redirect()->intended('home');
         }
@@ -183,6 +182,46 @@ class UserController extends Controller
     public function getLoginError(Request $request)
     {
         $view = view('auth.loginError');
+        return $view;
+    }
+
+    public function createByRequest(Request $request)
+    {
+        // dd($_POST);
+        $view = view('auth.register_by_request')->with('email', $request->email);
+        return $view;
+    }
+
+    public function manageAccount($id)
+    {
+        $user = User::find($id);
+
+        $view = view('auth.account_management')->with('user', $user);
+
+        return $view;
+    }
+
+    public function updateAccount(Request $request, $id)
+    {
+        $this->validate($request, [
+            'old_password' => 'required|max:255',
+            'new_password'  => 'required|max:255|confirmed',
+        ]);
+
+        $user = User::find($id);
+
+        if ( Hash::check($request->old_password, $user->password) ) {
+            $user->password = Hash::make($request->new_password);
+
+            $user->save();
+        }
+        else {
+            dd('No');
+        }
+
+        
+        $view = view('home');
+
         return $view;
     }
 }

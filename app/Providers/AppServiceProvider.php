@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\AccessRequest;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $requests = AccessRequest::where('seen', 0)->get();
+
+        $requests_number = count($requests);
+
+        view()->share('requests_number', $requests_number);
     }
 
     /**

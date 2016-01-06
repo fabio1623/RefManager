@@ -9,12 +9,14 @@
 						<div class="row">
 							<div class="col-sm-3">List of users</div>
 							<div class="col-sm-5 pull-right">
-								<form action="{{ action('UserController@search') }}" method="POST">
+								<form action="{{ action('UserController@search') }}" method="GET">
 									<?php echo csrf_field(); ?>
-									<div class="input-group">
+									<div class="input-group input-group-sm">
 									  <input type="text" class="form-control" name="search_inp" placeholder="Search for...">
 									  <span class="input-group-btn">
-									    <button class="btn btn-default" type="submit">Search</button>
+									    <button class="btn btn-default" type="submit">
+									    	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									    </button>
 									  </span>
 									</div>
 								</form>

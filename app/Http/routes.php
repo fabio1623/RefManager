@@ -28,6 +28,7 @@ Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
 Route::get('auth/google/callback', 'Auth\OAuthController@handleProviderCallback');
 
 //Grant Access
+Route::get('access_requests/destroyOne/{id}', 'AccessController@destroyOne');
 Route::resource('access_requests', 'AccessController');
 
 //Home
@@ -46,7 +47,10 @@ Route::resource('references', 'ReferenceController');
 
 //Users
 Route::get('user/destroyOne/{id}', 'UserController@destroyOne');
-Route::post('user/search', 'UserController@search');
+Route::get('user/search', 'UserController@search');
+Route::post('users/create_by_request', 'UserController@createByRequest');
+Route::get('user/account_management/{id}', 'UserController@manageAccount');
+Route::post('user/account_update/{id}', 'UserController@updateAccount');
 Route::resource('users', 'UserController');
 
 //Middleware

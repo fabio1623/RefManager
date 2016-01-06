@@ -45,16 +45,27 @@ class AccessController extends Controller
     public function store(Request $request)
     {
         // dd($_POST);
+        $messages = [
+            'required'  => 'The :attribute field is required.',
+            'unique'    => 'You already asked for an account or you actually already have one.'
+        ];
+
         $this->validate($request, [
-            'email' => 'required|unique:access_requests',
-        ]);
+            'email' => 'required|email|unique:users|unique:access_requests',
+        ], $messages);
 
         $access = new AccessRequest;
         $access->email = $request->email;
         
         $access->save();
 
-        return redirect('auth/login');
+        // $requests = AccessRequest::where('seen', 0)->get();
+
+        // $requests_number = count($requests);
+
+        // view()->share('requests_number', $requests_number);
+
+        return view('auth.loginRequestSent');
     }
 
     /**
@@ -97,8 +108,11 @@ class AccessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyOne($id)
     {
-        //
+        // dd($id);
+        AccessRequest::destroy($id);
+
+        return redirect()->action('AccessController@index');
     }
 }

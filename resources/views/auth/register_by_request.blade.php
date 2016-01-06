@@ -32,7 +32,7 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">E-Mail Address</label>
 							<div class="col-sm-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input type="email" class="form-control" name="email" value="{{ $email }}">
 							</div>
 						</div>
 
@@ -65,7 +65,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ action('UserController@index') }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>

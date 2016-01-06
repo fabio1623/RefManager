@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="row col-sm-8 col-sm-offset-2">
+    <div class="row col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Login</h3>
@@ -19,14 +19,18 @@
                         </div>
                     @endif
 
-                    <!-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}"> -->
-                    <form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@authenticate') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/loginError') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        
+
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Your request has been sent!</strong>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Username</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="username" id="email" value="{{ old('username') }}" data-toggle="popover" data-trigger="focus" title="Wrong format" data-content="Please, fill a correct email (ex:fabio.pedro)">
+                                <input type="text" class="form-control" name="username" value="{{ old('username') }}" data-toggle="popover" data-trigger="focus" title="Wrong format" data-content="Please, fill a correct email (ex:fabio.pedro)">
                             </div>
                         </div>
 
@@ -58,7 +62,7 @@
                             <div class="col-sm-6 col-sm-offset-4">
                                 <button type="submit" class="btn btn-primary">Login</button>
 
-                                <a class="btn btn-link" href="{{ action('AccessController@create') }}">Need To Ask Your Access?</a>
+                                <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
                             </div>
                         </div>
                     </form>
