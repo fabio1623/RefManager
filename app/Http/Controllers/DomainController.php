@@ -116,7 +116,7 @@ class DomainController extends Controller
 
     public function destroyOne(Request $request)
     {
-        dd($_POST);
+        // dd($_POST);
         $id = $request->input('hidden_field');
 
         $domain = Domain::where('id',$id)->first();

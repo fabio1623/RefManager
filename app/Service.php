@@ -6,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    public function subServices()
+    // public function subServices()
+    // {
+    //     return $this->belongsToMany('App\SubService', 'sub_service_service', 'service_id', 'sub_service_id');
+    // }
+
+    public function references()
     {
-        return $this->belongsToMany('App\SubService', 'sub_service_service', 'service_id', 'sub_service_id');
+        return $this->belongsToMany('App\Reference');
     }
 }

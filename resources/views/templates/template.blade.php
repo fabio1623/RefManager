@@ -92,12 +92,12 @@
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-retweet"></span> Services<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
 							          	<li class="dropdown-header">External services</li>
-							            <li><a href="{{ action ('SubServiceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
-							            <li><a href="{{ action('SubServiceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of external services</a></li>
+							            <li><a href="{{ action('ServiceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
+							            <li><a href="{{ action('ServiceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of external services</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li class="dropdown-header">Internal services</li>
-							            <li><a href="{{ action ('SubServiceController@internalCreate') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
-							            <li><a href="{{ action('SubServiceController@veoliaIndex') }}"><span class="glyphicon glyphicon-list"></span> List of internal services</a></li>
+							            <li><a href="{{ action('ServiceController@internal_create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
+							            <li><a href="{{ action('ServiceController@internal_index') }}"><span class="glyphicon glyphicon-list"></span> List of internal services</a></li>
 							          </ul>
 							        </li>
 							        <li class="dropdown">
@@ -142,7 +142,8 @@
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{ Auth::user()->username }}<span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="{{ action('UserController@manageAccount', Auth::user()->id) }}"> <span class="glyphicon glyphicon glyphicon-user"></span> Change Password</a></li>
+										<li><a href="{{ action('UserController@manageAccount', Auth::user()->id) }}"> <span class="glyphicon glyphicon glyphicon-user"></span> My account</a></li>
+										<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
 										<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests 
 											@if ( $requests_number > 0 )
 												<span class="badge">{{$requests_number}}</span>

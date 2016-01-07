@@ -12,7 +12,7 @@
 							<!-- #./Left column -->
 							<!-- Center column -->
 							<div class="col-sm-1">
-								<form action="{{ action('SubServiceController@create') }}" method="GET">
+								<form action="{{ action('ServiceController@internal_create') }}" method="GET">
 									<?php echo csrf_field(); ?>
 									<button type="submit" id="add_btn" class="btn btn-success btn-sm pull-right">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -44,13 +44,13 @@
 
 						</tfoot>
 						<tbody>
-							<form id="form_services" action="{{ action('SubServiceController@destroy') }}" method="POST">
+							<form id="form_services" action="{{ action('ServiceController@internal_destroy_multiple') }}" method="POST">
 					      		<?php echo method_field('DELETE'); ?>
 							    <?php echo csrf_field(); ?>
-								@foreach ($services as $service)
-										<tr data-href="{{ action('SubServiceController@edit', $service->id) }}">
+								@foreach ($internal_services as $service)
+										<tr data-href="{{ action('ServiceController@internal_edit', $service->id) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('SubServiceController@edit', $service->id) }}">{{$service->service_name}}</a>	
+												<a class="btn btn-link" href="{{ action('ServiceController@internal_edit', $service->id) }}">{{$service->name}}</a>	
 											</td>
 											<td class="check">
 												<input class="checkbox" type="checkbox" value="{{$service->id}}" name=id[]>
@@ -62,7 +62,7 @@
 					</table>
 				</div>
 				<div class="pull-right">
-					{!! $services->render() !!}
+					{!! $internal_services->render() !!}
 				</div>
 			</div>
 	</div>

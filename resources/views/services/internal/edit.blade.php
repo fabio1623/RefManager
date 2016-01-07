@@ -7,15 +7,15 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-6">{{ $service->service_name }}</div>
+							<div class="col-sm-6">{{ $internal_service->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('SubServiceController@destroyOne') }}" method="POST">
+								<form action="{{ action('ServiceController@internal_destroy', $internal_service->id) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
-								    <input type="hidden" name="hidden_field" value="{{ $service->id}}">
+								    <input type="hidden" name="hidden_field" value="{{ $internal_service->id}}">
 								</form>
 							</div>
 						</div>
@@ -33,14 +33,14 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('SubServiceController@update', $service->id) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('ServiceController@internal_update', $internal_service->id) }}">
+						<?php echo method_field('PUT'); ?>
+					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Service Name</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{$service->service_name}}">
+								<input type="text" class="form-control" name="name" value="{{$internal_service->name}}">
 							</div>
 						</div>
 

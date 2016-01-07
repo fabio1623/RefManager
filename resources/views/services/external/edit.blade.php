@@ -7,16 +7,15 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-6">{{ $expertise->name }}</div>
+							<div class="col-sm-6">{{ $external_service->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('ExpertiseController@destroyOne') }}" method="POST">
+								<form action="{{ action('ServiceController@destroy', $external_service->id) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-								    <button type="submit" class="btn btn-danger btn-xs pull-right">
+								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
-								    <input type="hidden" name="expertise_id" value="{{ $expertise->id}}">
-								    <input type="hidden" name="domain_id" value="{{ $domain->id}}">
+								    <input type="hidden" name="hidden_field" value="{{ $external_service->id}}">
 								</form>
 							</div>
 						</div>
@@ -34,14 +33,14 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('ExpertiseController@update', [$domain->id, $expertise->id]) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<form class="form-horizontal" role="form" action="{{ action('ServiceController@update', $external_service->id) }}" method="POST">
+						<?php echo method_field('PUT'); ?>
+						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Expertise Name</label>
+							<label class="col-md-4 control-label">Service Name</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{$expertise->name}}">
+								<input type="text" class="form-control" name="name" value="{{$external_service->name}}">
 							</div>
 						</div>
 
@@ -50,8 +49,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>

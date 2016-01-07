@@ -19,13 +19,13 @@
 				</div>
 			@endif
 
-			<form class="form-horizontal" role="form" method="POST" action="{{ action('SubServiceController@store') }}">
+			<form class="form-horizontal" role="form" method="POST" action="{{ action('ServiceController@store') }}">
 				<?php echo csrf_field(); ?>
 
 				<div class="form-group">
 					<label class="col-sm-4 control-label">Service Name</label>
 					<div class="col-sm-6">
-						<input type="text" class="form-control" id="serviceName" name="service_name" value="{{ old('service_name') }}">
+						<input type="text" class="form-control" id="serviceName" name="name" value="{{ old('name') }}">
 					</div>
 				</div>
 				<div class="form-group">

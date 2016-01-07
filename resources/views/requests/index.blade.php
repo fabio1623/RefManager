@@ -23,28 +23,38 @@
 						</tr>
 					</thead>
 					<tbody>
-						<form id="form_delete" action="{{ action('UserController@createByRequest') }}" method="POST">
-						    <?php echo csrf_field(); ?>
+					    @if ( count($access) == 0 )
+					    	<tr>
+					    		<td>
+					    			No pending request.
+					    		</td>
+					    		<td>
 
-							@foreach ($access as $acc)
-									<tr data-href="">
-										<td>
-											<a class="btn btn-link" href="">{{$acc->email}}</a>
-											<input type="text" class="form-control hidden" id="firstName" name="email" value="{{ $acc->email }}">
-										</td>
-										<td>
-											<button form="form_delete" type="submit" id="remove_btn" class="btn btn-default btn-sm center-block">
-												<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-											</button>
-										</td>
-										<td>
-											<a id="remove_request_btn" class="btn btn-danger btn-sm inline-block" href="{{ action('AccessController@destroyOne', $acc->id) }}" role="button">
-										    	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-										    </a>
-										</td>
-									</tr>
+					    		</td>
+					    		<td>
+
+					    		</td>
+					    	</tr>
+					    @else
+					    	@foreach ($access as $acc)
+								<tr data-href="">
+									<td>
+										<a class="btn btn-link" href="">{{$acc->email}}</a>
+										<input type="text" class="form-control hidden" id="firstName" name="email" value="{{ $acc->email }}">
+									</td>
+									<td>
+										<a class="btn btn-default btn-sm inline-block" href="{{ action('UserController@create_by_request', $acc->id) }}" role="button">
+									    	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									    </a>
+									</td>
+									<td>
+										<a id="remove_request_btn" class="btn btn-danger btn-sm inline-block" href="{{ action('AccessController@destroyOne', $acc->id) }}" role="button">
+									    	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+									    </a>
+									</td>
+								</tr>
 							@endforeach
-							</form>
+					    @endif
 					</tbody>
 				</table>
 			</div>

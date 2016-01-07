@@ -64,7 +64,7 @@
 								<button type="submit" id="add_btn" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</button>
-								<input type="hidden" name="domain_id_hidden" value="{{ $domain->id}}">
+								<input type="hidden" name="domain_id" value="{{ $domain->id}}">
 							</div>
 						</div>
 					</form>
@@ -87,8 +87,9 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-10">Expertise name</th>
-						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-11">Expertise name</th>
+								<th class="col-sm-1"></th>
+						    	<!-- <th class="col-sm-1"><input type="checkbox" id="select_all"> All</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -101,7 +102,10 @@
 												<a class="btn btn-link" href="{{ action('ExpertiseController@edit', [$domain->id, $expertise->id]) }}">{{$expertise->name}}</a>
 											</td>
 											<td class="check">
-												<input class="checkbox" type="checkbox" value="{{$expertise->id}}" name=id[]>
+												<a class="btn btn-danger btn-xs center-block" href="{{ action('ExpertiseController@destroy', $domain->id) }}" role="button">
+											    	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+											    </a>
+												<!-- <input class="checkbox" type="checkbox" value="{{$expertise->id}}" name=id[]> -->
 											</td>
 										</tr>
 								@endforeach

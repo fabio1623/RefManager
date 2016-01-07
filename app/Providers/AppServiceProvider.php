@@ -17,8 +17,9 @@ class AppServiceProvider extends ServiceProvider
         $requests = AccessRequest::where('seen', 0)->get();
 
         $requests_number = count($requests);
+        $default_password = 'azerty';
 
-        view()->share('requests_number', $requests_number);
+        view()->share(['requests_number'=>$requests_number, 'default_password'=>$default_password]);
     }
 
     /**

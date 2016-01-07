@@ -29,7 +29,20 @@
 								<input type="text" class="form-control" id="measureName" name="name" value="{{ old('name') }}">
 							</div>
 						</div>
-						<input type="hidden" name="category_id_hidden" value="{{ $category->id}}">
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Field Type</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="field_type">
+									<option></option>
+									<option>Input</option>
+									<option>Option</option>
+									<option>Select</option>
+								</select>
+							</div>
+						</div>
+
+						<input type="hidden" name="category_id" value="{{ $category->id}}">
 						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">
 								<button type="submit" class="btn btn-primary">

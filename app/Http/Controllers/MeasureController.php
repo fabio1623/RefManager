@@ -49,22 +49,22 @@ class MeasureController extends Controller
      */
     public function store(Request $request)
     {
-        $dd_measure = Measure::find($request->input('name'));
-        $category = Category::find($request->input('category_id_hidden'));
+        // dd($_POST);
+        $this->validate($request, [
+            'name'     => 'required|string|max:255|unique:measures,name,NULL,id,category_id,'.$request->category_id,
+            'field_type' => 'required'
+        ]);
 
-        if ($dd_measure) {
-            $category->measures()->attach($measure->id);
-        }
-        else {
-            $measure = new Measure;
-            $measure->name = $request->input('name');
+        $new_measure = new Measure;
 
-            $measure->save();
+        $new_measure->name = $request->name;
+        $new_measure->field_type = $request->field_type;
+        $new_measure->category_id = $request->category_id;
 
-            $category->measures()->attach($measure->id);
-        }
+        $new_measure->save();
 
-        return redirect()->action('CategoryController@edit', $category);
+
+        return redirect()->action('CategoryController@edit', $request->category_id);
     }
 
     /**
@@ -103,16 +103,19 @@ class MeasureController extends Controller
      */
     public function update(Request $request, $category_id, $measure_id)
     {
+        // dd($_POST);
         $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:measures',
+            'name'     => 'required|string|max:255|unique:measures,name,'.$measure_id.',id,category_id,'.$category_id,
+            'field_type' => 'required'
         ]);
 
-        $measure = new Measure;
-        $measure->name = $request->input('name');
+        $measure = Measure::find($measure_id);
+        $measure->name = $request->name;
+        $measure->field_type = $request->field_type;
 
-        $user->save();
+        $measure->save();
 
-        return redirect()->action('CategoryController@edit', $measure_id);
+        return redirect()->action('CategoryController@edit', $category_id);
     }
 
     /**

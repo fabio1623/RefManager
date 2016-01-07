@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 
 use App\Service;
 
+use App\ExternalService;
+use App\InternalService;
+
 class ServiceController extends Controller
 {
     /**
@@ -15,9 +18,17 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+//-------- External services --------//
+
+
     public function index()
     {
-        //
+        $external_services = ExternalService::paginate(8);
+
+        $view = view('services.external.index')->with('external_services', $external_services);
+        return $view;
     }
 
     /**
@@ -25,9 +36,11 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
-        //
+        $view = view('services.external.create');
+        return $view;
     }
 
     /**
@@ -36,21 +49,23 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        /*dd($_POST);*/
-        /*$this->validate($request, [
-            'first_name' => 'required|alpha|max:255',
-            'last_name'  => 'required|alpha|max:255',
-            'email'     => 'required|email|max:255|unique:users',
-            'password'  => 'required|confirmed|min:6',
-            'profile'    => 'required',
-        ]);*/
-        $service = new service;
-        $service->subsidiary = 'Seureca';
-        $service->service_type = 1;
+        // dd($_POST);
 
-        $service->save();
+        //Validate the input value
+        $this->validate($request, [
+            'name' => 'required|unique:external_services',
+        ]);
+
+        //Create new service
+        $external_service = new ExternalService;
+        $external_service->name = $request->name;
+
+        $external_service->save();
+
+        return redirect()->action('ServiceController@index');
     }
 
     /**
@@ -70,9 +85,13 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
-        //
+        $external_service = ExternalService::find($id);
+
+        $view = view('services.external.edit')->with('external_service', $external_service);
+        return $view;
     }
 
     /**
@@ -82,9 +101,16 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-        //
+        // dd($_POST);
+        $external_service = ExternalService::find($id);
+        $external_service->name = $request->name;
+
+        $external_service->save();
+
+        return redirect()->action('ServiceController@index');
     }
 
     /**
@@ -93,8 +119,110 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
-        //
+        // dd($id);
+        $external_service = ExternalService::find($id);
+        $external_service->references()->detach();
+        ExternalService::destroy($id);
+
+        return redirect()->action('ServiceController@index');   
+    }
+
+    public function destroy_multiple(Request $request)
+    {
+        // dd($_POST);
+        $ids = $request->input('id');
+
+        foreach ($ids as $id) {
+            $external_service = ExternalService::find($id);
+            $external_service->references()->detach();
+        }
+
+        ExternalService::destroy($ids);
+
+        return redirect()->action('ServiceController@index');
+    }
+
+
+//-------- Internal services --------//
+
+
+    public function internal_index()
+    {
+        $internal_services = InternalService::paginate(8);
+        // dd($external_services);
+
+        $view = view('services.internal.index')->with('internal_services', $internal_services);
+        return $view;
+    }
+
+    public function internal_create()
+    {
+        $view = view('services.internal.create');
+        return $view;
+    }
+
+    public function internal_store(Request $request)
+    {
+        // dd($_POST);
+
+        //Validate the input value
+        $this->validate($request, [
+            'name' => 'required|unique:internal_services',
+        ]);
+
+        //Create new service
+        $internal_service = new InternalService;
+        $internal_service->name = $request->name;
+
+        $internal_service->save();
+
+        return redirect()->action('ServiceController@internal_index');
+    }
+
+    public function internal_edit($id)
+    {
+        $internal_service = InternalService::find($id);
+
+        $view = view('services.internal.edit')->with('internal_service', $internal_service);
+        return $view;
+    }
+
+    public function internal_update(Request $request, $id)
+    {
+        // dd($_POST);
+        $internal_service = InternalService::find($id);
+        $internal_service->name = $request->name;
+
+        $internal_service->save();
+
+        return redirect()->action('ServiceController@internal_index');
+    }
+
+    public function internal_destroy($id)
+    {
+        // dd($id);
+        $internal_service = InternalService::find($id);
+        $internal_service->references()->detach();
+        InternalService::destroy($id);
+
+        return redirect()->action('ServiceController@internal_index');   
+    }
+
+    public function internal_destroy_multiple(Request $request)
+    {
+        // dd($_POST);
+        $ids = $request->input('id');
+
+        foreach ($ids as $id) {
+            $internal_service = InternalService::find($id);
+            $internal_service->references()->detach();
+        }
+
+        InternalService::destroy($ids);
+
+        return redirect()->action('ServiceController@internal_index');
     }
 }

@@ -44,6 +44,30 @@
 						</div>
 
 						<div class="form-group">
+							<label class="col-sm-4 control-label">Field Type</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="field_type">
+									<option></option>
+									@if ($measure->field_type == 'Input')
+										<option selected>Input</option>
+									@else
+										<option>Input</option>
+									@endif
+									@if ($measure->field_type == 'Option')
+										<option selected>Option</option>
+									@else
+										<option>Option</option>
+									@endif
+									@if ($measure->field_type == 'Select')
+										<option selected>Select</option>
+									@else
+										<option>Select</option>
+									@endif
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">
 									Update

@@ -28,7 +28,7 @@
 								<input type="text" class="form-control" id="expertiseName" name="name" value="{{ old('name') }}">
 							</div>
 						</div>
-						<input type="hidden" name="domain_id_hidden" value="{{ $domain->id}}">
+						<input type="hidden" name="domain_id" value="{{ $domain->id}}">
 						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">
 								<button type="submit" class="btn btn-primary btn-sm">

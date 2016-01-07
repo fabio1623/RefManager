@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\AccessRequest;
 use Auth;
 use Hash;
 
@@ -51,6 +52,16 @@ class UserController extends Controller
         return $view;
     }
 
+    public function create_by_request($id)
+    {
+        // dd($id);
+        $request = AccessRequest::find($id);
+        $username = strstr($request->email, '@', true);
+
+        $view = view('auth.register_by_request', ['request'=>$request, 'username'=>$username]);
+        return $view;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -61,11 +72,36 @@ class UserController extends Controller
     {
         // dd($_POST);
         $this->validate($request, [
-            // 'first_name' => 'required|alpha|max:255',
-            // 'last_name'  => 'required|alpha|max:255',
+            // 'username'  =>  'required',
+            'email'     => 'required|email|max:255|unique:users',
+            'password'  => 'required|min:6',
+            'profile'    => 'required',
+        ]);
+        $user = new User;
+        $username = strstr($request->email, '@', true);
+        $user->username = $username;
+        $user->email = $request->email;
+        $user->password  = bcrypt($request->password);
+        $user->profile = $request->profile;
+        
+        $user->save();
+
+        $access_request = AccessRequest::where('email', $request->email)->first();
+
+        if ($access_request) {
+            AccessRequest::destroy($access_request->id);
+        }
+
+        return redirect()->action('UserController@index');
+    }
+
+    public function store_by_request(Request $request)
+    {
+        // dd($_POST);
+        $this->validate($request, [
             'username'  =>  'required',
             'email'     => 'required|email|max:255|unique:users',
-            'password'  => 'required|confirmed|min:6',
+            'password'  => 'required|min:6',
             'profile'    => 'required',
         ]);
         $user = new User;
@@ -76,7 +112,11 @@ class UserController extends Controller
         
         $user->save();
 
-        return redirect()->action('UserController@index');
+        $access_request = AccessRequest::where('email', $request->email)->first();
+
+        AccessRequest::destroy($access_request->id);
+
+        return redirect()->action('AccessController@index');
     }
 
     /**
@@ -182,13 +222,6 @@ class UserController extends Controller
     public function getLoginError(Request $request)
     {
         $view = view('auth.loginError');
-        return $view;
-    }
-
-    public function createByRequest(Request $request)
-    {
-        // dd($_POST);
-        $view = view('auth.register_by_request')->with('email', $request->email);
         return $view;
     }
 

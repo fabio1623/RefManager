@@ -19,41 +19,42 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@store') }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@store_by_request') }}">
 						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Username</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="firstName" name="username" value="{{ old('username') }}">
+								<input type="text" class="form-control" id="firstName" name="username" value="{{ $username }}" readonly>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">E-Mail Address</label>
 							<div class="col-sm-6">
-								<input type="email" class="form-control" name="email" value="{{ $email }}">
+								<input type="email" class="form-control" name="email" value="{{ $request->email }}" readonly>
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group hidden">
 							<label class="col-sm-4 control-label">Password</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" name="password">
+								<input type="password" class="form-control" name="password" value="{{ $default_password }}" readonly>
 							</div>
 						</div>
 
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label class="col-sm-4 control-label">Confirm Password</label>
 							<div class="col-sm-6">
 								<input type="password" class="form-control" name="password_confirmation">
 							</div>
-						</div>
+						</div> -->
 						
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">
 							  <select class="form-control" id="profile_type" name="profile">
+							  	<option></option>
 							    <option value="3">Basic user</option>
 							    <option value="2">Reference administrator</option>
 							    <option value="1">User administrator</option>
