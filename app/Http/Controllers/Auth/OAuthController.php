@@ -31,9 +31,11 @@ class OAuthController extends Controller
         $user = Socialite::driver('google')->user();
         // dd($user);
 
-        $value = ends_with($user->email, '@gmail.com');
+        $veolia = ends_with($user->email, '@veolia.com');
+        $seureca = ends_with($user->email, '@seureca.com');
+        $google = ends_with($user->email, '@gmail.com');
 
-        if ($value == true) {
+        if ($veolia || $seureca || $google) {
             $ddb_user = User::where('email', $user->email)->first();
             if ($ddb_user) {
                 Auth::login($ddb_user);
