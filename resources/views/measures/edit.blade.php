@@ -10,11 +10,12 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $measure->name }}</div>
 							<div class="col-sm-6">
-								<form action="" method="POST">
-									<input class="btn btn-danger pull-right btn-xs" type="submit" name="_method" value="Delete">
-								    <?php echo method_field('DELETE'); ?>
+								<form action="{{ action('MeasureController@destroy') }}" method="POST">
+									<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-								    <input type="hidden" name="hidden_field" value="{{ $measure->id}}">
+									<input class="btn btn-danger pull-right btn-xs" type="submit" name="_method" value="Delete">
+								    <input type="hidden" name="measure_id" value="{{ $measure->id}}">
+								    <input type="hidden" name="category_id" value="{{ $category->id}}">
 								</form>
 							</div>
 						</div>
@@ -37,7 +38,7 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Expertise Name</label>
+							<label class="col-md-4 control-label">Measure Name</label>
 							<div class="col-md-4">
 								<input type="text" class="form-control" name="name" value="{{$measure->name}}">
 							</div>

@@ -9,7 +9,7 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $expertise->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('ExpertiseController@destroyOne') }}" method="POST">
+								<form action="{{ action('ExpertiseController@destroy') }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" class="btn btn-danger btn-xs pull-right">
@@ -35,8 +35,8 @@
 					@endif
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ action('ExpertiseController@update', [$domain->id, $expertise->id]) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<?php echo method_field('PUT'); ?>
+					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Expertise Name</label>
@@ -46,11 +46,27 @@
 						</div>
 
 						<div class="form-group">
+							<label class="col-sm-4 control-label">Sub-Expertise Of </label>
+							<div class="col-sm-6">
+								<select class="form-control selectpicker" name="parent_expertise">
+									<option></option>
+									@foreach ($parent_expertises as $exp)
+										@if ($exp->id == $expertise->parent_expertise_id)
+											<option value="{{ $exp->id }}" selected>{{ $exp->name }}</option>
+										@else
+											<option value="{{ $exp->id }}">{{ $exp->name }}</option>
+										@endif
+									@endforeach
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
+								<a class="btn btn-primary btn-sm" href="{{ action('DomainController@edit', $domain->id) }}" role="button">	
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>

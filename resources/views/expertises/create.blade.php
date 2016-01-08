@@ -28,6 +28,19 @@
 								<input type="text" class="form-control" id="expertiseName" name="name" value="{{ old('name') }}">
 							</div>
 						</div>
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Sub-Expertise Of </label>
+							<div class="col-sm-6">
+								<select class="form-control selectpicker" name="parent_expertise">
+									<option></option>
+									@foreach ($parent_expertises as $expertise)
+										<option value="{{ $expertise->id }}">{{ $expertise->name }}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+
 						<input type="hidden" name="domain_id" value="{{ $domain->id}}">
 						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">

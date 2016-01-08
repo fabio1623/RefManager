@@ -33,9 +33,11 @@ class ExpertiseController extends Controller
     public function create(Request $request)
     {
         // dd($_POST);
-        $domain = Domain::find($request->input('domain_id'));
+        $domain = Domain::find($request->domain_id);
+        $parent_expertises = Expertise::whereNull('parent_expertise_id')
+                                            ->where('domain_id', $domain->id)->get();
 
-        $view = view('expertises.create')->with('domain', $domain);
+        $view = view('expertises.create', ['domain'=>$domain, 'parent_expertises'=>$parent_expertises]);
         return $view;
     }
 
@@ -55,6 +57,10 @@ class ExpertiseController extends Controller
         $new_expertise = new Expertise;
         $new_expertise->name = $request->name;
         $new_expertise->domain_id = $request->domain_id;
+
+        if ($request->parent_expertise != '') {
+            $new_expertise->parent_expertise_id = $request->parent_expertise;
+        }
 
         $new_expertise->save();
 
@@ -99,11 +105,16 @@ class ExpertiseController extends Controller
      */
     public function edit($domain_id, $expertise_id)
     {
+        // dd($_POST);
         $expertise = Expertise::find($expertise_id);
         $domain = Domain::find($domain_id);
 
+        $parent_expertises = Expertise::where('id', '<>', $expertise_id)
+                                            ->whereNull('parent_expertise_id')
+                                            ->where('domain_id', $domain->id)->get();
+
         // $view = view('expertises.edit', ['expertise'=>$expertise, 'domain'=>$domain]);
-        $view = view('expertises.edit', ['domain'=>$domain, 'expertise'=>$expertise]);
+        $view = view('expertises.edit', ['domain'=>$domain, 'expertise'=>$expertise, 'parent_expertises'=>$parent_expertises]);
         return $view;
     }
 
@@ -116,8 +127,13 @@ class ExpertiseController extends Controller
      */
     public function update(Request $request, $domain_id, $expertise_id)
     {
+        // dd($_POST);
         $expertise = Expertise::find($expertise_id);
         $expertise->name = $request->input('name');
+
+        if ($request->parent_expertise != '') {
+            $expertise->parent_expertise_id = $request->parent_expertise;
+        }
 
         $expertise->save();
 
@@ -130,22 +146,7 @@ class ExpertiseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $domain_id)
-    {
-        dd($_POST);
-        $ids = $request->input('id');
-
-        foreach ($ids as $id) {
-            $expertise = Expertise::where('id',$id)->first();
-            $expertise->domains()->detach();
-        }
-
-        Expertise::destroy($ids);
-
-        return redirect()->action('DomainController@edit', $domain_id);
-    }
-
-    public function destroyOne(Request $request)
+    public function destroy(Request $request)
     {
         $references = Reference::whereHas('expertises', function ($query) use ($request) {
             $query->where('domain_id', $request->domain_id);
@@ -158,5 +159,21 @@ class ExpertiseController extends Controller
         Expertise::destroy($request->expertise_id);
 
         return redirect()->action('DomainController@edit', $request->domain_id);
+
+    }
+
+    public function destroyOne(Request $request, $domain_id)
+    {
+        dd($_POST);
+        $ids = $request->input('id');
+
+        foreach ($ids as $id) {
+            $expertise = Expertise::where('id',$id)->first();
+            $expertise->domains()->detach();
+        }
+
+        Expertise::destroy($ids);
+
+        return redirect()->action('DomainController@edit', $domain_id);
     }
 }

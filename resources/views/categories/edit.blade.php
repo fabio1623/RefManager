@@ -17,8 +17,8 @@
 								<button form="form_delete" type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ action('CategoryController@index') }}" role="button">	
+									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> List
 								</a>
 							</div>
 						</div>
@@ -37,8 +37,8 @@
 					@endif
 
 					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('CategoryController@update', $category->id) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<?php echo method_field('PUT'); ?>
+					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Name</label>
@@ -52,7 +52,7 @@
 					    <?php echo method_field('DELETE'); ?>
 					    <?php echo csrf_field(); ?>
 
-					    <input type="hidden" name="hidden_field" value="{{ $category->id}}">
+					    <input type="hidden" name="category_id" value="{{ $category->id}}">
 					</form>
 					<form class="form-horizontal" action="{{ action('MeasureController@create') }}" method="GET">
 						<?php echo csrf_field(); ?>
@@ -71,11 +71,11 @@
 						<div class="col-sm-4"><h4>Associated measures</h4></div>
 						<!-- #./Left column -->
 						<!-- Right column -->
-						<div class="col-sm-8">
+						<!-- <div class="col-sm-8">
 							<button form="form_measures" type="submit" id="remove_btn" class="btn btn-danger btn-sm">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							</button>
-						</div>
+						</div> -->
 						<!-- #./Right column -->
 					</div>
 
@@ -85,9 +85,9 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-10">Measure name</th>
-								<th></th>
-						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-11">Measure name</th>
+								<th class="col-sm-1"></th>
+						    	<!-- <th class="col-sm-1"><input type="checkbox" id="select_all"> All</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -104,9 +104,9 @@
 													<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 												</button>
 											</td>
-											<td class="check">
+											<!-- <td class="check">
 												<input class="checkbox" type="checkbox" value="{{$measure->id}}" name=id[]>
-											</td>
+											</td> -->
 										</tr>
 								@endforeach
 							</form>

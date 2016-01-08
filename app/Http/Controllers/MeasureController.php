@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use App\Measure;
 use App\Category;
+use App\Reference;
+use App\Qualifier;
 
 class MeasureController extends Controller
 {
@@ -124,18 +126,33 @@ class MeasureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $category_id)
+    public function destroy(Request $request)
     {
-        dd($_POST);
-        $ids = $request->input('id');
+        // dd($_POST);
+        $measure = Measure::find($request->measure_id);
 
-        foreach ($ids as $id) {
-            $measure = Measure::where('id',$id)->first();
-            $measure->categories()->detach();
+        $references = Reference::whereHas('measures', function ($query) use ($request) {
+            $query->where('measures.id', $request->measure_id);
+        })->get();
+
+        if ($references) {
+            foreach ($references as $reference) {
+                $reference->measures()->detach($request->measure_id);
+            }
         }
 
-        Measure::destroy($ids);
+        $qualifiers = Qualifier::whereHas('measures', function ($query) use ($request) {
+            $query->where('measures.id', $request->measure_id);
+        })->get();
 
-        return redirect()->action('CategoryController@edit', $category_id);
+        if ($qualifiers) {
+            foreach ($qualifiers as $qualifier) {
+                $qualifier->measures()->detach($request->measure_id);
+            }
+        }
+
+        Measure::destroy($request->measure_id);
+
+        return redirect()->action('CategoryController@edit', $request->category_id);
     }
 }

@@ -26,7 +26,7 @@
 					@endif
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ action('AccessController@store') }}">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">E-Mail Address</label>

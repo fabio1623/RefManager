@@ -17,8 +17,8 @@
 								<button form="form_delete" type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 
-									Back
+								<a class="btn btn-primary btn-sm" href="{{ action('DomainController@index') }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 
+									List
 								</a>
 							</div>
 						</div>
@@ -37,23 +37,23 @@
 					@endif
 
 					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('DomainController@update', $domain->id) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<?php echo method_field('PUT'); ?>
+					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Name</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="first_name" value="{{$domain->name}}">
+								<input type="text" class="form-control" name="name" value="{{$domain->name}}">
 							</div>
 						</div>
 
 					</form>
 
-					<form id="form_delete" action="{{ action('DomainController@destroyOne') }}" method="POST">
+					<form id="form_delete" action="{{ action('DomainController@destroy') }}" method="POST">
 					    <?php echo method_field('DELETE'); ?>
 					    <?php echo csrf_field(); ?>
 
-					    <input type="hidden" name="hidden_field" value="{{ $domain->id}}">
+					    <input type="hidden" name="domain_id" value="{{ $domain->id}}">
 					</form>
 
 					<form class="form-horizontal" action="{{ action('ExpertiseController@create') }}" method="GET">
@@ -74,9 +74,9 @@
 						<!-- #./Left column -->
 						<!-- Right column -->
 						<div class="col-sm-8">
-							<button form="form_expertises" type="submit" id="remove_btn" class="btn btn-danger btn-sm">
+							<!-- <button form="form_expertises" type="submit" id="remove_btn" class="btn btn-danger btn-sm">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-							</button>
+							</button> -->
 						</div>
 						<!-- #./Right column -->
 					</div>
@@ -101,12 +101,14 @@
 											<td>
 												<a class="btn btn-link" href="{{ action('ExpertiseController@edit', [$domain->id, $expertise->id]) }}">{{$expertise->name}}</a>
 											</td>
-											<td class="check">
-												<a class="btn btn-danger btn-xs center-block" href="{{ action('ExpertiseController@destroy', $domain->id) }}" role="button">
-											    	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-											    </a>
-												<!-- <input class="checkbox" type="checkbox" value="{{$expertise->id}}" name=id[]> -->
+											<td>
+												<button form="" type="button" id="" class="btn btn-danger btn-sm pull-right">
+													<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+												</button>
 											</td>
+											<!-- <td class="check">
+												<input class="checkbox" type="checkbox" value="{{$expertise->id}}" name=id[]>
+											</td> -->
 										</tr>
 								@endforeach
 							</form>

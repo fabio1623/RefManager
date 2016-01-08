@@ -25,14 +25,14 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Username</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="firstName" name="username" value="{{ old('username') }}" readonly>
+								<input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" readonly>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">E-Mail Address</label>
 							<div class="col-sm-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
 							</div>
 						</div>
 
@@ -75,6 +75,11 @@
 			</div>
 	</div>
 <script>
+	$('#email').keyup(function () {
+		
+		$('#username').val($('#email').val());
+	});
+
 	$('#firstName').bind('keypress keyup blur', function() {
 		if($('#lastName').val() != ""){
     		$('#user_name').val($(this).val() + "." + $('#lastName').val());	

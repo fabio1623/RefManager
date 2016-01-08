@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Domain;
+use App\Expertise;
+use App\Reference;
 
 class DomainController extends Controller
 {
@@ -42,8 +44,12 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name'     => 'required|string|max:255|unique:domains',
+        ]);
+
         $domain = new Domain;
-        $domain->name = $request->input('name');
+        $domain->name = $request->name;
         $domain->save();
 
         return redirect()->action('DomainController@index');
@@ -85,10 +91,18 @@ class DomainController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $domain = Domain::find($id);
-        $domain->name = $request->input('name');
+        // dd($_POST);
+        $this->validate($request, [
+            'name'     => 'required|string|max:255|unique:domains,name,'.$id,
+        ]);
 
-        $domain->save();
+        $domain = Domain::find($id);
+
+        if ($domain->name != $request->name) {
+            $domain->name = $request->name;
+
+            $domain->save();
+        }
 
         return redirect()->action('DomainController@index');
     }
@@ -102,6 +116,39 @@ class DomainController extends Controller
     public function destroy(Request $request)
     {
         // dd($_POST);
+
+        $domain = Domain::find($request->domain_id);
+
+        foreach ($domain->expertises as $expertise) {
+            if ($expertise->parent_expertise_id != NULL) {
+                $expertise->parent_expertise_id = NULL;
+
+                $expertise->save();
+            }
+        }
+
+        foreach ($domain->expertises as $expertise) {
+            $references = Reference::whereHas('expertises', function ($query) use ($expertise) {
+                $query->where('expertises.id', $expertise->id);
+            })->get();
+
+            if ($references) {
+                foreach ($references as $reference) {
+                    $reference->expertises()->detach($expertise->id);
+                }
+            }
+
+            Expertise::destroy($expertise->id);
+        }
+
+        Domain::destroy($domain->id);
+
+        return redirect()->action('DomainController@index');
+    }
+
+    public function destroyOne(Request $request)
+    {
+        // dd($_POST);
         $ids = $request->input('id');
 
         foreach ($ids as $id) {
@@ -110,19 +157,6 @@ class DomainController extends Controller
         }
 
         Domain::destroy($ids);
-
-        return redirect()->action('DomainController@index');
-    }
-
-    public function destroyOne(Request $request)
-    {
-        // dd($_POST);
-        $id = $request->input('hidden_field');
-
-        $domain = Domain::where('id',$id)->first();
-        $domain->expertises()->detach();
-
-        Domain::destroy($id);
 
         return redirect()->action('DomainController@index');
     }

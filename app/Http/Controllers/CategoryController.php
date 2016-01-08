@@ -8,6 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Category;
+use App\Measure;
+use App\Reference;
+use App\Qualifier;
 
 class CategoryController extends Controller
 {
@@ -48,15 +51,15 @@ class CategoryController extends Controller
     {
         /*dd($_POST);*/
         $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:categories',
+            'name' => 'required|string|max:255|unique:categories',
         ]);
 
-        $category = new Category;
-        $category->name = $request->input('name');
+        $new_category = new Category;
+        $new_category->name = $request->name;
         
-        $category->save();
+        $new_category->save();
 
-        return redirect()->action('CategoryController@index');
+        return redirect()->action('CategoryController@edit', $new_category);
     }
 
     /**
@@ -96,15 +99,18 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:categories',
+            'name'     => 'required|string|max:255|unique:categories,name,'.$id,
         ]);
 
-        $category = new Category;
-        $category->name = $request->input('name');
+        $category = Category::find($id);
 
-        $user->save();
+        if ($category->name != $request->name) {
+            $category->name = $request->name;
 
-        return redirect()->action('UserController@index');
+            $category->save();
+        }
+
+        return redirect()->action('CategoryController@index');
     }
 
     /**
@@ -114,6 +120,42 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
+    {
+        // dd($_POST);
+        
+        $category = Category::find($request->category_id);
+
+        //Delete all related measures
+        foreach ($category->measures as $measure) {
+            $references = Reference::whereHas('measures', function ($query) use ($measure) {
+                $query->where('measures.id', $measure->id);
+            })->get();
+
+            if ($references) {
+                foreach ($references as $reference) {
+                    $reference->measures()->detach($measure->id);
+                }
+            }
+
+            $qualifiers = Qualifier::whereHas('measures', function ($query) use ($measure) {
+                $query->where('measures.id', $measure->id);
+            })->get();
+
+            if ($qualifiers) {
+                foreach ($qualifiers as $qualifier) {
+                    $qualifier->measures()->detach($measure->id);
+                }
+            }
+
+            Measure::destroy($measure->id);
+        }
+
+        Category::destroy($category->id);
+
+        return redirect()->action('CategoryController@index');
+    }
+
+    public function destroy_multiple(Request $request)
     {
         dd($_POST);
         $ids = $request->input('id');
