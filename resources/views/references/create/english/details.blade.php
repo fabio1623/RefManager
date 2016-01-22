@@ -360,13 +360,14 @@
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-		  	<input type="text" class="form-control" name="financing[]">
+		  	<!-- <input type="text" class="form-control" name="financing[0][]"> -->
+		  	<input id="typeahead" class="form-control" type="text" data-provide="typeahead">
 	  	</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control" name="financing_fr[]">
+			<input type="text" class="form-control" name="financing[0][]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addFinancingButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -465,10 +466,35 @@
 </div>
 
 <script>
-	var languages = {!! $languages->toJson() !!};
 	var fundings_in_db = {!! $fundings->toJson() !!}
 
-	var fundings = ['hello', 'Welcome'];
+	var fundings = [];
+	for (var i = 0; i < fundings_in_db.length; i++) {
+		if (fundings_in_db[i].name != '') {
+			fundings.push(fundings_in_db[i].name);
+		};
+	}
+
+	// instantiate the bloodhound suggestion engine
+	var numbers = new Bloodhound({
+	datumTokenizer: Bloodhound.tokenizers.whitespace,
+	queryTokenizer: Bloodhound.tokenizers.whitespace,
+	local:  fundings
+	});
+
+	// initialize the bloodhound suggestion engine
+	numbers.initialize();
+
+	$('#typeahead').typeahead(
+	{
+	items: 4,
+	source:numbers.ttAdapter()  
+	});
+
+	var languages = {!! $languages->toJson() !!};
+	
+
+	// var fundings = ['hello', 'Welcome'];
 	// var fundings_fr = [];
 
 	// for (var i = 0; i < fundings_in_db.length; i++) {
@@ -635,6 +661,7 @@
             $row.remove();
         });
 
+	var i = 1;
     $('#form').on('click', '.addFinancingButton', function() {
             var $template = $('#financingsTemplate'),
                 $clone    = $template
@@ -642,8 +669,9 @@
                                 .removeClass('hide')
                                 .removeAttr('id')
                                 .insertBefore($template)
-                                .find('[class="form-control financingInput"]').attr('name', 'financing[]');
-                $('#financing_fr_input').attr('name', 'financing_fr[]').removeAttr('id');
+                                .find('[class="form-control financingInput"]').attr('name', 'financing[' + i + '][]');
+                $('#financing_fr_input').attr('name', 'financing[' + i + '][]').removeAttr('id');
+                i++;
         })
 		.on('click', '.removeFinancingButton', function() {
             var $row    = $(this).closest('.financingsTemplate');

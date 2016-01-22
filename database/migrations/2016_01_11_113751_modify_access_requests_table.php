@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDomainsTable extends Migration
+class ModifyAccessRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,8 @@ class CreateDomainsTable extends Migration
      */
     public function up()
     {
-        Schema::create('domains', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 50);
+        Schema::table('access_requests', function (Blueprint $table) {
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -27,6 +24,8 @@ class CreateDomainsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('domains');
+        Schema::table('access_requests', function (Blueprint $table) {
+            //
+        });
     }
 }

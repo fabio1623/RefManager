@@ -527,20 +527,20 @@ class ReferenceController extends Controller
 
         $reference->location = $request->input('location');
 
-        $reference->start_date = $request->input('start_date');
-        $reference->end_date = $request->input('end_date');
+        $reference->start_date = $request->start_date;
+        $reference->end_date = $request->end_date;
 
         $reference->estimated_duration = $request->input('estimated_duration');
 
         //Details panel
         $reference->project_name = $request->input('project_name');
-        $reference->project_name = $request->input('project_name_fr');
-        $reference->project_name = $request->input('project_description');
-        $reference->project_name = $request->input('project_description_fr');
-        $reference->project_name = $request->input('service_name');
-        $reference->project_name = $request->input('service_name_fr');
-        $reference->project_name = $request->input('service_description');
-        $reference->project_name = $request->input('service_description_fr');
+        $reference->project_name_fr = $request->input('project_name_fr');
+        $reference->project_description = $request->input('project_description');
+        $reference->project_description_fr = $request->input('project_description_fr');
+        $reference->service_name = $request->input('service_name');
+        $reference->service_name_fr = $request->input('service_name_fr');
+        $reference->service_description = $request->input('service_description');
+        $reference->service_description_fr = $request->input('service_description_fr');
         
         if ($request->input('staff_number')) {
             $reference->staff_number = $request->input('staff_number');
@@ -640,8 +640,11 @@ class ReferenceController extends Controller
         }
 
         //Costs & currency infos
+        if ($request->seureca_services_cost) {
+            $reference->seureca_services_cost = $request->seureca_services_cost;
+        }
         $reference->total_project_cost = $request->input('total_project_cost');
-        $reference->seureca_services_cost = $request->input('seureca_services_cost');
+        // $reference->seureca_services_cost = $request->input('seureca_services_cost');
         $reference->work_cost = $request->input('work_cost');
 
         $reference->currency = $request->input('project_currency');
@@ -706,13 +709,15 @@ class ReferenceController extends Controller
         //Attach the measures
         foreach ($request->input('categories') as $category) {
             foreach ($category as $key => $value) {
-                $measure_in_db = Measure::where('id', $key)->first();
+                if ($value != '') {
+                    $measure_in_db = Measure::where('id', $key)->first();
 
-                if (count($measure_in_db->units) > 1) {
-                    $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
-                }
-                else {
-                    $reference->measures()->attach($key, ['value' => $value]);   
+                    if (count($measure_in_db->units) > 1) {
+                        $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
+                    }
+                    else {
+                        $reference->measures()->attach($key, ['value' => $value]);   
+                    }
                 }
             }
         }
@@ -733,51 +738,107 @@ class ReferenceController extends Controller
         // }
 
         //Attach the fundings
-        if ($request->financing) {
-            foreach ($request->financing as $f) {
-                $funding_in_db = Funding::where('name', $f)
-                                            ->orWhere('name_fr', $f)->first();
-                if ($funding_in_db) {
-                    if ($funding_in_db->name == '') {
-                        $funding_in_db->name = $f;
-
-                        $funding_in_db->save();
-                    }
-                    $reference->fundings()->attach($funding_in_db->id);
+        foreach ($request->financing as $key => $f) {
+            if ($f[0] != '') {
+                if ($f[1] != '') {
+                    $funding_in_db = Funding::where('name', $f[0])->orWhere('name_fr', $f[1])->first();
                 }
                 else {
+                    $funding_in_db = Funding::where('name', $f[0])->first();
+                }
+            }
+            else {
+                if ($f[1] != '') {
+                    $funding_in_db = Funding::where('name_fr', $f[1])->first();
+                }
+                else {
+                    $funding_in_db = null;
+                }
+            }
+            if ($funding_in_db) {
+                if ($funding_in_db->name == '') {
+                    $funding_in_db->name = $f[0];
+                    $funding_in_db->save();
+                }
+                if ($funding_in_db->name_fr == '') {
+                     $funding_in_db->name_fr = $f[1];
+                     $funding_in_db->save();
+                }
+                $reference->fundings()->attach($funding_in_db->id);
+            }
+            else {
+                if ($f[0] != '' || $f[1] != '') {
                     $new_funding = new Funding;
-                    $new_funding->name = $f;
-
+                    if ($f[0] != '') {
+                        $new_funding->name = $f[0];
+                    }
+                    if ($f[1] != '') {
+                        $new_funding->name_fr = $f[1];
+                    }
                     $new_funding->save();
-
                     $reference->fundings()->attach($new_funding->id);
                 }
             }
         }
 
-        if ($request->financing_fr) {
-            foreach ($request->financing_fr as $f) {
-                $funding_in_db = Funding::where('name', $f)
-                                            ->orWhere('name_fr', $f)->first();
-                if ($funding_in_db) {
-                    if ($funding_in_db->name_fr == '') {
-                        $funding_in_db->name_fr = $f;
+        //OLD VERSION
+        // if ($request->financing) {
+        //     foreach ($request->financing as $f) {
+        //         if ($f != '') {
+        //             $funding_in_db = Funding::where('name', $f)
+        //                                     ->orWhere('name_fr', $f)->first();
+        //             if ($funding_in_db) {
+        //                 if ($funding_in_db->name == '') {
+        //                     $funding_in_db->name = $f;
 
-                        $funding_in_db->save();
-                    }
-                    $reference->fundings()->attach($funding_in_db->id);
-                }
-                else {
-                    $new_funding = new Funding;
-                    $new_funding->name_fr = $f;
+        //                     $funding_in_db->save();
+        //                 }
+        //                 $reference->fundings()->attach($funding_in_db->id);
+        //             }
+        //             else {
+        //                 $new_funding = new Funding;
+        //                 $new_funding->name = $f;
 
-                    $new_funding->save();
+        //                 $new_funding->save();
 
-                    $reference->fundings()->attach($new_funding->id);
-                }
-            }
-        }
+        //                 $reference->fundings()->attach($new_funding->id);
+        //             }
+        //         }
+        //     }
+        // // }
+
+        // // if ($request->financing_fr) {
+        //     foreach ($request->financing_fr as $f) {
+        //         if ($f != '') {
+        //             $funding_in_db = Funding::where('name', $f)
+        //                                     ->orWhere('name_fr', $f)->first();
+        //             if ($funding_in_db) {
+        //                 if ($funding_in_db->name_fr == '') {
+        //                     $funding_in_db->name_fr = $f;
+
+        //                     $funding_in_db->save();
+        //                 }
+
+        //                 $isLinked = $reference->fundings()->where('id', $funding_in_db->id)->get();
+
+        //                 if ($isLinked) {
+        //                     # code...
+        //                 }
+        //                 else {
+        //                     $reference->fundings()->attach($funding_in_db->id);
+        //                 }
+        //             }
+        //             else {
+        //                 $new_funding = new Funding;
+        //                 $new_funding->name_fr = $f;
+
+        //                 $new_funding->save();
+
+        //                 $reference->fundings()->attach($new_funding->id);
+        //             }
+        //         }
+        //     }
+        // }
 
         //Attach the involved staff
         foreach ($request->involved_staff as $key => $value) {
@@ -885,7 +946,7 @@ class ReferenceController extends Controller
 
         $financings = $reference->fundings()->get();
         
-        // dd($staff_names);
+        // dd($financings);
 
         $external_services = ExternalService::all();
         $internal_services = InternalService::all();
@@ -909,7 +970,7 @@ class ReferenceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($_POST);
+        dd($_POST);
         // $this->validate($request, [
         //     'project_number' => 'required|unique:references',
         //     'country_id'     => 'required',
@@ -944,8 +1005,19 @@ class ReferenceController extends Controller
         }
 
         $reference->location = $request->input('location');
-        $reference->start_date = $request->input('start_date');
-        $reference->end_date = $request->input('end_date');
+
+            // $month_start = strstr($request->start_date, '-', true);
+            // $year_start = substr($request->start_date, strpos($request->start_date, '-') + 1);
+            
+            // $reference->start_date = $year_start.'-'.$month_start.'-01';
+        $reference->start_date = $request->start_date;
+
+            // $month_end = strstr($request->end_date, '-', true);
+            // $year_end = substr($request->end_date, strpos($request->end_date, '-') + 1);
+
+            // $reference->end_date = $year_end.'-'.$month_end.'-01';
+        $reference->end_date = $request->end_date;
+
         $reference->estimated_duration = $request->input('estimated_duration');
         
         //Details panel
@@ -957,9 +1029,27 @@ class ReferenceController extends Controller
         $reference->service_name_fr = $request->input('service_name_fr');
         $reference->service_description = $request->input('service_description');
         $reference->service_description_fr = $request->input('service_description_fr');
-        $reference->staff_number = $request->input('staff_number');
-        $reference->seureca_man_months = $request->input('seureca_man_months');
-        $reference->consultants_man_months = $request->input('consultants_man_months');
+
+        if ($request->staff_number != '' && $request->staff_number != 0) {
+            $reference->staff_number = $request->staff_number;
+        }
+        else {
+            $reference->staff_number = null;   
+        }
+
+        if ($request->seureca_man_months != '' && $request->seureca_man_months != 0) {
+            $reference->seureca_man_months = $request->seureca_man_months;
+        }
+        else {
+            $reference->seureca_man_months = null;   
+        }
+
+        if ($request->consultants_man_months != '' && $request->consultants_man_months != 0) {
+            $reference->consultants_man_months = $request->consultants_man_months;
+        }
+        else {
+            $reference->consultants_man_months = null;   
+        }
 
         //Contact infos
         if ($request->input('contact_name') != "") {
@@ -978,7 +1068,7 @@ class ReferenceController extends Controller
             }
         }
 
-        $reference->contact_department = $request->input('contact_department_en');
+        $reference->contact_department = $request->input('contact_department');
         $reference->contact_department_fr = $request->input('contact_department_fr');
         $reference->contact_phone = $request->input('contact_phone');
         $reference->contact_email = $request->input('contact_email');
@@ -1046,9 +1136,27 @@ class ReferenceController extends Controller
             }
         }
 
-        $reference->total_project_cost = $request->input('total_project_cost');
-        $reference->seureca_services_cost = $request->input('seureca_services_cost');
-        $reference->work_cost = $request->input('work_cost');
+        if ($request->seureca_services_cost != '' && $request->seureca_services_cost != 0) {
+            $reference->seureca_services_cost = $request->seureca_services_cost;
+        }
+        else {
+            $reference->seureca_services_cost = null;
+        }
+
+        if ($request->total_project_cost != '' && $request->total_project_cost != 0) {
+            $reference->total_project_cost = $request->total_project_cost;
+        }
+        else {
+            $reference->total_project_cost = null;
+        }
+
+        if ($request->work_cost != '' && $request->work_cost != 0) {
+            $reference->work_cost = $request->work_cost;
+        }
+        else {
+            $reference->work_cost = null;
+        }
+
         $reference->general_comments = $request->input('general_comments');
         $reference->general_comments_fr = $request->input('general_comments_fr');
 
@@ -1107,15 +1215,17 @@ class ReferenceController extends Controller
         $reference->measures()->detach();
 
         //Attach the measures
-        foreach ($request->input('categories') as $category) {
+        foreach ($request->categories as $category) {
             foreach ($category as $key => $value) {
-                $measure_in_db = Measure::where('id', $key)->first();
+                if ($value != '') {
+                    $measure_in_db = Measure::where('id', $key)->first();
 
-                if (count($measure_in_db->units) > 1) {
-                    $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
-                }
-                else {
-                    $reference->measures()->attach($key, ['value' => $value]);   
+                    if (count($measure_in_db->units) > 1) {
+                        $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
+                    }
+                    else {
+                        $reference->measures()->attach($key, ['value' => $value]);   
+                    }
                 }
             }
         }
@@ -1145,55 +1255,59 @@ class ReferenceController extends Controller
         $reference->fundings()->detach();
 
         //Attach the fundings to the reference
-        if ($request->financing) {
+        // if ($request->financing) {
             foreach ($request->financing as $f) {
-                $funding_in_db = Funding::where('name', $f)
+                if ($f != '') {
+                    $funding_in_db = Funding::where('name', $f)
                                             ->orWhere('name_fr', $f)->first();
-                if ($funding_in_db) {
-                    if ($funding_in_db->name == '') {
-                        $funding_in_db->name = $f;
+                    if ($funding_in_db) {
+                        if ($funding_in_db->name == '') {
+                            $funding_in_db->name = $f;
 
-                        $funding_in_db->save();
-                    }
-                    $reference->fundings()->attach($funding_in_db->id);
-                }
-                else {
-                    $new_funding = new Funding;
-                    $new_funding->name = $f;
-
-                    $new_funding->save();
-
-                    $reference->fundings()->attach($new_funding->id);
-                }
-            }
-        }
-
-        if ($request->financing_fr) {
-            foreach ($request->financing_fr as $f) {
-                $funding_in_db = Funding::where('name', $f)
-                                            ->orWhere('name_fr', $f)->first();
-                if ($funding_in_db) {
-                    if ($funding_in_db->name_fr == '') {
-                        $funding_in_db->name_fr = $f;
-
-                        $funding_in_db->save();
-                    }
-                    $linked_funding = $reference->fundings()->where('name', $funding_in_db->name)
-                                                            ->orWhere('name_fr', $funding_in_db->name_fr)->first();
-                    if (!$linked_funding) {
+                            $funding_in_db->save();
+                        }
                         $reference->fundings()->attach($funding_in_db->id);
                     }
-                }
-                else {
-                    $new_funding = new Funding;
-                    $new_funding->name_fr = $f;
+                    else {
+                        $new_funding = new Funding;
+                        $new_funding->name = $f;
 
-                    $new_funding->save();
+                        $new_funding->save();
 
-                    $reference->fundings()->attach($new_funding->id);
+                        $reference->fundings()->attach($new_funding->id);
+                    }
                 }
             }
-        }
+        // }
+
+        // if ($request->financing_fr) {
+            foreach ($request->financing_fr as $f) {
+                if ($f != '') {
+                    $funding_in_db = Funding::where('name', $f)
+                                            ->orWhere('name_fr', $f)->first();
+                    if ($funding_in_db) {
+                        if ($funding_in_db->name_fr == '') {
+                            $funding_in_db->name_fr = $f;
+
+                            $funding_in_db->save();
+                        }
+                        $linked_funding = $reference->fundings()->where('name', $funding_in_db->name)
+                                                                ->orWhere('name_fr', $funding_in_db->name_fr)->first();
+                        if (!$linked_funding) {
+                            $reference->fundings()->attach($funding_in_db->id);
+                        }
+                    }
+                    else {
+                        $new_funding = new Funding;
+                        $new_funding->name_fr = $f;
+
+                        $new_funding->save();
+
+                        $reference->fundings()->attach($new_funding->id);
+                    }
+                }
+            }
+        // }
 
         //Detach all contributors
         $reference->contributors()->detach();

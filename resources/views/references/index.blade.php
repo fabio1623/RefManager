@@ -67,10 +67,10 @@
 										<a class="btn btn-link" href="">{{$reference->dfac_name}}</a>	
 									</td>
 									<td>
-										<a class="btn btn-link" href="">{{$reference->start_date}}</a>	
+										<a class="btn btn-link center-block" href="">{{$reference->start_date}}</a>	
 									</td>
 									<td>
-										<a class="btn btn-link" href="">{{$reference->end_date}}</a>	
+										<a class="btn btn-link center-block" href="">{{$reference->end_date}}</a>	
 									</td>
 									<td>
 										<a class="btn btn-link" href="">
