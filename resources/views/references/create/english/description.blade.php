@@ -23,7 +23,7 @@
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
 	<div class="col-sm-4">
-	    <select class="form-control selectpicker" data-width="auto" data-live-search="true" id="country" name="country" data-live-search="true">
+	    <select class="form-control selectpicker" data-width="100%" data-live-search="true" id="country" name="country">
 	    	<option></option>
 	    	@foreach($countries as $country)
 	    		<option value="{{ $country->id }}">{{$country->name}}</option>
@@ -63,7 +63,7 @@
 <div class="form-group">
 	<label for="zone_manager" class="col-sm-4 control-label">Zone manager</label>
 	<div class="col-sm-4">
-	  	<input type="text" class="form-control" id="zone_manager">
+	  	<input type="text" class="form-control" id="zone_manager" readonly>
 	</div>
 </div>
 <!-- EO line -->
@@ -175,6 +175,11 @@
 </div>
 
 <script>
+	var countries = {!! $countries->toJson() !!};
+	var zones = {!! $zones->toJson() !!};
+	var seniors = {!! $seniors->toJson() !!};
+	var experts = {!! $experts->toJson() !!};
+
 	$('#date_picker_start').datepicker({
 	    format: "mm-yyyy",
 	    viewMode: "months", 
@@ -263,18 +268,58 @@
 		}
 	});
 
-	var countries = {!! $countries->toJson() !!};
-
 	$('#country').change( function () {
-		for (var i = 0; i < countries.length; i++) {
-			if (countries[i].id == $('#country').val()) {
-				$('#continent').val(countries[i].continent);
-				break;
+		if ( $('#country').val() != '' ) {
+			for (var i = 0; i < countries.length; i++) {
+				if (countries[i].id == $('#country').val()) {
+					$('#continent').val(countries[i].continent);
+					break;
+				}
 			}
-			else {
-				$('#continent').val('');
+		}
+		else {
+			$('#continent').val('');
+		};
+	});
+
+	//Search the right manager of the selected zone.
+	$('#zone').change( function(e) {
+		var found = 0;
+		if ( $('#zone').val() != '' ) {
+			for (var i = 0; i < zones.length; i++) {
+				if ( zones[i].id == $('#zone').val() ) {
+					if ( zones[i].manager != null ) {
+						//Check if the manager exist in the staff list
+						for (var j = 0; j < seniors.length; j++) {
+							if ( seniors[j].id == zones[i].manager ) {
+								found = 1;
+								$('#zone_manager').val( seniors[j].name );
+								break;
+							};
+						};
+						if (found == 0) {
+							//Check if the manager exist in the experts list
+							for (var x = 0; x < experts.length; x++) {
+								if ( experts[x].id == zones[i].manager ) {
+									found = 1;
+									$('#zone_manager').val( experts[x].name );
+									break;
+								};
+							};
+						};
+					}
+					else {
+						$('#zone_manager').val('No manager for this zone');
+					};
+				};
+				if ( found == 1 ) {
+					break;
+				};
 			};
 		}
-	});
+		else {
+			$('#zone_manager').val('');
+		};
+	} );
 	
 </script>

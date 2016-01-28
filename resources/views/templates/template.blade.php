@@ -114,6 +114,14 @@
 							            <li><a href="{{ action('CategoryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of categories</a></li>
 							          </ul>
 							        </li>
+							        <li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-inbox"></span> Management<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action('ZoneController@index') }}"><span class="glyphicon glyphicon-list"></span> Zones</a></li>
+							            <li><a href="{{ action('ContributorController@index') }}"><span class="glyphicon glyphicon-list"></span> Contributors</a></li>
+							            <li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-list"></span> Fundings</a></li>
+							          </ul>
+							        </li>
 						        @endif
 						        <!-- References Administrator -->
 						        @if (Auth::user()->profile == 'Reference administrator')

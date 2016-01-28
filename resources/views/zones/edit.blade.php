@@ -42,6 +42,22 @@
 								<input type="text" class="form-control" name="name" value="{{$zone->name}}">
 							</div>
 						</div>
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Manager</label>
+							<div class="col-sm-4">
+								<select class="form-control selectpicker" data-width="100%" data-live-search="true" name="manager" data-live-search="true">
+									<option></option>
+									@foreach ($contributors as $cont)
+										@if($cont->id == $zone->manager)
+											<option value="{{ $cont->id }}" selected>{{ $cont->name }}</option>
+										@else
+											<option value="{{ $cont->id }}">{{ $cont->name }}</option>
+										@endif
+									@endforeach
+								</select>
+							</div>
+						</div>
 					</form>
 					<form id="form_attach" class="form-horizontal" role="form" method="POST" action="{{ action('ZoneController@attach_country', $zone->id) }}">
 						<input type="hidden" name="_method" value="PUT">
@@ -56,7 +72,7 @@
 									@endforeach
 								</select>
 							</div>
-							<button type="submit" class="btn btn-default btn-sm">
+							<button id="add_country_btn" type="submit" class="btn btn-default btn-sm">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -114,4 +130,14 @@
 					<!-- -->
 			</div>
 	</div>
+
+	<script>
+		$('#add_country_btn').click( function(e){
+			if ($('#involved_country').val() == '') {
+				alert('You have to select a country.');
+				e.preventDefault();
+			};
+		} );
+	</script>
+
 @endsection

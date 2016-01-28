@@ -24,8 +24,20 @@
 
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Zone Name</label>
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Manager</label>
+							<div class="col-sm-4">
+								<select class="form-control selectpicker" data-width="100%" data-live-search="true" name="manager" data-live-search="true">
+									<option></option>
+									@foreach ($contributors as $cont)
+										<option value="{{ $cont->id }}">{{ $cont->name }}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 

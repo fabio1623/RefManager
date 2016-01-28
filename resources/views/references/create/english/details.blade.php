@@ -55,7 +55,7 @@
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control" id="involved_staff" name="involved_staff[]">
+			<input type="text" class="form-control involved_staff" id="involved_staff" data-provide="typeahead" name="involved_staff[0][]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -70,13 +70,13 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input id="staff_function" type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function[]">
+			<input id="staff_function_0" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff[0][]">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input id="staff_function_fr" type="text" class="form-control" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+			<input id="staff_function_fr_0" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff[0][]">
 			<span class="input-group-btn">
 				<button id="clean_staff_fields" class="btn btn-default" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -86,24 +86,6 @@
 	</div>
 </div>
 <!-- EO line -->
-
-<!-- The option field template containing an option field and a Remove button -->
-<!-- <div class="form-group hide" id="optionTemplate">
-    <div class="col-sm-offset-4 col-sm-4">
-        <input class="form-control nameInput" type="text"/>
-    </div>
-    <div class="col-sm-4">
-        <div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Function</span>
-			<input id="function_input" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
-			<span class="input-group-btn">
-				<button class="btn btn-default removeButton" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-				</button>
-			</span>
-		</div>
-    </div>
-</div> -->
 <!-- The option field template containing an option field and a Remove button -->
 <div class="hide template" id="optionTemplate">
 	<br></br>
@@ -111,7 +93,7 @@
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
 	    		<span class="input-group-addon" id="basic-addon2">Name</span>
-	        <input id="name_input" class="form-control nameInput" type="text"/>
+	        <input id="involved_staff_temp" class="form-control nameInput" type="text"/>
 		        <!-- <span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -124,13 +106,13 @@
 	    <div class="col-sm-offset-4 col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input id="function_input" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
+				<input id="staff_function_temp" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
 			</div>
 	    </div>
 	    <div class="col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input id="function_input_fr" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="">
+				<input id="staff_function_fr_temp" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="">
 				<span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -147,7 +129,7 @@
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control" id="experts" name="experts[]">
+			<input type="text" class="form-control experts" id="experts" name="experts[0][]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addExpertButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -162,13 +144,13 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input id="expert_function" type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions[]">
+			<input id="expert_function" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="experts[0][]">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input id="expert_function_fr" type="text" class="form-control" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+			<input id="expert_function_fr" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="experts[0][]">
 			<span class="input-group-btn">
 				<button id="clean_expert_fields" class="btn btn-default" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -185,7 +167,7 @@
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
 	    		<span class="input-group-addon" id="basic-addon2">Name</span>
-	        <input id="name_input" class="form-control expertNameInput" type="text"/>
+	        <input id="expert_name_temp" class="form-control expertNameInput" type="text"/>
 		        <!-- <span class="input-group-btn">
 					<button class="btn btn-default removeExpertButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -198,13 +180,13 @@
 	    <div class="col-sm-offset-4 col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input id="expert_functions_input" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="">
+				<input id="expert_function_temp" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="">
 			</div>
 	    </div>
 	    <div class="col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input id="expert_functions_input_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="">
+				<input id="expert_function_temp_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="">
 				<span class="input-group-btn">
 					<button class="btn btn-default removeExpertButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -253,7 +235,7 @@
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control" id="involved_consultants" name="consultants[]">
+			<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addConsultantButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -273,7 +255,7 @@
     <div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control consultantInput">
+			<input id="involved_consultant_temp" type="text" class="form-control consultantInput">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeConsultantButton" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -300,10 +282,10 @@
 	<div class="form-group">
 		<label for="contact_name_en" class="col-sm-4 control-label">Name</label>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_name_en" name="contact_name">
+		  <input type="text" class="form-control contact_name_en" id="contact_name_en" name="contact_name">
 		</div>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_name_fr">
+		  <input type="text" class="form-control contact_name_fr" id="contact_name_fr">
 		</div>
 	</div>
 	<!-- EO line -->
@@ -346,10 +328,10 @@
 <div class="form-group">
 	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="client_name" name="client_name_en">
+	  <input type="text" class="form-control client_name" id="client_name" name="client_name_en">
 	</div>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="client_name_fr" name="client_name_fr">
+	  <input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr">
 	</div>
 </div>
 <!-- EO line -->
@@ -360,14 +342,13 @@
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-		  	<!-- <input type="text" class="form-control" name="financing[0][]"> -->
-		  	<input id="typeahead" class="form-control" type="text" data-provide="typeahead">
+		  	<input id="financing" class="form-control financing" type="text" data-provide="typeahead" name="financing[0][]">
 	  	</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control" name="financing[0][]">
+			<input id="financing_fr" type="text" class="form-control financing_fr" data-provide="typeahead" name="financing[0][]">
 			<span class="input-group-btn">
 				<button class="btn btn-default addFinancingButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -382,13 +363,13 @@
     <div class="col-sm-4 col-sm-offset-4">
     	<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control financingInput">
+			<input id="financing_input_temp" type="text" class="form-control financingInput">
 		</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control financingFrInput" id="financing_fr_input">
+			<input id="financing_fr_input_temp" type="text" class="form-control financingFrInput">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeFinancingButton" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -466,44 +447,81 @@
 </div>
 
 <script>
+	//TYPEAHEAD FIELDS
 	var fundings_in_db = {!! $fundings->toJson() !!}
-
-	var fundings = [];
-	for (var i = 0; i < fundings_in_db.length; i++) {
-		if (fundings_in_db[i].name != '') {
-			fundings.push(fundings_in_db[i].name);
-		};
-	}
-
-	// instantiate the bloodhound suggestion engine
-	var numbers = new Bloodhound({
-	datumTokenizer: Bloodhound.tokenizers.whitespace,
-	queryTokenizer: Bloodhound.tokenizers.whitespace,
-	local:  fundings
-	});
-
-	// initialize the bloodhound suggestion engine
-	numbers.initialize();
-
-	$('#typeahead').typeahead(
-	{
-	items: 4,
-	source:numbers.ttAdapter()  
-	});
-
+	var involved_staff_db = {!! $seniors->toJson() !!}
+	var experts_db = {!! $experts->toJson() !!}
+	var consultants_db = {!! $consultants->toJson() !!}
+	var senior_profiles = {!! $senior_profiles->toJson() !!}
+	var expert_profiles = {!! $expert_profiles->toJson() !!}
+	var contacts = {!! $contacts->toJson() !!}
+	var clients = {!! $clients->toJson() !!}
 	var languages = {!! $languages->toJson() !!};
+
+	function getTranslation (filledField, jsonCollection, attribute1, attribute2, translationField) {
+		if ($('#' + filledField).val() != '') {
+			for (var i = 0; i < jsonCollection.length; i++) {
+				if (jsonCollection[i][attribute1] == $('#' + filledField).val() ) {
+					if (jsonCollection[i][attribute2] != '') {
+						$('#' + translationField).val(jsonCollection[i][attribute2]);
+					};
+					break;
+				};
+			};
+		};
+	};
+
+	function customTypeahead (jsonCollection, fieldClass, attribute) {
+		var table = [];
+		for (var i = 0; i < jsonCollection.length; i++) {
+			if (jsonCollection[i][attribute] != '') {
+				table.push(jsonCollection[i][attribute]);
+			};
+		};
+
+		var dataSourceName = new Bloodhound({
+			datumTokenizer: Bloodhound.tokenizers.whitespace,
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			local:  table
+		});
+
+		dataSourceName.initialize();
+
+		$('.' + fieldClass).typeahead(
+		{
+			items: 4,
+			source:dataSourceName.ttAdapter()  
+		});
+	};
+
+	$('#staff_function_0').change( function (e) {
+		getTranslation('staff_function_0', senior_profiles, 'responsability_on_project', 'responsability_on_project_fr', 'staff_function_fr_0');
+	});
+
+	$('#staff_function_fr_0').change( function (e) {
+		getTranslation('staff_function_fr_0', senior_profiles, 'responsability_on_project_fr', 'responsability_on_project', 'staff_function_0');
+	});
+
+	customTypeahead(involved_staff_db, 'involved_staff', 'name');
+	customTypeahead(senior_profiles, 'staff_function', 'responsability_on_project');
+	customTypeahead(senior_profiles, 'staff_function_fr', 'responsability_on_project_fr');
+
+	customTypeahead(experts_db, 'experts', 'name');
+	customTypeahead(expert_profiles, 'expert_function', 'responsability_on_project');
+	customTypeahead(expert_profiles, 'expert_function_fr', 'responsability_on_project_fr');
+
+	customTypeahead(consultants_db, 'involved_consultants', 'name');
+
+	customTypeahead(fundings_in_db, 'financing', 'name');
+	customTypeahead(fundings_in_db, 'financing_fr', 'name_fr');
+
+	customTypeahead(contacts, 'contact_name_en', 'name');
+	customTypeahead(contacts, 'contact_name_fr', 'name');
+
+	customTypeahead(clients, 'client_name', 'name');
+	customTypeahead(clients, 'client_name_fr', 'name_fr');
 	
-
-	// var fundings = ['hello', 'Welcome'];
-	// var fundings_fr = [];
-
-	// for (var i = 0; i < fundings_in_db.length; i++) {
-	// 	fundings.push(fundings_in_db[i].name);
-	// 	if (fundings_in_db[i].name_fr != '') {
-	// 		fundings_fr.push(fundings_in_db[i].name_fr);
-	// 	};
-	// }
-
+	// ./TYPEAHEAD FIELDS
 
 	// Array of checkboxes and their children
 	var checkboxs = [
@@ -523,52 +541,17 @@
 			// $("html, body").animate({ scrollTop: $(document).height() }, "slow");
 		}
 		else {
-			$('#contact_name').val('');
+			$('#contact_name_en').val('');
+			$('#contact_name_fr').val('');
 			$('#contact_department').val('');
-			$('#contact_phone').val('');
-			$('#contact_email').val('');
+			$('#contact_department_fr').val('');
+			$('#contact_phone_en').val('');
+			$('#contact_phone_fr').val('');
+			$('#contact_email_en').val('');
+			$('#contact_email_fr').val('');
 			$('#contact_info').hide("fast");
 		}
 	});
-
-	// var staff = [];
-	// $('#involved_staff').change(function () {
-	// 	$('#seniors_list').empty();
-	// 	val = $('#involved_staff').selectpicker('val');
-	// 	staff[0] = val;
-
-	// 	if (staff[0] != null) {
-	// 		for (var i = 0; i < staff[0].length; i++) {
-	// 			$("#seniors_list").append('<a href="#" class="list-group-item">' + staff[0][i] +'</a>');
-	// 		};
-	// 	};
-	// });
-
-	// var experts = [];
-	// $('#involved_experts').change(function () {
-	// 	$('#experts_list').empty();
-	// 	val = $('#involved_experts').selectpicker('val');
-	// 	experts[0] = val;
-
-	// 	if (experts[0] != null) {
-	// 		for (var i = 0; i < experts[0].length; i++) {
-	// 			$("#experts_list").append('<a href="#" class="list-group-item">' + experts[0][i] +'</a>');
-	// 		};
-	// 	};
-	// });
-
-	// var consultants = [];
-	// $('#involved_consultants').change(function () {
-	// 	$('#consultants_list').empty();
-	// 	val = $('#involved_consultants').selectpicker('val');
-	// 	consultants[0] = val;
-
-	// 	if (consultants[0] != null) {
-	// 		for (var i = 0; i < consultants[0].length; i++) {
-	// 			$("#consultants_list").append('<a href="#" class="list-group-item">' + consultants[0][i] +'</a>');
-	// 		};
-	// 	};
-	// });
 
 	$('#project_cost_select').change( function () {
 		$('#services_cost_select').selectpicker('val', $('#project_cost_select').val());
@@ -585,11 +568,11 @@
 		$('#project_cost_select').selectpicker('val', $('#works_cost_select').val());
 	});
 
-	$('#contact_name_en').keyup(function () {
+	$('#contact_name_en').change(function () {
 		$('#contact_name_fr').val($('#contact_name_en').val());
 	});
 
-	$('#contact_name_fr').keyup(function () {
+	$('#contact_name_fr').change(function () {
 		$('#contact_name_en').val($('#contact_name_fr').val());
 	});
 
@@ -609,41 +592,89 @@
 		$('#contact_email_en').val($('#contact_email_fr').val());
 	});
 
+	var staff_index = 1;
 	$('#form').on('click', '.addButton', function() {
-            var $template = $('#optionTemplate'),
-                $clone    = $template
-                                .clone()
-                                .removeClass('hide')
-                                .removeAttr('id')
-                                .insertBefore($template)
-                                .find('[class="form-control nameInput"]').attr('name', 'involved_staff[]');
-            $('#function_input').attr('name', 'involved_staff_function[]').removeAttr('id');
-            $('#function_input_fr').attr('name', 'involved_staff_function_fr[]').removeAttr('id');
-        })
-		.on('click', '.removeButton', function() {
-            var $row    = $(this).closest('.template');
+		var field1 = 'staff_function_' + staff_index;
+		var field2 = 'staff_function_fr_' + staff_index;
 
-            // Remove element containing the option
-            $row.remove();
-        });
+        var $template = $('#optionTemplate'),
+            $clone    = $template
+                            .clone()
+                            .removeClass('hide')
+                            .insertBefore($template)
+                            .removeAttr('id')
+                            .find('[class="form-control nameInput"]')
+                            .attr('name', 'involved_staff[' + staff_index + '][]')
+                            .on('load', customTypeahead(involved_staff_db, 'nameInput', 'name'));
 
+        $('#staff_function_temp')
+        					.attr('name', 'involved_staff[' + staff_index +'][]')
+        					.on('load', customTypeahead(senior_profiles, 'functionInput', 'responsability_on_project'))
+        					.attr('id', field1);
+
+        $('#staff_function_fr_temp')
+        					.attr('name', 'involved_staff[' + staff_index +'][]')
+        					.on('load', customTypeahead(senior_profiles, 'functionInput_fr', 'responsability_on_project_fr'))
+        					.attr('id', field2);
+
+		$('#' + field1).change( function (e) {
+			getTranslation(field1, senior_profiles, 'responsability_on_project', 'responsability_on_project_fr', field2);
+		} );
+
+		$('#' + field2).change( function (e) {
+			getTranslation(field2, senior_profiles, 'responsability_on_project_fr', 'responsability_on_project', field1);
+		} );
+
+        staff_index++;
+    })
+	.on('click', '.removeButton', function() {
+        var $row    = $(this).closest('.template');
+
+        // Remove element containing the option
+        $row.remove();
+    });
+
+	var expert_index = 1;
     $('#form').on('click', '.addExpertButton', function() {
-            var $template = $('#expertTemplate'),
-                $clone    = $template
-                                .clone()
-                                .removeClass('hide')
-                                .removeAttr('id')
-                                .insertBefore($template)
-                                .find('[class="form-control expertNameInput"]').attr('name', 'experts[]');
-            $('#expert_functions_input').attr('name', 'expert_functions[]').removeAttr('id');
-            $('#expert_functions_input_fr').attr('name', 'expert_functions_fr[]').removeAttr('id');
-        })
-		.on('click', '.removeExpertButton', function() {
-            var $row    = $(this).closest('.expertTemplate');
+    	var field1 = 'expert_function_' + expert_index;
+		var field2 = 'expert_function_fr_' + expert_index;
 
-            // Remove element containing the option
-            $row.remove();
-        });
+        var $template = $('#expertTemplate'),
+            $clone    = $template
+                            .clone()
+                            .removeClass('hide')
+                            .removeAttr('id')
+                            .insertBefore($template)
+                            .find('[class="form-control expertNameInput"]')
+                            .attr('name', 'experts[' + expert_index + '][]')
+                            .on('load', customTypeahead(experts_db, 'expertNameInput', 'name'));
+
+        $('#expert_function_temp')
+        					.attr('name', 'experts[' + expert_index + '][]')
+        					.on('load', customTypeahead(expert_profiles, 'expertFunctionInput', 'responsability_on_project'))
+        					.attr('id', field1);
+
+        $('#expert_function_temp_fr')
+        					.attr('name', 'experts[' + expert_index + '][]')
+        					.on('load', customTypeahead(expert_profiles, 'expertFunctionInput_fr', 'responsability_on_project_fr'))
+        					.attr('id', field2);
+
+		$('#' + field1).change( function (e) {
+			getTranslation(field1, expert_profiles, 'responsability_on_project', 'responsability_on_project_fr', field2);
+		} );
+
+		$('#' + field2).change( function (e) {
+			getTranslation(field2, expert_profiles, 'responsability_on_project_fr', 'responsability_on_project', field1);
+		} );
+
+        expert_index++;
+    })
+	.on('click', '.removeExpertButton', function() {
+        var $row    = $(this).closest('.expertTemplate');
+
+        // Remove element containing the option
+        $row.remove();
+    });
 
     $('#form').on('click', '.addConsultantButton', function() {
             var $template = $('#consultantsTemplate'),
@@ -652,7 +683,12 @@
                                 .removeClass('hide')
                                 .removeAttr('id')
                                 .insertBefore($template)
-                                .find('[class="form-control consultantInput"]').attr('name', 'consultants[]');
+                                .find('[class="form-control consultantInput"]')
+                                .attr('name', 'consultants[]');
+
+                $('#involved_consultant_temp')
+                				.on('load', customTypeahead(consultants_db, 'consultantInput', 'name'))
+                				.removeAttr('id');
         })
 		.on('click', '.removeConsultantButton', function() {
             var $row    = $(this).closest('.consultantsTemplate');
@@ -661,29 +697,51 @@
             $row.remove();
         });
 
-	var i = 1;
+	var financ_index = 1;
     $('#form').on('click', '.addFinancingButton', function() {
-            var $template = $('#financingsTemplate'),
-                $clone    = $template
-                                .clone()
-                                .removeClass('hide')
-                                .removeAttr('id')
-                                .insertBefore($template)
-                                .find('[class="form-control financingInput"]').attr('name', 'financing[' + i + '][]');
-                $('#financing_fr_input').attr('name', 'financing[' + i + '][]').removeAttr('id');
-                i++;
-        })
-		.on('click', '.removeFinancingButton', function() {
-            var $row    = $(this).closest('.financingsTemplate');
+    	var field1 = 'financ_' + financ_index;
+    	var field2 = 'financ_fr_' + financ_index;
 
-            // Remove element containing the option
-            $row.remove();
-        });
+        var $template = $('#financingsTemplate'),
+            $clone    = $template
+                            .clone()
+                            .removeClass('hide')
+                            .insertBefore($template)
+                            .removeAttr('id')
+                            .closest('#financing_input_temp')
+                            .on('load', customTypeahead(fundings_in_db, 'financingInput', 'name'));
+
+            $('#financing_input_temp')
+            				.first()
+            				.attr('name', 'financing[' + financ_index + '][]')
+            				.attr('id', field1);
+
+            $('#financing_fr_input_temp')
+            				.attr('name', 'financing[' + financ_index + '][]')
+        					.on('load', customTypeahead(fundings_in_db, 'financingFrInput', 'name_fr'))
+        					.attr('id', field2);
+
+			$('#' + field1).change( function (e) {
+				getTranslation(field1, fundings_in_db, 'name', 'name_fr', field2);
+			});
+
+			$('#' + field2).change( function (e) {
+				getTranslation(field2, fundings_in_db, 'name_fr', 'name', field1);
+			});
+
+            financ_index++;
+    })
+	.on('click', '.removeFinancingButton', function() {
+        var $row    = $(this).closest('.financingsTemplate');
+
+        // Remove element containing the option
+        $row.remove();
+    });
 
     $('#clean_staff_fields').click( function () {
     	$('#involved_staff').val('');
-    	$('#staff_function').val('');
-    	$('#staff_function_fr').val('');
+    	$('#staff_function_0').val('');
+    	$('#staff_function_fr_0').val('');
     });
 
     $('#clean_expert_fields').click( function () {

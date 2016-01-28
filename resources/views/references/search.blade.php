@@ -83,7 +83,7 @@
 			  	<div class="form-group">
 					    <label class="control-label col-sm-4" for="service_type">Service type</label>
 				    <div class="col-sm-3">
-						<select class="selectpicker" multiple data-selected-text-format="count" data-size="8" name="service[]">
+						<select class="selectpicker" multiple data-selected-text-format="count" data-width="100%" data-size="8" name="service[]">
 							<optgroup label="External services">
 							  @foreach ($external_services as $service)
 							  	<option value="e{{ $service->id }}">{{ $service->name }}</option>
@@ -116,7 +116,8 @@
 				<div class="form-group">
 				    <label class="control-label col-sm-4" for="measure">Measure</label>
 				    <div class="col-sm-3">
-			    		<select id="" class="selectpicker" data-size="11" data-show-subtext="true" name="measure_type">
+			    		<select id="" class="selectpicker" data-size="11" data-width="100%" data-show-subtext="true" name="measure_type">
+			    			<option></option>
 							@foreach ($categories as $category)
 								<optgroup label="{{ $category->name }}">
 									@foreach ($category->measures as $measure)
@@ -209,7 +210,8 @@
 				<div class="form-group">
 				    <label class="control-label col-sm-4" for="cost">Cost</label>
 				    <div class="col-sm-3">
-			    		<select id="" class="selectpicker" name="cost_type">
+			    		<select id="" class="selectpicker" data-width="100%" name="cost_type">
+			    			<option></option>
 							<option>Total cost</option>
 							<option>Seureca services</option>
 							<option>Works</option>
@@ -234,7 +236,7 @@
 			  	<!-- Line -->
 				<div class="form-group">
 				    <label class="control-label col-sm-4" for="financing">Financing</label>
-				    <div class="col-sm-5">
+				    <div class="col-sm-3">
 				    	<input type="text" class="form-control" id="financing" name="financing" placeholder="Ex: Oil">
 				    </div>
 			  	</div>

@@ -26,8 +26,8 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
-	<div class="col-sm-3">
-	    <select class="form-control selectpicker" data-width="auto" data-live-search="true" id="country" name="country">
+	<div class="col-sm-4">
+	    <select class="form-control selectpicker" data-width="100%" data-live-search="true" id="country" name="country">
 	    	<option></option>
 	    	@foreach($countries as $country)
 	    		@if($country->id == $reference->country)
@@ -52,7 +52,7 @@
 <div class="form-group">
 	<label for="zone" class="col-sm-4 control-label">Zone</label>
 	<div class="col-sm-2">
-	  	<select class="form-control selectpicker" data-width="auto" id="zone" name="zone">
+	  	<select class="form-control selectpicker" data-width="100%" id="zone" name="zone">
 	  		<option></option>
 			@foreach($zones as $zone)
 				@if ($zone->id == $reference->zone)
@@ -69,7 +69,7 @@
 <div class="form-group">
 	<label for="zone_manager" class="col-sm-4 control-label">Zone manager</label>
 	<div class="col-sm-4">
-	  	<input type="text" class="form-control" id="zone_manager" name="zone_manager" value="">
+	  	<input type="text" class="form-control" id="zone_manager" name="zone_manager" value="" readonly>
 	</div>
 </div>
 <!-- EO line -->
@@ -181,6 +181,12 @@
 </div>
 
 <script>
+	var countries = {!! $countries->toJson() !!};
+	var zones = {!! $zones->toJson() !!};
+	var seniors = {!! $seniors->toJson() !!};
+	var experts = {!! $experts->toJson() !!};
+	var selected_external_services = {!! $reference->external_services !!};
+	var selected_internal_services = {!! $reference->internal_services !!};
 
 	$('#date_picker_start').datepicker({
 	    format: "mm-yyyy",
@@ -231,10 +237,6 @@
 		}
 	});
 
-	var countries = {!! $countries->toJson() !!};
-	var selected_external_services = {!! $reference->external_services !!};
-	var selected_internal_services = {!! $reference->internal_services !!};
-
 	if (selected_internal_services.length > 0) {
 		$('#internal_checkbox').attr('checked', true);
 		// $('#internal_div').show();
@@ -261,18 +263,58 @@
 			$('#details_pane').removeClass("hide");
 		}
 	});
-	
-	var countries = {!! $countries->toJson() !!};
 
 	$('#country').change( function () {
-		for (var i = 0; i < countries.length; i++) {
-			if (countries[i].id == $('#country').val()) {
-				$('#continent').val(countries[i].continent);
-				break;
+		if ( $('#country').val() != '' ) {
+			for (var i = 0; i < countries.length; i++) {
+				if (countries[i].id == $('#country').val()) {
+					$('#continent').val(countries[i].continent);
+					break;
+				}
 			}
-			else {
-				$('#continent').val('');
+		}
+		else {
+			$('#continent').val('');
+		};
+	});
+
+	//Search the right manager of the selected zone.
+	$('#zone').change( function(e) {
+		var found = 0;
+		if ( $('#zone').val() != '' ) {
+			for (var i = 0; i < zones.length; i++) {
+				if ( zones[i].id == $('#zone').val() ) {
+					if ( zones[i].manager != null ) {
+						//Check if the manager exist in the staff list
+						for (var j = 0; j < seniors.length; j++) {
+							if ( seniors[j].id == zones[i].manager ) {
+								found = 1;
+								$('#zone_manager').val( seniors[j].name );
+								break;
+							};
+						};
+						if (found == 0) {
+							//Check if the manager exist in the experts list
+							for (var x = 0; x < experts.length; x++) {
+								if ( experts[x].id == zones[i].manager ) {
+									found = 1;
+									$('#zone_manager').val( experts[x].name );
+									break;
+								};
+							};
+						};
+					}
+					else {
+						$('#zone_manager').val('No manager for this zone');
+					};
+				};
+				if ( found == 1 ) {
+					break;
+				};
 			};
 		}
-	});
+		else {
+			$('#zone_manager').val('');
+		};
+	} );
 </script>

@@ -99,6 +99,14 @@ Route::resource('zones', 'ZoneController');
 //Countries
 Route::resource('zones.countries', 'CountryController');
 
+//Contributors
+Route::delete('contributors/destroy_multiple', 'ContributorController@destroyMultiple');
+Route::resource('contributors', 'ContributorController');
+
+//Fundings
+Route::delete('fundings/destroy_multiple', 'FundingController@destroyMultiple');
+Route::resource('fundings', 'FundingController');
+
 Route::get('test', function () {
 
 });

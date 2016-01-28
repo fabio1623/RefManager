@@ -9,9 +9,14 @@ use App\Http\Controllers\Controller;
 
 use App\Zone;
 use App\Country;
+use App\Contributor;
 
 class ZoneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +36,9 @@ class ZoneController extends Controller
      */
     public function create()
     {
-        $view = view('zones.create');
+        $contributors = Contributor::all();
+
+        $view = view('zones.create', ['contributors'=>$contributors]);
         return $view;
     }
 
@@ -47,8 +54,13 @@ class ZoneController extends Controller
         $this->validate($request, [
             'name' => 'required|alpha|max:255|unique:zones',
         ]);
+
         $zone = new Zone;
-        $zone->name = $request->input('name');
+        $zone->name = $request->name;
+
+        if ($request->manager != '') {
+            $zone->manager = $request->manager;
+        }
     
         $zone->save();
 
@@ -76,10 +88,11 @@ class ZoneController extends Controller
     {
         $zone = Zone::find($id);
         $countries = Country::all();
+        $contributors = Contributor::all();
         
         $zone_countries = $zone->countries()->paginate(8);
 
-        $view = view('zones.edit', ['zone'=>$zone, 'countries'=>$countries, 'zone_countries'=>$zone_countries]);
+        $view = view('zones.edit', ['zone'=>$zone, 'countries'=>$countries, 'zone_countries'=>$zone_countries, 'contributors'=>$contributors]);
         return $view;
     }
 
@@ -123,7 +136,22 @@ class ZoneController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($_POST);
+        $this->validate($request, [
+            'name' => 'required|alpha|max:255|unique:zones,name,'.$id,
+        ]);
+
+        $zone = Zone::find($id);
+
+        $zone->name = $request->name;
+
+        if ($request->manager != '') {
+            $zone->manager = $request->manager;
+        }
+
+        $zone->save();
+
+        return redirect()->action('ZoneController@index');
     }
 
     /**

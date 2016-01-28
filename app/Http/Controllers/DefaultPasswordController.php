@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class DefaultPasswordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function manage_password()
     {
         $view = view('default_password.manage_password');
