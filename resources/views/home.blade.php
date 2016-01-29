@@ -4,7 +4,7 @@
 
     <div class="row col-sm-10 col-sm-offset-1">
             <div class="jumbotron">
-              <h1>Home Page</h1>
+              <h1>Home Page {{$subsidiary->name}}</h1>
               <p>
               	Manage your references
               </p>

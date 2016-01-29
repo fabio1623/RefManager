@@ -42,6 +42,7 @@ Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti')
 Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
+Route::get('references/custom_index/{id}', 'ReferenceController@subsidiary_references');
 Route::get('references/search', 'ReferenceController@search');
 Route::get('references/search/results', 'ReferenceController@results');
 Route::get('references/customize', 'ReferenceController@customize');
@@ -73,6 +74,7 @@ Route::delete('service/internal/{id}', 'ServiceController@internal_destroy');
 Route::delete('services/internal/destroy_multiple/{id}', 'ServiceController@internal_destroy_multiple');
 
 //External services
+Route::get('services/external/custom_index/{id}', 'ServiceController@subsidiary_external_services');
 Route::delete('services/external/destroy_multiple/{id}', 'ServiceController@destroy_multiple');
 Route::resource('services/external', 'ServiceController');
 

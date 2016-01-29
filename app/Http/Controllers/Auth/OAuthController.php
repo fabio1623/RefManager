@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use Socialite;
 use Auth;
+use App\Subsidiary;
 
 class OAuthController extends Controller
 {
@@ -31,7 +32,7 @@ class OAuthController extends Controller
         $user = Socialite::driver('google')->user();
         // dd($user);
 
-        $gmail = ends_with($user->email, '@gmail.com');
+        $gmail = 'sarmentopedrofabio@gmail.com';
         $seureca = ends_with($user->email, '@seureca.com');
         $veolia = ends_with($user->email, '@veolia.com');
 
@@ -52,7 +53,12 @@ class OAuthController extends Controller
                 return redirect()->intended('home');
             }
             else {
+                $domain = substr($user->email, strpos($user->email, "@") + 1);
+                $subsidiary_name = strstr($domain, '.', true);
+                $subsidiary_in_db = Subsidiary::where('name', $subsidiary_name)->first();
+
                 $new_user = new User;
+
                 if ($user->name != '') {
                     $new_user->username = $user->name;
                 }
@@ -62,6 +68,17 @@ class OAuthController extends Controller
                 }
                 $new_user->email = $user->email;
                 $new_user->avatar = $user->avatar;
+
+                if ($subsidiary_in_db) {
+                    $new_user->subsidiary_id = $subsidiary_in_db->id;
+                }
+                else {
+                    $new_subsidiary = new Subsidiary;
+                    $new_subsidiary->name = strtoupper($subsidiary_name);
+                    $new_subsidiary->save();
+
+                    $new_user->subsidiary_id = $new_subsidiary->id;
+                }
 
                 $new_user->save();
 

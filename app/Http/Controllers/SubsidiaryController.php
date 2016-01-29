@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Subsidiary;
+use App\User;
 
 class SubsidiaryController extends Controller
 {
@@ -80,7 +81,9 @@ class SubsidiaryController extends Controller
     public function edit($id)
     {
         $subsidiary = Subsidiary::find($id);
-        $view = view('subsidiaries.edit')->with('subsidiary', $subsidiary);
+        $users = $subsidiary->users()->get();
+        
+        $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users]);
         return $view;
     }
 

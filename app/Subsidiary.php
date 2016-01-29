@@ -10,4 +10,14 @@ class Subsidiary extends Model
     {
         return $this->hasMany('App\User');
     }
+
+    public function references()
+    {
+        return $this->hasMany('App\Reference');
+    }
+
+    public function external_services()
+    {
+        return $this->belongsToMany('App\ExternalService');
+    }
 }

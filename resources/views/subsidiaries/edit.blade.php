@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="row col-sm-6 col-sm-offset-3">
+	<div class="row col-sm-8 col-sm-offset-2">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -50,6 +50,10 @@
 								</button>
 								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
+								<a class="btn btn-primary btn-sm" href="{{ action('ReferenceController@subsidiary_references', $subsidiary->id) }}" role="button">
+									<span class="glyphicon glyphicon-list" aria-hidden="true"></span> 
+									References
+								</a>
 							</div>
 						</div>
 					</form>
@@ -59,15 +63,34 @@
 					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
-								<th class="col-sm-10">Users</th>
-						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-3">Username</th>
+								<th class="col-sm-5">Email</th>
+								<th class="col-sm-3">Profile</th>
+						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
-							
+							@foreach($users as $user)
+								<tr>
+									<td>
+										{{ $user->username }}
+									</td>
+									<td>
+										{{ $user->email }}
+									</td>
+									<td>
+										{{ $user->profile }}
+									</td>
+									<td>
+										
+									</td>
+								</tr>
+							@endforeach
 						</tbody>
 					</table>
 				</div>
 			</div>
 	</div>
 @endsection
+
+

@@ -8,13 +8,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\AccessRequest;
+use App\Subsidiary;
 
 class AccessController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -35,8 +36,9 @@ class AccessController extends Controller
      */
     public function create()
     {
-        $view = view('auth.access_request');
-        
+        $subsidiaries = Subsidiary::orderBy('name', 'asc')->get();
+
+        $view = view('auth.access_request', ['subsidiaries'=>$subsidiaries]);
         return $view;
     }
 
@@ -51,15 +53,17 @@ class AccessController extends Controller
         // dd($_POST);
         $messages = [
             'required'  => 'The :attribute field is required.',
-            'unique'    => 'You already asked for an account or you actually already have one.'
+            'unique'    => 'You already asked for an account or you actually have one.'
         ];
 
         $this->validate($request, [
             'email' => 'required|email|unique:users|unique:access_requests',
+            'company' => 'required',
         ], $messages);
 
         $access = new AccessRequest;
         $access->email = $request->email;
+        $access->subsidiary_id = $request->company;
         
         $access->save();
 

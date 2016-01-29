@@ -15,7 +15,7 @@
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
-								    <input type="hidden" name="hidden_field" value="{{ $external_service->id}}">
+								    <input type="hidden" name="subsidiary_id" value="{{ Auth::user()->subsidiary_id }}">
 								</form>
 							</div>
 						</div>

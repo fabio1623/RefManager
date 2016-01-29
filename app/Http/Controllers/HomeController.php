@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Subsidiary;
 Use Auth;
 
 class HomeController extends Controller {
@@ -35,27 +36,9 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		/*switch (Auth::user()->profile) {
-			case 'User administrator':
-				$view = view('home');
-				break;
+		$subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
 
-			case 'Reference administrator':
-				$users = User::all();
-        		$view = view('auth.index')->with('users', $users);
-				break;
-
-			case 'Basic user':
-				$users = User::all();
-        		$view = view('auth.index')->with('users', $users);
-				break;
-
-			default:
-				# code...
-				break;
-		}*/
-
-		$view = view('home');
+		$view = view('home')->with('subsidiary', $subsidiary);
 		return $view;
 	}
 

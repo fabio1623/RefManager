@@ -10,6 +10,8 @@ use App\Service;
 
 use App\ExternalService;
 use App\InternalService;
+use App\Subsidiary;
+use Auth;
 
 class ServiceController extends Controller
 {
@@ -33,6 +35,15 @@ class ServiceController extends Controller
 
         $view = view('services.external.index')->with('external_services', $external_services);
         return $view;
+    }
+
+    public function subsidiary_external_services($id)
+    {
+        $subsidiary = Subsidiary::find($id);
+        $external_services = $subsidiary->external_services()->paginate(8);
+
+        $view = view('services.external.index')->with('external_services', $external_services);
+        return $view;   
     }
 
     /**
@@ -64,10 +75,15 @@ class ServiceController extends Controller
         ]);
 
         //Create new service
-        $external_service = new ExternalService;
-        $external_service->name = $request->name;
+        $new_external_service = new ExternalService;
+        $new_external_service->name = $request->name;
 
-        $external_service->save();
+        $new_external_service->save();
+
+        //Attach the service to the current user subsidiary
+        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+
+        $subsidiary->external_services()->attach($new_external_service->id);
 
         return redirect()->action('ServiceController@index');
     }
@@ -92,9 +108,10 @@ class ServiceController extends Controller
 
     public function edit($id)
     {
+        // $subsidiary = Subsidiary::find($subsidiary_id);
         $external_service = ExternalService::find($id);
 
-        $view = view('services.external.edit')->with('external_service', $external_service);
+        $view = view('services.external.edit', ['external_service'=>$external_service]);
         return $view;
     }
 
@@ -124,12 +141,14 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        // dd($id);
-        $external_service = ExternalService::find($id);
-        $external_service->references()->detach();
-        ExternalService::destroy($id);
+        // dd($_POST);
+        $subsidiary = Subsidiary::find($request->subsidiary_id);
+        $subsidiary->external_services()->detach($id);
+        // $external_service = ExternalService::find($id);
+        // $external_service->references()->detach();
+        // ExternalService::destroy($id);
 
         return redirect()->action('ServiceController@index');   
     }

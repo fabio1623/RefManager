@@ -94,6 +94,7 @@
 							          	<li class="dropdown-header">External services</li>
 							            <li><a href="{{ action('ServiceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
 							            <li><a href="{{ action('ServiceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of external services</a></li>
+							            <li><a href="{{ action('ServiceController@subsidiary_external_services', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-list"></span> External services</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li class="dropdown-header">Internal services</li>
 							            <li><a href="{{ action('ServiceController@internal_create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>

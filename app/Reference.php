@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reference extends Model
 {
+    public function subsidiary()
+    {
+        return $this->belongsTo('App\Subsidiary');
+    }
+
     public function contributors()
     {
         return $this->belongsToMany('App\Contributor');

@@ -25,14 +25,8 @@
 					<tbody>
 					    @if ( count($access) == 0 )
 					    	<tr>
-					    		<td>
+					    		<td colspan="3">
 					    			No pending request.
-					    		</td>
-					    		<td>
-
-					    		</td>
-					    		<td>
-
 					    		</td>
 					    	</tr>
 					    @else

@@ -83,6 +83,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
         $user->profile = $request->profile;
+        $user->subsidiary_id = Auth::user()->subsidiary_id;
         
         $user->save();
 
@@ -109,6 +110,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
         $user->profile = $request->profile;
+        $user->subsidiary_id = Auth::user()->subsidiary_id;
         
         $user->save();
 
@@ -175,23 +177,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        // dd($_POST);
-        $ids = $request->input('id');
-        User::destroy($ids);
+        User::destroy($id);
 
         return redirect()->action('UserController@index');
+        
+        // dd($_POST);
+        // $ids = $request->input('id');
+        // User::destroy($ids);
+
+        // return redirect()->action('UserController@index');
     }
-
-    // public function destroyOne(Request $request)
-    // {
-    //     // dd($_POST);
-    //     $id = $request->input('hidden_field');
-    //     User::destroy($id);
-
-    //     return redirect()->action('UserController@index');
-    // }
 
     public function destroyOne($id)
     {
@@ -209,14 +206,6 @@ class UserController extends Controller
             // Authentication passed...
             return redirect()->intended('home');
         }
-        // $ddb_user = User::where('email', $request->input('email'))->first();
-        //     if ($ddb_user) {
-        //         Auth::login($ddb_user);
-        //         return redirect()->intended('home');
-        //     }
-            // else {
-            //     return redirect('auth/login');
-            // }
     }
 
     public function getLoginError(Request $request)

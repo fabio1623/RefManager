@@ -58,57 +58,65 @@
 					<form id="form_delete" action="{{ action('ReferenceController@destroy') }}" method="POST">
 			      		<?php echo method_field('DELETE'); ?>
 					    <?php echo csrf_field(); ?>
-						@foreach ($references as $reference)
-								<tr data-href="{{ action('ReferenceController@edit', $reference->id) }}">
-									<td>
-										<a class="btn btn-link" href="">{{$reference->project_number}}</a>	
-									</td>
-									<td>
-										<a class="btn btn-link" href="">{{$reference->dfac_name}}</a>	
-									</td>
-									<td>
-										<a class="btn btn-link center-block" href="">{{$reference->start_date}}</a>	
-									</td>
-									<td>
-										<a class="btn btn-link center-block" href="">{{$reference->end_date}}</a>	
-									</td>
-									<td>
-										<a class="btn btn-link" href="">
-											@foreach ($clients as $client)
-												@if($client->id == $reference->client)
-													{{ $client->name }}
-												@endif
-											@endforeach
-										</a>
-									</td>
-									<td>
-										<a class="btn btn-link" href="">
-											@foreach($countries as $country)
-												@if($country->id == $reference->country)
-													{{ $country->name }}
-												@endif
-											@endforeach
-										</a>	
-									</td>
-									<td>
-										<a class="btn btn-link" href="">
-											@foreach ($zones as $zone)
-												@if ($zone->id == $reference->zone)
-													{{ $zone->name }}
-												@endif
-											@endforeach
-										</a>	
-									</td>
-									<td>
-										<a class="btn btn-link" href="">
-											{{ $reference->total_project_cost }}
-										</a>	
-									</td>
-									<td class="check">
-										<input class="checkbox" type="checkbox" value="{{$reference->id}}" name=id[]>
-									</td>
-								</tr>
-						@endforeach
+					    @if (count($references) > 0)
+							@foreach ($references as $reference)
+									<tr data-href="{{ action('ReferenceController@edit', $reference->id) }}">
+										<td>
+											<a class="btn btn-link" href="">{{$reference->project_number}}</a>	
+										</td>
+										<td>
+											<a class="btn btn-link" href="">{{$reference->dfac_name}}</a>	
+										</td>
+										<td>
+											<a class="btn btn-link center-block" href="">{{$reference->start_date}}</a>	
+										</td>
+										<td>
+											<a class="btn btn-link center-block" href="">{{$reference->end_date}}</a>	
+										</td>
+										<td>
+											<a class="btn btn-link" href="">
+												@foreach ($clients as $client)
+													@if($client->id == $reference->client)
+														{{ $client->name }}
+													@endif
+												@endforeach
+											</a>
+										</td>
+										<td>
+											<a class="btn btn-link" href="">
+												@foreach($countries as $country)
+													@if($country->id == $reference->country)
+														{{ $country->name }}
+													@endif
+												@endforeach
+											</a>	
+										</td>
+										<td>
+											<a class="btn btn-link" href="">
+												@foreach ($zones as $zone)
+													@if ($zone->id == $reference->zone)
+														{{ $zone->name }}
+													@endif
+												@endforeach
+											</a>	
+										</td>
+										<td>
+											<a class="btn btn-link" href="">
+												{{ $reference->total_project_cost }}
+											</a>	
+										</td>
+										<td class="check">
+											<input class="checkbox" type="checkbox" value="{{$reference->id}}" name=id[]>
+										</td>
+									</tr>
+							@endforeach
+						@else
+							<tr>
+								<td colspan="9">
+									No references
+								</td>
+							</tr>
+						@endif
 						</form>
 
 				</tbody>

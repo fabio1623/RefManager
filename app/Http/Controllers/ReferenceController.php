@@ -25,6 +25,8 @@ use App\Measure;
 use App\Contact;
 use App\Funding;
 use App\ContributorReference;
+use App\Subsidiary;
+use Auth;
 
 class ReferenceController extends Controller
 {
@@ -46,6 +48,19 @@ class ReferenceController extends Controller
 
         $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones]);
         return $view;
+    }
+
+    public function subsidiary_references($id)
+    {
+        $subsidiary = Subsidiary::find($id);
+        $references = $subsidiary->references()->paginate(8);
+        // $references = Reference::paginate(8);
+        $countries = Country::all();
+        $clients = Client::all();
+        $zones = Zone::all();
+
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones]);
+        return $view;   
     }
 
     public function customize()
@@ -666,6 +681,9 @@ class ReferenceController extends Controller
             $reference->rate = 1;
         }
 
+        $reference->subsidiary_id = Auth::user()->subsidiary_id;
+        $reference->created_by = Auth::user()->username;
+
         // if ($request->input('languages.English.8') != "") {
         //     $client_in_db = Client::where('name', $request->input('languages.English.8'))->first();
         //     // dd($client_in_db);
@@ -1200,6 +1218,8 @@ class ReferenceController extends Controller
         else {
             $reference->rate = 1;
         }
+
+        $reference->updated_by = Auth::user()->username;
 
         $reference->save();
 

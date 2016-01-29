@@ -42,18 +42,11 @@
 								<input type="password" class="form-control" name="password" value="{{ $default_password }}">
 							</div>
 						</div>
-
-						<!-- <div class="form-group">
-							<label class="col-sm-4 control-label">Confirm Password</label>
-							<div class="col-sm-6">
-								<input type="password" class="form-control" name="password_confirmation">
-							</div>
-						</div> -->
 						
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">
-							  <select class="form-control" id="profile_type" name="profile">
+							  <select id="profile_type" class="form-control selectpicker" data-width="100%" data-live-search="true" name="profile">
 							  	<option></option>
 							    <option value="3">Basic user</option>
 							    <option value="2">Reference administrator</option>

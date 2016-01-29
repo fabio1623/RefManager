@@ -36,6 +36,18 @@
 						</div>
 
 						<div class="form-group">
+							<label class="col-sm-4 control-label">Company</label>
+							<div class="col-sm-4">
+								<select class="form-control selectpicker" data-width="100%" data-live-search="true" name="company">
+									<option></option>
+									@foreach ($subsidiaries as $subsidiary)
+										<option value="{{ $subsidiary->id }}">{{ $subsidiary->name }}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">
 								<button type="submit" class="btn btn-primary">
 									<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send

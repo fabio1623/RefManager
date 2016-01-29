@@ -9,7 +9,7 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $user->first_name }} {{ $user->last_name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('UserController@destroyOne') }}" method="POST">
+								<form action="{{ action('UserController@destroy', $user->id) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
