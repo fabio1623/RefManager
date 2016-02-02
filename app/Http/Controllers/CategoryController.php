@@ -11,6 +11,7 @@ use App\Category;
 use App\Measure;
 use App\Reference;
 use App\Qualifier;
+use App\Subsidiary;
 
 class CategoryController extends Controller
 {
@@ -33,6 +34,16 @@ class CategoryController extends Controller
         return $view;
     }
 
+    public function custom_index($id)
+    {
+        $subsidiary = Subsidiary::find($id);
+        $categories = Category::paginate(9);
+        $linked_categories = $subsidiary->categories()->get();
+
+        $view = view('categories.custom_index', ['categories'=>$categories, 'subsidiary'=>$subsidiary, 'linked_categories'=>$linked_categories]);
+        return $view;   
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,6 +54,24 @@ class CategoryController extends Controller
         $view = view('categories.create');
         
         return $view;
+    }
+
+    public function link_category($subsidiary_id, $category_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->categories()->attach($category_id);
+
+        return redirect()->back();
+    }
+
+    public function detach_category($subsidiary_id, $category_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->categories()->detach($category_id);        
+
+        return redirect()->back();
     }
 
     /**
@@ -91,6 +120,20 @@ class CategoryController extends Controller
         $view = view('categories.edit', ['category'=>$category, 'measures'=>$measures]);
         
         return $view;
+    }
+
+    public function custom_edit($subsidiary_id, $category_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $category = Category::find($category_id);
+
+        $measures = $category->measures()->paginate(9);
+
+        $linked_measures = $subsidiary->measures()->get();
+
+        $view = view('categories.custom_edit', ['subsidiary'=>$subsidiary, 'category'=>$category, 'measures'=>$measures, 'linked_measures'=>$linked_measures]);
+        return $view;   
     }
 
     /**

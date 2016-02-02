@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Expertise;
 use App\Domain;
 use App\Reference;
+use App\Subsidiary;
 
 class ExpertiseController extends Controller
 {
@@ -43,6 +44,24 @@ class ExpertiseController extends Controller
 
         $view = view('expertises.create', ['domain'=>$domain, 'parent_expertises'=>$parent_expertises]);
         return $view;
+    }
+
+    public function link_expertise($subsidiary_id, $expertise_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->expertises()->attach($expertise_id);
+
+        return redirect()->back();
+    }
+
+    public function detach_expertise($subsidiary_id, $expertise_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->expertises()->detach($expertise_id);        
+
+        return redirect()->back();
     }
 
     /**

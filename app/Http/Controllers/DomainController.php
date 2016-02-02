@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Domain;
 use App\Expertise;
 use App\Reference;
+use App\Subsidiary;
 
 class DomainController extends Controller
 {
@@ -29,6 +30,16 @@ class DomainController extends Controller
         return $view;
     }
 
+    public function custom_index($id)
+    {
+        $subsidiary = Subsidiary::find($id);
+        $domains = Domain::paginate(9);
+        $linked_domains = $subsidiary->domains()->get();
+
+        $view = view('domains.custom_index', ['domains'=>$domains, 'subsidiary'=>$subsidiary, 'linked_domains'=>$linked_domains]);
+        return $view;   
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -38,6 +49,24 @@ class DomainController extends Controller
     {
         $view = view('domains.create');
         return $view;
+    }
+
+    public function link_domain($subsidiary_id, $domain_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->domains()->attach($domain_id);
+
+        return redirect()->back();
+    }
+
+    public function detach_domain($subsidiary_id, $domain_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->domains()->detach($domain_id);        
+
+        return redirect()->back();
     }
 
     /**
@@ -84,6 +113,20 @@ class DomainController extends Controller
 
         $view = view('domains.edit', ['domain' => $domain, 'expertises' => $expertises]);
         return $view;
+    }
+
+    public function custom_edit($subsidiary_id, $domain_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $domain = Domain::find($domain_id);
+
+        $expertises = $domain->expertises()->paginate(9);
+
+        $linked_expertises = $subsidiary->expertises()->get();
+
+        $view = view('domains.custom_edit', ['subsidiary'=>$subsidiary, 'domain' => $domain, 'expertises' => $expertises, 'linked_expertises'=>$linked_expertises]);
+        return $view;   
     }
 
     /**

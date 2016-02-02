@@ -243,9 +243,12 @@ class ReferenceController extends Controller
         'zh' => 'Chinese' , 
         'zu' => 'Zulu' , 
         );
+        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
         $languages = Language::all();
-        $external_services = ExternalService::all();
-        $internal_services = InternalService::all();
+        // $external_services = ExternalService::all();
+        $external_services = $subsidiary->external_services()->get();
+        // $internal_services = InternalService::all();
+        $internal_services = $subsidiary->internal_services()->get();
         $domains = Domain::all();
         $expertises = Expertise::all();
         $categories = Category::all();
@@ -514,7 +517,7 @@ class ReferenceController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($_POST);
+        dd($_POST);
         $this->validate($request, [
             'project_number'    =>  'required|unique:references',
             // 'country'           =>  'required',

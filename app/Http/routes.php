@@ -65,6 +65,9 @@ Route::controllers([
 ]);
 
 //Internal services
+Route::get('services/internal/subsidiary_internal_services', 'ServiceController@subsidiary_internal_services');
+Route::get('services/internal/link_internal_service/{id}', 'ServiceController@link_internal_service');
+Route::get('services/internal/detach_internal_service/{id}', 'ServiceController@detach_internal_service');
 Route::get('services/internal', 'ServiceController@internal_index');
 Route::get('services/internal/create', 'ServiceController@internal_create');
 Route::post('services/internal/store', 'ServiceController@internal_store');
@@ -74,22 +77,36 @@ Route::delete('service/internal/{id}', 'ServiceController@internal_destroy');
 Route::delete('services/internal/destroy_multiple/{id}', 'ServiceController@internal_destroy_multiple');
 
 //External services
-Route::get('services/external/custom_index/{id}', 'ServiceController@subsidiary_external_services');
+Route::get('services/external/subsidiary_external_services', 'ServiceController@subsidiary_external_services');
+Route::get('services/external/link_external_service/{id}', 'ServiceController@link_external_service');
+Route::get('services/external/detach_external_service/{id}', 'ServiceController@detach_external_service');
 Route::delete('services/external/destroy_multiple/{id}', 'ServiceController@destroy_multiple');
 Route::resource('services/external', 'ServiceController');
 
 //Domains
+Route::get('domains/{domain}/subsidiary/{subsidiary}/custom_edit', 'DomainController@custom_edit');
 Route::delete('domains/destroyOne/{id}', 'DomainController@destroyOne');
+Route::get('domains/{domain}/link_domain/{id}', 'DomainController@link_domain');
+Route::get('domains/{domain}/detach_domain/{id}', 'DomainController@detach_domain');
+Route::get('domains/custom_index/{id}', 'DomainController@custom_index');
 Route::resource('domains', 'DomainController');
 
 //Expertises
+Route::get('expertises/{expertise}/link_expertise/{id}', 'ExpertiseController@link_expertise');
+Route::get('expertises/{expertise}/detach_expertise/{id}', 'ExpertiseController@detach_expertise');
 Route::delete('expertises/destroyOne', 'ExpertiseController@destroyOne');
 Route::resource('domains.expertises', 'ExpertiseController');
 
 //Categories
+Route::get('categories/{category}/subsidiary/{subsidiary}/custom_edit', 'CategoryController@custom_edit');
+Route::get('categories/custom_index/{id}', 'CategoryController@custom_index');
+Route::get('categories/{categories}/link_category/{id}', 'CategoryController@link_category');
+Route::get('categories/{categories}/detach_category/{id}', 'CategoryController@detach_category');
 Route::resource('categories', 'CategoryController');
 
 //Measures
+Route::get('measures/{measure}/link_measure/{id}', 'MeasureController@link_measure');
+Route::get('measures/{measure}/detach_measure/{id}', 'MeasureController@detach_measure');
 Route::resource('categories.measures', 'MeasureController');
 
 //Zones

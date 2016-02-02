@@ -11,6 +11,7 @@ use App\Measure;
 use App\Category;
 use App\Reference;
 use App\Qualifier;
+use App\Subsidiary;
 
 class MeasureController extends Controller
 {
@@ -45,6 +46,24 @@ class MeasureController extends Controller
 
         $view = view('measures.create')->with('category', $category);
         return $view;
+    }
+
+    public function link_measure($subsidiary_id, $measure_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->measures()->attach($measure_id);
+
+        return redirect()->back();
+    }
+
+    public function detach_measure($subsidiary_id, $measure_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->measures()->detach($measure_id);        
+
+        return redirect()->back();
     }
 
     /**

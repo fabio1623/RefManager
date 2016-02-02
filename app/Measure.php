@@ -28,4 +28,9 @@ class Measure extends Model
     {
         return $this->belongsToMany('App\Qualifier');
     }
+
+    public function subsidiaries()
+    {
+        return $this->belongsToMany('App\Subsidiary');
+    }
 }

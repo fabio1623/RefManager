@@ -33,26 +33,68 @@
 					@endif
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ action('SubsidiaryController@update', $subsidiary->id) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<?php echo method_field('PUT'); ?>
+						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Subsidiary Name</label>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<input type="text" class="form-control" name="name" value="{{$subsidiary->name}}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Services</label>
+							<div class="col-md-4">
+								<div class="btn-group" role="group" aria-label="...">
+									<a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_external_services') }}" role="button">
+										<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> 
+										External
+									</a>
+									<a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_internal_services') }}" role="button">
+										<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> 
+										Internal
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Domains of expertise</label>
+							<div class="col-md-4">
+									<a class="btn btn-primary btn-sm" href="{{ action('DomainController@custom_index', $subsidiary->id) }}" role="button">
+										<span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span>
+									</a>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Measures</label>
+							<div class="col-md-4">
+									<a class="btn btn-primary btn-sm" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}" role="button">
+										<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+									</a>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Linked References</label>
+							<div class="col-md-4">
+									<a class="btn btn-primary btn-sm" href="{{ action('ReferenceController@subsidiary_references', $subsidiary->id) }}" role="button">
+									<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+								</a>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary btn-sm">
-									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
+									<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> 
+									Save
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-								</a>
-								<a class="btn btn-primary btn-sm" href="{{ action('ReferenceController@subsidiary_references', $subsidiary->id) }}" role="button">
-									<span class="glyphicon glyphicon-list" aria-hidden="true"></span> 
-									References
+								<a class="btn btn-primary btn-sm" href="{{ action('SubsidiaryController@index') }}" role="button">
+									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									Back
 								</a>
 							</div>
 						</div>

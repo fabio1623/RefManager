@@ -13,4 +13,9 @@ class Category extends Model
     {
         return $this->hasMany('App\Measure');
     }
+
+    public function subsidiaries()
+    {
+        return $this->belongsToMany('App\Subsidiary');
+    }
 }

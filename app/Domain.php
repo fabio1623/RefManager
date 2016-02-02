@@ -13,4 +13,9 @@ class Domain extends Model
     {
         return $this->hasMany('App\Expertise');
     }
+
+    public function subsidiaries()
+    {
+        return $this->belongsToMany('App\Subsidiary');
+    }
 }

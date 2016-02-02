@@ -18,4 +18,9 @@ class Expertise extends Model
     {
         return $this->belongsToMany('App\Reference');
     }
+
+    public function subsidiaries()
+    {
+        return $this->belongsToMany('App\Subsidiary');
+    }
 }
