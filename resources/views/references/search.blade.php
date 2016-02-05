@@ -167,17 +167,6 @@
 					      </span>
 					    </div>
 					</div>
-					<!-- <label for="end_date" class="col-sm-2 control-label">End of project</label>
-					<div class="col-sm-2">
-					    <div class="input-group">
-					      <input type="text" class="form-control" id="end_date" name="end_date">
-					      <span class="input-group-btn">
-					        <button class="btn btn-default" type="button">
-					        	<span class="glyphicon glyphicon glyphicon-calendar" aria-hidden="true"></span>
-					        </button>
-					      </span>
-					    </div>
-					</div> -->
 				</div>
 				<!-- EO line -->
 				<!-- Line -->
@@ -235,9 +224,14 @@
 			  	<!-- EO line -->
 			  	<!-- Line -->
 				<div class="form-group">
-				    <label class="control-label col-sm-4" for="financing">Financing</label>
+				    <label for="financing" class="control-label col-sm-4" for="financing">Financing</label>
 				    <div class="col-sm-3">
-				    	<input type="text" class="form-control" id="financing" name="financing" placeholder="Ex: Oil">
+				    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" name="financings[]">
+				    		<option></option>
+				    		@foreach($fundings as $funding)
+				    			<option value="{{ $funding->id }}">{{ $funding->name }}</option>
+				    		@endforeach
+			    		</select>
 				    </div>
 			  	</div>
 			  	<!-- EO line -->

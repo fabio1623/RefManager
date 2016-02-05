@@ -5,7 +5,18 @@
 <div class="col-sm-6 col-sm-offset-3">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 class="panel-title">New External Service</h3>
+			<h3 class="panel-title">
+				<div class="row">
+					<div class="col-sm-10">New External Service</div>
+					<div class="col-sm-2">
+					    <button form="form_back" type="submit" class="btn btn-default btn-xs pull-right">
+							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+						</button>
+					</div>
+					<form id="form_back" action="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}" method="GET">
+					</form>
+				</div>
+			</h3>
 		</div>
 		<div class="panel-body">
 			@if (count($errors) > 0)
@@ -33,11 +44,9 @@
 						<button type="submit" class="btn btn-primary">
 							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 						</button>
-						<a class="btn btn-primary" style="margin-right:2px" href="{{ URL::previous() }}" role="button">	
-							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-						</a>
 					</div>
 				</div>
+				<input type="hidden" name="subsidiary_id" value="{{ $subsidiary->id }}">
 			</form>
 		</div>
 	</div>

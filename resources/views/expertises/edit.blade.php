@@ -9,14 +9,12 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $expertise->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('ExpertiseController@destroy') }}" method="POST">
+								<form action="{{ action('ExpertiseController@destroy', [$subsidiary->id, $domain->id, $expertise->id]) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
-								    <input type="hidden" name="expertise_id" value="{{ $expertise->id}}">
-								    <input type="hidden" name="domain_id" value="{{ $domain->id}}">
 								</form>
 							</div>
 						</div>
@@ -34,7 +32,7 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('ExpertiseController@update', [$domain->id, $expertise->id]) }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('ExpertiseController@update', [$subsidiary->id, $domain->id, $expertise->id]) }}">
 						<?php echo method_field('PUT'); ?>
 					    <?php echo csrf_field(); ?>
 
@@ -66,7 +64,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ action('DomainController@edit', $domain->id) }}" role="button">	
+								<a class="btn btn-primary btn-sm" href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domain->id]) }}" role="button">	
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>

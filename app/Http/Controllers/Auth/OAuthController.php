@@ -50,6 +50,12 @@ class OAuthController extends Controller
                 //Temporary functionality
                 $ddb_user->save();
 
+                // if ($ddb_user->profile == 'Basic user') {
+                //     return redirect()->action('ReferenceController@index');
+                // }
+                // else {
+                //     return redirect()->intended('home');   
+                // }
                 return redirect()->intended('home');
             }
             else {

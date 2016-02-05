@@ -37,7 +37,7 @@
 
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover">
+					<table class="table table-bordered table-hover table-striped table-condensed">
 						<thead>
 							<tr>
 								<th class="col-sm-6">Name</th>
@@ -59,8 +59,13 @@
 												<a class="btn btn-link" href="{{ action('UserController@edit', $user->id) }}">{{$user->profile}}</a>	
 											</td>
 											<td class="check">
-												<a class="btn btn-danger btn-xs center-block" href="{{ action('UserController@destroyOne', $user->id) }}" role="button">
+												<!-- <a class="btn btn-danger btn-xs center-block" href="{{ action('UserController@destroyOne', $user->id) }}" role="button">
 											    	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+											    </a> -->
+											    <a class="btn btn-link center-block" href="{{ action('UserController@destroyOne', $user->id) }}">
+											    	<span class="label label-danger">
+											    		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										    		</span>
 											    </a>
 												<!-- <input class="checkbox" type="checkbox" value="{{$user->id}}" name=id[]> -->
 											</td>

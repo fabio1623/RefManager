@@ -10,12 +10,12 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $measure->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('MeasureController@destroy') }}" method="POST">
+								<form action="{{ action('MeasureController@destroy', [$subsidiary_id, $category->id, $measure->id]) }}" method="POST">
 									<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 									<input class="btn btn-danger pull-right btn-xs" type="submit" name="_method" value="Delete">
-								    <input type="hidden" name="measure_id" value="{{ $measure->id}}">
-								    <input type="hidden" name="category_id" value="{{ $category->id}}">
+								    <!-- <input type="hidden" name="measure_id" value="{{ $measure->id}}">
+								    <input type="hidden" name="category_id" value="{{ $category->id}}"> -->
 								</form>
 							</div>
 						</div>
@@ -33,9 +33,9 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('MeasureController@update', [$category->id, $measure->id]) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('MeasureController@update', [$subsidiary_id, $category->id, $measure->id]) }}">
+						<?php echo method_field('PUT'); ?>
+					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Measure Name</label>
@@ -47,7 +47,7 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Field Type</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="field_type">
+								<select class="form-control selectpicker" name="field_type">
 									<option></option>
 									@if ($measure->field_type == 'Input')
 										<option selected>Input</option>
@@ -73,7 +73,7 @@
 								<button type="submit" class="btn btn-primary">
 									Update
 								</button>
-								<a class="btn btn-primary" style="margin-right:2px" href="{{ action('CategoryController@edit', $category->id) }}" role="button">Back</a>
+								<a class="btn btn-primary" style="margin-right:2px" href="{{ action('CategoryController@custom_edit', [$subsidiary_id, $category->id]) }}" role="button">Back</a>
 							</div>
 						</div>
 					</form>

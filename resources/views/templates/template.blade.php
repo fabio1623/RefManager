@@ -19,6 +19,8 @@
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css">
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/theme.default.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/jquery.tablesorter.pager.min.css">
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,6 +41,9 @@
 		<script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.min.js"></script>
 		<script src="/js/bootstrap3-typeahead.js"></script>
 		<script src="//cdn.bootcss.com/typeahead.js/0.11.1/bloodhound.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.widgets.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/extras/jquery.tablesorter.pager.min.js"></script>
 		
 	</head>
 
@@ -77,6 +82,9 @@
 							          <ul class="dropdown-menu">
 							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a reference</a></li>
 							            <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
+							            <li><a href="{{ action('ReferenceController@index_to_approve') }}"><span class="glyphicon glyphicon-list"></span> References to approve</a></li>
+							            <li><a href="{{ action('ReferenceController@index_approved') }}"><span class="glyphicon glyphicon-list"></span> Approved references</a></li>
+							            <li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search a reference</a></li>
 							          </ul>
@@ -131,6 +139,8 @@
 							          <ul class="dropdown-menu">
 							            <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li>
 							            <li><a href="{{ action('ReferenceController@index') }}">List of references</a></li>
+							            <li><a href="{{ action('ReferenceController@index_to_approve') }}">References to approve</a></li>
+							            <li><a href="{{ action('ReferenceController@index_approved') }}">Approved references</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
 							          </ul>
@@ -138,6 +148,15 @@
 						        @endif
 						        <!-- End User -->
 						        @if (Auth::user()->profile == 'Basic user')
+						        	<li class="dropdown">
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
+							          <ul class="dropdown-menu">
+							            <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li>
+							            <li><a href="{{ action('ReferenceController@index') }}">List of references</a></li>
+							            <li role="separator" class="divider"></li>
+							            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
+							          </ul>
+							        </li>
 						        @endif
 					        @endif
 						</ul>

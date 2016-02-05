@@ -25,8 +25,8 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>Name</th>
-						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-11">Name</th>
+						    	<th class="col-sm-1"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -39,7 +39,10 @@
 												<a class="btn btn-link" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">{{$subsidiary->name}}</a>	
 											</td>
 											<td class="check">
-												<input class="checkbox" type="checkbox" value="{{$subsidiary->id}}" name=id[]>
+												<!-- <input class="checkbox" type="checkbox" value="{{$subsidiary->id}}" name=id[]> -->
+												<a class="btn btn-link center-block" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+													<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+												</a>
 											</td>
 										</tr>
 								@endforeach
@@ -54,12 +57,12 @@
 	</div>
 
 <script>
-	$("tbody > tr").click(function() {
-		var href = $(this).data("href");
-		if(href){
-			window.location = href;
-		}
-	});
+	// $("tbody > tr").click(function() {
+	// 	var href = $(this).data("href");
+	// 	if(href){
+	// 		window.location = href;
+	// 	}
+	// });
 
 	$( ".check").click(function( event ) {
 	  event.stopImmediatePropagation();

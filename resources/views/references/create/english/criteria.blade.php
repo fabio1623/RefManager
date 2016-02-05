@@ -9,7 +9,7 @@
         </h3>
       </div>
       <div id="domain-{{ $domain->id }}" class="panel-body">
-        @foreach($domain->expertises as $expertise)
+        @foreach($expertises as $expertise)
         <div class="checkbox col-sm-6">
           <label>
             <input id="service-{{ $expertise->id }}" name="domains[{{ $domain->id }}][{{ $expertise->id }}]" type="checkbox"> {{$expertise->name}}

@@ -41,12 +41,13 @@ class ReferenceController extends Controller
      */
     public function index()
     {
-        $references = Reference::paginate(8);
+        $references = Reference::orderBy('created_at', 'desc')->paginate(20);
         $countries = Country::all();
         $clients = Client::all();
         $zones = Zone::all();
+        $kind_of_reference = 'All';
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
         return $view;
     }
 
@@ -58,9 +59,47 @@ class ReferenceController extends Controller
         $countries = Country::all();
         $clients = Client::all();
         $zones = Zone::all();
+        $kind_of_reference = 'From '.$subsidiary->name;
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones]);
-        return $view;   
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        return $view; 
+    }
+
+    public function index_to_approve()
+    {
+        $references = Reference::where('dcom_approval', false)->orderBy('created_at', 'desc')->paginate(8);
+        $countries = Country::all();
+        $clients = Client::all();
+        $zones = Zone::all();
+        $kind_of_reference = 'To approve';
+
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        return $view;
+
+    }
+
+    public function index_approved()
+    {
+        $references = Reference::where('dcom_approval', true)->orderBy('created_at', 'desc')->paginate(8);
+        $countries = Country::all();
+        $clients = Client::all();
+        $zones = Zone::all();
+        $kind_of_reference = 'Approved';
+
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        return $view;        
+    }
+
+    public function index_created_by_me()
+    {
+        $references = Reference::where('created_by', Auth::user()->username)->orderBy('created_at', 'desc')->paginate(8);
+        $countries = Country::all();
+        $clients = Client::all();
+        $zones = Zone::all();
+        $kind_of_reference = 'Created by me';
+
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        return $view;
     }
 
     public function customize()
@@ -97,15 +136,6 @@ class ReferenceController extends Controller
      */
     public function create()
     {
-        // $internal_services = Service::where('subsidiary','Seureca')
-        //                                 ->where('service_type', 'internal')
-        //                                 ->first()
-        //                                 ->subServices()->get();
-        // $external_services = Service::where('subsidiary','Seureca')
-        //                                 ->where('service_type', 'external')
-        //                                 ->first()
-        //                                 ->subServices()->get();
-
         $language_codes = array(
         'en' => 'English' , 
         'aa' => 'Afar' , 
@@ -249,9 +279,13 @@ class ReferenceController extends Controller
         $external_services = $subsidiary->external_services()->get();
         // $internal_services = InternalService::all();
         $internal_services = $subsidiary->internal_services()->get();
-        $domains = Domain::all();
-        $expertises = Expertise::all();
-        $categories = Category::all();
+        // $domains = Domain::all();
+        $domains = $subsidiary->domains()->get();
+        // $expertises = Expertise::all();
+        $expertises = $subsidiary->expertises()->get();
+        // $categories = Category::all();
+        $categories = $subsidiary->categories()->get();
+        $measures = $subsidiary->measures()->get();
         $countries = Country::orderBy('name', 'asc')->get();
         $zones = Zone::orderBy('name','asc')->get();
         $fundings = Funding::all();
@@ -275,7 +309,7 @@ class ReferenceController extends Controller
         $clients = Client::all();
 
         /*dd($internal_services);*/
-        $view = view('references.create', ['languages'=>$languages, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants, 'fundings'=>$fundings, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients]);
+        $view = view('references.create', ['languages'=>$languages, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants, 'fundings'=>$fundings, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients]);
         return $view;
     }
 
@@ -302,16 +336,18 @@ class ReferenceController extends Controller
                 $references = $references->whereNotNull('country')->orWhere('country', $value->id);
             }
 
-            $references = $references->paginate(8);
+            $references = $references->paginate(20);
         }
         else {
-            $references = Reference::paginate(8);
+            $references = Reference::paginate(20);
         }
 
         $countries = Country::all();
         $zones = Zone::all();
         $clients = Client::all();
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'inputs'=>$request->except('page')]);
+        $kind_of_reference = 'All';
+
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'inputs'=>$request->except('page'), 'kind_of_reference'=>$kind_of_reference]);
         return $view;
     }
 
@@ -324,8 +360,9 @@ class ReferenceController extends Controller
         $countries = Country::all();
         $categories = Category::all();
         $zones = Zone::all();
+        $fundings = Funding::orderBy('name', 'asc')->get();
 
-        $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories, 'zones'=>$zones]);
+        $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories, 'zones'=>$zones, 'fundings'=>$fundings]);
         return $view;
     }
 
@@ -418,7 +455,7 @@ class ReferenceController extends Controller
             $filtered_references = Reference::has('expertises', '>=', $nb_selected_domains)->get();
             $references_to_get = [];
 
-            //For each filtered reference, check if there are at least linked to selected domains
+            //For each filtered reference, check if there is at least one linked to selected domains
             foreach ($filtered_references as $ref) {
                 $domains_in_ref = [];
 
@@ -443,7 +480,7 @@ class ReferenceController extends Controller
 
         //Get the references corresponding to the selected measure value
         if ($request->measure != '') {
-            $measure_type;
+            // $measure_type;
             $references->whereHas('measures', function ($query) use ($request) {
                 $query->where('measure_id', $request->measure_type)
                         ->where('value', $request->measure_symbol, $request->measure);
@@ -494,9 +531,22 @@ class ReferenceController extends Controller
             $references->where($cost_type, $request->cost_symbol, $request->cost);
         }
 
+        if ($request->financings != '') {
+            $financings = [];
+
+            foreach ($request->financings as $value) {
+                $financings[] = $value;
+            }
+            if (count($financings) > 0) {
+                $references->whereHas('fundings', function ($query) use ($financings) {
+                    $query->whereIn('id', $financings);
+                });
+            }
+        }
+
         
 
-        $references = $references->paginate(8);
+        $references = $references->paginate(20);
 
         $zones = Zone::all();
         $external_services = ExternalService::all();
@@ -509,6 +559,22 @@ class ReferenceController extends Controller
         return $view;
     }
 
+    public function results_by_project_number()
+    {
+        $references = Reference::orderBy('project_number', 'asc')->paginate(8);
+        // dd($references);
+
+        $zones = Zone::all();
+        $external_services = ExternalService::all();
+        $internal_services = InternalService::all();
+        $domains = Domain::all();
+        $countries = Country::all();
+        $clients = Client::all();
+
+        $view = view('references.index', ['references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients]);
+        return $view;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -517,7 +583,7 @@ class ReferenceController extends Controller
      */
     public function store(Request $request)
     {
-        dd($_POST);
+        // dd($_POST);
         $this->validate($request, [
             'project_number'    =>  'required|unique:references',
             // 'country'           =>  'required',
@@ -731,16 +797,18 @@ class ReferenceController extends Controller
         }
 
         //Attach the measures
-        foreach ($request->input('categories') as $category) {
-            foreach ($category as $key => $value) {
-                if ($value != '') {
-                    $measure_in_db = Measure::where('id', $key)->first();
+        if ($request->categories) {
+            foreach ($request->input('categories') as $category) {
+                foreach ($category as $key => $value) {
+                    if ($value != '') {
+                        $measure_in_db = Measure::where('id', $key)->first();
 
-                    if (count($measure_in_db->units) > 1) {
-                        $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
-                    }
-                    else {
-                        $reference->measures()->attach($key, ['value' => $value]);   
+                        if (count($measure_in_db->units) > 1) {
+                            $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
+                        }
+                        else {
+                            $reference->measures()->attach($key, ['value' => $value]);   
+                        }
                     }
                 }
             }
@@ -931,7 +999,82 @@ class ReferenceController extends Controller
      */
     public function show($id)
     {
-        //
+        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+        $reference = Reference::find($id);
+
+        $measures_values = MeasureValues::where('reference_id', $id)->get();
+
+        $qualifiers_values = QualifierValues::where('reference_id', $id)->get();
+
+        $languages = Language::all();
+
+        $languagesValues = LanguageReference::where('reference_id', $id)->get();
+
+        $contact = Contact::find($reference->contact);
+        $client = Client::find($reference->client);
+
+        //Get contributors
+        $staff_involved = ContributorReference::where('reference_id', $reference->id)
+                                                ->where('function_on_project', 'Senior')->get();
+
+        $staff_name = $reference->contributors()->where('function_on_project', 'Senior')->get();
+
+        $experts = ContributorReference::where('reference_id', $reference->id)
+                                            ->where('function_on_project', 'Expert')->get();
+
+        $experts_name = $reference->contributors()->where('function_on_project', 'Expert')->get();
+
+        $consultants = $reference->contributors()->where('function_on_project', 'Consultant')->get();
+
+        $financings = $reference->fundings()->get();
+        
+        // dd($financings);
+
+        // $external_services = ExternalService::all();
+        $external_services = $subsidiary->external_services()->get();
+        // $internal_services = InternalService::all();
+        $internal_services = $subsidiary->internal_services()->get();
+        // $domains = Domain::all();
+        $domains = $subsidiary->domains()->get();
+        // $expertises = Expertise::all();
+        $expertises = $subsidiary->expertises()->get();
+        // $categories = Category::all();
+        $categories = $subsidiary->categories()->get();
+        $measures = $subsidiary->measures()->get();
+        $countries = Country::orderBy('name', 'asc')->get();
+        $country = Country::find($reference->country);
+        $zones = Zone::orderBy('name','asc')->get();
+        $zone = Zone::find($reference->zone);
+        if ($zone) {
+            $zone_manager = Contributor::find($zone->manager);
+        }
+        else {
+            $zone_manager = null;
+        }
+
+        $fundings = Funding::all();
+
+        $seniors = Contributor::whereHas('references', function ($query) {
+            $query->where('function_on_project', 'Senior');
+        })->get();
+
+        $exps = Contributor::whereHas('references', function ($query) {
+            $query->where('function_on_project', 'Expert');
+        })->get();
+
+        $consults = Contributor::whereHas('references', function ($query) {
+            $query->where('function_on_project', 'Consultant');
+        })->get();
+
+        $senior_profiles = ContributorReference::where('function_on_project', 'Senior')->distinct()->get();
+        $expert_profiles = ContributorReference::where('function_on_project', 'Expert')->distinct()->get();
+
+        $contacts = Contact::all();
+        $clients = Client::all();
+
+        $view = view('references.show', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
+        
+        return $view;
     }
 
     /**
@@ -942,6 +1085,7 @@ class ReferenceController extends Controller
      */
     public function edit($id)
     {
+        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
         $reference = Reference::find($id);
         // $references_list = Reference::where('contact_department', '<>', '')->orWhere('contact_department_fr', '<>', '')->get();
 
@@ -973,11 +1117,17 @@ class ReferenceController extends Controller
         
         // dd($financings);
 
-        $external_services = ExternalService::all();
-        $internal_services = InternalService::all();
-        $domains = Domain::all();
-        $expertises = Expertise::all();
-        $categories = Category::all();
+        // $external_services = ExternalService::all();
+        $external_services = $subsidiary->external_services()->get();
+        // $internal_services = InternalService::all();
+        $internal_services = $subsidiary->internal_services()->get();
+        // $domains = Domain::all();
+        $domains = $subsidiary->domains()->get();
+        // $expertises = Expertise::all();
+        $expertises = $subsidiary->expertises()->get();
+        // $categories = Category::all();
+        $categories = $subsidiary->categories()->get();
+        $measures = $subsidiary->measures()->get();
         $countries = Country::orderBy('name', 'asc')->get();
         $zones = Zone::orderBy('name','asc')->get();
 
@@ -1001,7 +1151,7 @@ class ReferenceController extends Controller
         $contacts = Contact::all();
         $clients = Client::all();
 
-        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
+        $view = view('references.edit', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'languages'=>$languages, 'languagesValues'=>$languagesValues, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
         
         return $view;
     }
@@ -1262,16 +1412,18 @@ class ReferenceController extends Controller
         $reference->measures()->detach();
 
         //Attach the measures
-        foreach ($request->categories as $category) {
-            foreach ($category as $key => $value) {
-                if ($value != '') {
-                    $measure_in_db = Measure::where('id', $key)->first();
+        if ($request->categories) {
+            foreach ($request->categories as $category) {
+                foreach ($category as $key => $value) {
+                    if ($value != '') {
+                        $measure_in_db = Measure::where('id', $key)->first();
 
-                    if (count($measure_in_db->units) > 1) {
-                        $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
-                    }
-                    else {
-                        $reference->measures()->attach($key, ['value' => $value]);   
+                        if (count($measure_in_db->units) > 1) {
+                            $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
+                        }
+                        else {
+                            $reference->measures()->attach($key, ['value' => $value]);   
+                        }
                     }
                 }
             }
@@ -1467,6 +1619,28 @@ class ReferenceController extends Controller
         }
 
         return redirect()->action('ReferenceController@index');
+    }
+
+    public function approve($id)
+    {
+        $reference = Reference::find($id);
+        $reference->dcom_approval = 1;
+        $reference->approved_at = date('Y-m-d H:i:s');
+
+        $reference->save();
+
+        return redirect()->back();
+    }
+
+    public function desapprove($id)
+    {
+        $reference = Reference::find($id);
+        $reference->dcom_approval = 0;
+        $reference->approved_at = null;
+
+        $reference->save();
+
+        return redirect()->back();
     }
 
     /**

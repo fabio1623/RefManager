@@ -43,17 +43,26 @@
 							</div>
 						</div>
 
-						<!-- <div class="form-group">
-							<label class="col-sm-4 control-label">Confirm Password</label>
+						<div class="form-group">
+							<label for="subsidiary" class="col-sm-4 control-label">Subsidiary</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" name="password_confirmation">
+								<select class="form-control selectpicker" id="subsidiary" name="subsidiary">
+									<option></option>
+									@foreach ($subsidiaries as $subsidiary)
+										@if(strtolower($subsidiary->id) == $request->subsidiary_id)
+											<option value="{{ $subsidiary->id }}" selected>{{ $subsidiary->name }}</option>
+										@else
+											<option value="{{ $subsidiary->id }}">{{ $subsidiary->name }}</option>
+										@endif
+									@endforeach
+								</select>
 							</div>
-						</div> -->
+						</div>
 						
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">
-							  <select class="form-control" id="profile_type" name="profile">
+							  <select class="form-control selectpicker" id="profile_type" name="profile">
 							  	<option></option>
 							    <option value="3">Basic user</option>
 							    <option value="2">Reference administrator</option>

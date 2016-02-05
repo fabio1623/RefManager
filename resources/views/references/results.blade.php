@@ -10,16 +10,21 @@
 					<h3 class="panel-title">Results of the search</h3>
 				</div>
 				<div class="col-sm-1">
-					<a class="btn btn-primary btn-xs" href="{{ action('ReferenceController@search') }}" role="button">	
-						<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+					<a class="btn btn-primary btn-xs pull-right" href="{{ action('ReferenceController@search') }}" role="button">	
+						<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 					</a>
 				</div>
 			</div>
 		</div>
-		<table class="table table-hover table-bordered">
+		<table id="sortedTable" class="table table-hover table-bordered table-striped table-condensed">
 			<thead>
 				<tr>
-					<th class="col-sm-2">Project number</th>
+					<th class="col-sm-2">
+						Project number
+						<!-- <a class="btn btn-link" href="{{ action('ReferenceController@results_by_project_number') }}">
+							<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+						</a> -->
+					</th>
 					<th class="col-sm-2">DFAC name</th>
 					<th class="col-sm-1">Start date</th>
 					<th class="col-sm-1">End date</th>
@@ -31,7 +36,7 @@
 			</thead>
 			<tbody>
 				@foreach ($references as $reference)
-						<tr data-href="{{ action('ReferenceController@edit', $reference->id) }}">
+						<tr class="line" data-href="{{ action('ReferenceController@edit', $reference->id) }}">
 							<td>
 								<a class="btn btn-link" href="">{{$reference->project_number}}</a>	
 							</td>
@@ -88,6 +93,15 @@
 
 <script>
 	// $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+	$(document).ready(function() 
+	{ 
+		$("#sortedTable").tablesorter(
+			{
+				// cssHeader:'header',
+				// cssAsc:'headerSortUp',
+				// cssDesc:'headerSortDown',
+			});
+    } );
 
 	$('tbody > tr').click(function() {
 		var href = $(this).data("href");
@@ -95,5 +109,14 @@
 			window.location = href;
 		}
 	});
+
+	$('.line').hover(
+    	function(){ 
+		  $(this).addClass("active");
+	  	}, 
+		function(){ 
+		  $(this).removeClass("active");
+		}
+  	);
 </script>
 @endsection

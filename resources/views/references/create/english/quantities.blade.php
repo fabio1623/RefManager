@@ -13,7 +13,7 @@
         <div id="collapse_category-{{$i}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{$i}}">
 
           <div id="category-{{ $categories[$i]->id }}" class="panel-body">
-            @foreach($categories[$i]->measures as $measure)
+            @foreach($measures as $measure)
             <div class="form-group">
               <label for="category-{{$categories[$i]->id}}-measure-{{$measure->id}}" class="col-sm-4 col-sm-offset-1 control-label">{{$measure->name}}</label>
               @if($measure->field_type == 'Input')

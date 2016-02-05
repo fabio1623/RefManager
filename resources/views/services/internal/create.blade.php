@@ -28,12 +28,13 @@
 						<input type="text" class="form-control" id="serviceName" name="name" value="{{ old('name') }}">
 					</div>
 				</div>
+				<input type="hidden" name="subsidiary_id" value="{{ $subsidiary->id }}">
 				<div class="form-group">
 					<div class="col-sm-6 col-sm-offset-4">
 						<button type="submit" class="btn btn-primary">
 							<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 						</button>
-						<a class="btn btn-primary" style="margin-right:2px" href="{{ URL::previous() }}" role="button">	
+						<a class="btn btn-primary" style="margin-right:2px" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}" role="button">	
 							<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 						</a>
 					</div>

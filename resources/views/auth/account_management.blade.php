@@ -35,7 +35,7 @@
 								<input type="email" class="form-control" value="{{ $user->email }}" readonly>
 							</div>
 						</div>
-
+						@if(Auth::user()->password != '')
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Old Password</label>
 							<div class="col-sm-6">
@@ -56,7 +56,7 @@
 								<input type="password" class="form-control" name="new_password_confirmation">
 							</div>
 						</div>
-						
+						@endif
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">

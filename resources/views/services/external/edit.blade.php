@@ -9,13 +9,13 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $external_service->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('ServiceController@destroy', $external_service->id) }}" method="POST">
+								<form action="{{ action('ServiceController@destroy', [$subsidiary->id, $external_service->id]) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
-								    <input type="hidden" name="subsidiary_id" value="{{ Auth::user()->subsidiary_id }}">
+								    
 								</form>
 							</div>
 						</div>
@@ -33,7 +33,7 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" action="{{ action('ServiceController@update', $external_service->id) }}" method="POST">
+					<form class="form-horizontal" role="form" action="{{ action('ServiceController@update', [$subsidiary->id, $external_service->id]) }}" method="POST">
 						<?php echo method_field('PUT'); ?>
 						<?php echo csrf_field(); ?>
 
@@ -49,7 +49,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>

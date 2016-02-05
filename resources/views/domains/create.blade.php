@@ -5,7 +5,20 @@
 	<div class="row col-sm-6 col-sm-offset-3">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">New Domain</h3>
+					<h3 class="panel-title">
+						<div class="row">
+							<div class="col-sm-10">
+								New Domain	
+							</div>
+							<div class="col-sm-2">
+								<button form="form_back" type="submit" class="btn btn-default btn-xs pull-right">
+									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+								</button>
+							</div>
+							<form id="form_back" action="{{ action('DomainController@custom_index', $subsidiary->id) }}" method="GET">
+							</form>
+						</div>
+					</h3>
 				</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
@@ -28,15 +41,12 @@
 								<input type="text" class="form-control" id="domainName" name="name" value="{{ old('name') }}">
 							</div>
 						</div>
-
+						<input type="hidden" name="subsidiary_id" value="{{ $subsidiary->id }}">
 						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 								</button>
-								<a class="btn btn-primary btn-sm" style="margin-right:2px" href="{{ URL::previous() }}" role="button">
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-								</a>
 							</div>
 						</div>
 					</form>

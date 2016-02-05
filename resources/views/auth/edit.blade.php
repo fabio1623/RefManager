@@ -9,13 +9,12 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $user->first_name }} {{ $user->last_name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('UserController@destroy', $user->id) }}" method="POST">
+								<form action="{{ action('UserController@destroy', [$subsidiary_id, $user->id]) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
-								    <input type="hidden" name="hidden_field" value="{{ $user->id}}">
 								</form>
 							</div>
 						</div>
@@ -33,9 +32,9 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@update', [$user->id]) }}">
-						<input type="hidden" name="_method" value="PUT">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@update', [$subsidiary_id, $user->id]) }}">
+						<?php echo method_field('PUT'); ?>
+					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Username</label>
@@ -54,21 +53,21 @@
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">
-							  <select class="form-control" id="profile_type" name="profile">
+							  <select class="form-control selectpicker" id="profile_type" name="profile">
 							  	@if ($user->profile == 'User administrator')
-							    	<option value="1" selected>User administrator</option>
+							    	<option value="User administrator" selected>User administrator</option>
 						    	@else
-						    		<option value="1">User administrator</option>
+						    		<option value="User administrator">User administrator</option>
 						    	@endif
 						    	@if ($user->profile == 'Reference administrator')
-							    	<option value="2" selected>Reference administrator</option>
+							    	<option value="Reference administrator" selected>Reference administrator</option>
 							    @else
-							    	<option value="2">Reference administrator</option>
+							    	<option value="Reference administrator">Reference administrator</option>
 							    @endif
 							    @if ($user->profile == 'Basic user')
-							    	<option value="3" selected>Basic user</option>
+							    	<option value="Basic user" selected>Basic user</option>
 							    @else
-							    	<option value="3">Basic user</option>
+							    	<option value="Basic user">Basic user</option>
 							    @endif
 							  </select>
 							</div>
@@ -79,7 +78,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary_id) }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>

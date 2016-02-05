@@ -37,11 +37,11 @@ class ServiceController extends Controller
         return $view;
     }
 
-    public function subsidiary_external_services()
+    public function subsidiary_external_services($id)
     {
-        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+        $subsidiary = Subsidiary::find($id);
         // $external_services = $subsidiary->external_services()->paginate(8);
-        $external_services = ExternalService::paginate(14);
+        $external_services = ExternalService::paginate(20);
         $linked_services = $subsidiary->external_services()->get();
         // dd($linked_services);
 
@@ -55,25 +55,51 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function create()
+    public function create($id)
     {
-        $view = view('services.external.create');
+        $subsidiary = Subsidiary::find($id);
+
+        $view = view('services.external.create', ['subsidiary'=>$subsidiary]);
         return $view;
     }
 
-    public function link_external_service($id)
+    public function create_from_subsidiary($id)
     {
-        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
-        $external_service = ExternalService::find($id);
+        $subsidiary = Subsidiary::find($id);
 
-        $subsidiary->external_services()->attach($external_service->id);
+        $view = view('services.external.create', ['subsidiary'=>$subsidiary]);
+        return $view;
+    }
+
+    // public function link_external_service($subsidiary_id, $id)
+    // {
+    //     $subsidiary = Subsidiary::find($subsidiary_id);
+    //     $external_service = ExternalService::find($id);
+
+    //     $subsidiary->external_services()->attach($external_service->id);
+
+    //     return redirect()->back();
+    // }
+
+    public function link_external_service(Request $request, $subsidiary_id)
+    {
+        // dd($_POST);
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->external_services()->detach();
+
+        if ($request->id) {
+            foreach ($request->id as $value) {
+                $subsidiary->external_services()->attach($value);
+            }
+        }
 
         return redirect()->back();
     }
 
-    public function detach_external_service($id)
+    public function detach_external_service($subsidiary_id, $id)
     {
-        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+        $subsidiary = Subsidiary::find($subsidiary_id);
         $external_service = ExternalService::find($id);
 
         $subsidiary->external_services()->detach($external_service->id);
@@ -104,11 +130,11 @@ class ServiceController extends Controller
         $new_external_service->save();
 
         //Attach the service to the current user subsidiary
-        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+        $subsidiary = Subsidiary::find($request->subsidiary_id);
 
         $subsidiary->external_services()->attach($new_external_service->id);
 
-        return redirect()->action('ServiceController@index');
+        return redirect()->action('ServiceController@subsidiary_external_services', $subsidiary->id);
     }
 
     /**
@@ -129,12 +155,12 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function edit($id)
+    public function edit($subsidiary_id, $id)
     {
-        // $subsidiary = Subsidiary::find($subsidiary_id);
+        $subsidiary = Subsidiary::find($subsidiary_id);
         $external_service = ExternalService::find($id);
 
-        $view = view('services.external.edit', ['external_service'=>$external_service]);
+        $view = view('services.external.edit', ['subsidiary'=>$subsidiary, 'external_service'=>$external_service]);
         return $view;
     }
 
@@ -146,7 +172,7 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $subsidiary_id, $id)
     {
         // dd($_POST);
         $external_service = ExternalService::find($id);
@@ -154,7 +180,7 @@ class ServiceController extends Controller
 
         $external_service->save();
 
-        return redirect()->action('ServiceController@index');
+        return redirect()->action('ServiceController@subsidiary_external_services', $subsidiary_id);
     }
 
     /**
@@ -164,16 +190,15 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $subsidiary_id, $id)
     {
         // dd($_POST);
-        // $subsidiary = Subsidiary::find($request->subsidiary_id);
-        // $subsidiary->external_services()->detach($id);
         $external_service = ExternalService::find($id);
         $external_service->references()->detach();
+        $external_service->subsidiaries()->detach();
         ExternalService::destroy($id);
 
-        return redirect()->action('ServiceController@index');   
+        return redirect()->action('ServiceController@subsidiary_external_services', $subsidiary_id);
     }
 
     public function destroy_multiple(Request $request)
@@ -204,11 +229,11 @@ class ServiceController extends Controller
         return $view;
     }
 
-    public function subsidiary_internal_services()
+    public function subsidiary_internal_services($subsidiary_id)
     {
-        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+        $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $internal_services = InternalService::paginate(14);
+        $internal_services = InternalService::paginate(20);
         $linked_services = $subsidiary->internal_services()->get();
         // dd($linked_services);
 
@@ -216,25 +241,42 @@ class ServiceController extends Controller
         return $view;
     }
 
-    public function internal_create()
+    public function internal_create($subsidiary_id)
     {
-        $view = view('services.internal.create');
+        $subsidiary = Subsidiary::find($subsidiary_id);
+        $view = view('services.internal.create', ['subsidiary'=>$subsidiary]);
         return $view;
     }
 
-    public function link_internal_service($id)
-    {
-        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
-        $internal_service = InternalService::find($id);
+    // public function link_internal_service($subsidiary_id, $id)
+    // {
+    //     $subsidiary = Subsidiary::find($subsidiary_id);
+    //     $internal_service = InternalService::find($id);
 
-        $subsidiary->internal_services()->attach($internal_service->id);
+    //     $subsidiary->internal_services()->attach($internal_service->id);
+
+    //     return redirect()->back();
+    // }
+
+    public function link_internal_service(Request $request, $subsidiary_id)
+    {
+        // dd($_POST);
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->internal_services()->detach();
+
+        if ($request->id) {
+            foreach ($request->id as $value) {
+                $subsidiary->internal_services()->attach($value);
+            }
+        }
 
         return redirect()->back();
     }
 
-    public function detach_internal_service($id)
+    public function detach_internal_service($subsidiary_id, $id)
     {
-        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+        $subsidiary = Subsidiary::find($subsidiary_id);
         $internal_service = InternalService::find($id);
 
         $subsidiary->internal_services()->detach($internal_service->id);
@@ -252,23 +294,28 @@ class ServiceController extends Controller
         ]);
 
         //Create new service
-        $internal_service = new InternalService;
-        $internal_service->name = $request->name;
+        $new_internal_service = new InternalService;
+        $new_internal_service->name = $request->name;
 
-        $internal_service->save();
+        $new_internal_service->save();
 
-        return redirect()->action('ServiceController@internal_index');
+        $subsidiary = Subsidiary::find($request->subsidiary_id);
+
+        $subsidiary->internal_services()->attach($new_internal_service->id);
+
+        return redirect()->action('ServiceController@subsidiary_internal_services', $subsidiary->id);
     }
 
-    public function internal_edit($id)
+    public function internal_edit($subsidiary_id, $id)
     {
+        $subsidiary = Subsidiary::find($subsidiary_id);
         $internal_service = InternalService::find($id);
 
-        $view = view('services.internal.edit')->with('internal_service', $internal_service);
+        $view = view('services.internal.edit', ['subsidiary'=>$subsidiary, 'internal_service'=>$internal_service]);
         return $view;
     }
 
-    public function internal_update(Request $request, $id)
+    public function internal_update(Request $request, $subsidiary_id, $id)
     {
         // dd($_POST);
         $internal_service = InternalService::find($id);
@@ -276,17 +323,18 @@ class ServiceController extends Controller
 
         $internal_service->save();
 
-        return redirect()->action('ServiceController@internal_index');
+        return redirect()->action('ServiceController@subsidiary_internal_services', $subsidiary_id);
     }
 
-    public function internal_destroy($id)
+    public function internal_destroy($subsidiary_id, $id)
     {
         // dd($id);
         $internal_service = InternalService::find($id);
         $internal_service->references()->detach();
+        $internal_service->subsidiaries()->detach();
         InternalService::destroy($id);
 
-        return redirect()->action('ServiceController@internal_index');   
+        return redirect()->action('ServiceController@subsidiary_internal_services', $subsidiary_id);
     }
 
     public function internal_destroy_multiple(Request $request)

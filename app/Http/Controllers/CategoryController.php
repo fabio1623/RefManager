@@ -34,9 +34,9 @@ class CategoryController extends Controller
         return $view;
     }
 
-    public function custom_index($id)
+    public function custom_index($subsidiary_id)
     {
-        $subsidiary = Subsidiary::find($id);
+        $subsidiary = Subsidiary::find($subsidiary_id);
         $categories = Category::paginate(9);
         $linked_categories = $subsidiary->categories()->get();
 
@@ -49,18 +49,39 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($subsidiary_id)
     {
-        $view = view('categories.create');
+        $view = view('categories.create', ['subsidiary_id'=>$subsidiary_id]);
         
         return $view;
     }
 
-    public function link_category($subsidiary_id, $category_id)
+    // public function link_category($subsidiary_id, $category_id)
+    // {
+    //     $subsidiary = Subsidiary::find($subsidiary_id);
+
+    //     $subsidiary->categories()->attach($category_id);
+
+    //     $category = Category::find($category_id);
+
+    //     foreach ($category->measures as $measure) {
+    //         $subsidiary->measures()->attach($measure->id);
+    //     }
+
+    //     return redirect()->back();
+    // }
+
+    public function link_category(Request $request, $subsidiary_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->categories()->attach($category_id);
+        $subsidiary->categories()->detach();
+
+        if ($request->id) {
+            foreach ($request->id as $category_id) {
+                $subsidiary->categories()->attach($category_id);
+            }
+        }
 
         return redirect()->back();
     }
@@ -69,7 +90,13 @@ class CategoryController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->categories()->detach($category_id);        
+        $subsidiary->categories()->detach($category_id);  
+
+        $category = Category::find($category_id);
+
+        foreach ($category->measures as $measure) {
+                 $subsidiary->measures()->detach($measure->id);
+             }     
 
         return redirect()->back();
     }
@@ -80,9 +107,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $subsidiary_id)
     {
-        /*dd($_POST);*/
+        // dd($_POST);
         $this->validate($request, [
             'name' => 'required|string|max:255|unique:categories',
         ]);
@@ -92,7 +119,10 @@ class CategoryController extends Controller
         
         $new_category->save();
 
-        return redirect()->action('CategoryController@edit', $new_category);
+        $subsidiary = Subsidiary::find($subsidiary_id);
+        $subsidiary->categories()->attach($new_category);
+
+        return redirect()->action('CategoryController@custom_edit', [$subsidiary_id, $new_category->id]);
     }
 
     /**
@@ -143,13 +173,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $subsidiary_id, $category_id)
     {
+        // dd($_POST);
         $this->validate($request, [
-            'name'     => 'required|string|max:255|unique:categories,name,'.$id,
+            'name'     => 'required|string|max:255|unique:categories,name,'.$category_id,
         ]);
 
-        $category = Category::find($id);
+        $category = Category::find($category_id);
 
         if ($category->name != $request->name) {
             $category->name = $request->name;
@@ -157,7 +188,7 @@ class CategoryController extends Controller
             $category->save();
         }
 
-        return redirect()->action('CategoryController@index');
+        return redirect()->action('CategoryController@custom_index', $subsidiary_id);
     }
 
     /**
@@ -166,40 +197,46 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $subsidiary_id, $category_id)
     {
         // dd($_POST);
         
-        $category = Category::find($request->category_id);
+        $category = Category::find($category_id);
 
         //Delete all related measures
         foreach ($category->measures as $measure) {
-            $references = Reference::whereHas('measures', function ($query) use ($measure) {
-                $query->where('measures.id', $measure->id);
-            })->get();
+            // $references = Reference::whereHas('measures', function ($query) use ($measure) {
+            //     $query->where('measures.id', $measure->id);
+            // })->get();
 
-            if ($references) {
-                foreach ($references as $reference) {
-                    $reference->measures()->detach($measure->id);
-                }
-            }
+            // if ($references) {
+            //     foreach ($references as $reference) {
+            //         $reference->measures()->detach($measure->id);
+            //     }
+            // }
 
-            $qualifiers = Qualifier::whereHas('measures', function ($query) use ($measure) {
-                $query->where('measures.id', $measure->id);
-            })->get();
+            // $qualifiers = Qualifier::whereHas('measures', function ($query) use ($measure) {
+            //     $query->where('measures.id', $measure->id);
+            // })->get();
 
-            if ($qualifiers) {
-                foreach ($qualifiers as $qualifier) {
-                    $qualifier->measures()->detach($measure->id);
-                }
-            }
+            // if ($qualifiers) {
+            //     foreach ($qualifiers as $qualifier) {
+            //         $qualifier->measures()->detach($measure->id);
+            //     }
+            // }
+
+            $measure->references()->detach();
+            $measure->qualifiers()->detach();
+            $measure->subsidiaries()->detach();
 
             Measure::destroy($measure->id);
         }
 
+        $category->subsidiaries()->detach();
+
         Category::destroy($category->id);
 
-        return redirect()->action('CategoryController@index');
+        return redirect()->action('CategoryController@custom_index', $subsidiary_id);
     }
 
     public function destroy_multiple(Request $request)

@@ -10,13 +10,14 @@ use App\User;
 use App\AccessRequest;
 use Auth;
 use Hash;
+use App\Subsidiary;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -24,20 +25,27 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(8);
+        $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
+
+        // $users = User::paginate(8);
+        $users = $subsidiary->users()->paginate(8);
         // $users->setPath('index');
         $view = view('auth.index')->with('users', $users);
         return $view;
     }
 
-    public function search(Request $request)
+    public function search(Request $request, $subsidiary_id)
     {
-        /*dd($_POST);*/
-        $users = User::where('username', 'LIKE', '%'.$request->input('search_inp').'%')
-                        ->orWhere('profile', 'LIKE', '%'.$request->input('search_inp').'%')
-                        ->paginate(8);
-        // $users->setPath('search');
-        $view = view('auth.index')->with('users', $users);
+        // dd($_POST);
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $users = $subsidiary->users()->where(function ($query) use ($request) {
+                                $query->where('username', 'LIKE', '%'.$request->search_inp.'%')
+                                      ->orWhere('profile', 'LIKE', '%'.$request->search_inp.'%');
+                            })->paginate(20);
+        
+        $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users, 'search_inp'=>$request->search_inp]);
+        // $view = view('auth.index')->with('users', $users);
         return $view;
     }
 
@@ -46,9 +54,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($subsidiary_id)
     {
-        $view = view('auth.register');
+        $subsidiaries = Subsidiary::orderBy('name', 'asc')->get();
+        
+        $view = view('auth.register', ['subsidiary_id'=>$subsidiary_id, 'subsidiaries'=>$subsidiaries]);
         return $view;
     }
 
@@ -57,8 +67,11 @@ class UserController extends Controller
         // dd($id);
         $request = AccessRequest::find($id);
         $username = strstr($request->email, '@', true);
+        // $domain = substr($request->email, strpos($request->email, "@") + 1);
+        // $subsidiary_name = strstr($domain, '.', true);
+        $subsidiaries = Subsidiary::orderBy('name', 'asc')->get();
 
-        $view = view('auth.register_by_request', ['request'=>$request, 'username'=>$username]);
+        $view = view('auth.register_by_request', ['request'=>$request, 'username'=>$username, 'subsidiaries'=>$subsidiaries]);
         return $view;
     }
 
@@ -68,22 +81,39 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $subsidiary_id)
     {
         // dd($_POST);
-        $this->validate($request, [
-            // 'username'  =>  'required',
-            'email'     => 'required|email|max:255|unique:users',
-            'password'  => 'required|min:6',
-            'profile'    => 'required',
-        ]);
+        if ($request->subsidiary) {
+            $this->validate($request, [
+                // 'username'  =>  'required',
+                'email'     => 'required|email|max:255|unique:users',
+                'password'  => 'required|min:6',
+                'profile'    => 'required',
+                'subsidiary' => 'required',
+            ]);
+        }
+        else {
+            $this->validate($request, [
+                // 'username'  =>  'required',
+                'email'     => 'required|email|max:255|unique:users',
+                'password'  => 'required|min:6',
+                'profile'    => 'required',
+            ]);
+        }
         $user = new User;
         $username = strstr($request->email, '@', true);
         $user->username = $username;
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
         $user->profile = $request->profile;
-        $user->subsidiary_id = Auth::user()->subsidiary_id;
+        
+        if ($request->subsidiary) {
+            $user->subsidiary_id = $request->subsidiary;
+        }
+        else {
+            $user->subsidiary_id = $subsidiary_id;
+        }
         
         $user->save();
 
@@ -93,7 +123,13 @@ class UserController extends Controller
             AccessRequest::destroy($access_request->id);
         }
 
-        return redirect()->action('UserController@index');
+        //If $request->subsidiary exist, we want to go to the request access page
+        if ($request->subsidiary) {
+            return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+        }
+        else {
+            return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+        }
     }
 
     public function store_by_request(Request $request)
@@ -104,13 +140,14 @@ class UserController extends Controller
             'email'     => 'required|email|max:255|unique:users',
             'password'  => 'required|min:6',
             'profile'    => 'required',
+            'subsidiary' => 'required',
         ]);
         $user = new User;
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
         $user->profile = $request->profile;
-        $user->subsidiary_id = Auth::user()->subsidiary_id;
+        $user->subsidiary_id = $request->subsidiary;
         
         $user->save();
 
@@ -140,10 +177,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($subsidiary_id, $user_id)
     {
-        $user = User::find($id);
-        $view = view('auth.edit')->with('user', $user);
+        $user = User::find($user_id);
+        $view = view('auth.edit', ['subsidiary_id'=>$subsidiary_id, 'user'=>$user]);
         return $view;
     }
 
@@ -154,21 +191,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $subsidiary_id, $user_id)
     {
+        // dd($_POST);
         $this->validate($request, [
             'username' => 'required|max:255',
             'email'     => 'required|email|max:255',
         ]);
 
-        $user = User::find($id);
+        $user = User::find($user_id);
         $user->username = $request->username;
         $user->email = $request->email;
         $user->profile = $request->profile;
 
         $user->save();
 
-        return redirect()->action('UserController@index');
+        return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
     }
 
     /**
@@ -177,11 +215,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($subsidiary_id, $user_id)
     {
-        User::destroy($id);
+        // dd($_POST);
+        User::destroy($user_id);
 
-        return redirect()->action('UserController@index');
+        return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
         
         // dd($_POST);
         // $ids = $request->input('id');
@@ -204,6 +243,12 @@ class UserController extends Controller
 
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             // Authentication passed...
+            // if (Auth::user()->profile == 'Basic user') {
+            //     return redirect()->action('ReferenceController@index');
+            // }
+            // else {
+            //     return redirect()->intended('home');
+            // }
             return redirect()->intended('home');
         }
     }

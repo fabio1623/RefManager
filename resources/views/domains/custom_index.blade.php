@@ -7,11 +7,14 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-10">List of domains</div>
-							<div class="col-sm-2">
-								<div class="btn-group" role="group" aria-label="...">
-									<button id="add_btn" form="form_create" type="submit" class="btn btn-default btn-sm">
+							<div class="col-sm-9">List of domains</div>
+							<div class="col-sm-3">
+								<div class="btn-group pull-right" role="group" aria-label="...">
+									<button form="form_create" type="submit" class="btn btn-default btn-sm">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									</button>
+									<button form="form_save" type="submit" class="btn btn-default btn-sm">
+										<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 									</button>
 									<button form="form_back" type="submit" class="btn btn-default btn-sm">
 											<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
@@ -19,7 +22,7 @@
 								</div>
 							</div>
 
-							<form id="form_create" action="{{ action('DomainController@create') }}" method="GET">
+							<form id="form_create" action="{{ action('DomainController@create', $subsidiary->id) }}" method="GET">
 							</form>
 							<form id="form_back" action="{{ action('SubsidiaryController@edit', $subsidiary->id) }}" method="GET">
 							</form>
@@ -29,32 +32,37 @@
 				
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover">
+					<table class="table table-bordered table-hover table-striped table-condensed">
 						<thead>
 							<tr>
 								<th class="col-sm-11">Domain name</th>
-						    	<th class="col-sm-1"></th>
+						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($domains as $domain)
-									<tr data-href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domain->id]) }}">
-										<td>
-											<a class="btn btn-link" href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domain->id]) }}">{{$domain->name}}</a>	
-										</td>
-										<td class="check">
-											@if ($linked_domains->contains($domain))
-												<a class="btn btn-link" href="{{ action('DomainController@detach_domain', [$subsidiary->id, $domain->id]) }}">
-													<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-												</a>
-											@else
-												<a class="btn btn-link" href="{{ action('DomainController@link_domain', [$subsidiary->id, $domain->id]) }}">
-													<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-												</a>
-											@endif
-										</td>
-									</tr>
-							@endforeach
+							<form id="form_save" action="{{ action('DomainController@link_domain', $subsidiary->id) }}" method="POST">
+							    <?php echo csrf_field(); ?>
+								@foreach ($domains as $domain)
+										<tr data-href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domain->id]) }}">
+											<td>
+												<a class="btn btn-link" href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domain->id]) }}">{{$domain->name}}</a>	
+											</td>
+											<td class="check">
+												@if ($linked_domains->contains($domain))
+													<!-- <a class="btn btn-link" href="{{ action('DomainController@detach_domain', [$subsidiary->id, $domain->id]) }}">
+														<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+													</a> -->
+													<input class="checkbox" type="checkbox" value="{{ $domain->id }}" name=id[] checked>
+												@else
+													<!-- <a class="btn btn-link" href="{{ action('DomainController@link_domain', [$subsidiary->id, $domain->id]) }}">
+														<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+													</a> -->
+													<input class="checkbox" type="checkbox" value="{{ $domain->id }}" name=id[]>
+												@endif
+											</td>
+										</tr>
+								@endforeach
+							</form>
 						</tbody>
 					</table>
 				</div>
@@ -64,6 +72,10 @@
 			</div>
 	</div>
 <script>
+	if ($('.checkbox:checked').length == $('.checkbox').length) {
+		$('#select_all').prop('checked', true);
+	};
+
 	$("tbody > tr").click(function() {
 		var href = $(this).data("href");
 		if(href){

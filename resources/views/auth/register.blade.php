@@ -19,7 +19,7 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@store') }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@store', $subsidiary_id) }}">
 						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
@@ -42,15 +42,37 @@
 								<input type="password" class="form-control" name="password" value="{{ $default_password }}">
 							</div>
 						</div>
+
+						<div class="form-group">
+							<label for="subsidiary" class="col-sm-4 control-label">Subsidiary</label>
+							<div class="col-sm-6">
+								@if( isset($subsidiary_id) )
+									<select class="form-control selectpicker" id="subsidiary" name="subsidiary" disabled>
+										@foreach ($subsidiaries as $subsidiary)
+											@if ($subsidiary->id == $subsidiary_id)
+												<option value="{{ $subsidiary->id }}">{{ $subsidiary->name }}</option>
+											@endif
+										@endforeach
+									</select>
+								@else
+									<select class="form-control selectpicker" id="subsidiary" name="subsidiary">
+										<option></option>
+										@foreach ($subsidiaries as $subsidiary)
+											<option value="{{ $subsidiary->id }}">{{ $subsidiary->name }}</option>
+										@endforeach
+									</select>
+								@endif
+							</div>
+						</div>
 						
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">
-							  <select id="profile_type" class="form-control selectpicker" data-width="100%" data-live-search="true" name="profile">
+							  <select id="profile_type" class="form-control selectpicker" data-width="100%" name="profile">
 							  	<option></option>
-							    <option value="3">Basic user</option>
-							    <option value="2">Reference administrator</option>
-							    <option value="1">User administrator</option>
+							    <option value="Basic user">Basic user</option>
+							    <option value="Reference administrator">Reference administrator</option>
+							    <option value="User administrator">User administrator</option>
 							  </select>
 							</div>
 						</div>
@@ -59,7 +81,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ action('UserController@index') }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary_id) }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>

@@ -33,7 +33,7 @@ class DomainController extends Controller
     public function custom_index($id)
     {
         $subsidiary = Subsidiary::find($id);
-        $domains = Domain::paginate(9);
+        $domains = Domain::paginate(20);
         $linked_domains = $subsidiary->domains()->get();
 
         $view = view('domains.custom_index', ['domains'=>$domains, 'subsidiary'=>$subsidiary, 'linked_domains'=>$linked_domains]);
@@ -45,17 +45,60 @@ class DomainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $view = view('domains.create');
-        return $view;
-    }
-
-    public function link_domain($subsidiary_id, $domain_id)
+    public function create($subsidiary_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->domains()->attach($domain_id);
+        $view = view('domains.create', ['subsidiary'=>$subsidiary]);
+        return $view;
+    }
+
+    // public function link_domain($subsidiary_id, $domain_id)
+    // {
+    //     $subsidiary = Subsidiary::find($subsidiary_id);
+
+    //     $subsidiary->domains()->attach($domain_id);
+
+    //     $domain = Domain::find($domain_id);
+
+    //     foreach ($domain->expertises as $expertise) {
+    //         $subsidiary->expertises()->attach($expertise->id);
+    //     }
+
+    //     return redirect()->back();
+    // }
+
+    public function link_domain(Request $request, $subsidiary_id)
+    {
+        $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $subsidiary->domains()->detach();
+        // $subsidiary->expertises()->detach();
+
+        if ($request->id) {
+            foreach ($request->id as $domain_id) {
+                $subsidiary->domains()->attach($domain_id);
+                // $domain = Domain::find($domain_id);
+                // foreach ($domain->expertises as $expertise) {
+                //     $subsidiary->expertises()->attach($expertise->id);
+                // }
+            }
+            $domains = Domain::all();
+
+            foreach ($domains as $domain) {
+                $found = 0;
+                foreach ($subsidiary->domains as $value) {
+                    if ($value->id == $domain->id) {
+                        $found = 1;
+                    }
+                }
+                if ($found == 0) {
+                    foreach ($domain->expertises as $expertise) {
+                        $subsidiary->expertises()->detach($expertise->id);
+                    }
+                }
+            }
+        }
 
         return redirect()->back();
     }
@@ -64,7 +107,13 @@ class DomainController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->domains()->detach($domain_id);        
+        $subsidiary->domains()->detach($domain_id);
+
+        $domain = Domain::find($domain_id);
+
+        foreach ($domain->expertises as $expertise) {
+            $subsidiary->expertises()->detach($expertise->id);
+        }      
 
         return redirect()->back();
     }
@@ -77,15 +126,18 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($_POST);
         $this->validate($request, [
             'name'     => 'required|string|max:255|unique:domains',
         ]);
 
-        $domain = new Domain;
-        $domain->name = $request->name;
-        $domain->save();
+        $new_domain = new Domain;
+        $new_domain->name = $request->name;
+        $new_domain->save();
 
-        return redirect()->action('DomainController@index');
+        $new_domain->subsidiaries()->attach($request->subsidiary_id);
+
+        return redirect()->action('DomainController@custom_edit', [$request->subsidiary_id, $new_domain->id]);
     }
 
     /**
@@ -109,7 +161,7 @@ class DomainController extends Controller
     {
         $domain = Domain::find($id);
 
-        $expertises = $domain->expertises()->paginate(4);
+        $expertises = $domain->expertises()->paginate(10);
 
         $view = view('domains.edit', ['domain' => $domain, 'expertises' => $expertises]);
         return $view;
@@ -125,7 +177,9 @@ class DomainController extends Controller
 
         $linked_expertises = $subsidiary->expertises()->get();
 
-        $view = view('domains.custom_edit', ['subsidiary'=>$subsidiary, 'domain' => $domain, 'expertises' => $expertises, 'linked_expertises'=>$linked_expertises]);
+        $parent_expertises = Expertise::whereNull('parent_expertise_id')->where('domain_id', $domain_id)->get();
+
+        $view = view('domains.custom_edit', ['subsidiary'=>$subsidiary, 'domain' => $domain, 'expertises' => $expertises, 'linked_expertises'=>$linked_expertises, 'parent_expertises'=>$parent_expertises]);
         return $view;   
     }
 
@@ -136,7 +190,7 @@ class DomainController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $subsidiary_id, $id)
     {
         // dd($_POST);
         $this->validate($request, [
@@ -151,7 +205,7 @@ class DomainController extends Controller
             $domain->save();
         }
 
-        return redirect()->action('DomainController@index');
+        return redirect()->action('DomainController@custom_index', $subsidiary_id);
     }
 
     /**
@@ -160,11 +214,11 @@ class DomainController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($subsidiary_id, $domain_id)
     {
         // dd($_POST);
 
-        $domain = Domain::find($request->domain_id);
+        $domain = Domain::find($domain_id);
 
         foreach ($domain->expertises as $expertise) {
             if ($expertise->parent_expertise_id != NULL) {
@@ -175,22 +229,26 @@ class DomainController extends Controller
         }
 
         foreach ($domain->expertises as $expertise) {
-            $references = Reference::whereHas('expertises', function ($query) use ($expertise) {
-                $query->where('expertises.id', $expertise->id);
-            })->get();
+            // $references = Reference::whereHas('expertises', function ($query) use ($expertise) {
+            //     $query->where('expertises.id', $expertise->id);
+            // })->get();
 
-            if ($references) {
-                foreach ($references as $reference) {
-                    $reference->expertises()->detach($expertise->id);
-                }
-            }
+            // if ($references) {
+            //     foreach ($references as $reference) {
+            //         $reference->expertises()->detach($expertise->id);
+            //     }
+            // }
+            $expertise->references()->detach();
+            $expertise->subsidiaries()->detach();
 
             Expertise::destroy($expertise->id);
         }
 
+        $domain->subsidiaries()->detach();
+
         Domain::destroy($domain->id);
 
-        return redirect()->action('DomainController@index');
+        return redirect()->action('DomainController@custom_index', $subsidiary_id);
     }
 
     public function destroyOne(Request $request)

@@ -36,33 +36,45 @@
 						</div>
 					@endif
 
-					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('CategoryController@update', $category->id) }}">
+					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('CategoryController@update', [$subsidiary->id, $category->id]) }}">
 						<?php echo method_field('PUT'); ?>
 					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">Name</label>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<input type="text" class="form-control" name="name" value="{{$category->name}}">
 							</div>
 						</div>
 
 					</form>
-					<form id="form_delete" action="{{ action('CategoryController@destroy') }}" method="POST">
+					<form id="form_delete" action="{{ action('CategoryController@destroy', [$subsidiary->id, $category->id]) }}" method="POST">
 					    <?php echo method_field('DELETE'); ?>
 					    <?php echo csrf_field(); ?>
-
-					    <input type="hidden" name="category_id" value="{{ $category->id}}">
 					</form>
-					<form class="form-horizontal" action="{{ action('MeasureController@create') }}" method="GET">
+					<form class="form-horizontal" action="{{ action('MeasureController@store', [$subsidiary->id, $category->id]) }}" method="POST">
 						<?php echo csrf_field(); ?>
 						<div class="form-group">
 							<label class="col-md-4 control-label">Add measure</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="measure_name" value="{{ old('measure_name') }}">
+							</div>
 							<div class="col-md-4">
-								<button type="submit" id="add_btn" class="btn btn-primary btn-sm">
+								<button type="submit" id="add_btn" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</button>
-								<input type="hidden" name="category_id_hidden" value="{{ $category->id}}">
+								<!-- <input type="hidden" name="category_id_hidden" value="{{ $category->id}}"> -->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Field Type</label>
+							<div class="col-sm-4">
+								<select class="form-control selectpicker" name="field_type">
+									<option></option>
+									<option value="Input">Input</option>
+									<option value="Option">Option</option>
+									<option value="Select">Select</option>
+								</select>
 							</div>
 						</div>
 					</form>
@@ -85,18 +97,18 @@
 							    <?php echo method_field('DELETE'); ?>
 							    <?php echo csrf_field(); ?>
 								@foreach ($measures as $measure)
-										<tr data-href="{{ action('MeasureController@edit', [$category->id, $measure->id]) }}">
+										<tr data-href="{{ action('MeasureController@edit', [$subsidiary->id, $category->id, $measure->id]) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('MeasureController@edit', [$category->id, $measure->id]) }}">{{$measure->name}}</a>
+												<a class="btn btn-link" href="{{ action('MeasureController@edit', [$subsidiary->id, $category->id, $measure->id]) }}">{{$measure->name}}</a>
 											</td>
 											<td class="check">
 												@if ($linked_measures->contains($measure))
 													<a class="btn btn-link" href="{{ action('MeasureController@detach_measure', [$subsidiary->id, $measure->id]) }}">
-														<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+														<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 													</a>
 												@else
 													<a class="btn btn-link" href="{{ action('MeasureController@link_measure', [$subsidiary->id, $measure->id]) }}">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+														<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 													</a>
 												@endif
 											</td>

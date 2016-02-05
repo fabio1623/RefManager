@@ -81,7 +81,8 @@ class SubsidiaryController extends Controller
     public function edit($id)
     {
         $subsidiary = Subsidiary::find($id);
-        $users = $subsidiary->users()->get();
+        // $users = $subsidiary->users()->get();
+        $users = $subsidiary->users()->paginate(20);
         
         $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users]);
         return $view;

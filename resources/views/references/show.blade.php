@@ -7,7 +7,7 @@
 		<h3 class="panel-title">
 			<div class="row">
 				<div class="col-sm-7">
-					<h4>{{ $reference->project_number }}</h4>
+					<h4>{{ $reference->project_number }} @if($reference->confidential == 1) : Confidential @endif</h4>
 				</div>
 				<!-- Button toolbar -->
 				<div class="col-sm-4 pull-right">
@@ -21,7 +21,7 @@
 							</form>
 
 							<form id="form_index" role="form" method="get" action="{{ action('ReferenceController@index') }}">
-							</form>	
+							</form>							
 
 							@if(Auth::user()->profile == 'Dcom manager')
 								@if($reference->dcom_approval == 0)
@@ -43,6 +43,9 @@
 							<button id='btn_language_selector' type="button" class="btn btn-primary btn-sm hidden">
 							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
+							<!-- <button form="form_index" type="submit" class="btn btn-primary btn-sm" aria-label="Left Align">
+							  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button> -->
 							<button form="form_index" type="submit" class="btn btn-primary btn-sm" aria-label="Left Align">
 							  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 							</button>
@@ -65,19 +68,16 @@
 			</div>
 		@endif
 
-		<form id="form" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@update', $reference->id) }}">
-			{{ method_field('PUT') }}
-			<?php echo csrf_field(); ?>
-
+		<form id="form" class="form-horizontal" role="form">
 			<!-- Menu content -->
 			<div class="tab-content col-sm-12">
 				<!-- Base menu content -->
 				<div id="base_menu" class="tab-pane fade in active">
-					@include("references.edit.layout")
+					@include("references.show.layout")
 				</div>
 				<!-- /#base menu content -->
 				<div id="language_menu" class="tab-pane fade">
-					@include("references.edit.lang_layout")
+					@include("references.show.lang_layout")
 				</div>
 			</div>
 			<!-- /#menu content -->
@@ -87,27 +87,6 @@
 </div>
 
 <script>
-	// Show description pane
-	// $('.drop_description').click(function (e) {
-	// 	e.preventDefault()
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#description_menu"]').tab('show')
-	// });
-
-	// // Show criteria pane
-	// $('.drop_criteria').click(function (e) {
-	// 	/*e.preventDefault()*/
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#criteria_menu"]').tab('show')
-	// });
-
-	// // Show measure pane
-	// $('.drop_measure').click(function (e) {
-	// 	e.preventDefault()
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#measure_menu"]').tab('show')
-	// }):
-
 	$('#language_btn').click( function () {
 		$('#base_btn').attr("class", "btn btn-primary btn-sm");
 		$(this).attr("class", "btn btn-primary btn-sm active");
@@ -122,7 +101,6 @@
 
 	$('#btn_language_selector').click(function () {
 		$('#select_language_modal').modal();
-		// $('.lang_tab').removeClass('active');
 	});
 </script>
 

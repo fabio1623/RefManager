@@ -72,24 +72,26 @@ class MeasureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $subsidiary_id, $category_id)
     {
         // dd($_POST);
         $this->validate($request, [
-            'name'     => 'required|string|max:255|unique:measures,name,NULL,id,category_id,'.$request->category_id,
+            'measure_name'     => 'required|string|max:255|unique:measures,name,NULL,id,category_id,'.$category_id,
             'field_type' => 'required'
         ]);
 
         $new_measure = new Measure;
 
-        $new_measure->name = $request->name;
+        $new_measure->name = $request->measure_name;
         $new_measure->field_type = $request->field_type;
-        $new_measure->category_id = $request->category_id;
+        $new_measure->category_id = $category_id;
 
         $new_measure->save();
 
+        $subsidiary = Subsidiary::find($subsidiary_id);
+        $subsidiary->measures()->attach($new_measure->id);
 
-        return redirect()->action('CategoryController@edit', $request->category_id);
+        return redirect()->action('CategoryController@custom_edit', [$subsidiary_id, $category_id]);
     }
 
     /**
@@ -109,13 +111,12 @@ class MeasureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($category_id, $measure_id)
+    public function edit($subsidiary_id, $category_id, $measure_id)
     {
         $measure = Measure::find($measure_id);
         $category = Category::find($category_id);
 
-        // $view = view('expertises.edit', ['expertise'=>$expertise, 'domain'=>$domain]);
-        $view = view('measures.edit', ['category'=>$category, 'measure'=>$measure]);
+        $view = view('measures.edit', ['category'=>$category, 'measure'=>$measure, 'subsidiary_id'=>$subsidiary_id]);
         return $view;
     }
 
@@ -126,7 +127,7 @@ class MeasureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $category_id, $measure_id)
+    public function update(Request $request, $subsidiary_id, $category_id, $measure_id)
     {
         // dd($_POST);
         $this->validate($request, [
@@ -140,7 +141,7 @@ class MeasureController extends Controller
 
         $measure->save();
 
-        return redirect()->action('CategoryController@edit', $category_id);
+        return redirect()->action('CategoryController@custom_edit', [$subsidiary_id, $category_id]);
     }
 
     /**
@@ -149,33 +150,37 @@ class MeasureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($subsidiary_id, $category_id, $measure_id)
     {
         // dd($_POST);
-        $measure = Measure::find($request->measure_id);
+        $measure = Measure::find($measure_id);
 
-        $references = Reference::whereHas('measures', function ($query) use ($request) {
-            $query->where('measures.id', $request->measure_id);
-        })->get();
+        // $references = Reference::whereHas('measures', function ($query) use ($measure_id) {
+        //     $query->where('measures.id', $measure_id);
+        // })->get();
 
-        if ($references) {
-            foreach ($references as $reference) {
-                $reference->measures()->detach($request->measure_id);
-            }
-        }
+        // if ($references) {
+        //     foreach ($references as $reference) {
+        //         $reference->measures()->detach($measure_id);
+        //     }
+        // }
 
-        $qualifiers = Qualifier::whereHas('measures', function ($query) use ($request) {
-            $query->where('measures.id', $request->measure_id);
-        })->get();
+        // $qualifiers = Qualifier::whereHas('measures', function ($query) use ($measure_id) {
+        //     $query->where('measures.id', $measure_id);
+        // })->get();
 
-        if ($qualifiers) {
-            foreach ($qualifiers as $qualifier) {
-                $qualifier->measures()->detach($request->measure_id);
-            }
-        }
+        // if ($qualifiers) {
+        //     foreach ($qualifiers as $qualifier) {
+        //         $qualifier->measures()->detach($measure_id);
+        //     }
+        // }
 
-        Measure::destroy($request->measure_id);
+        $measure->references()->detach();
+        $measure->qualifiers()->detach();
+        $measure->subsidiaries()->detach();
 
-        return redirect()->action('CategoryController@edit', $request->category_id);
+        Measure::destroy($measure_id);
+
+        return redirect()->action('CategoryController@custom_edit', [$subsidiary_id, $category_id]);
     }
 }

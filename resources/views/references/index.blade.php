@@ -7,7 +7,7 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<div class="row">
-					<div class="col-sm-6">List of references</div>
+					<div class="col-sm-6">References : {{ $kind_of_reference }}</div>
 					<div class="col-sm-1">
 						<form action="{{ action('ReferenceController@create') }}" method="GET">
 							<?php echo csrf_field(); ?>
@@ -16,12 +16,12 @@
 							</button>
 						</form>
 					</div>
-					<div class="col-sm-1">
+					<!-- <div class="col-sm-1">
 						<button type="submit" form="form_delete" id="remove_btn" class="btn btn-danger btn-sm">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 						</button>
-					</div>
-					<div class="col-sm-4">
+					</div> -->
+					<div class="col-sm-4 pull-right">
 						<form action="{{ action('ReferenceController@basic_search') }}" method="GET">
 					      	<div class="input-group input-group-sm">
 						      <input type="text" class="form-control" name="search_input" placeholder="Search for...">
@@ -39,18 +39,24 @@
 
 		<div class="table-responsive">
 
-			<table class="table table-bordered table-hover">
+			<table id="sortedTable" class="table table-bordered table-hover table-condensed table-striped">
 				<thead>
 					<tr>
-						<th class="col-sm-2">Project number</th>
-				    	<th class="col-sm-2">DFAC name</th>
+						<th class="col-sm-2">
+							Project number
+							<!-- <a class="btn btn-link" href="{{ action('ReferenceController@results_by_project_number') }}">
+								<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+							</a> -->
+						</th>
+				    	<th id="test" class="col-sm-2">DFAC name</th>
 				    	<th class="col-sm-1">Start date</th>
 				    	<th class="col-sm-1">End date</th>
 						<th class="col-sm-2">Client</th>
 				    	<th class="col-sm-1">Country</th>
 				    	<th class="col-sm-1">Zone</th>
 				    	<th class="col-sm-1">Cost</th>
-				    	<th class="col-sm-1"><input id="select_all" type="checkbox"> All</th>
+				    	<!-- <th class="col-sm-1"><input id="select_all" type="checkbox"> All</th> -->
+				    	<th class="col-sm-1"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -60,21 +66,22 @@
 					    <?php echo csrf_field(); ?>
 					    @if (count($references) > 0)
 							@foreach ($references as $reference)
-									<tr data-href="{{ action('ReferenceController@edit', $reference->id) }}">
+									<!-- <tr class="line" data-href="{{ action('ReferenceController@edit', $reference->id) }}"> -->
+									<tr class="line">
 										<td>
-											<a class="btn btn-link" href="">{{$reference->project_number}}</a>	
+											<a class="btn btn-link">{{$reference->project_number}}</a>
 										</td>
 										<td>
-											<a class="btn btn-link" href="">{{$reference->dfac_name}}</a>	
+											<a class="btn btn-link">{{$reference->dfac_name}}</a>	
 										</td>
 										<td>
-											<a class="btn btn-link center-block" href="">{{$reference->start_date}}</a>	
+											<a class="btn btn-link center-block">{{$reference->start_date}}</a>	
 										</td>
 										<td>
-											<a class="btn btn-link center-block" href="">{{$reference->end_date}}</a>	
+											<a class="btn btn-link center-block">{{$reference->end_date}}</a>	
 										</td>
 										<td>
-											<a class="btn btn-link" href="">
+											<a class="btn btn-link center-block">
 												@foreach ($clients as $client)
 													@if($client->id == $reference->client)
 														{{ $client->name }}
@@ -83,7 +90,7 @@
 											</a>
 										</td>
 										<td>
-											<a class="btn btn-link" href="">
+											<a class="btn btn-link center-block">
 												@foreach($countries as $country)
 													@if($country->id == $reference->country)
 														{{ $country->name }}
@@ -92,7 +99,7 @@
 											</a>	
 										</td>
 										<td>
-											<a class="btn btn-link" href="">
+											<a class="btn btn-link center-block">
 												@foreach ($zones as $zone)
 													@if ($zone->id == $reference->zone)
 														{{ $zone->name }}
@@ -101,12 +108,19 @@
 											</a>	
 										</td>
 										<td>
-											<a class="btn btn-link" href="">
+											<a class="btn btn-link center-block">
 												{{ $reference->total_project_cost }}
 											</a>	
 										</td>
 										<td class="check">
-											<input class="checkbox" type="checkbox" value="{{$reference->id}}" name=id[]>
+											@if (Auth::user()->username == $reference->created_by || Auth::user()->profile == 'User administrator')
+												<a class="btn btn-link" href="{{ action('ReferenceController@edit', $reference->id) }}">
+													<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+												</a>
+											@endif
+												<a class="btn btn-link pull-right" href="{{ action('ReferenceController@show', $reference->id) }}">
+													<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+												</a>
 										</td>
 									</tr>
 							@endforeach
@@ -133,6 +147,16 @@
 </div>
 
 <script>
+	$(document).ready(function() 
+	{ 
+		$("#sortedTable").tablesorter(
+			{
+				// cssHeader:'header',
+				// cssAsc:'headerSortUp',
+				// cssDesc:'headerSortDown',
+			});
+    } ); 
+
 	$('tbody > tr').click(function() {
 		var href = $(this).data("href");
 		if(href){
@@ -147,5 +171,15 @@
     $("#select_all").change(function(){
       $(".checkbox").prop("checked", $(this).prop("checked"));
     });
+
+    $('.line').hover(
+    	function(){ 
+		  $(this).addClass("active");
+	  	}, 
+		function(){ 
+		  $(this).removeClass("active");
+		}
+  	);
 </script>
+
 @endsection

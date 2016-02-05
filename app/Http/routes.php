@@ -42,6 +42,12 @@ Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti')
 Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
+Route::get('references/index_created_by_me', 'ReferenceController@index_created_by_me');
+Route::get('references/index_approved', 'ReferenceController@index_approved');
+Route::get('references/index_to_approve', 'ReferenceController@index_to_approve');
+Route::get('references/search/results_by_project_number', 'ReferenceController@results_by_project_number');
+Route::get('references/approve/{id}', 'ReferenceController@approve');
+Route::get('references/disapprove/{id}', 'ReferenceController@disapprove');
 Route::get('references/custom_index/{id}', 'ReferenceController@subsidiary_references');
 Route::get('references/search', 'ReferenceController@search');
 Route::get('references/search/results', 'ReferenceController@results');
@@ -51,12 +57,12 @@ Route::resource('references', 'ReferenceController');
 
 //Users
 Route::get('user/destroyOne/{id}', 'UserController@destroyOne');
-Route::get('user/search', 'UserController@search');
+Route::get('subsidiaries/{subsidiary}/edit/search', 'UserController@search');
 Route::get('user/create_by_request/{id}', 'UserController@create_by_request');
 Route::post('users/create_by_request/store_by_request', 'UserController@store_by_request');
 Route::get('user/account_management/{id}', 'UserController@manageAccount');
 Route::post('user/account_update/{id}', 'UserController@updateAccount');
-Route::resource('users', 'UserController');
+Route::resource('subsidiaries.users', 'UserController');
 
 //Middleware
 Route::controllers([
@@ -65,49 +71,45 @@ Route::controllers([
 ]);
 
 //Internal services
-Route::get('services/internal/subsidiary_internal_services', 'ServiceController@subsidiary_internal_services');
-Route::get('services/internal/link_internal_service/{id}', 'ServiceController@link_internal_service');
-Route::get('services/internal/detach_internal_service/{id}', 'ServiceController@detach_internal_service');
-Route::get('services/internal', 'ServiceController@internal_index');
-Route::get('services/internal/create', 'ServiceController@internal_create');
-Route::post('services/internal/store', 'ServiceController@internal_store');
-Route::get('services/internal/{id}/edit', 'ServiceController@internal_edit');
-Route::put('services/internal/{id}', 'ServiceController@internal_update');
-Route::delete('service/internal/{id}', 'ServiceController@internal_destroy');
-Route::delete('services/internal/destroy_multiple/{id}', 'ServiceController@internal_destroy_multiple');
+Route::get('subsidiaries/{subsidiary}/internal_services/subsidiary_internal_services', 'ServiceController@subsidiary_internal_services');
+Route::post('subsidiaries/{subsidiary}/link_internal_service', 'ServiceController@link_internal_service');
+Route::get('subsidiaries/{subsidiary}/internal_services/{internal_service}/detach_internal_service', 'ServiceController@detach_internal_service');
+Route::get('subsidiaries/{subsidiary}/internal_services', 'ServiceController@internal_index');
+Route::get('subsidiaries/{subsidiary}/internal_services/create', 'ServiceController@internal_create');
+Route::post('subsidiaries/{subsidiary}/internal_services/store', 'ServiceController@internal_store');
+Route::get('subsidiaries/{subsidiary}/internal_services/{internal_service}/edit', 'ServiceController@internal_edit');
+Route::put('subsidiaries/{subsidiary}/internal_services/{internal_service}', 'ServiceController@internal_update');
+Route::delete('subsidiaries/{subsidiary}/internal_services/{internal_service}', 'ServiceController@internal_destroy');
 
 //External services
-Route::get('services/external/subsidiary_external_services', 'ServiceController@subsidiary_external_services');
-Route::get('services/external/link_external_service/{id}', 'ServiceController@link_external_service');
-Route::get('services/external/detach_external_service/{id}', 'ServiceController@detach_external_service');
-Route::delete('services/external/destroy_multiple/{id}', 'ServiceController@destroy_multiple');
-Route::resource('services/external', 'ServiceController');
+Route::get('subsidiaries/{subsidiary}/external_service/subsidiary_external_services', 'ServiceController@subsidiary_external_services');
+Route::post('subsidiaries/{subsidiary}/link_external_service', 'ServiceController@link_external_service');
+Route::get('subsidiaries/{subsidiary}/external_service/{external_service}/detach_external_service', 'ServiceController@detach_external_service');
+Route::resource('subsidiaries.external_service', 'ServiceController');
 
 //Domains
-Route::get('domains/{domain}/subsidiary/{subsidiary}/custom_edit', 'DomainController@custom_edit');
-Route::delete('domains/destroyOne/{id}', 'DomainController@destroyOne');
-Route::get('domains/{domain}/link_domain/{id}', 'DomainController@link_domain');
-Route::get('domains/{domain}/detach_domain/{id}', 'DomainController@detach_domain');
-Route::get('domains/custom_index/{id}', 'DomainController@custom_index');
-Route::resource('domains', 'DomainController');
+Route::get('subsidiaries/{subsidiary}/domains/{domain}/custom_edit', 'DomainController@custom_edit');
+Route::post('subsidiaries/{subsidiary}/link_domain', 'DomainController@link_domain');
+Route::get('subsidiaries/{subsidiary}/domains/{domain}/detach_domain', 'DomainController@detach_domain');
+Route::get('subsidiaries/{subsidiary}/domains', 'DomainController@custom_index');
+Route::resource('subsidiaries.domains', 'DomainController');
 
 //Expertises
-Route::get('expertises/{expertise}/link_expertise/{id}', 'ExpertiseController@link_expertise');
-Route::get('expertises/{expertise}/detach_expertise/{id}', 'ExpertiseController@detach_expertise');
-Route::delete('expertises/destroyOne', 'ExpertiseController@destroyOne');
-Route::resource('domains.expertises', 'ExpertiseController');
+Route::post('subsidiaries/{subsidiary}/domains/{domain}/link_expertise', 'ExpertiseController@link_expertise');
+Route::get('subsidiaries/{subsidiary}/expertises/{expertise}/detach_expertise', 'ExpertiseController@detach_expertise');
+Route::resource('subsidiaries.domains.expertises', 'ExpertiseController');
 
 //Categories
-Route::get('categories/{category}/subsidiary/{subsidiary}/custom_edit', 'CategoryController@custom_edit');
-Route::get('categories/custom_index/{id}', 'CategoryController@custom_index');
-Route::get('categories/{categories}/link_category/{id}', 'CategoryController@link_category');
-Route::get('categories/{categories}/detach_category/{id}', 'CategoryController@detach_category');
-Route::resource('categories', 'CategoryController');
+Route::get('subsidiaries/{subsidiary}/categories/{category}/custom_edit', 'CategoryController@custom_edit');
+Route::get('subsidiaries/{subsidiary}/categories/custom_index', 'CategoryController@custom_index');
+Route::post('subsidiaries/{subsidiary}/link_category', 'CategoryController@link_category');
+Route::get('subsidiaries/{subsidiary}/categories/{category}/detach_category', 'CategoryController@detach_category');
+Route::resource('subsidiaries.categories', 'CategoryController');
 
 //Measures
-Route::get('measures/{measure}/link_measure/{id}', 'MeasureController@link_measure');
-Route::get('measures/{measure}/detach_measure/{id}', 'MeasureController@detach_measure');
-Route::resource('categories.measures', 'MeasureController');
+Route::get('subsidiaries/{subsidiary}/measures/{measure}/link_measure', 'MeasureController@link_measure');
+Route::get('subsidiaries/{subsidiary}/measures/{measure}/detach_measure', 'MeasureController@detach_measure');
+Route::resource('subsidiaries.categories.measures', 'MeasureController');
 
 //Zones
 Route::put('zones/attach_country/{id}', 'ZoneController@attach_country');

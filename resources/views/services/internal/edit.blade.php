@@ -9,7 +9,7 @@
 						<div class="row">
 							<div class="col-sm-6">{{ $internal_service->name }}</div>
 							<div class="col-sm-6">
-								<form action="{{ action('ServiceController@internal_destroy', $internal_service->id) }}" method="POST">
+								<form action="{{ action('ServiceController@internal_destroy', [$subsidiary->id, $internal_service->id]) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
@@ -33,7 +33,7 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('ServiceController@internal_update', $internal_service->id) }}">
+					<form class="form-horizontal" role="form" method="POST" action="{{ action('ServiceController@internal_update', [$subsidiary->id, $internal_service->id]) }}">
 						<?php echo method_field('PUT'); ?>
 					    <?php echo csrf_field(); ?>
 
@@ -49,7 +49,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
-								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}" role="button">	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>
