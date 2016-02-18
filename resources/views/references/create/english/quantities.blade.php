@@ -14,7 +14,9 @@
 
           <div id="category-{{ $categories[$i]->id }}" class="panel-body">
             @foreach($measures as $measure)
-            <div class="form-group">
+              @foreach($categories[$i]->measures as $linked_measure)
+                @if($linked_measure->id == $measure->id)
+                  <div class="form-group">
               <label for="category-{{$categories[$i]->id}}-measure-{{$measure->id}}" class="col-sm-4 col-sm-offset-1 control-label">{{$measure->name}}</label>
               @if($measure->field_type == 'Input')
                 <div class="col-sm-4">
@@ -64,6 +66,10 @@
                 </div>
               </div>
             @endforeach
+                @endif
+              @endforeach
+
+            
 
             @endforeach
           </div>
@@ -75,15 +81,6 @@
 
   @endfor
 
-</div>
-
-<div class="form-group">
-  <button id="reference_create_btn" type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-    <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
-  </button>
-  <a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button"> 
-    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-  </a>
 </div>
 
 <!-- Modals -->

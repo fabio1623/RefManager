@@ -171,15 +171,6 @@
 </div>
 <!-- EO line -->
 
-<div class="form-group">
-	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
-	</button>
-	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
-		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-	</a>
-</div>
-
 <script>
 	var countries = {!! $countries->toJson() !!};
 	var zones = {!! $zones->toJson() !!};
@@ -187,6 +178,60 @@
 	var experts = {!! $experts->toJson() !!};
 	var selected_external_services = {!! $reference->external_services !!};
 	var selected_internal_services = {!! $reference->internal_services !!};
+	var country_zone = {!! $country_zone->toJson() !!};
+	var zone_managers = {!! $zone_managers->toJson() !!};
+
+	function getManager(selected_zone_id) {
+		var manager_id = null;
+		if (selected_zone_id != '') {
+			for (var i = 0; i < zones.length; i++) {
+				if (zones[i].id == selected_zone_id) {
+					manager_id = zones[i].manager;
+					break;
+				}
+			}
+			if (manager_id == null) {
+				$('#zone_manager').val('No manager for this zone');
+			}
+			else {
+				for (var i = 0; i < zone_managers.length; i++) {
+					if (zone_managers[i].id == manager_id) {
+						$('#zone_manager').val( zone_managers[i].name );
+					}
+				}
+			}
+		}
+		else {
+			$('#zone_manager').val('');
+		}
+	}
+
+	function getCountriesList(selected_zone_id) {
+		var countries_id_list = [];
+		for (var i = 0; i < country_zone.length; i++) {
+			if (country_zone[i].zone_id == selected_zone_id) {
+				countries_id_list.push(country_zone[i].country_id);
+			}
+		}
+		for (var i = 0; i < countries.length; i++) {
+			if (jQuery.inArray(countries[i].id, countries_id_list) != -1) {
+				$('#country_options').after("<option value='" + countries[i].id + "'>" + countries[i].name + "<option>");
+			}
+		}
+		$('#country').selectpicker('refresh');
+	}
+
+	function getContinent(selected_country_id) {
+		for (var i = 0; i < countries.length; i++) {
+			if (countries[i].id == selected_country_id) {
+				$('#continent').val(countries[i].continent);
+				break;
+			}
+		}
+	}
+
+	getManager($('#zone').val());
+	getContinent($('#country').val());
 
 	$('#date_picker_start').datepicker({
 	    format: "mm-yyyy",
@@ -208,18 +253,6 @@
 	}).on('changeDate', function (e) {
 		$('#date_picker_start').datepicker('setEndDate', $('#date_picker_end').datepicker('getDate'));
 	});
-
-	// Array of checkboxes and their children
-	// var checkboxs = [
-	// 	["internal_checkbox", "internal_div"]
-	// ];
-
-	// // Hiding the children checkboxes
-	// for	(var i = 0; i < checkboxs.length; i++) {
-	// 	for (var j = 1; j < checkboxs[i].length; j++) {
-	// 		$('#' + checkboxs[i][j]).hide();
-	// 	}
-	// };
 
 	$('#internal_checkbox').change(function () {
 		if (this.checked) {
@@ -265,13 +298,9 @@
 	});
 
 	$('#country').change( function () {
-		if ( $('#country').val() != '' ) {
-			for (var i = 0; i < countries.length; i++) {
-				if (countries[i].id == $('#country').val()) {
-					$('#continent').val(countries[i].continent);
-					break;
-				}
-			}
+		var country_id = $('#country').val();
+		if ( country_id != '' ) {
+			getContinent(country_id);
 		}
 		else {
 			$('#continent').val('');
@@ -280,41 +309,7 @@
 
 	//Search the right manager of the selected zone.
 	$('#zone').change( function(e) {
-		var found = 0;
-		if ( $('#zone').val() != '' ) {
-			for (var i = 0; i < zones.length; i++) {
-				if ( zones[i].id == $('#zone').val() ) {
-					if ( zones[i].manager != null ) {
-						//Check if the manager exist in the staff list
-						for (var j = 0; j < seniors.length; j++) {
-							if ( seniors[j].id == zones[i].manager ) {
-								found = 1;
-								$('#zone_manager').val( seniors[j].name );
-								break;
-							};
-						};
-						if (found == 0) {
-							//Check if the manager exist in the experts list
-							for (var x = 0; x < experts.length; x++) {
-								if ( experts[x].id == zones[i].manager ) {
-									found = 1;
-									$('#zone_manager').val( experts[x].name );
-									break;
-								};
-							};
-						};
-					}
-					else {
-						$('#zone_manager').val('No manager for this zone');
-					};
-				};
-				if ( found == 1 ) {
-					break;
-				};
-			};
-		}
-		else {
-			$('#zone_manager').val('');
-		};
+		var zone_id = $('#zone').val();
+		getManager(zone_id);
 	} );
 </script>

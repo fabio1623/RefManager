@@ -10,4 +10,9 @@ class Zone extends Model
     {
         return $this->belongsToMany('App\Country');
     }
+
+    public function manager()
+    {
+    	return $this->belongsTo('App\Contributor');
+    }
 }

@@ -9,14 +9,10 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<div class="col-sm-6">{{ $measure->name }}</div>
-							<div class="col-sm-6">
-								<form action="{{ action('MeasureController@destroy', [$subsidiary_id, $category->id, $measure->id]) }}" method="POST">
-									<?php echo method_field('DELETE'); ?>
-								    <?php echo csrf_field(); ?>
-									<input class="btn btn-danger pull-right btn-xs" type="submit" name="_method" value="Delete">
-								    <!-- <input type="hidden" name="measure_id" value="{{ $measure->id}}">
-								    <input type="hidden" name="category_id" value="{{ $category->id}}"> -->
-								</form>
+							<div class="col-sm-6">								
+								<button id="btn_delete" form="form_delete" type="submit" class="btn btn-danger btn-xs pull-right">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+								</button>
 							</div>
 						</div>
 					</h3>
@@ -32,6 +28,11 @@
 							</ul>
 						</div>
 					@endif
+
+					<form id="form_delete" action="{{ action('MeasureController@destroy', [$subsidiary_id, $category->id, $measure->id]) }}" method="POST">
+						<?php echo method_field('DELETE'); ?>
+					    <?php echo csrf_field(); ?>
+				    </form>
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ action('MeasureController@update', [$subsidiary_id, $category->id, $measure->id]) }}">
 						<?php echo method_field('PUT'); ?>
@@ -82,4 +83,12 @@
 		</div>
 	</div>
 </div>
+<script>
+	$('#btn_delete').click( function(e) {
+		var confirm_box = confirm("Are you sure ?");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
+</script>
 @endsection

@@ -10,7 +10,10 @@
         "laravelcollective/html": "5.1.*",
         "laravel/socialite": "^2.0",
         "doctrine/dbal": "^2.5",
-        "guzzlehttp/guzzle": "~5.3|~6.0"
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "phpoffice/phpword": "dev-master",
+        "zendframework/zend-validator": "^2.5",
+        "maatwebsite/excel": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

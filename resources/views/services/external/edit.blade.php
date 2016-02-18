@@ -57,4 +57,12 @@
 				</div>
 			</div>
 	</div>
+	<script>
+		$('#remove_btn').click( function(e) {
+			var confirm_box = confirm("Are you sure ?");
+			if (confirm_box == false) {
+				e.preventDefault();
+			}
+		});
+	</script>
 @endsection

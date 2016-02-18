@@ -59,13 +59,16 @@
 				<div class="col-sm-4">
 		@else
 			<div class="template">
-				<br></br>
+				<!-- <br></br> -->
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Name</span>
-				<input type="text" class="form-control involved_staff" id="involved_staff" name="involved_staff[]" value="{{ $staff_name[$i]['name'] }}">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
+				<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="{{ $staff_name[$i]['name'] }}">
 				<span class="input-group-btn">
 					@if ($i == 0)
 						<button class="btn btn-default addButton" type="button">
@@ -87,9 +90,9 @@
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
 				@if ($i == 0)
-					<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}">
+					<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}" autocomplete="off">
 				@else
-					<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}">
+					<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}" autocomplete="off">
 				@endif
 				
 			</div>
@@ -98,14 +101,14 @@
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
 				@if ($i == 0)
-					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}">
+					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}" autocomplete="off">
 					<span class="input-group-btn">
 						<button id="clean_staff_fields" class="btn btn-default" type="button">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 						</button>
 					</span>
 				@else
-					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}">
+					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}" autocomplete="off">
 				@endif
 			</div>
 		</div>
@@ -121,8 +124,11 @@
 	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control involved_staff" id="involved_staff" name="involved_staff[]">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input type="text" class="form-control involved_staff" id="involved_staff" name="involved_staff[]" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -137,13 +143,13 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input id="staff_function_0" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]">
+			<input id="staff_function_0" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" autocomplete="off">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input id="staff_function_fr_0" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]">
+			<input id="staff_function_fr_0" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" autocomplete="off">
 		</div>
 	</div>
 </div>
@@ -152,12 +158,15 @@
 <!-- EO line -->
 <!-- The option field template containing an option field and a Remove button -->
 <div class="hide template" id="optionTemplate">
-	<br></br>
+	<!-- <br></br> -->
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
-	    		<span class="input-group-addon" id="basic-addon2">Name</span>
-		        <input id="name_input" class="form-control nameInput" type="text"/>
+	    		<span class="input-group-addon" id="basic-addon2">
+	    			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+	    			Name
+    			</span>
+		        <input id="name_input" class="form-control nameInput" type="text" autocomplete="off">
 		        <span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -170,13 +179,13 @@
 	    <div class="col-sm-offset-4 col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input id="function_input" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
+				<input id="function_input" type="text" class="form-control functionInput" placeholder="" aria-describedby="" autocomplete="off">
 			</div>
 	    </div>
 	    <div class="col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input id="function_input_fr" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="">
+				<input id="function_input_fr" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="" autocomplete="off">
 			</div>
 	    </div>
 	</div>
@@ -192,13 +201,16 @@
 				<div class="col-sm-4">
 		@else
 			<div class="expertTemplate">
-				<br></br>
+				<!-- <br></br> -->
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Name</span>
-				<input type="text" class="form-control experts" id="experts" name="experts[]" value="{{ $experts_name[$i]['name'] }}">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
+				<input type="text" class="form-control experts" id="experts" name="experts[]" value="{{ $experts_name[$i]['name'] }}" autocomplete="off">
 				<span class="input-group-btn">
 					@if ($i == 0)
 						<button class="btn btn-default addExpertButton" type="button">
@@ -220,9 +232,9 @@
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
 				@if ($i == 0)
-					<input id="expert_function_{{$i}}" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}">
+					<input id="expert_function_{{$i}}" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}" autocomplete="off">
 				@else
-					<input id="expert_function_{{$i}}" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}">
+					<input id="expert_function_{{$i}}" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}" autocomplete="off">
 				@endif
 			</div>
 		</div>
@@ -230,14 +242,14 @@
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
 				@if ($i == 0)
-					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}">
+					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}" autocomplete="off">
 					<span class="input-group-btn">
 						<button id="clean_expert_fields" class="btn btn-default" type="button">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 						</button>
 					</span>
 				@else
-					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}">
+					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}" autocomplete="off">
 				@endif
 			</div>
 		</div>
@@ -253,8 +265,11 @@
 	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control experts" id="experts" name="experts[]">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input type="text" class="form-control experts" id="experts" name="experts[]" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addExpertButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -269,13 +284,13 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input id="expert_function_0" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]">
+			<input id="expert_function_0" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" autocomplete="off">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input id="expert_function_fr_0" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]">
+			<input id="expert_function_fr_0" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" autocomplete="off">
 		</div>
 	</div>
 </div>
@@ -284,12 +299,15 @@
 <!-- EO line -->
 <!-- The option field template containing an option field and a Remove button -->
 <div class="hide expertTemplate" id="expertTemplate">
-	<br></br>
+	<!-- <br></br> -->
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
-	    		<span class="input-group-addon" id="basic-addon2">Name</span>
-		        <input id="expert_name_input" class="form-control expertNameInput" type="text"/>
+	    		<span class="input-group-addon" id="basic-addon2">
+	    			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+	    			Name
+    			</span>
+		        <input id="expert_name_input" class="form-control expertNameInput" type="text" autocomplete="off">
 		        <span class="input-group-btn">
 					<button class="btn btn-default removeExpertButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -302,13 +320,13 @@
 	    <div class="col-sm-offset-4 col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input id="expert_functions_input" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="">
+				<input id="expert_functions_input" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="" autocomplete="off">
 			</div>
 	    </div>
 	    <div class="col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input id="expert_functions_input_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="">
+				<input id="expert_functions_input_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="" autocomplete="off">
 			</div>
 	    </div>
 	</div>
@@ -353,8 +371,11 @@
 				<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 				<div class="col-sm-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
-						<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}">
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
+						<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default addConsultantButton" type="button">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -372,8 +393,11 @@
 			<div class="form-group consultantsTemplate">
 			    <div class="col-sm-4 col-sm-offset-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
-						<input type="text" class="form-control consultantInput involved_consultants" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}">
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
+						<input type="text" class="form-control consultantInput involved_consultants" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default removeConsultantButton" type="button">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -389,8 +413,11 @@
 	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addConsultantButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -410,8 +437,11 @@
 <div class="form-group hide consultantsTemplate" id="consultantsTemplate">
     <div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control consultantInput" id="involved_consultants">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input type="text" class="form-control consultantInput" id="involved_consultants" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeConsultantButton" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -441,16 +471,16 @@
 			<div class="col-sm-4">
 			  <input type="text" class="form-control contact_name" id="contact_name_en" name="contact_name" value="{{ $contact->name }}">
 			</div>
-			<div class="col-sm-4">
+			<!-- <div class="col-sm-4">
 			  <input type="text" class="form-control contact_name" id="contact_name_fr" value="{{ $contact->name }}">
-			</div>	
+			</div>	 -->
 		@else
 			<div class="col-sm-4">
 			  <input type="text" class="form-control contact_name" id="contact_name_en" name="contact_name" value="">
 			</div>
-			<div class="col-sm-4">
+			<!-- <div class="col-sm-4">
 			  <input type="text" class="form-control contact_name" id="contact_name_fr" value="">
-			</div>
+			</div> -->
 		@endif
 	</div>
 	<!-- EO line -->
@@ -471,9 +501,9 @@
 		<div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_phone_en" name="contact_phone" value="{{ $reference->contact_phone }}">
 		</div>
-		<div class="col-sm-4">
+		<!-- <div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_phone_fr" value="{{ $reference->contact_phone }}">
-		</div>
+		</div> -->
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
@@ -482,9 +512,9 @@
 		<div class="col-sm-4">
 		  <input type="email" class="form-control" id="contact_email_en" name="contact_email" value="{{ $reference->contact_email }}">
 		</div>
-		<div class="col-sm-4">
+		<!-- <div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_email_fr" value="{{ $reference->contact_email }}">
-		</div>
+		</div> -->
 	</div>
 	<!-- EO line -->
 	<hr></hr>
@@ -494,17 +524,17 @@
 	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
 	@if ($client != null)
 		<div class="col-sm-4">
-			<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="{{ $client->name }}">
+			<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="{{ $client->name }}" autocomplete="off">
 		</div>
 		<div class="col-sm-4">
-		  	<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="{{ $client->name }}">
+		  	<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="{{ $client->name }}" autocomplete="off">
 		</div>
 	@else
 		<div class="col-sm-4">
-		  	<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="">
+		  	<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="" autocomplete="off">
 		</div>
 		<div class="col-sm-4">
-		  	<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="">
+		  	<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="" autocomplete="off">
 		</div>
 	@endif
 </div>
@@ -518,14 +548,17 @@
 				<label for="financing" class="col-sm-4 control-label">Financing</label>
 				<div class="col-sm-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
-					  	<input id="financ_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name }}">
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
+					  	<input id="financ_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name }}" autocomplete="off">
 				  	</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon2">Name</span>
-						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}">
+						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default addFinancingButton" type="button">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -538,14 +571,17 @@
 			<div class="form-group financingsTemplate">
 				<div class="col-sm-4 col-sm-offset-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
-					  	<input id="financ_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name }}">
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
+					  	<input id="financ_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name }}" autocomplete="off">
 				  	</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon2">Name</span>
-						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}">
+						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default removeFinancingButton" type="button">
 								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -561,14 +597,17 @@
 		<label for="financing" class="col-sm-4 control-label">Financing</label>
 		<div class="col-sm-4">
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Name</span>
-			  	<input id="financ_0" type="text" class="form-control" name="financing[0][]">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
+			  	<input id="financ_0" type="text" class="form-control" name="financing[0][]" autocomplete="off">
 		  	</div>
 		</div>
 		<div class="col-sm-4">
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Name</span>
-				<input id="financ_fr_0" type="text" class="form-control" name="financing[0][]">
+				<input id="financ_fr_0" type="text" class="form-control" name="financing[0][]" autocomplete="off">
 				<span class="input-group-btn">
 					<button class="btn btn-default addFinancingButton" type="button">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -584,7 +623,10 @@
 <div class="form-group hide financingsTemplate" id="financingsTemplate">
     <div class="col-sm-4 col-sm-offset-4">
     	<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
 			<input type="text" class="form-control financingInput">
 		</div>
 	</div>
@@ -682,15 +724,6 @@
 </div>
 <!-- EO line -->
 
-<div class="form-group">
-	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
-	</button>
-	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
-		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-	</a>
-</div>
-
 <script>
 	var fundings_in_db = {!! $fundings->toJson() !!}
 	var involved_staff_db = {!! $seniors->toJson() !!}
@@ -703,9 +736,7 @@
 	var linked_fundings = {!! $financings->toJson() !!}
 	var linked_staff = {!! $staff_name->toJson() !!}
 	var linked_experts = {!! $experts_name->toJson() !!}
-
-	var languages = {!! $languages->toJson() !!}
-	var languagesValues = {!! $languagesValues->toJson() !!}
+	var language_reference = {!! $language_reference->toJson() !!}
 	var reference = {!! $reference->toJson() !!}
 
 	function getTranslation (filledField, jsonCollection, attribute1, attribute2, translationField) {
@@ -851,7 +882,6 @@
 	$('#contact_check').change(function () {
 		if (this.checked) {
 			$('#contact_info').show("fast");
-			// $("html, body").animate({ scrollTop: $(document).height() }, "slow");
 		}
 		else {
 			$('#contact_name_en').val('');
@@ -866,49 +896,44 @@
 		}
 	});
 
-	var staff = [];
-	$('#involved_staff').change(function () {
-		$('#seniors_list').empty();
-		val = $('#involved_staff').selectpicker('val');
-		staff[0] = val;
+	// var staff = [];
+	// $('#involved_staff').change(function () {
+	// 	$('#seniors_list').empty();
+	// 	val = $('#involved_staff').selectpicker('val');
+	// 	staff[0] = val;
 
-		if (staff[0] != null) {
-			for (var i = 0; i < staff[0].length; i++) {
-				$("#seniors_list").append('<a href="#" class="list-group-item">' + staff[0][i] +'</a>');
-			};
-		};
-	});
+	// 	if (staff[0] != null) {
+	// 		for (var i = 0; i < staff[0].length; i++) {
+	// 			$("#seniors_list").append('<a href="#" class="list-group-item">' + staff[0][i] +'</a>');
+	// 		};
+	// 	};
+	// });
 
-	var experts = [];
-	$('#involved_experts').change(function () {
-		$('#experts_list').empty();
-		val = $('#involved_experts').selectpicker('val');
-		experts[0] = val;
+	// var experts = [];
+	// $('#involved_experts').change(function () {
+	// 	$('#experts_list').empty();
+	// 	val = $('#involved_experts').selectpicker('val');
+	// 	experts[0] = val;
 
-		if (experts[0] != null) {
-			for (var i = 0; i < experts[0].length; i++) {
-				$("#experts_list").append('<a href="#" class="list-group-item">' + experts[0][i] +'</a>');
-			};
-		};
-	});
+	// 	if (experts[0] != null) {
+	// 		for (var i = 0; i < experts[0].length; i++) {
+	// 			$("#experts_list").append('<a href="#" class="list-group-item">' + experts[0][i] +'</a>');
+	// 		};
+	// 	};
+	// });
 
-	var consultants = [];
-	$('#involved_consultants').change(function () {
-		$('#consultants_list').empty();
-		val = $('#involved_consultants').selectpicker('val');
-		consultants[0] = val;
+	// var consultants = [];
+	// $('#involved_consultants').change(function () {
+	// 	$('#consultants_list').empty();
+	// 	val = $('#involved_consultants').selectpicker('val');
+	// 	consultants[0] = val;
 
-		if (consultants[0] != null) {
-			for (var i = 0; i < consultants[0].length; i++) {
-				$("#consultants_list").append('<a href="#" class="list-group-item">' + consultants[0][i] +'</a>');
-			};
-		};
-	});
-
-	// if ($('#contact_name_english').val() != "") {
-	// 	$('#contact_check').attr('checked', true);
-	// 	$('#contact_info').show("fast");
-	// };
+	// 	if (consultants[0] != null) {
+	// 		for (var i = 0; i < consultants[0].length; i++) {
+	// 			$("#consultants_list").append('<a href="#" class="list-group-item">' + consultants[0][i] +'</a>');
+	// 		};
+	// 	};
+	// });
 
 	$('#project_cost_select').change( function () {
 		$('#services_cost_select').selectpicker('val', $('#project_cost_select').val());
@@ -949,28 +974,13 @@
 		$('#contact_email_en').val($('#contact_email_fr').val());
 	});
 
-	// for (var i = 0; i < languages.length; i++) {
-	// 	$('#project_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].project_name);
-	// 	$('#project_description_' + (languages[i].name).toLowerCase()).val(languagesValues[i].project_description);
-	// 	$('#service_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].service_name);
-	// 	$('#service_description_' + (languages[i].name).toLowerCase()).val(languagesValues[i].service_description);
-	// 	$('#experts_' + (languages[i].name).toLowerCase()).val(languagesValues[i].experts);
-	// 	$('#contact_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_name);
-	// 	$('#contact_department_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_department);
-	// 	$('#contact_email_' + (languages[i].name).toLowerCase()).val(languagesValues[i].contact_email);
-	// 	$('#client_name_' + (languages[i].name).toLowerCase()).val(languagesValues[i].client);
-	// 	$('#financing_' + (languages[i].name).toLowerCase()).val(languagesValues[i].financing);
-	// 	$('#general_comments_' + (languages[i].name).toLowerCase()).val(languagesValues[i].general_comments);
-	// };
-
 	if (reference.contact != null) {
 		$('#contact_check').attr('checked', true);
-		// $('#internal_div').show();
 		$('#contact_info').show("fast");
 	};
 
 	var staff_index = linked_staff.length;
-	$('#form').on('click', '.addButton', function() {
+	$('#form_save').on('click', '.addButton', function() {
 		var field1 = 'staff_function_' + staff_index;
 		var field2 = 'staff_function_fr_' + staff_index;
 
@@ -1012,7 +1022,7 @@
     });
 
     var expert_index = linked_experts.length;
-    $('#form').on('click', '.addExpertButton', function() {
+    $('#form_save').on('click', '.addExpertButton', function() {
     	var field1 = 'expert_function_' + expert_index;
 		var field2 = 'expert_function_fr_' + expert_index;
 
@@ -1053,7 +1063,7 @@
         $row.remove();
     });
 
-    $('#form').on('click', '.addConsultantButton', function() {
+    $('#form_save').on('click', '.addConsultantButton', function() {
         var $template = $('#consultantsTemplate'),
             $clone    = $template
                             .clone()
@@ -1072,7 +1082,7 @@
     });
 
 	var financ_index = linked_fundings.length;
-    $('#form').on('click', '.addFinancingButton', function() {
+    $('#form_save').on('click', '.addFinancingButton', function() {
     		var field1 = 'financ_' + financ_index;
     		var field2 = 'financ_fr_' + financ_index;
 

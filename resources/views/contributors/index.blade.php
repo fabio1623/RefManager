@@ -12,8 +12,7 @@
 							<!-- #./Left column -->
 							<!-- Center column -->
 							<div class="col-sm-7">
-								<form action="{{ action('ContributorController@create') }}" method="GET">
-									<?php echo csrf_field(); ?>
+								<form action="{{ action('ContributorController@custom_create', $subsidiary_id) }}" method="GET">
 									<button type="submit" id="add_btn" class="btn btn-success btn-sm pull-right">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>
@@ -41,16 +40,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							<form action="{{ action('ContributorController@destroyMultiple') }}" method="POST" id="form_delete">
+							<form action="{{ action('ContributorController@destroyMultiple', [$subsidiary_id, 1]) }}" method="POST" id="form_delete">
 						      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 									@foreach ($contributors as $contributor)
-											<tr data-href="{{ action('ContributorController@edit', $contributor->id) }}">
+											<tr data-href="{{ action('ContributorController@edit', [$subsidiary_id, 1,$contributor->id]) }}">
 												<td>
-													<a class="btn btn-link" href="{{ action('ContributorController@edit') }}">{{$contributor->name}}</a>	
+													<a class="btn btn-link" href="{{ action('ContributorController@edit', [$subsidiary_id, 1,$contributor->id]) }}">{{$contributor->name}}</a>	
 												</td>
 												<td class="check">
-													<input class="checkbox" type="checkbox" value="{{$contributor->id}}" name=id[]>
+													<input class="checkbox" type="checkbox" value="{{$contributor->id}}" name=ids[]>
 												</td>
 											</tr>
 									@endforeach

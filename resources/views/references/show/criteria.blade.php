@@ -11,11 +11,15 @@
       </div>
       <div id="domain-{{ $domains[$i]->id }}" class="panel-body">
         @foreach($expertises as $expertise)
+          @foreach($domains[$i]->expertises as $linked_expertise)
+            @if($linked_expertise->id == $expertise->id)
         <div class="checkbox col-sm-6">
           <label>
             <input id="expertise-{{ $expertise->id }}" name="domains[{{ $domains[$i]->id }}][{{ $expertise->id }}]" type="checkbox"> {{$expertise->name}}
           </label>
         </div>
+            @endif
+          @endforeach
         @endforeach
       </div>
     </div>

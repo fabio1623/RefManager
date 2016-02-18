@@ -150,6 +150,7 @@ return [
          * Other service providers...
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::Class,
 
     ],
 
@@ -202,6 +203,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::Class,
 
     ],
 

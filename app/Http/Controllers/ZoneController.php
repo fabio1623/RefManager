@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Zone;
 use App\Country;
 use App\Contributor;
+use App\Subsidiary;
 
 class ZoneController extends Controller
 {
@@ -22,10 +23,12 @@ class ZoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($subsidiary_id)
     {
-        $zones = Zone::paginate(8);
-        $view = view('zones.index')->with('zones', $zones);
+        $subsidiary = Subsidiary::find($subsidiary_id);
+        $zones = Zone::paginate(20);
+
+        $view = view('zones.index', ['subsidiary'=>$subsidiary, 'zones'=>$zones]);
         return $view;
     }
 
@@ -34,11 +37,11 @@ class ZoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($subsidiary_id)
     {
-        $contributors = Contributor::all();
+        $contributors = Contributor::where('profile', 'In-house')->get();
 
-        $view = view('zones.create', ['contributors'=>$contributors]);
+        $view = view('zones.create', ['subsidiary_id'=>$subsidiary_id, 'contributors'=>$contributors]);
         return $view;
     }
 
@@ -48,7 +51,7 @@ class ZoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $subsidiary_id)
     {
         // dd($_POST);
         $this->validate($request, [
@@ -64,7 +67,7 @@ class ZoneController extends Controller
     
         $zone->save();
 
-        return redirect()->action('ZoneController@index');
+        return redirect()->action('ZoneController@index', $subsidiary_id);
     }
 
     /**
@@ -84,15 +87,27 @@ class ZoneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($subsidiary_id, $zone_id)
     {
-        $zone = Zone::find($id);
-        $countries = Country::all();
-        $contributors = Contributor::all();
-        
-        $zone_countries = $zone->countries()->paginate(8);
+        $zone = Zone::find($zone_id);
+        $zone_countries = $zone->countries()->get();
 
-        $view = view('zones.edit', ['zone'=>$zone, 'countries'=>$countries, 'zone_countries'=>$zone_countries, 'contributors'=>$contributors]);
+        // $id_tab = [];
+
+        // foreach ($zone->countries as $country) {
+        //     $id_tab[] = $country->id;
+        // }
+
+        // $countries = Country::whereNotIn('id', $id_tab)->get();
+        $countries = Country::orderBy('name', 'asc')->get();
+
+        // $contributors = Contributor::whereHas('references', function ($query) {
+        //     $query->where('function_on_project', 'Senior');
+        // })->get();
+
+        $contributors = Contributor::where('profile', 'In-house')->get();
+
+        $view = view('zones.edit', ['subsidiary_id'=>$subsidiary_id, 'zone'=>$zone, 'countries'=>$countries, 'zone_countries'=>$zone_countries, 'contributors'=>$contributors]);
         return $view;
     }
 
@@ -117,14 +132,14 @@ class ZoneController extends Controller
         return redirect()->action('ZoneController@edit', $zone_id);
     }
 
-    public function detach_country(Request $request, $zone_id)
+    public function detach_country($zone_id, $country_id)
     {
         // dd($_POST);
         $zone = Zone::find($zone_id);
 
-        $zone->countries()->detach($request->input('country_id'));
+        $zone->countries()->detach($country_id);
 
-        return redirect()->action('ZoneController@edit', $zone_id);
+        return redirect()->back();
     }
 
     /**
@@ -134,24 +149,34 @@ class ZoneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $subsidiary_id, $zone_id)
     {
         // dd($_POST);
         $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:zones,name,'.$id,
+            'name' => 'required|alpha|max:255|unique:zones,name,'.$zone_id,
         ]);
 
-        $zone = Zone::find($id);
+        $zone = Zone::find($zone_id);
 
         $zone->name = $request->name;
 
         if ($request->manager != '') {
             $zone->manager = $request->manager;
         }
+        else {
+            $zone->manager = null;
+        }
+
+        $zone->countries()->detach();
+        if ($request->countries) {
+            foreach ($request->countries as $country_id) {
+                $zone->countries()->attach($country_id);
+            }
+        }
 
         $zone->save();
 
-        return redirect()->action('ZoneController@index');
+        return redirect()->back();
     }
 
     /**
@@ -160,16 +185,16 @@ class ZoneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($subsidiary_id, $zone_id)
     {
         // dd($_POST);
 
-        $zone = Zone::find($id);
+        $zone = Zone::find($zone_id);
         $zone->countries()->detach();
 
-        Zone::destroy($id);
+        Zone::destroy($zone_id);
 
-        return redirect()->action('ZoneController@index');
+        return redirect()->action('ZoneController@index', $subsidiary_id);
     }
 
     public function destroyMultiple(Request $request)

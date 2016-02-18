@@ -57,12 +57,15 @@
 				<div class="col-sm-4">
 		@else
 			<div class="template">
-				<br></br>
+				<!-- <br></br> -->
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Name</span>
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
 				<input type="text" class="form-control involved_staff" id="involved_staff" value="{{ $staff_name[$i]['name'] }}" readonly>
 			</div>
 		</div>
@@ -95,7 +98,10 @@
 	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
 			<input type="text" class="form-control involved_staff" id="involved_staff" readonly>
 		</div>
 	</div>
@@ -129,12 +135,15 @@
 				<div class="col-sm-4">
 		@else
 			<div class="expertTemplate">
-				<br></br>
+				<!-- <br></br> -->
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Name</span>
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
 				<input type="text" class="form-control experts" id="experts" value="{{ $experts_name[$i]['name'] }}" readonly>
 			</div>
 		</div>
@@ -166,7 +175,10 @@
 	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
 			<input type="text" class="form-control experts" id="experts" readonly>
 		</div>
 	</div>
@@ -230,7 +242,10 @@
 				<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 				<div class="col-sm-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
 						<input type="text" class="form-control involved_consultants" id="involved_consultants" value="{{$consultants[$i]->name}}" readonly>
 					</div>
 				</div>
@@ -239,7 +254,10 @@
 			<div class="form-group consultantsTemplate">
 			    <div class="col-sm-4 col-sm-offset-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
 						<input type="text" class="form-control consultantInput involved_consultants" id="involved_consultants" value="{{$consultants[$i]->name}}" readonly>
 					</div>
 				</div>
@@ -251,7 +269,10 @@
 	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
 			<input type="text" class="form-control involved_consultants" id="involved_consultants" readonly>
 		</div>
 	</div>
@@ -342,7 +363,10 @@
 				<label for="financing" class="col-sm-4 control-label">Financing</label>
 				<div class="col-sm-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
 					  	<input id="financ_{{$i}}" type="text" class="form-control financing" value="{{ $financings[$i]->name }}" readonly>
 				  	</div>
 				</div>
@@ -357,7 +381,10 @@
 			<div class="form-group financingsTemplate">
 				<div class="col-sm-4 col-sm-offset-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
 					  	<input id="financ_{{$i}}" type="text" class="form-control financing" value="{{ $financings[$i]->name }}" readonly>
 				  	</div>
 				</div>
@@ -375,7 +402,10 @@
 		<label for="financing" class="col-sm-4 control-label">Financing</label>
 		<div class="col-sm-4">
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Name</span>
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
 			  	<input id="financ_0" type="text" class="form-control" readonly>
 		  	</div>
 		</div>

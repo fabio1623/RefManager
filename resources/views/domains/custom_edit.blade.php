@@ -14,7 +14,7 @@
 										<span class="glyphicon glyphicon-save" aria-hidden="true"></span> 
 										Save expertises
 									</button>
-									<button form="form_delete" type="submit" class="btn btn-default btn-sm">
+									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
 										Delete
 									</button>
@@ -91,21 +91,9 @@
 								</select>
 							</div>
 						</div>
-					</form>
-					<div class="row">
-						<!-- Left column -->
-						<div class="col-sm-3"><h4>Associated expertises</h4></div>
-						<!-- #./Left column -->
-						<!-- Right column -->
-						<div class="col-sm-8">
-							<!-- <button form="form_expertises" type="submit" id="remove_btn" class="btn btn-danger btn-sm">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-							</button> -->
-						</div>
-						<!-- #./Right column -->
-					</div>
+					</form>				
 
-				<!-- Expertises table -->
+				</div>
 				<div class="table-responsive">
 
 					<table class="table table-bordered table-hover table-striped table-condensed">
@@ -141,12 +129,6 @@
 							</form>
 						</tbody>
 					</table>
-					<!-- #./Expertises table -->
-					<div class="pull-right">
-						{!! $expertises->render() !!}
-					</div>
-				</div>
-
 				</div>
 			</div>
 		</div>
@@ -155,6 +137,13 @@
 	if ($('.checkbox:checked').length == $('.checkbox').length) {
 		$('#select_all').prop('checked', true);
 	};
+
+	$('#btn_delete').click( function(e) {
+		var confirm_box = confirm("Are you sure ?");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
 
 	$("tbody > tr").click(function() {
 		var href = $(this).data("href");

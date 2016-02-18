@@ -21,7 +21,7 @@
 
                     <!-- <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}"> -->
                     <form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@authenticate') }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <?php echo csrf_field(); ?>
                         
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Username</label>
@@ -65,9 +65,4 @@
                 </div>
             </div>
     </div>
-<script> 
-    $( "#email" ).blur(function() {
-        $(this).popover('animation');
-    });
-</script>
 @endsection

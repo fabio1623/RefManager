@@ -103,7 +103,16 @@ class UserController extends Controller
         }
         $user = new User;
         $username = strstr($request->email, '@', true);
-        $user->username = $username;
+        
+        $nb_users_in_db = User::where('username', 'like', $username.'%')->count();
+        if ($nb_users_in_db > 0) {
+            $user->username = $username.$nb_users_in_db;
+        }
+        else {
+            $user->username = $username;
+        }
+
+        // $user->username = $username;
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
         $user->profile = $request->profile;
@@ -240,8 +249,21 @@ class UserController extends Controller
     public function authenticate(Request $request)
     {
         // dd($_POST);
+        // $this->validate($request, [
+        //     'username' => 'required|max:255|exists:users,username',
+        //     'password'     => 'required|email|max:255',
+        // ]);
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        $messages = [
+            'exists' => "This :attribute doesn't exist."
+        ];
+
+        $this->validate($request, [
+            'username' => 'required|exists:users,username',
+            'password'     => 'required|max:255',
+        ], $messages);
+
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $request->remember)) {
             // Authentication passed...
             // if (Auth::user()->profile == 'Basic user') {
             //     return redirect()->action('ReferenceController@index');
@@ -251,12 +273,21 @@ class UserController extends Controller
             // }
             return redirect()->intended('home');
         }
+        else {
+            return redirect()->action('UserController@getLoginWrongPassword');
+        }
     }
 
     public function getLoginError(Request $request)
     {
         $view = view('auth.loginError');
         return $view;
+    }
+
+    public function getLoginWrongPassword()
+    {
+        $view = view('auth.loginWrongPassword');
+        return $view;   
     }
 
     public function manageAccount($id)

@@ -8,17 +8,17 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<div class="col-sm-9">List of subsidiaries</div>
-							<div class="col-sm-3 pull-right">
-							    <a class="btn btn-success btn-sm" href="{{ action('SubsidiaryController@create') }}" role="button">
-							    	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-							    </a>
-							    <button form="form_delete" type="submit" id="remove_btn" class="btn btn-danger btn-sm">
-									<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							<div class="col-sm-3">
+								<button form="form_create" type="submit" class="btn btn-default btn-xs pull-right">
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</button>
 							</div>
 						</div>
 					</h3>
 				</div>
+
+				<form id="form_create" action="{{ action('SubsidiaryController@create') }}" method="GET">
+				</form>
 
 				<div class="table-responsive">
 

@@ -75,12 +75,44 @@ class CategoryController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->categories()->detach();
+        $categories = Category::all();
 
+        //If at least 1 category is selected
         if ($request->id) {
-            foreach ($request->id as $category_id) {
-                $subsidiary->categories()->attach($category_id);
+            foreach ($categories as $category_in_db) {
+                $category_found = 0;
+                foreach ($request->id as $category_id) {
+                    if ($category_id == $category_in_db->id) {
+                        $category_found = 1;
+                    }
+                }
+                //Remove the link between the subsidiary and categories not selected
+                if ($category_found == 0) {
+                    $subsidiary->categories()->detach($category_in_db->id);
+                    foreach ($category_in_db->measures as $measure_in_db) {
+                        $subsidiary->measures()->detach($measure_in_db->id);
+                    }
+                }
+                else {
+                    $found = 0;
+                    foreach ($subsidiary->categories as $linked_category) {
+                        if ($linked_category->id == $category_in_db->id) {
+                            $found = 1;
+                        }
+                    } 
+                    if ($found == 0) {
+                        $subsidiary->categories()->attach($category_in_db->id);
+                        foreach ($category_in_db->measures as $measure_in_db) {
+                            $subsidiary->measures()->attach($measure_in_db->id);
+                        }
+                    }   
+                }
             }
+        }
+        //If no categories selected
+        else {
+            $subsidiary->categories()->detach();
+            $subsidiary->measures()->detach();
         }
 
         return redirect()->back();
@@ -145,7 +177,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        $measures = $category->measures()->paginate(4);
+        $measures = $category->measures()->orderBy('name', 'asc')->get();
 
         $view = view('categories.edit', ['category'=>$category, 'measures'=>$measures]);
         

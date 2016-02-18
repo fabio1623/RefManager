@@ -12,7 +12,7 @@
 								<form action="{{ action('ExpertiseController@destroy', [$subsidiary->id, $domain->id, $expertise->id]) }}" method="POST">
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-								    <button type="submit" class="btn btn-danger btn-xs pull-right">
+								    <button id="btn_delete" type="submit" class="btn btn-danger btn-xs pull-right">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
 									</button>
 								</form>
@@ -73,4 +73,12 @@
 				</div>
 			</div>
 	</div>
+	<script>
+		$('#btn_delete').click( function(e) {
+			var confirm_box = confirm("Are you sure ?");
+			if (confirm_box == false) {
+				e.preventDefault();
+			}
+		});
+	</script>
 @endsection

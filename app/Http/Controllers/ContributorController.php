@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Contributor;
+use App\Subsidiary;
+use App\Zone;
 
 class ContributorController extends Controller
 {
@@ -19,10 +21,10 @@ class ContributorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($subsidiary_id, $zone_id)
     {
         $contributors = Contributor::paginate(8);
-        $view = view('contributors.index')->with('contributors', $contributors);
+        $view = view('contributors.index', ['subsidiary_id'=>$subsidiary_id, 'contributors'=>$contributors]);
         return $view;
     }
 
@@ -31,9 +33,18 @@ class ContributorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($subsidiary_id, $zone_id)
     {
-        //
+        // $subsidiary = Subsidiary::find($subsidiary_id);
+
+        $view = view('contributors.create', ['subsidiary_id'=>$subsidiary_id, 'zone_id'=>$zone_id]);
+        return $view;
+    }
+
+    public function custom_create($subsidiary_id)
+    {
+        $view = view('contributors.custom_create', ['subsidiary_id'=>$subsidiary_id]);
+        return $view;
     }
 
     /**
@@ -42,9 +53,39 @@ class ContributorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $subsidiary_id, $zone_id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:contributors',
+        ]);
+
+        $new_manager = new Contributor;
+        $new_manager->name = $request->name;
+        $new_manager->profile = 'In-house';
+
+        $new_manager->save();
+
+        $zone = Zone::find($zone_id);
+        $zone->manager = $new_manager->id;
+
+        $zone->save();
+
+        return redirect()->action('ZoneController@edit', [$subsidiary_id, $zone_id]);
+    }
+
+    public function custom_store(Request $request, $subsidiary_id, $zone_id)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:contributors',
+        ]);
+
+        $new_manager = new Contributor;
+        $new_manager->name = $request->name;
+        $new_manager->profile = 'In-house';
+
+        $new_manager->save();
+
+        return redirect()->action('ContributorController@index', [$subsidiary_id, $zone_id]);
     }
 
     /**
@@ -92,19 +133,20 @@ class ContributorController extends Controller
         //
     }
 
-    public function destroyMultiple(Request $request)
+    public function destroyMultiple(Request $request, $subsidiary_id, $zone_id)
     {
         // dd($_POST);
 
-        // $ids = $request->input('id');
+        foreach ($request->ids as $id) {
+            $zones = Zone::where('manager', $id)->get();
+            foreach ($zones as $zone) {
+                $zone->manager = null;
+                $zone->save();
+            }
+        }
 
-        // foreach ($ids as $id) {
-        //     $zone = Zone::find($id);
-        //     $zone->countries()->detach();
-        // }
+        Contributor::destroy($id);
 
-        // Zone::destroy($ids);
-
-        return redirect()->action('ZoneController@index');  
+        return redirect()->action('ContributorController@index', [$subsidiary_id, $zone_id]);  
     }
 }

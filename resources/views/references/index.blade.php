@@ -8,10 +8,9 @@
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-6">References : {{ $kind_of_reference }}</div>
-					<div class="col-sm-1">
+					<div class="col-sm-2">
 						<form action="{{ action('ReferenceController@create') }}" method="GET">
-							<?php echo csrf_field(); ?>
-							<button type="submit" class="btn btn-primary btn-sm">
+							<button type="submit" class="btn btn-default btn-sm pull-right">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 						</form>
@@ -109,7 +108,7 @@
 										</td>
 										<td>
 											<a class="btn btn-link center-block">
-												{{ $reference->total_project_cost }}
+												{{ number_format($reference->total_project_cost) }}
 											</a>	
 										</td>
 										<td class="check">

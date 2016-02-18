@@ -8,12 +8,11 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<!-- Left column -->
-							<div class="col-sm-4">List of zones</div>
+							<div class="col-sm-4">Zones</div>
 							<!-- #./Left column -->
 							<!-- Center column -->
 							<div class="col-sm-7">
-								<form action="{{ action('ZoneController@create') }}" method="GET">
-									<?php echo csrf_field(); ?>
+								<form action="{{ action('ZoneController@create', $subsidiary->id) }}" method="GET">
 									<button type="submit" id="add_btn" class="btn btn-success btn-sm pull-right">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>
@@ -36,8 +35,8 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-10">Zone name</th>
-						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-11">Zones</th>
+						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,9 +44,9 @@
 						      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 									@foreach ($zones as $zone)
-											<tr data-href="{{ action('ZoneController@edit', $zone->id) }}">
+											<tr data-href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">
 												<td>
-													<a class="btn btn-link" href="{{ action('ZoneController@edit') }}">{{$zone->name}}</a>	
+													<a class="btn btn-link" href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">{{$zone->name}}</a>	
 												</td>
 												<td class="check">
 													<input class="checkbox" type="checkbox" value="{{$zone->id}}" name=id[]>

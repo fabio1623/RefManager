@@ -19,8 +19,8 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/loginError') }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@authenticate') }}">
+                        <?php echo csrf_field(); ?>
 
                         <div class="alert alert-danger alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -62,16 +62,11 @@
                             <div class="col-sm-6 col-sm-offset-4">
                                 <button type="submit" class="btn btn-primary">Login</button>
 
-                                <a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+                                <a class="btn btn-link" href="{{ action('AccessController@create') }}">Need To Ask Your Access?</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
     </div>
-<script> 
-    $( "#email" ).blur(function() {
-        $(this).popover('animation');
-    });
-</script>
 @endsection

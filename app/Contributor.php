@@ -10,4 +10,9 @@ class Contributor extends Model
     {
         return $this->belongsToMany('App\Reference');
     }
+
+    public function zones()
+    {
+        return $this->belongsToMany('App\Zone');
+    }
 }

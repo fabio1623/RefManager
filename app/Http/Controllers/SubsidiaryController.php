@@ -98,7 +98,7 @@ class SubsidiaryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|max:50|unique:subsidiaries',
+            'name' => 'required|max:50|unique:subsidiaries,name,'.$id,
         ]);
 
         $subsidiary = Subsidiary::find($id);
@@ -120,7 +120,10 @@ class SubsidiaryController extends Controller
         // dd($_POST);
 
         $subsidiary = Subsidiary::find($id);
-        $subsidiary->users()->detach();
+        
+        if ($subsidiary->users()->count() > 0) {
+            $subsidiary->users()->detach();
+        }
 
         Subsidiary::destroy($id);
 

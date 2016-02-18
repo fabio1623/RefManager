@@ -22,6 +22,7 @@ use App\Language;
 Route::get('/', 'Auth\AuthController@getLogin');
 Route::post('login', 'UserController@authenticate');
 Route::get('loginError', 'UserController@getLoginError');
+Route::get('loginError_password', 'UserController@getLoginWrongPassword');
 
 //Google Authentication
 Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');
@@ -35,6 +36,7 @@ Route::resource('access_requests', 'AccessController');
 Route::get('default_password/edit', 'DefaultPasswordController@manage_password');
 
 //Home
+Route::post('upload', 'HomeController@upload_file');
 Route::get('home', 'HomeController@index');
 
 //Subsidiaries
@@ -53,6 +55,12 @@ Route::get('references/search', 'ReferenceController@search');
 Route::get('references/search/results', 'ReferenceController@results');
 Route::get('references/customize', 'ReferenceController@customize');
 Route::get('references/basic_search', 'ReferenceController@basic_search');
+Route::get('references/{reference}/generate_file_wb_en', 'ReferenceController@generate_file_wb_en');
+Route::get('references/{reference}/generate_file_wb_fr', 'ReferenceController@generate_file_wb_fr');
+Route::get('references/{reference}/generate_file_eu_en', 'ReferenceController@generate_file_eu_en');
+Route::get('references/{reference}/generate_file_eu_fr', 'ReferenceController@generate_file_eu_fr');
+Route::post('references/{reference}/link_translation', 'ReferenceController@link_translation');
+Route::get('references/{reference}/languages/{language}/detach_translation', 'ReferenceController@detach_translation');
 Route::resource('references', 'ReferenceController');
 
 //Users
@@ -107,22 +115,24 @@ Route::get('subsidiaries/{subsidiary}/categories/{category}/detach_category', 'C
 Route::resource('subsidiaries.categories', 'CategoryController');
 
 //Measures
-Route::get('subsidiaries/{subsidiary}/measures/{measure}/link_measure', 'MeasureController@link_measure');
+Route::post('subsidiaries/{subsidiary}/categories/{category}/link_measure', 'MeasureController@link_measure');
 Route::get('subsidiaries/{subsidiary}/measures/{measure}/detach_measure', 'MeasureController@detach_measure');
 Route::resource('subsidiaries.categories.measures', 'MeasureController');
 
 //Zones
 Route::put('zones/attach_country/{id}', 'ZoneController@attach_country');
-Route::put('zones/detach_country/{id}', 'ZoneController@detach_country');
+Route::get('zones/{zone}/countries/{country}/detach_country', 'ZoneController@detach_country');
 Route::delete('zones/destroy_multiple', 'ZoneController@destroyMultiple');
-Route::resource('zones', 'ZoneController');
+Route::resource('subsidiaries.zones', 'ZoneController');
 
 //Countries
 Route::resource('zones.countries', 'CountryController');
 
 //Contributors
-Route::delete('contributors/destroy_multiple', 'ContributorController@destroyMultiple');
-Route::resource('contributors', 'ContributorController');
+Route::delete('subsidiaries/{subsidiary}/zones/{zone}/contributors/destroy_multiple', 'ContributorController@destroyMultiple');
+Route::get('subsidiaries/{subsidiary}/contributors/custom_create', 'ContributorController@custom_create');
+Route::post('subsidiaries/{subsidiary}/zones/{zone}/contributors/custom_store', 'ContributorController@custom_store');
+Route::resource('subsidiaries.zones.contributors', 'ContributorController');
 
 //Fundings
 Route::delete('fundings/destroy_multiple', 'FundingController@destroyMultiple');

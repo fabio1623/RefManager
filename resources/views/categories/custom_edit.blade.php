@@ -7,19 +7,21 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-8">
-								{{ $category->name }}
-							</div>
-							<div class="col-sm-4 btn-group" role="group" aria-label="...">
-								<button form="form_update" type="submit" class="btn btn-primary btn-sm">
-									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
-								</button>
-								<button form="form_delete" type="submit" class="btn btn-primary btn-sm">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-								</button>
-								<a class="btn btn-primary btn-sm" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}" role="button">	
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> List
-								</a>
+							<div class="col-sm-8">{{ $category->name }}</div>
+							<div class="col-sm-4">
+								<div class="btn-group pull-right" role="group" aria-label="...">
+									<button form="form_link_measures" type="submit" class="btn btn-default btn-sm">
+										<span class="glyphicon glyphicon-save" aria-hidden="true"></span> 
+										Save measures
+									</button>
+									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+										Delete
+									</button>
+									<button form="form_back" type="submit" class="btn btn-default btn-sm">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</button>
+								</div>
 							</div>
 						</div>
 					</h3>
@@ -36,6 +38,9 @@
 						</div>
 					@endif
 
+					<form id="form_back" action="{{ action('CategoryController@custom_index', $subsidiary->id) }}" method="GET">
+					</form>
+
 					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('CategoryController@update', [$subsidiary->id, $category->id]) }}">
 						<?php echo method_field('PUT'); ?>
 					    <?php echo csrf_field(); ?>
@@ -43,7 +48,14 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Name</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="name" value="{{$category->name}}">
+								<div class="input-group">
+									<input type="text" class="form-control" name="name" value="{{$category->name}}">
+									<span class="input-group-btn">
+							        <button class="btn btn-default" type="submit">
+							        	<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+						        	</button>
+							      </span>
+							    </div>
 							</div>
 						</div>
 
@@ -57,14 +69,21 @@
 						<div class="form-group">
 							<label class="col-md-4 control-label">Add measure</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="measure_name" value="{{ old('measure_name') }}">
+								<div class="input-group">
+									<input type="text" class="form-control" name="measure_name" value="{{ old('measure_name') }}">
+									<span class="input-group-btn">
+							        <button class="btn btn-default" type="submit">
+							        	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						        	</button>
+							      </span>
+							    </div>
 							</div>
-							<div class="col-md-4">
+							<!-- <div class="col-md-4">
 								<button type="submit" id="add_btn" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-								</button>
+								</button> -->
 								<!-- <input type="hidden" name="category_id_hidden" value="{{ $category->id}}"> -->
-							</div>
+							<!-- </div> -->
 						</div>
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Field Type</label>
@@ -78,24 +97,21 @@
 							</div>
 						</div>
 					</form>
-					<div class="row">
-						<div class="col-sm-4"><h4>Associated measures</h4></div>
-					</div>
 
-				<!-- Expertises table -->
+				</div>
+				<!-- Measures table -->
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover">
+					<table class="table table-bordered table-hover table-striped table-condensed">
 						<thead>
 							<tr>
 								<th class="col-sm-11">Measure name</th>
-								<th class="col-sm-1"></th>
+								<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
-							<form id="form_measures" action="{{ action('MeasureController@destroy', $category->id) }}" method="POST">
-							    <?php echo method_field('DELETE'); ?>
-							    <?php echo csrf_field(); ?>
+							<form id="form_link_measures" action="{{ action('MeasureController@link_measure', [$subsidiary->id, $category->id]) }}" method="POST">
+								<?php echo csrf_field(); ?>
 								@foreach ($measures as $measure)
 										<tr data-href="{{ action('MeasureController@edit', [$subsidiary->id, $category->id, $measure->id]) }}">
 											<td>
@@ -103,13 +119,15 @@
 											</td>
 											<td class="check">
 												@if ($linked_measures->contains($measure))
-													<a class="btn btn-link" href="{{ action('MeasureController@detach_measure', [$subsidiary->id, $measure->id]) }}">
+													<!-- <a class="btn btn-link" href="{{ action('MeasureController@detach_measure', [$subsidiary->id, $measure->id]) }}">
 														<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-													</a>
+													</a> -->
+													<input class="checkbox" type="checkbox" value="{{ $measure->id }}" name=id[] checked>
 												@else
-													<a class="btn btn-link" href="{{ action('MeasureController@link_measure', [$subsidiary->id, $measure->id]) }}">
+													<!-- <a class="btn btn-link" href="{{ action('MeasureController@link_measure', [$subsidiary->id, $measure->id]) }}">
 														<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-													</a>
+													</a> -->
+													<input class="checkbox" type="checkbox" value="{{ $measure->id }}" name=id[]>
 												@endif
 											</td>
 										</tr>
@@ -117,17 +135,22 @@
 							</form>
 						</tbody>
 					</table>
-					<!-- #./Expertises table -->
-					<div class="pull-right">
-						{!! $measures->render() !!}
-					</div>
-				</div>
-
 				</div>
 			</div>
 		</div>
 
 <script>
+	if ($('.checkbox:checked').length == $('.checkbox').length) {
+		$('#select_all').prop('checked', true);
+	};
+
+	$('#btn_delete').click( function(e) {
+		var confirm_box = confirm("Are you sure ?");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
+	
 	$("tbody > tr").click(function() {
 		var href = $(this).data("href");
 		if(href){

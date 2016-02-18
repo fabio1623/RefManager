@@ -14,6 +14,8 @@
 
           <div id="category-{{ $categories[$i]->id }}" class="panel-body">
             @foreach($measures as $measure)
+              @foreach($categories[$i]->measures as $linked_measure)
+                @if($linked_measure->id == $measure->id)
             <div class="form-group">
               <label for="measure-{{$measure->id}}" class="col-sm-4 col-sm-offset-1 control-label">{{$measure->name}}</label>
               @if($measure->field_type == 'Input')
@@ -64,7 +66,8 @@
                 </div>
               </div>
             @endforeach
-
+              @endif
+              @endforeach
             @endforeach
           </div>
 

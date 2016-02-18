@@ -54,8 +54,11 @@
 	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control involved_staff" id="involved_staff" data-provide="typeahead" name="involved_staff[0][]">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input type="text" class="form-control involved_staff" id="involved_staff" name="involved_staff[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -70,13 +73,13 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input id="staff_function_0" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff[0][]">
+			<input id="staff_function_0" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff[0][]" data-provide="typeahead" autocomplete="off">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-			<input id="staff_function_fr_0" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff[0][]">
+			<input id="staff_function_fr_0" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button id="clean_staff_fields" class="btn btn-default" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -88,17 +91,15 @@
 <!-- EO line -->
 <!-- The option field template containing an option field and a Remove button -->
 <div class="hide template" id="optionTemplate">
-	<br></br>
+	<!-- <br></br> -->
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
-	    		<span class="input-group-addon" id="basic-addon2">Name</span>
-	        <input id="involved_staff_temp" class="form-control nameInput" type="text"/>
-		        <!-- <span class="input-group-btn">
-					<button class="btn btn-default removeButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					</button>
-				</span> -->
+	    		<span class="input-group-addon" id="basic-addon2">
+	    			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+	    			Name
+    			</span>
+	        <input id="involved_staff_temp" class="form-control nameInput" type="text" data-provide="typeahead" autocomplete="off">
 			</div>
 	    </div>
 	</div>
@@ -106,13 +107,13 @@
 	    <div class="col-sm-offset-4 col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input id="staff_function_temp" type="text" class="form-control functionInput" placeholder="" aria-describedby="">
+				<input id="staff_function_temp" type="text" class="form-control functionInput" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
 			</div>
 	    </div>
 	    <div class="col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				<input id="staff_function_fr_temp" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="">
+				<input id="staff_function_fr_temp" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
 				<span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -128,8 +129,11 @@
 	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control experts" id="experts" name="experts[0][]">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input type="text" class="form-control experts" id="experts" name="experts[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addExpertButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -144,13 +148,13 @@
 	<div class="col-sm-4 col-sm-offset-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input id="expert_function" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="experts[0][]">
+			<input id="expert_function_0" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="experts[0][]" data-provide="typeahead" autocomplete="off">
 		</div>
 	</div>
 	<div class="col-sm-4">
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
-			<input id="expert_function_fr" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="experts[0][]">
+			<input id="expert_function_fr_0" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="experts[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button id="clean_expert_fields" class="btn btn-default" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -162,17 +166,15 @@
 <!-- EO line -->
 <!-- The option field template containing an option field and a Remove button -->
 <div class="hide expertTemplate" id="expertTemplate">
-	<br></br>
+	<!-- <br></br> -->
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
-	    		<span class="input-group-addon" id="basic-addon2">Name</span>
-	        <input id="expert_name_temp" class="form-control expertNameInput" type="text"/>
-		        <!-- <span class="input-group-btn">
-					<button class="btn btn-default removeExpertButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-					</button>
-				</span> -->
+	    		<span class="input-group-addon" id="basic-addon2">
+	    			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+    				Name
+				</span>
+	        <input id="expert_name_temp" class="form-control expertNameInput" type="text" data-provide="typeahead" autocomplete="off">
 			</div>
 	    </div>
 	</div>
@@ -180,13 +182,13 @@
 	    <div class="col-sm-offset-4 col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input id="expert_function_temp" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="">
+				<input id="expert_function_temp" type="text" class="form-control expertFunctionInput" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
 			</div>
 	    </div>
 	    <div class="col-sm-4">
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				<input id="expert_function_temp_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="">
+				<input id="expert_function_temp_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
 				<span class="input-group-btn">
 					<button class="btn btn-default removeExpertButton" type="button">
 						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -234,8 +236,11 @@
 	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addConsultantButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -254,8 +259,11 @@
 <div class="form-group hide consultantsTemplate" id="consultantsTemplate">
     <div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input id="involved_consultant_temp" type="text" class="form-control consultantInput">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input id="involved_consultant_temp" type="text" class="form-control consultantInput" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeConsultantButton" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -284,9 +292,9 @@
 		<div class="col-sm-4">
 		  <input type="text" class="form-control contact_name_en" id="contact_name_en" name="contact_name">
 		</div>
-		<div class="col-sm-4">
+		<!-- <div class="col-sm-4">
 		  <input type="text" class="form-control contact_name_fr" id="contact_name_fr">
-		</div>
+		</div> -->
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
@@ -306,9 +314,9 @@
 		<div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_phone_en" name="contact_phone">
 		</div>
-		<div class="col-sm-4">
+		<!-- <div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_phone_fr">
-		</div>
+		</div> -->
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
@@ -317,9 +325,9 @@
 		<div class="col-sm-4">
 		  <input type="email" class="form-control" id="contact_email_en" name="contact_email">
 		</div>
-		<div class="col-sm-4">
+		<!-- <div class="col-sm-4">
 		  <input type="text" class="form-control" id="contact_email_fr">
-		</div>
+		</div> -->
 	</div>
 	<!-- EO line -->
 	<hr></hr>
@@ -341,14 +349,17 @@
 	<label for="financing" class="col-sm-4 control-label">Financing</label>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-		  	<input id="financing" class="form-control financing" type="text" data-provide="typeahead" name="financing[0][]">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+		  	<input id="financ_0" class="form-control financing" type="text" name="financing[0][]" data-provide="typeahead" autocomplete="off">
 	  	</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input id="financing_fr" type="text" class="form-control financing_fr" data-provide="typeahead" name="financing[0][]">
+			<input id="financ_fr_0" type="text" class="form-control financing_fr" name="financing[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addFinancingButton" type="button">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -362,14 +373,17 @@
 <div class="form-group hide financingsTemplate" id="financingsTemplate">
     <div class="col-sm-4 col-sm-offset-4">
     	<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input id="financing_input_temp" type="text" class="form-control financingInput">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input id="financing_input_temp" type="text" class="form-control financingInput" data-provide="typeahead" autocomplete="off">
 		</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input id="financing_fr_input_temp" type="text" class="form-control financingFrInput">
+			<input id="financing_fr_input_temp" type="text" class="form-control financingFrInput" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeFinancingButton" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -437,15 +451,6 @@
 </div>
 <!-- EO line -->
 
-<div class="form-group">
-	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
-	</button>
-	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
-		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-	</a>
-</div>
-
 <script>
 	//TYPEAHEAD FIELDS
 	var fundings_in_db = {!! $fundings->toJson() !!}
@@ -500,6 +505,30 @@
 
 	$('#staff_function_fr_0').change( function (e) {
 		getTranslation('staff_function_fr_0', senior_profiles, 'responsability_on_project_fr', 'responsability_on_project', 'staff_function_0');
+	});
+
+	$('#expert_function_0').change( function (e) {
+		getTranslation('expert_function_0', expert_profiles, 'responsability_on_project', 'responsability_on_project_fr', 'expert_function_fr_0');
+	});
+
+	$('#expert_function_fr_0').change( function (e) {
+		getTranslation('expert_function_fr_0', expert_profiles, 'responsability_on_project_fr', 'responsability_on_project', 'expert_function_0');
+	});
+
+	$('#client_name').change( function (e) {
+		getTranslation('client_name', clients, 'name', 'name_fr', 'client_name_fr');
+	});
+
+	$('#client_name_fr').change( function (e) {
+		getTranslation('client_name_fr', clients, 'name_fr', 'name', 'client_name');
+	});
+
+	$('#financ_0').change( function (e) {
+		getTranslation('financ_0', fundings_in_db, 'name', 'name_fr', 'financ_fr_0');
+	});
+
+	$('#financ_fr_0').change( function (e) {
+		getTranslation('financ_fr_0', fundings_in_db, 'name_fr', 'name', 'financ_0');
 	});
 
 	customTypeahead(involved_staff_db, 'involved_staff', 'name');
@@ -593,7 +622,7 @@
 	});
 
 	var staff_index = 1;
-	$('#form').on('click', '.addButton', function() {
+	$('#form_save').on('click', '.addButton', function() {
 		var field1 = 'staff_function_' + staff_index;
 		var field2 = 'staff_function_fr_' + staff_index;
 
@@ -635,7 +664,7 @@
     });
 
 	var expert_index = 1;
-    $('#form').on('click', '.addExpertButton', function() {
+    $('#form_save').on('click', '.addExpertButton', function() {
     	var field1 = 'expert_function_' + expert_index;
 		var field2 = 'expert_function_fr_' + expert_index;
 
@@ -676,7 +705,7 @@
         $row.remove();
     });
 
-    $('#form').on('click', '.addConsultantButton', function() {
+    $('#form_save').on('click', '.addConsultantButton', function() {
             var $template = $('#consultantsTemplate'),
                 $clone    = $template
                                 .clone()
@@ -698,7 +727,7 @@
         });
 
 	var financ_index = 1;
-    $('#form').on('click', '.addFinancingButton', function() {
+    $('#form_save').on('click', '.addFinancingButton', function() {
     	var field1 = 'financ_' + financ_index;
     	var field2 = 'financ_fr_' + financ_index;
 
@@ -763,5 +792,4 @@
     	$('#involved_consultants').val('');
     	$('#clean_consultant').addClass('hide');
     });
-    
 </script>

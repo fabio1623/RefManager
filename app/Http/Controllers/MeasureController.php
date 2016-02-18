@@ -48,16 +48,52 @@ class MeasureController extends Controller
         return $view;
     }
 
-    public function link_measure($subsidiary_id, $measure_id)
+    // public function link_measure($subsidiary_id, $measure_id)
+    // {
+    //     $subsidiary = Subsidiary::find($subsidiary_id);
+
+    //     $subsidiary->measures()->attach($measure_id);
+
+    //     return redirect()->back();
+    // }
+
+    public function link_measure(Request $request, $subsidiary_id, $category_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->measures()->attach($measure_id);
+        $category = Category::find($category_id);
+        $selected_measures_nb = 0;
+        $category_found = 0;
+
+        foreach ($category->measures as $measure) {
+            $subsidiary->measures()->detach($measure->id);
+        }
+
+        if ($request->id) {
+            foreach ($request->id as $measure_id) {
+                $subsidiary->measures()->attach($measure_id);
+                $selected_measures_nb++;
+            }
+
+            if ( $selected_measures_nb == $category->measures()->count() ) {
+                foreach ($subsidiary->categories as $linked_category) {
+                    if ($linked_category->id == $category_id) {
+                        $category_found = 1;
+                    }
+                }
+                if ($category_found == 0) {
+                    $subsidiary->categories()->attach($category_id);
+                }
+            }
+        }
+        else {
+            $subsidiary->categories()->detach($category_id);
+        }
 
         return redirect()->back();
     }
 
-    public function detach_measure($subsidiary_id, $measure_id)
+    public function detach_measure($subsidiary_id, $category_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 

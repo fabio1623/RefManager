@@ -52,7 +52,7 @@
 								<button type="submit" class="btn btn-primary">
 									<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send
 								</button>
-								<a class="btn btn-primary" href="{{ URL::previous() }}" role="button">
+								<a class="btn btn-primary" href="{{ URL('/auth/login') }}" role="button">
 							    	<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Back
 							    </a>
 							</div>

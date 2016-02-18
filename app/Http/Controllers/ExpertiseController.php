@@ -61,6 +61,8 @@ class ExpertiseController extends Controller
         $subsidiary = Subsidiary::find($subsidiary_id);
 
         $domain = Domain::find($domain_id);
+        $selected_expertises_nb = 0;
+        $domain_found = 0;
 
         foreach ($domain->expertises as $expertise) {
             $subsidiary->expertises()->detach($expertise->id);
@@ -69,7 +71,22 @@ class ExpertiseController extends Controller
         if ($request->id) {
             foreach ($request->id as $expertise_id) {
                 $subsidiary->expertises()->attach($expertise_id);
+                $selected_expertises_nb++;
             }
+
+            if ( $selected_expertises_nb == $domain->expertises()->count() ) {
+                foreach ($subsidiary->domains as $linked_domain) {
+                    if ($linked_domain->id == $domain_id) {
+                        $domain_found = 1;
+                    }
+                }
+                if ($domain_found == 0) {
+                    $subsidiary->domains()->attach($domain_id);
+                }
+            }
+        }
+        else {
+            $subsidiary->domains()->detach($domain_id);
         }
 
         return redirect()->back();

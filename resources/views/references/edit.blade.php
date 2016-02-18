@@ -14,36 +14,39 @@
 					<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 						<div id="toolbar" class="btn-group" role="group" aria-label="...">
 
-							<form id="form_approve" role="form" method="get" action="{{ action('ReferenceController@approve', $reference->id) }}">
-							</form>
-
-							<form id="form_disapprove" role="form" method="get" action="{{ action('ReferenceController@disapprove', $reference->id) }}">
-							</form>
-
-							<form id="form_index" role="form" method="get" action="{{ action('ReferenceController@index') }}">
-							</form>	
-
 							@if(Auth::user()->profile == 'Dcom manager')
 								@if($reference->dcom_approval == 0)
-									<button form="form_approve" type="submit" class="btn btn-primary btn-sm" aria-label="Left Align">
+									<button form="form_approve" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
 									  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Approve
 									</button>
 								@else
-									<button form="form_disapprove" type="submit" class="btn btn-primary btn-sm" aria-label="Left Align">
+									<button form="form_disapprove" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
 									  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Disapprove
 									</button>
 								@endif
 							@endif
-							<button id="base_btn" type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
+							<button form="form_save" type="submit" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+							</button>
+							<button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
 							  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
 							</button>
-							<button id="language_btn" type="button" class="btn btn-primary btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
-							  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Languages
+							<!-- <button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu"> -->
+							@if($linked_languages->count() > 0)
+								<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
+							@else
+								<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="">
+							@endif
+							<!-- <button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href=""> -->
+							  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Translations
 							</button>
-							<button id='btn_language_selector' type="button" class="btn btn-primary btn-sm hidden">
+							<button id='btn_language_selector' type="button" class="btn btn-default btn-sm hidden">
 							  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
-							<button form="form_index" type="submit" class="btn btn-primary btn-sm" aria-label="Left Align">
+							<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							</button>
+							<button form="form_back" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
 							  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 							</button>
 
@@ -65,7 +68,21 @@
 			</div>
 		@endif
 
-		<form id="form" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@update', $reference->id) }}">
+		<form id="form_approve" role="form" method="get" action="{{ action('ReferenceController@approve', $reference->id) }}">
+		</form>
+
+		<form id="form_disapprove" role="form" method="get" action="{{ action('ReferenceController@disapprove', $reference->id) }}">
+		</form>
+
+		<form id="form_back" role="form" method="get" action="{{ action('ReferenceController@index') }}">
+		</form>	
+
+		<form id="form_delete" role="form" method="POST" action="{{ action('ReferenceController@destroy', $reference->id) }}">
+			<?php echo method_field('DELETE'); ?>
+		    <?php echo csrf_field(); ?>
+		</form>	
+
+		<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@update', $reference->id) }}">
 			{{ method_field('PUT') }}
 			<?php echo csrf_field(); ?>
 
@@ -86,43 +103,46 @@
 </div>
 </div>
 
+<form id="form_add_translation" role="form" method="POST" action="{{ action('ReferenceController@link_translation', $reference->id) }}">
+    <?php echo csrf_field(); ?>
+    @include("references.create.english.modals.select_language_modal")
+</form>	
+
 <script>
-	// Show description pane
-	// $('.drop_description').click(function (e) {
-	// 	e.preventDefault()
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#description_menu"]').tab('show')
-	// });
+	var linked_languages = {!! $linked_languages->toJson() !!};
 
-	// // Show criteria pane
-	// $('.drop_criteria').click(function (e) {
-	// 	/*e.preventDefault()*/
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#criteria_menu"]').tab('show')
-	// });
+	$('#btn_delete').click( function(e) {
+		var confirm_box = confirm("Are you sure ?");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
 
-	// // Show measure pane
-	// $('.drop_measure').click(function (e) {
-	// 	e.preventDefault()
-	// 	// Select tab by name
-	// 	$('.nav-tabs a[href="#measure_menu"]').tab('show')
-	// }):
-
-	$('#language_btn').click( function () {
-		$('#base_btn').attr("class", "btn btn-primary btn-sm");
-		$(this).attr("class", "btn btn-primary btn-sm active");
-		$('#btn_language_selector').attr("class", "btn btn-primary btn-sm");
+	$('#language_btn').click( function (e) {
+		if (linked_languages.length < 1) {
+			var confirm_box = confirm("There is no translation. Do you want to add one ?");
+			if (confirm_box == false) {
+				e.preventDefault();
+			}
+			else {
+				$('#select_language_modal').modal();		
+			}
+		}
+		else {
+			$('#base_btn').attr("class", "btn btn-default btn-sm");
+			$(this).attr("class", "btn btn-default btn-sm active");
+			$('#btn_language_selector').attr("class", "btn btn-default btn-sm");
+		}
 	});
 
 	$('#base_btn').click( function () {
-		$('#language_btn').attr("class", "btn btn-primary btn-sm");
-		$(this).attr("class", "btn btn-primary btn-sm active");
-		$('#btn_language_selector').attr("class", "btn btn-primary btn-sm hidden");
+		$('#language_btn').attr("class", "btn btn-default btn-sm");
+		$(this).attr("class", "btn btn-default btn-sm active");
+		$('#btn_language_selector').attr("class", "btn btn-default btn-sm hidden");
 	});
 
 	$('#btn_language_selector').click(function () {
 		$('#select_language_modal').modal();
-		// $('.lang_tab').removeClass('active');
 	});
 </script>
 

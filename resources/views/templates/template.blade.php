@@ -67,7 +67,7 @@
 						<ul class="nav navbar-nav">
 							@if (Auth::guest())
 							@else
-								<li><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+								<li class="visible-lg"><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 								<!-- Users Administrator -->
 								@if (Auth::user()->profile == 'User administrator')
 									<li class="dropdown">
@@ -87,16 +87,17 @@
 							            <li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search a reference</a></li>
+							            <li><a href=""><span class="glyphicon glyphicon-import"></span> Import</a></li>
 							          </ul>
 							        </li>
-							        <li class="dropdown">
+							        <!-- <li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Users<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
 							            <li><a href="{{ action ('UserController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a user</a></li>
 							            <li><a href="{{ action('UserController@index') }}"><span class="glyphicon glyphicon-list"></span> List of users</a></li>
 							          </ul>
-							        </li>
-							        <li class="dropdown">
+							        </li> -->
+							        <!-- <li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-retweet"></span> Services<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
 							          	<li class="dropdown-header">External services</li>
@@ -122,15 +123,18 @@
 							            <li><a href="{{ action ('CategoryController@create') }}"><span class="glyphicon glyphicon-plus"></span> New category</a></li>
 							            <li><a href="{{ action('CategoryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of categories</a></li>
 							          </ul>
-							        </li>
+							        </li> -->
 							        <li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-inbox"></span> Management<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
-							            <li><a href="{{ action('ZoneController@index') }}"><span class="glyphicon glyphicon-list"></span> Zones</a></li>
-							            <li><a href="{{ action('ContributorController@index') }}"><span class="glyphicon glyphicon-list"></span> Contributors</a></li>
+							          	<li><a href="{{ action('SubsidiaryController@edit', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-wrench"></span> Layout</a></li>
+							            <li><a href="{{ action('ZoneController@index', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-list"></span> Zones</a></li>
+							            <li><a href="{{ action('ContributorController@index', [Auth::user()->subsidiary_id, 1]) }}"><span class="glyphicon glyphicon-list"></span> Contributors</a></li>
 							            <li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-list"></span> Fundings</a></li>
+							            <li><a id="upload_link" href=""><span class="glyphicon glyphicon-import"></span> Upload</a></li>
 							          </ul>
 							        </li>
+							        <input type="file" id="upload_input" class="hidden">
 						        @endif
 						        <!-- References Administrator -->
 						        @if (Auth::user()->profile == 'Reference administrator')
@@ -163,12 +167,17 @@
 
 						<ul class="nav navbar-nav navbar-right">
 							@if (Auth::guest())
-								<li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-								<li><a href="{{ url('/auth/register') }}"><span class="glyphicon glyphicon-registration-mark"></span> Register</a></li>
+								<!-- <li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+								<li><a href="{{ url('/auth/register') }}"><span class="glyphicon glyphicon-registration-mark"></span> Register</a></li> -->
 							@else
 								<img src="{{Auth::user()->avatar}}" class="profile-image img-circle">
 								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{ Auth::user()->username }}<span class="caret"></span></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">	   {{ Auth::user()->username }} 
+										@if ($requests_number > 0)
+											<span class="badge">{{$requests_number}}</span>
+										@endif
+										<span class="caret"></span>
+									</a>
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="{{ action('UserController@manageAccount', Auth::user()->id) }}"> <span class="glyphicon glyphicon glyphicon-user"></span> My account</a></li>
 										<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
@@ -189,14 +198,22 @@
 			<!-- #./Navbar -->
 
 			<style>
-				body { padding-top: 60px; }
+				/*body { padding-top: 60px; }*/
 			</style>
-
+<!-- <div class="container"> -->
+			<h3>Fixed Navbar</h3>
 			@yield('content')
-
+<!-- </div> -->
 		</div>
 		<!-- #./Body container -->
 
 	</body>
 
 </html>
+
+<script>
+	$('#upload_link').click( function(e) {
+		e.preventDefault();
+		$('#upload_input').click();
+	} );
+</script>

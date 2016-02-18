@@ -72,32 +72,41 @@ class DomainController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->domains()->detach();
-        // $subsidiary->expertises()->detach();
+        $domains = Domain::all();
 
         if ($request->id) {
-            foreach ($request->id as $domain_id) {
-                $subsidiary->domains()->attach($domain_id);
-                // $domain = Domain::find($domain_id);
-                // foreach ($domain->expertises as $expertise) {
-                //     $subsidiary->expertises()->attach($expertise->id);
-                // }
-            }
-            $domains = Domain::all();
-
-            foreach ($domains as $domain) {
-                $found = 0;
-                foreach ($subsidiary->domains as $value) {
-                    if ($value->id == $domain->id) {
-                        $found = 1;
+            foreach ($domains as $domain_in_db) {
+                $domain_found = 0;
+                foreach ($request->id as $domain_id) {
+                    if ($domain_id == $domain_in_db->id) {
+                        $domain_found = 1;
                     }
                 }
-                if ($found == 0) {
-                    foreach ($domain->expertises as $expertise) {
-                        $subsidiary->expertises()->detach($expertise->id);
+                if ($domain_found == 0) {
+                    $subsidiary->domains()->detach($domain_in_db->id);
+                    foreach ($domain_in_db->expertises as $expertise_in_db) {
+                        $subsidiary->expertises()->detach($expertise_in_db->id);
                     }
                 }
+                else {
+                    $found = 0;
+                    foreach ($subsidiary->domains as $linked_domain) {
+                        if ($linked_domain->id == $domain_in_db->id) {
+                            $found = 1;
+                        }
+                    }   
+                    if ($found == 0) {
+                        $subsidiary->domains()->attach($domain_in_db->id);
+                        foreach ($domain_in_db->expertises as $expertise_in_db) {
+                            $subsidiary->expertises()->attach($expertise_in_db->id);
+                        }
+                    }   
+                }
             }
+        }
+        else {
+            $subsidiary->domains()->detach();
+            $subsidiary->expertises()->detach();
         }
 
         return redirect()->back();
@@ -161,7 +170,7 @@ class DomainController extends Controller
     {
         $domain = Domain::find($id);
 
-        $expertises = $domain->expertises()->paginate(10);
+        $expertises = $domain->expertises()->orderBy('name', 'asc')->get();
 
         $view = view('domains.edit', ['domain' => $domain, 'expertises' => $expertises]);
         return $view;

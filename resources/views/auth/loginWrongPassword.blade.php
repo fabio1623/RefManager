@@ -22,9 +22,9 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@authenticate') }}">
                         <?php echo csrf_field(); ?>
 
-                        <div class="alert alert-success alert-dismissible" role="alert">
+                        <div class="alert alert-danger alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>Your request has been sent!</strong>
+                          <strong>Warning!</strong> Failed to connect.
                         </div>
 
                         <div class="form-group">

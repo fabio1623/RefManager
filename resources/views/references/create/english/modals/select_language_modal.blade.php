@@ -6,35 +6,36 @@
         <h4 class="modal-title">Add a translation</h4>
       </div>
       <div class="modal-body">
-        <div class='row'>
           <div class="form-group">
-            <label for="language_select" class="col-sm-4 control-label">Language</label>
-            <div class="col-sm-8">
-                <select class="form-control" id="language_select">
+            <label for="language_select" class="control-label">Language</label>
+              <select id="language_select" class="form-control selectpicker" data-width="100%" data-live-search="true" name="language">
                 <option></option>
-                @foreach ($languages as $language)
-                  <option>{{ $language->name }}</option>
+                @foreach ($translation_languages as $language)
+                  <option value="{{ $language->id }}">{{ $language->name }}</option>
                 @endforeach
               </select>
-            </div>
           </div>
-        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="add_language_btn" type="button" data-dismiss="modal" class="btn btn-primary">Add</button>
+        <a id="add_language_btn" tabindex="0" class="btn btn-primary" role="button" data-toggle="popover" data-placement="top" data-trigger="focus" title="Warning" data-content="You have to choose a language.">Add</a>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <script>
+  $('#add_language_btn').popover();
+  
+  $('#add_language_btn').on('show.bs.popover', function (e) {
+      if ($('#language_select').val() != '') {
+          e.preventDefault(); 
+      }
+  });
 
-$('#add_language_btn').click( function () {
-  $('#language_nav').append('<li role="presentation"><a data-toggle="tab" href="#test"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> ' + $('#language_select').val() + '</a></li>');
-  $('#language_menu').append('<div id="test" class="tab-pane fade"><h3></h3>');
-  $('#language_menu').load("resources/views/references/create/english/languages");
-  $('#language_menu').append('</div>');
-});
-
+  $('#add_language_btn').click( function(e) {
+      if ($('#language_select').val() != '') {
+          $('#form_add_translation').submit();
+      }
+  });
 </script>

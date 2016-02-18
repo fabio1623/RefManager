@@ -10,26 +10,26 @@
       </div>
       <div id="domain-{{ $domain->id }}" class="panel-body">
         @foreach($expertises as $expertise)
-        <div class="checkbox col-sm-6">
+          @foreach($domain->expertises as $linked_expertise)
+            @if($linked_expertise->id == $expertise->id)
+              <div class="checkbox col-sm-6">
+                <label>
+                  <input id="service-{{ $expertise->id }}" name="domains[{{ $domain->id }}][{{ $expertise->id }}]" type="checkbox"> {{$expertise->name}}
+                </label>
+              </div>
+            @endif
+          @endforeach
+        <!-- <div class="checkbox col-sm-6">
           <label>
             <input id="service-{{ $expertise->id }}" name="domains[{{ $domain->id }}][{{ $expertise->id }}]" type="checkbox"> {{$expertise->name}}
           </label>
-        </div>
+        </div> -->
         @endforeach
       </div>
     </div>
   </div>
   @endforeach
 
-</div>
-
-<div class="form-group">
-  <button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-    <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
-  </button>
-  <a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button"> 
-    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-  </a>
 </div>
 
 

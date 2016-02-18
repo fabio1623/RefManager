@@ -24,16 +24,16 @@
 	<label for="country" class="col-sm-4 control-label">Country</label>
 	<div class="col-sm-4">
 	    <select class="form-control selectpicker" data-width="100%" data-live-search="true" id="country" name="country">
-	    	<option></option>
-	    	@foreach($countries as $country)
-	    		<option value="{{ $country->id }}">{{$country->name}}</option>
+	    	<option id="country_options"></option>
+	    	@foreach ($countries as $country)
+	    		<option value="{{ $country->id }}">{{ $country->name }}</option>
 	    	@endforeach
 		</select>
 	</div>
 	@if (Auth::user()->profile == 'User administrator')
-		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#country_modal">
+		<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#country_modal">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-		</button>
+		</button> -->
 		@include("references.create.english.modals.countries_modal")
 	@endif
 </div>
@@ -50,7 +50,7 @@
 <div class="form-group">
 	<label for="zone" class="col-sm-4 control-label">Zone</label>
 	<div class="col-sm-2">
-	  	<select class="form-control selectpicker" data-width="auto" id="zone" name="zone">
+	  	<select class="form-control selectpicker" data-width="100%" id="zone" name="zone">
 	  		<option></option>
 			@foreach($zones as $zone)
 				<option value="{{ $zone->id }}">{{$zone->name}}</option>
@@ -165,20 +165,53 @@
 </div>
 <!-- EO line -->
 
-<div class="form-group">
-	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
-	</button>
-	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
-		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-	</a>
-</div>
-
 <script>
 	var countries = {!! $countries->toJson() !!};
 	var zones = {!! $zones->toJson() !!};
 	var seniors = {!! $seniors->toJson() !!};
 	var experts = {!! $experts->toJson() !!};
+	var country_zone = {!! $country_zone->toJson() !!};
+	var zone_managers = {!! $zone_managers->toJson() !!};
+
+	function getManager(selected_zone_id) {
+		var manager_id = null;
+		if (selected_zone_id != '') {
+			for (var i = 0; i < zones.length; i++) {
+				if (zones[i].id == selected_zone_id) {
+					manager_id = zones[i].manager;
+					break;
+				}
+			}
+			if (manager_id == null) {
+				$('#zone_manager').val('No manager for this zone');
+			}
+			else {
+				for (var i = 0; i < zone_managers.length; i++) {
+					if (zone_managers[i].id == manager_id) {
+						$('#zone_manager').val( zone_managers[i].name );
+					}
+				}
+			}
+		}
+		else {
+			$('#zone_manager').val('');
+		}
+	}
+
+	function getCountriesList(selected_zone_id) {
+		var countries_id_list = [];
+		for (var i = 0; i < country_zone.length; i++) {
+			if (country_zone[i].zone_id == selected_zone_id) {
+				countries_id_list.push(country_zone[i].country_id);
+			}
+		}
+		for (var i = 0; i < countries.length; i++) {
+			if (jQuery.inArray(countries[i].id, countries_id_list) != -1) {
+				$('#country_options').after("<option value='" + countries[i].id + "'>" + countries[i].name + "<option>");
+			}
+		}
+		$('#country').selectpicker('refresh');
+	}
 
 	$('#date_picker_start').datepicker({
 	    format: "mm-yyyy",
@@ -227,34 +260,6 @@
 		}
 	});
 
-	// $("#add_external_btn").click(function() {
-	// 	var service = $("#add_external_inp").val();
-	// 	$("#external_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label><label><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></label></div>');
-	// });
-
-	// $("#add_internal_btn").click(function() {
-	// 	var service = $("#add_internal_inp").val();
-	// 	$("#internal_div").append('<div class="checkbox col-sm-12 col-sm-offset-4"><label><input type="checkbox"><b>' + service + '</b></label></div>');
-	// });
-
-	// var i;
-	// $("label[id|='lab']").bind("click", function () {
-	// 	var current_element = this;
-	// 	if(i){
-	// 		i = $(this).after('<div id="add_external_sub_div"><p></p><div id="" class="col-sm-4"><div class="input-group"><input type="text" class="form-control" id="add_external_sub_inp"><span class="input-group-btn"><button class="btn btn-default" type="button" id="add_external_sub_btn"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span></button></span></div></div></div>');
-	// 		$("#add_external_sub_btn").click(function(){
-	// 			var service = $("#add_external_sub_inp").val();
-	// 			alert(service);
-	// 			$("#add_external_sub_div").before('<div class="checkbox col-sm-12"><label><input type="checkbox"><b>' + service + '</b></label></div>');
-	// 		});
-	// 		i = null;
-	// 	}
-	// 	else{
-	// 		$("#add_external_sub_div").detach();
-	// 		i = 1;
-	// 	}
-	// });
-
 	$('#confidential_check').change(function () {
 		if (this.checked) {
 			$('#criteria_pane').addClass("hide");
@@ -284,42 +289,8 @@
 
 	//Search the right manager of the selected zone.
 	$('#zone').change( function(e) {
-		var found = 0;
-		if ( $('#zone').val() != '' ) {
-			for (var i = 0; i < zones.length; i++) {
-				if ( zones[i].id == $('#zone').val() ) {
-					if ( zones[i].manager != null ) {
-						//Check if the manager exist in the staff list
-						for (var j = 0; j < seniors.length; j++) {
-							if ( seniors[j].id == zones[i].manager ) {
-								found = 1;
-								$('#zone_manager').val( seniors[j].name );
-								break;
-							};
-						};
-						if (found == 0) {
-							//Check if the manager exist in the experts list
-							for (var x = 0; x < experts.length; x++) {
-								if ( experts[x].id == zones[i].manager ) {
-									found = 1;
-									$('#zone_manager').val( experts[x].name );
-									break;
-								};
-							};
-						};
-					}
-					else {
-						$('#zone_manager').val('No manager for this zone');
-					};
-				};
-				if ( found == 1 ) {
-					break;
-				};
-			};
-		}
-		else {
-			$('#zone_manager').val('');
-		};
+		var zone_id = $('#zone').val();
+		getManager(zone_id);
 	} );
 	
 </script>
