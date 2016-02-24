@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Subsidiary;
 use App\User;
+use App\Profile;
 
 class SubsidiaryController extends Controller
 {
@@ -83,8 +84,9 @@ class SubsidiaryController extends Controller
         $subsidiary = Subsidiary::find($id);
         // $users = $subsidiary->users()->get();
         $users = $subsidiary->users()->paginate(20);
+        $profiles = Profile::all();
         
-        $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users]);
+        $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users, 'profiles'=>$profiles]);
         return $view;
     }
 

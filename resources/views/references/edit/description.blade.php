@@ -126,7 +126,7 @@
 <!-- List of external services -->
 <!-- Line -->
 <div class="form-group" id="external_div"> 
-	<hr></hr>
+	<hr>
 	<label class="col-sm-4 control-label">Type of services</label>
 	@foreach($external_services as $service)
 			@if($service->parent_service_id != "")
@@ -155,7 +155,7 @@
 <!-- List of internal services -->
 <!-- Line -->
 <div class="form-group hidden" id="internal_div"> 
-	<hr></hr>
+	<hr>
 	<label class="col-sm-4 control-label">Veolia's contract type</label>
 	@foreach($internal_services as $service)
 		@if($service->parent_service_id != "")

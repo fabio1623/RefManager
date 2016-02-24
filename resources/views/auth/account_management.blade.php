@@ -60,7 +60,7 @@
 						<div class="form-group">
 						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  <div class="col-sm-6">
-							  <input type="text" class="form-control" value="{{ $user->profile }}" readonly>
+							  <input type="text" class="form-control" value="{{ $profile->name }}" readonly>
 							</div>
 						</div>
 						<div class="form-group">
@@ -68,7 +68,7 @@
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 								</button>
-								<a class="btn btn-primary btn-sm" href="" role="button"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
 						</div>

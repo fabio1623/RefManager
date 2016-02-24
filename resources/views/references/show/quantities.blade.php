@@ -2,7 +2,7 @@
 
   @for($i=0; $i < $categories->count(); $i++)
 
-    <div class="col-sm-8 col-sm-offset-2">
+    <div id="category-{{ $categories[$i]->id }}" class="col-sm-8 col-sm-offset-2 hidden">
       <div class="panel panel-default">
         <div id="panel_heading" class="panel-heading">
           <h3 class="panel-title">
@@ -12,7 +12,7 @@
 
         <div id="collapse_category-{{$i}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{$i}}">
 
-          <div id="category-{{ $categories[$i]->id }}" class="panel-body">
+          <div class="panel-body">
             @foreach($measures as $measure)
               @foreach($categories[$i]->measures as $linked_measure)
                 @if($linked_measure->id == $measure->id)
@@ -23,26 +23,16 @@
 
                 @if(count($measure->units) > 0)
                   <div class="input-group">
-                    <input type="text" class="form-control" id="measure-{{$measure->id}}" name="categories[{{$categories[$i]->id}}][{{$measure->id}}]">
+                    <input type="text" class="form-control" id="measure-{{$measure->id}}" name="categories[{{$categories[$i]->id}}][{{$measure->id}}]" disabled>
 
-                  @if(count($measure->units) == 1)
+                  
                     <span class="input-group-addon" id="basic-addon2">{{ $measure->units[0]->name }}</span>
-                  @else
-
-                    <input type="text" class="form-control hidden" id="measure-{{$measure->id}}" name="units[{{ $measure->id }}]">
-
-                    <select id="select-{{ $measure->id }}" name="units[{{ $measure->id }}]" class="selectpicker" data-width="22%" data-size="100%">
-                      @foreach($measure->units as $unit)
-                        <option value="{{ $unit->name }}">{{ $unit->name }}</option>
-                      @endforeach
-                    </select>
-
-                  @endif
+                  
 
                   </div><!-- /input-group -->
 
                 @else
-                  <input type="text" class="form-control" id="measure-{{$measure->id}}" name="categories[{{$categories[$i]->id}}][{{$measure->id}}]">
+                  <input type="text" class="form-control" id="measure-{{$measure->id}}" name="categories[{{$categories[$i]->id}}][{{$measure->id}}]" disabled>
                 @endif
                   
                 </div>
@@ -50,7 +40,7 @@
               @elseif($measure->field_type == 'Checkbox')
                 <div class="col-sm-4 checkbox">
                   <label>
-                    <input type="checkbox" id="measure-{{$measure->id}}" name="categories[{{$categories[$i]->id}}][{{$measure->id}}]">
+                    <input type="checkbox" id="measure-{{$measure->id}}" name="categories[{{$categories[$i]->id}}][{{$measure->id}}]" disabled>
                   </label>
                 </div>
               @endif
@@ -61,7 +51,7 @@
                 <label for="qualifier-{{ $qualifier->id }}" class="col-sm-4 col-sm-offset-1 control-label">{{$qualifier->name}}</label>
                 <div class="col-sm-4 checkbox">
                   <label>
-                    <input type="checkbox" id="qualifier-{{ $qualifier->id }}" name="qualifiers[{{ $measure->id }}][{{ $qualifier->id }}]">
+                    <input type="checkbox" id="qualifier-{{ $qualifier->id }}" name="qualifiers[{{ $measure->id }}][{{ $qualifier->id }}]" disabled>
                   </label>
                 </div>
               </div>
@@ -85,6 +75,18 @@
   var categories = {!! $categories->toJson() !!};
   var measures = {!! $measures_values->toJson() !!};
   var qualifiers = {!! $qualifiers_values->toJson() !!};
+  var selected_measures = {!! $reference->measures->toJson() !!};
+
+  var categories_tab = [];
+  for (var i = 0; i < selected_measures.length; i++) {
+      if (jQuery.inArray(selected_measures[i].category_id, categories_tab) == -1) {
+          categories_tab.push(selected_measures[i].category_id);
+      }
+  }
+
+  for (var i = 0; i < categories_tab.length; i++) {
+      $('#category-' + categories_tab).removeClass('hidden');
+  }
 
   for (var i=0; i<measures.length; i++) {
     $('#measure-' + measures[i].measure_id).val(measures[i].value);

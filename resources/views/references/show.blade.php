@@ -27,20 +27,41 @@
 							<div class="btn-group">
 							  <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							    <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span><span class="caret"></span>
+							    Extract
 							  </button>
 							  <ul class="dropdown-menu">
+							  	<li class="dropdown-header">WB</li>
 							    <li><a href="{{ action('ReferenceController@generate_file_wb_en', $reference->id) }}">
 							    	WB - EN
 						    	</a></li>
 							    <li><a href="{{ action('ReferenceController@generate_file_wb_fr', $reference->id) }}">
 							    	WB - FR
 						    	</a></li>
+						    	<li class="dropdown-header">EURO</li>
 							    <li><a href="{{ action('ReferenceController@generate_file_eu_en', $reference->id) }}">
 							    	EURO - EN
 						    	</a></li>
 							    <li><a href="{{ action('ReferenceController@generate_file_eu_fr', $reference->id) }}">
 							    	EURO - FR
 						    	</a></li>
+						    	@if ($linked_languages->count() > 0)
+									<li class="dropdown-header">OTHER</li>
+									@foreach ($linked_languages as $language)
+										<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
+											{{ $language->name }}
+										</a></li>	
+									@endforeach
+								@endif
+						    	<!-- <li class="dropdown-header">OTHER</li>
+						    	<li><a href="{{ action('ReferenceController@generate_file_es', $reference->id) }}">
+							    	ES
+						    	</a></li>
+						    	<li><a href="{{ action('ReferenceController@generate_file_eu_fr', $reference->id) }}">
+							    	PT
+						    	</a></li>
+						    	<li><a href="{{ action('ReferenceController@generate_file_eu_fr', $reference->id) }}">
+							    	RU
+						    	</a></li> -->
 							  </ul>
 							</div>
 							<!-- <button form="form_generate" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
@@ -58,9 +79,12 @@
 							<!-- <button form="form_index" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
 							  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							</button> -->
-							<button form="form_index" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
+							<!-- <button form="form_index" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
 							  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-							</button>
+							</button> -->
+							<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index') }}">
+								<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+							</a>
 
 						</div>
 					</div>

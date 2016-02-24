@@ -34,6 +34,7 @@ Route::resource('access_requests', 'AccessController');
 
 //Default Passwords
 Route::get('default_password/edit', 'DefaultPasswordController@manage_password');
+Route::resource('default_password', 'DefaultPasswordController');
 
 //Home
 Route::post('upload', 'HomeController@upload_file');
@@ -55,10 +56,6 @@ Route::get('references/search', 'ReferenceController@search');
 Route::get('references/search/results', 'ReferenceController@results');
 Route::get('references/customize', 'ReferenceController@customize');
 Route::get('references/basic_search', 'ReferenceController@basic_search');
-Route::get('references/{reference}/generate_file_wb_en', 'ReferenceController@generate_file_wb_en');
-Route::get('references/{reference}/generate_file_wb_fr', 'ReferenceController@generate_file_wb_fr');
-Route::get('references/{reference}/generate_file_eu_en', 'ReferenceController@generate_file_eu_en');
-Route::get('references/{reference}/generate_file_eu_fr', 'ReferenceController@generate_file_eu_fr');
 Route::post('references/{reference}/link_translation', 'ReferenceController@link_translation');
 Route::get('references/{reference}/languages/{language}/detach_translation', 'ReferenceController@detach_translation');
 Route::resource('references', 'ReferenceController');
@@ -66,7 +63,7 @@ Route::resource('references', 'ReferenceController');
 //Users
 Route::get('user/destroyOne/{id}', 'UserController@destroyOne');
 Route::get('subsidiaries/{subsidiary}/edit/search', 'UserController@search');
-Route::get('user/create_by_request/{id}', 'UserController@create_by_request');
+Route::get('user/create_by_request/{request}', 'UserController@create_by_request');
 Route::post('users/create_by_request/store_by_request', 'UserController@store_by_request');
 Route::get('user/account_management/{id}', 'UserController@manageAccount');
 Route::post('user/account_update/{id}', 'UserController@updateAccount');
@@ -137,6 +134,16 @@ Route::resource('subsidiaries.zones.contributors', 'ContributorController');
 //Fundings
 Route::delete('fundings/destroy_multiple', 'FundingController@destroyMultiple');
 Route::resource('fundings', 'FundingController');
+
+//Files generation
+Route::get('references/{reference}/generate_file_wb_en', 'ReferenceController@generate_file_wb_en');
+Route::get('references/{reference}/generate_file_wb_fr', 'ReferenceController@generate_file_wb_fr');
+Route::get('references/{reference}/generate_file_eu_en', 'ReferenceController@generate_file_eu_en');
+Route::get('references/{reference}/generate_file_eu_fr', 'ReferenceController@generate_file_eu_fr');
+Route::get('references/{reference}/generate_file_es', 'ReferenceController@generate_file_es');
+Route::get('references/{reference}/languages/{language}/generate_file_translations', 'ReferenceController@generate_file_translations');
+Route::get('{template}/{kind_of_file}/reference/{reference}/generate_file_base', 'ReferenceController@generate_file_base');
+Route::get('subsidiaries/{subsidiary}/match_page', 'ReferenceController@match_page');
 
 Route::get('test', function () {
 

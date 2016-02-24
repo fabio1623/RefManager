@@ -132,7 +132,11 @@
 									{{ $user->email }}
 								</td>
 								<td>
-									{{ $user->profile }}
+									@foreach ($profiles as $profile)
+										@if ($profile->id == $user->profile_id)
+											{{ $profile->name }}
+										@endif
+									@endforeach
 								</td>
 								<td>
 									<a class="btn btn-link center-block" href="{{ action('UserController@edit', [$subsidiary->id, $user->id]) }}">

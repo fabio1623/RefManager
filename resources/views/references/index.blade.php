@@ -9,11 +9,13 @@
 				<div class="row">
 					<div class="col-sm-6">References : {{ $kind_of_reference }}</div>
 					<div class="col-sm-2">
+						@if (Auth::user()->profile_id != 1)
 						<form action="{{ action('ReferenceController@create') }}" method="GET">
 							<button type="submit" class="btn btn-default btn-sm pull-right">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 						</form>
+						@endif
 					</div>
 					<!-- <div class="col-sm-1">
 						<button type="submit" form="form_delete" id="remove_btn" class="btn btn-danger btn-sm">
@@ -112,14 +114,18 @@
 											</a>	
 										</td>
 										<td class="check">
-											@if (Auth::user()->username == $reference->created_by || Auth::user()->profile == 'User administrator')
+											@if (Auth::user()->username == $reference->created_by || Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
 												<a class="btn btn-link" href="{{ action('ReferenceController@edit', $reference->id) }}">
 													<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 												</a>
-											@endif
 												<a class="btn btn-link pull-right" href="{{ action('ReferenceController@show', $reference->id) }}">
 													<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 												</a>
+											@else
+												<a class="btn btn-link center-block" href="{{ action('ReferenceController@show', $reference->id) }}">
+													<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+												</a>
+											@endif
 										</td>
 									</tr>
 							@endforeach

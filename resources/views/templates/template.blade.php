@@ -69,7 +69,7 @@
 							@else
 								<li class="visible-lg"><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 								<!-- Users Administrator -->
-								@if (Auth::user()->profile == 'User administrator')
+								@if (Auth::user()->profile_id == 5)
 									<li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-briefcase"></span> Subsidiaries<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
@@ -132,12 +132,13 @@
 							            <li><a href="{{ action('ContributorController@index', [Auth::user()->subsidiary_id, 1]) }}"><span class="glyphicon glyphicon-list"></span> Contributors</a></li>
 							            <li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-list"></span> Fundings</a></li>
 							            <li><a id="upload_link" href=""><span class="glyphicon glyphicon-import"></span> Upload</a></li>
+							            <li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
 							          </ul>
 							        </li>
 							        <input type="file" id="upload_input" class="hidden">
 						        @endif
-						        <!-- References Administrator -->
-						        @if (Auth::user()->profile == 'Reference administrator')
+						        <!-- References Administrator or Dcom manager -->
+						        @if (Auth::user()->profile_id == 2 || Auth::user()->profile_id == 3)
 									<li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
@@ -150,12 +151,12 @@
 							          </ul>
 							        </li>
 						        @endif
-						        <!-- End User -->
-						        @if (Auth::user()->profile == 'Basic user')
+						        <!-- Basic User -->
+						        @if (Auth::user()->profile_id == 1)
 						        	<li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
-							            <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li>
+							            <!-- <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li> -->
 							            <li><a href="{{ action('ReferenceController@index') }}">List of references</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
@@ -180,12 +181,16 @@
 									</a>
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="{{ action('UserController@manageAccount', Auth::user()->id) }}"> <span class="glyphicon glyphicon glyphicon-user"></span> My account</a></li>
+
+										@if(Auth::user()->profile_id == 5)
 										<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
 										<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests 
 											@if ( $requests_number > 0 )
 												<span class="badge">{{$requests_number}}</span>
 											@endif
 										</a></li>
+										@endif
+
 										<li role="separator" class="divider"></li>
 										<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 									</ul>
@@ -197,23 +202,17 @@
 			</nav>
 			<!-- #./Navbar -->
 
-			<style>
-				/*body { padding-top: 60px; }*/
-			</style>
 <!-- <div class="container"> -->
 			<h3>Fixed Navbar</h3>
 			@yield('content')
 <!-- </div> -->
 		</div>
 		<!-- #./Body container -->
-
 	</body>
-
-</html>
-
 <script>
 	$('#upload_link').click( function(e) {
 		e.preventDefault();
 		$('#upload_input').click();
 	} );
 </script>
+</html>

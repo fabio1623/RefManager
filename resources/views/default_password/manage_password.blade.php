@@ -19,7 +19,8 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="GET" action="action('DefaultPasswordController@manage_password')">
+					<form class="form-horizontal" role="form" method="POST" action="action('DefaultPasswordController@update')">
+						<?php echo method_field('PUT'); ?>
 						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
@@ -36,12 +37,12 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label class="col-sm-4 control-label">Confirmation Password</label>
 							<div class="col-sm-6">
 								<input type="password" class="form-control" name="new_password_confirmation">
 							</div>
-						</div>
+						</div> -->
 						
 						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">

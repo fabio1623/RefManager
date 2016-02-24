@@ -48,7 +48,7 @@
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 @if (count($staff_involved) > 0)
 
@@ -59,7 +59,6 @@
 				<div class="col-sm-4">
 		@else
 			<div class="template">
-				<!-- <br></br> -->
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
@@ -158,7 +157,6 @@
 <!-- EO line -->
 <!-- The option field template containing an option field and a Remove button -->
 <div class="hide template" id="optionTemplate">
-	<!-- <br></br> -->
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
@@ -190,7 +188,7 @@
 	    </div>
 	</div>
 </div>
-<hr></hr>
+<hr>
 <!-- Line -->
 @if (count($experts) > 0)
 
@@ -201,7 +199,6 @@
 				<div class="col-sm-4">
 		@else
 			<div class="expertTemplate">
-				<!-- <br></br> -->
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-4">
 		@endif
@@ -299,7 +296,6 @@
 <!-- EO line -->
 <!-- The option field template containing an option field and a Remove button -->
 <div class="hide expertTemplate" id="expertTemplate">
-	<!-- <br></br> -->
 	<div class="form-group">
 	    <div class="col-sm-4 col-sm-offset-4">
 	    	<div class="input-group">
@@ -331,7 +327,7 @@
 	    </div>
 	</div>
 </div>
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
@@ -362,7 +358,7 @@
 	  </div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 @if (count($consultants) > 0)
 	@for ($i=0; $i < count($consultants); $i++)
@@ -459,11 +455,11 @@
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <div id="contact_info">
-	<!-- <hr></hr> -->
-	<label for="contact_name_en" class="col-sm-4 control-label">Contact information</label>
-	<br></br>
+	<div class="form-group">
+		<label for="contact_name_en" class="col-sm-4 control-label">Contact information</label>
+	</div>
 	<!-- Line -->
 	<div class="form-group">
 		<label for="contact_name_en" class="col-sm-4 control-label">Name</label>
@@ -517,7 +513,7 @@
 		</div> -->
 	</div>
 	<!-- EO line -->
-	<hr></hr>
+	<hr>
 </div>
 <!-- Line -->
 <div class="form-group">
@@ -539,7 +535,7 @@
 	@endif
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 @if( count( $financings ) > 0 )
 	@for ($i = 0; $i < count( $financings ); $i++)
@@ -627,13 +623,13 @@
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 				Name
 			</span>
-			<input type="text" class="form-control financingInput">
+			<input type="text" class="form-control financingInput" autocomplete="off">
 		</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input type="text" class="form-control financingFrInput" id="financing_fr_input">
+			<input type="text" class="form-control financingFrInput" id="financing_fr_input" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeFinancingButton" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -643,7 +639,7 @@
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
@@ -711,7 +707,7 @@
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="general_comments" class="col-sm-4 control-label">General comments / Key words</label>

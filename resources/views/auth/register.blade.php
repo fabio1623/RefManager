@@ -22,7 +22,7 @@
 					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@store', $subsidiary_id) }}">
 						<?php echo csrf_field(); ?>
 
-						<div class="form-group">
+						<div class="form-group hidden">
 							<label class="col-sm-4 control-label">Username</label>
 							<div class="col-sm-6">
 								<input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" readonly>
@@ -66,14 +66,14 @@
 						</div>
 						
 						<div class="form-group">
-						  <label for="profile_type" class="col-sm-4 control-label">Profile</label>
-						  <div class="col-sm-6">
-							  <select id="profile_type" class="form-control selectpicker" data-width="100%" name="profile">
-							  	<option></option>
-							    <option value="Basic user">Basic user</option>
-							    <option value="Reference administrator">Reference administrator</option>
-							    <option value="User administrator">User administrator</option>
-							  </select>
+						  	<label for="profile_type" class="col-sm-4 control-label">Profile</label>
+						  	<div class="col-sm-6">
+								<select id="profile_type" class="form-control selectpicker" data-width="100%" name="profile">
+									<option></option>
+									@foreach ($profiles as $profile)
+										<option value="{{ $profile->id }}">{{ $profile->name }}</option>	
+									@endforeach
+								</select>
 							</div>
 						</div>
 						<div class="form-group">

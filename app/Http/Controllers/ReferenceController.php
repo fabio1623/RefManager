@@ -141,143 +141,6 @@ class ReferenceController extends Controller
      */
     public function create()
     {
-        $language_codes = array(
-        'en' => 'English' , 
-        'aa' => 'Afar' , 
-        'ab' => 'Abkhazian' , 
-        'af' => 'Afrikaans' , 
-        'am' => 'Amharic' , 
-        'ar' => 'Arabic' , 
-        'as' => 'Assamese' , 
-        'ay' => 'Aymara' , 
-        'az' => 'Azerbaijani' , 
-        'ba' => 'Bashkir' , 
-        'be' => 'Byelorussian' , 
-        'bg' => 'Bulgarian' , 
-        'bh' => 'Bihari' , 
-        'bi' => 'Bislama' , 
-        'bn' => 'Bengali/Bangla' , 
-        'bo' => 'Tibetan' , 
-        'br' => 'Breton' , 
-        'ca' => 'Catalan' , 
-        'co' => 'Corsican' , 
-        'cs' => 'Czech' , 
-        'cy' => 'Welsh' , 
-        'da' => 'Danish' , 
-        'de' => 'German' , 
-        'dz' => 'Bhutani' , 
-        'el' => 'Greek' , 
-        'eo' => 'Esperanto' , 
-        'es' => 'Spanish' , 
-        'et' => 'Estonian' , 
-        'eu' => 'Basque' , 
-        'fa' => 'Persian' , 
-        'fi' => 'Finnish' , 
-        'fj' => 'Fiji' , 
-        'fo' => 'Faeroese' , 
-        'fr' => 'French' , 
-        'fy' => 'Frisian' , 
-        'ga' => 'Irish' , 
-        'gd' => 'Scots/Gaelic' , 
-        'gl' => 'Galician' , 
-        'gn' => 'Guarani' , 
-        'gu' => 'Gujarati' , 
-        'ha' => 'Hausa' , 
-        'hi' => 'Hindi' , 
-        'hr' => 'Croatian' , 
-        'hu' => 'Hungarian' , 
-        'hy' => 'Armenian' , 
-        'ia' => 'Interlingua' , 
-        'ie' => 'Interlingue' , 
-        'ik' => 'Inupiak' , 
-        'in' => 'Indonesian' , 
-        'is' => 'Icelandic' , 
-        'it' => 'Italian' , 
-        'iw' => 'Hebrew' , 
-        'ja' => 'Japanese' , 
-        'ji' => 'Yiddish' , 
-        'jw' => 'Javanese' , 
-        'ka' => 'Georgian' , 
-        'kk' => 'Kazakh' , 
-        'kl' => 'Greenlandic' , 
-        'km' => 'Cambodian' , 
-        'kn' => 'Kannada' , 
-        'ko' => 'Korean' , 
-        'ks' => 'Kashmiri' , 
-        'ku' => 'Kurdish' , 
-        'ky' => 'Kirghiz' , 
-        'la' => 'Latin' , 
-        'ln' => 'Lingala' , 
-        'lo' => 'Laothian' , 
-        'lt' => 'Lithuanian' , 
-        'lv' => 'Latvian/Lettish' , 
-        'mg' => 'Malagasy' , 
-        'mi' => 'Maori' , 
-        'mk' => 'Macedonian' , 
-        'ml' => 'Malayalam' , 
-        'mn' => 'Mongolian' , 
-        'mo' => 'Moldavian' , 
-        'mr' => 'Marathi' , 
-        'ms' => 'Malay' , 
-        'mt' => 'Maltese' , 
-        'my' => 'Burmese' , 
-        'na' => 'Nauru' , 
-        'ne' => 'Nepali' , 
-        'nl' => 'Dutch' , 
-        'no' => 'Norwegian' , 
-        'oc' => 'Occitan' , 
-        'om' => '(Afan)/Oromoor/Oriya' , 
-        'pa' => 'Punjabi' , 
-        'pl' => 'Polish' , 
-        'ps' => 'Pashto/Pushto' , 
-        'pt' => 'Portuguese' , 
-        'qu' => 'Quechua' , 
-        'rm' => 'Rhaeto-Romance' , 
-        'rn' => 'Kirundi' , 
-        'ro' => 'Romanian' , 
-        'ru' => 'Russian' , 
-        'rw' => 'Kinyarwanda' , 
-        'sa' => 'Sanskrit' , 
-        'sd' => 'Sindhi' , 
-        'sg' => 'Sangro' , 
-        'sh' => 'Serbo-Croatian' , 
-        'si' => 'Singhalese' , 
-        'sk' => 'Slovak' , 
-        'sl' => 'Slovenian' , 
-        'sm' => 'Samoan' , 
-        'sn' => 'Shona' , 
-        'so' => 'Somali' , 
-        'sq' => 'Albanian' , 
-        'sr' => 'Serbian' , 
-        'ss' => 'Siswati' , 
-        'st' => 'Sesotho' , 
-        'su' => 'Sundanese' , 
-        'sv' => 'Swedish' , 
-        'sw' => 'Swahili' , 
-        'ta' => 'Tamil' , 
-        'te' => 'Tegulu' , 
-        'tg' => 'Tajik' , 
-        'th' => 'Thai' , 
-        'ti' => 'Tigrinya' , 
-        'tk' => 'Turkmen' , 
-        'tl' => 'Tagalog' , 
-        'tn' => 'Setswana' , 
-        'to' => 'Tonga' , 
-        'tr' => 'Turkish' , 
-        'ts' => 'Tsonga' , 
-        'tt' => 'Tatar' , 
-        'tw' => 'Twi' , 
-        'uk' => 'Ukrainian' , 
-        'ur' => 'Urdu' , 
-        'uz' => 'Uzbek' , 
-        'vi' => 'Vietnamese' , 
-        'vo' => 'Volapuk' , 
-        'wo' => 'Wolof' , 
-        'xh' => 'Xhosa' , 
-        'yo' => 'Yoruba' , 
-        'zh' => 'Chinese' , 
-        'zu' => 'Zulu' , 
-        );
         $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
         $languages = Language::all();
         // $external_services = ExternalService::all();
@@ -365,7 +228,8 @@ class ReferenceController extends Controller
         $external_services = ExternalService::all();
         $internal_services = InternalService::all();
         $domains = Domain::all();
-        $countries = Country::all();
+        // $countries = Country::all();
+        $countries = Country::has('zones')->orderBy('name', 'asc')->get();
         $categories = Category::all();
         $zones = Zone::all();
         $fundings = Funding::orderBy('name', 'asc')->get();
@@ -1061,9 +925,11 @@ class ReferenceController extends Controller
         // dd($financings);
 
         // $external_services = ExternalService::all();
-        $external_services = $subsidiary->external_services()->get();
+        // $external_services = $subsidiary->external_services()->get();
+        $external_services = $reference->external_services()->get();
         // $internal_services = InternalService::all();
-        $internal_services = $subsidiary->internal_services()->get();
+        // $internal_services = $subsidiary->internal_services()->get();
+        $internal_services = $reference->internal_services()->get();
         // $domains = Domain::all();
         $domains = $subsidiary->domains()->get();
         // $expertises = Expertise::all();
@@ -1228,7 +1094,7 @@ class ReferenceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($_POST);
+        // dd($request->linked_languages['Spanish']);
         // $this->validate($request, [
         //     'project_number' => 'required|unique:references',
         //     'country_id'     => 'required',
@@ -1616,14 +1482,25 @@ class ReferenceController extends Controller
                 }
             }
         }
-        
+        $reference->languages()->detach();
         if ($request->linked_languages) {
-            $reference->languages()->detach();
+            // $reference->languages()->detach();
+            // $textareas = ['project_description', 'service_description', 'comments'];
+            // foreach ($textareas as $value) {
+            //     # code...
+            // }
+
             foreach ($request->linked_languages as $key => $language) {
                 $language_in_db = Language::where('name', $key)->first();
 
+                
+
                 $reference->languages()->attach($language_in_db->id, [
-                    'project_name'=>$language['project_name'], 
+                    'project_name'=>$language['project_name'],
+                    'country'=>$language['country'],
+                    'location'=>$language['location'],
+                    'staff'=>$language['staff'],
+                    'consultants'=>$language['consultants'], 
                     'project_description'=>$language['project_description'],
                     'service_name'=>$language['service_title'],
                     'service_description'=>$language['service_description'],
@@ -1632,6 +1509,7 @@ class ReferenceController extends Controller
                     'contact_department'=>$language['contact_department'],
                     'contact_email'=>$language['contact_email'],
                     'client'=>$language['customer_name'],
+                    'customer_address'=>$language['customer_address'],
                     'financing'=>$language['funding'],
                     'general_comments'=>$language['comments'],
                 ]);
@@ -1710,222 +1588,433 @@ class ReferenceController extends Controller
         return redirect()->action('ReferenceController@index');    
     }
 
-    public function generate_file_wb_en($reference_id)
+    public function match_page($subsidiary_id)
+    {
+        $fields = [
+            'Project number',
+            'Name of DFAC project',
+            'Country',
+            'Continent',
+            'Zone',
+            'Zone manager',
+            'Location',
+            'Project start date',
+            'Project completion',
+            'Estimated duration',
+            'Name of the project',
+            'Detailed description of project',
+            'Title of services provided by Seureca',
+            'Detailed description of service',
+            'Staff involved',
+            'Experts employed',
+            'Total number of staff',
+            'Total number man/months (Seureca)',
+            'Total number man/months (Associated consultants)',
+            'Name of associated consultants',
+            'Contact name',
+            'Contact department',
+            'Contact phone',
+            'Contact email',
+            'Name of the client',
+            'Financing',
+            'Total project cost',
+            'Cost of services provided by Seureca',
+            'Works cost',
+            'General comments / Key words'
+        ];
+
+        $view = view('references.export.match_page', ['fields'=>$fields]);
+        return $view; 
+    }
+
+    public function generate_file($template_file, $extract_kind, $reference_id, $fields_tab)
     {
         \PhpOffice\PhpWord\Autoloader::register();
 
-        //Retrieve reference
         $reference = Reference::find($reference_id);
-
-        $template = 'app/Exports/Template_world_bank.docx';
-        $new_file = 'app/Exports/'.$reference->project_number.'_wb_en.docx';
+        
+        $template = 'app/Exports/'.$template_file.'.docx';
+        $new_file = 'app/Exports/'.$reference->project_number.'_'.$extract_kind.'.docx';
 
         //Create file from template
         $templateProcessor = new TemplateProcessor(storage_path($template));
 
-        //Insert values in template variables
-        if ($reference->subsidiary_id) {
-            $subsidiary = Subsidiary::find($reference->subsidiary_id);
-            $templateProcessor->setValue('firm', $subsidiary->name);
-        }
-        else {
-            $templateProcessor->setValue('firm', 'Firm');   
-        }
-
-        $templateProcessor->setValue('project_title', $reference->dfac_name);
-
-        if ($reference->country) {
-            $country = Country::find($reference->country);
-            $templateProcessor->setValue('country', $country->name);
-        }
-        else {
-            $templateProcessor->setValue('country', '');
-        }
-
-        $templateProcessor->setValue('location', $reference->location);
-        $templateProcessor->setValue('project_cost', $reference->total_project_cost);
-
-        if ($reference->client) {
-            $client = Client::find($reference->client);
-            $templateProcessor->setValue('customer_name', $client->name);
-        }
-        else {
-            $templateProcessor->setValue('customer_name', '');   
-        }
-
-        $templateProcessor->setValue('staff_number', $reference->staff_number);
-        $templateProcessor->setValue('service_cost', $reference->seureca_services_cost);
-        $templateProcessor->setValue('start_date', $reference->start_date);
-        $templateProcessor->setValue('end_date', $reference->end_date);
-
-        if ($reference->fundings()->count() > 0) {
-            $f = '';
-            foreach ($reference->fundings as $key => $funding) {
-                if ($key == 0) {
-                    $f = $funding->name.' / ';
-                }
-                else {
-                    $f = $f.$funding->name;
-                }
+        foreach ($fields_tab as $key => $value) {
+            switch ($value) {
+                case 'subsidiary_id':
+                    if ($reference->$value) {
+                        $subsidiary = Subsidiary::find($reference->$value);
+                        $templateProcessor->setValue($key, $subsidiary->name);
+                    }
+                    else {
+                        $templateProcessor->setValue($key, 'Firm');   
+                    }
+                    break;
+                case 'country':
+                    if ($reference->$value) {
+                        $country = Country::find($reference->$value);
+                        $templateProcessor->setValue($key, $country->name);
+                    }
+                    else {
+                        $templateProcessor->setValue($key, '');
+                    }
+                    break;
+                case 'client':
+                    if ($reference->$value) {
+                        $client = Client::find($reference->$value);
+                        $templateProcessor->setValue($key, $client->name);
+                    }
+                    else {
+                        $templateProcessor->setValue($key, '');   
+                    }
+                    break;
+                case '':
+                    if ($key == 'financing') {
+                        if ($reference->fundings()->count() > 0) {
+                            $f = '';
+                            foreach ($reference->fundings as $key => $funding) {
+                                if ($key == 0) {
+                                    $f = $funding->name.' / ';
+                                }
+                                else {
+                                    $f = $f.$funding->name;
+                                }
+                            }
+                            $templateProcessor->setValue('financing', $f);
+                        }
+                        else {
+                            $templateProcessor->setValue('financing', '');
+                        }
+                    }
+                    else {
+                        if ($key == 'consultant') {
+                            if ($reference->contributors()->where('function_on_project', 'Consultant')->count() > 0) {
+                                $c = '';
+                                foreach ($reference->contributors()->where('function_on_project', 'Consultant')->get() as $key => $consultant) {
+                                    if ($key == 0) {
+                                        $c = $consultant->name.' / ';
+                                    }
+                                    else {
+                                        $c = $c.$consultant->name;
+                                    }
+                                }
+                                $templateProcessor->setValue('consultant', $c);
+                            }
+                            else {
+                                $templateProcessor->setValue('consultant', '');   
+                            }
+                        }
+                        else {
+                            if ($reference->contributors()->where('function_on_project', 'Senior')->count() > 0) {
+                                $s = '';
+                                foreach ($reference->contributors()->where('function_on_project', 'Senior')->get() as $key => $senior) {
+                                    $senior_reference = ContributorReference::where('reference_id', $reference->id)->where('contributor_id', $senior->id)->first();
+                                    if ($key == 0) {
+                                        $s = $senior->name.' -> '.$senior_reference->responsability_on_project.' / ';
+                                    }
+                                    else {
+                                        $s = $s.$senior->name.' -> '.$senior_reference->responsability_on_project;
+                                    }
+                                }
+                                $templateProcessor->setValue('senior_staff', $s);
+                            }
+                            else {
+                                $templateProcessor->setValue('senior_staff', '');   
+                            }
+                        }
+                    }
+                    break;             
+                default:
+                    $templateProcessor->setValue($key, htmlspecialchars($reference->$value));
+                    break;
             }
-            $templateProcessor->setValue('financing', $f);
+            // $templateProcessor->setValue($key, htmlspecialchars($reference->$value));
         }
-        else {
-            $templateProcessor->setValue('financing', '');
-        }
-
-        if ($reference->contributors()->where('function_on_project', 'Consultant')->count() > 0) {
-            $c = '';
-            foreach ($reference->contributors()->where('function_on_project', 'Consultant')->get() as $key => $consultant) {
-                if ($key == 0) {
-                    $c = $consultant->name.' / ';
-                }
-                else {
-                    $c = $c.$consultant->name;
-                }
-            }
-            $templateProcessor->setValue('consultant', $c);
-        }
-        else {
-            $templateProcessor->setValue('consultant', '');   
-        }
-
-        $templateProcessor->setValue('consultants_man_months', $reference->consultants_man_months);
-
-        if ($reference->contributors()->where('function_on_project', 'Senior')->count() > 0) {
-            $s = '';
-            foreach ($reference->contributors()->where('function_on_project', 'Senior')->get() as $key => $senior) {
-                $senior_reference = ContributorReference::where('reference_id', $reference->id)->where('contributor_id', $senior->id)->first();
-                if ($key == 0) {
-                    $s = $senior->name.' -> '.$senior_reference->responsability_on_project.' / ';
-                }
-                else {
-                    $s = $s.$senior->name.' -> '.$senior_reference->responsability_on_project;
-                }
-            }
-            $templateProcessor->setValue('senior_staff', $s);
-        }
-        else {
-            $templateProcessor->setValue('senior_staff', '');   
-        }
-
-        $templateProcessor->setValue('project_description', $reference->project_description);
-        $templateProcessor->setValue('service_description', $reference->service_description);
 
         //Save filled file
         $templateProcessor->saveAs(storage_path($new_file));
         
         //Download the file & delete it from server
-        return response()->download(storage_path($new_file))->deleteFileAfterSend(true);
+        return $new_file;
+        // return response()->download(storage_path($new_file))->deleteFileAfterSend(true);
+    }
+
+    public function generate_file_wb_en($reference_id)
+    {
+        
+        // \PhpOffice\PhpWord\Autoloader::register();
+
+        // //Retrieve reference
+        // $reference = Reference::find($reference_id);
+
+        // $template = 'app/Exports/Template_world_bank.docx';
+        // $new_file = 'app/Exports/'.$reference->project_number.'_wb_en.docx';
+
+        // //Create file from template
+        // $templateProcessor = new TemplateProcessor(storage_path($template));
+
+        //Variable in template => database column
+        $fields_tab = [
+                'project_title'=>'project_name',
+                'location'=>'location',
+                'project_cost'=>'total_project_cost',
+                'staff_number'=>'staff_number',
+                'service_cost'=>'seureca_services_cost',
+                'start_date'=>'start_date',
+                'end_date'=>'end_date',
+                'consultants_man_months'=>'consultants_man_months',
+                'project_description'=>'project_description',
+                'service_description'=>'service_description',
+                //Foreign keys
+                'firm'=>'subsidiary_id',
+                'country'=>'country',
+                'customer_name'=>'client',
+                'financing'=>'',
+                'consultant'=>'',
+                'senior_staff'=>'',
+        ];
+
+        $file = ReferenceController::generate_file('Template_world_bank', 'wb_en', $reference_id, $fields_tab);
+
+        return response()->download(storage_path($file))->deleteFileAfterSend(true);
+
+        // dd($fields_tab);
+
+        // foreach ($fields_tab as $key => $value) {
+        //     $templateProcessor->setValue($key, htmlspecialchars($reference->$value));
+        // }
+
+        // //Insert values in template variables
+        // if ($reference->subsidiary_id) {
+        //     $subsidiary = Subsidiary::find($reference->subsidiary_id);
+        //     $templateProcessor->setValue('firm', $subsidiary->name);
+        // }
+        // else {
+        //     $templateProcessor->setValue('firm', 'Firm');   
+        // }
+
+        // // $templateProcessor->setValue('project_title', $reference->dfac_name);
+
+        // if ($reference->country) {
+        //     $country = Country::find($reference->country);
+        //     $templateProcessor->setValue('country', $country->name);
+        // }
+        // else {
+        //     $templateProcessor->setValue('country', '');
+        // }
+
+        // // $templateProcessor->setValue('location', $reference->location);
+        // // $templateProcessor->setValue('project_cost', $reference->total_project_cost);
+
+        // if ($reference->client) {
+        //     $client = Client::find($reference->client);
+        //     $templateProcessor->setValue('customer_name', $client->name);
+        // }
+        // else {
+        //     $templateProcessor->setValue('customer_name', '');   
+        // }
+
+        // // $templateProcessor->setValue('staff_number', $reference->staff_number);
+        // // $templateProcessor->setValue('service_cost', $reference->seureca_services_cost);
+        // // $templateProcessor->setValue('start_date', $reference->start_date);
+        // // $templateProcessor->setValue('end_date', $reference->end_date);
+
+        // if ($reference->fundings()->count() > 0) {
+        //     $f = '';
+        //     foreach ($reference->fundings as $key => $funding) {
+        //         if ($key == 0) {
+        //             $f = $funding->name.' / ';
+        //         }
+        //         else {
+        //             $f = $f.$funding->name;
+        //         }
+        //     }
+        //     $templateProcessor->setValue('financing', $f);
+        // }
+        // else {
+        //     $templateProcessor->setValue('financing', '');
+        // }
+
+        // if ($reference->contributors()->where('function_on_project', 'Consultant')->count() > 0) {
+        //     $c = '';
+        //     foreach ($reference->contributors()->where('function_on_project', 'Consultant')->get() as $key => $consultant) {
+        //         if ($key == 0) {
+        //             $c = $consultant->name.' / ';
+        //         }
+        //         else {
+        //             $c = $c.$consultant->name;
+        //         }
+        //     }
+        //     $templateProcessor->setValue('consultant', $c);
+        // }
+        // else {
+        //     $templateProcessor->setValue('consultant', '');   
+        // }
+
+        // // $templateProcessor->setValue('consultants_man_months', $reference->consultants_man_months);
+
+        // if ($reference->contributors()->where('function_on_project', 'Senior')->count() > 0) {
+        //     $s = '';
+        //     foreach ($reference->contributors()->where('function_on_project', 'Senior')->get() as $key => $senior) {
+        //         $senior_reference = ContributorReference::where('reference_id', $reference->id)->where('contributor_id', $senior->id)->first();
+        //         if ($key == 0) {
+        //             $s = $senior->name.' -> '.$senior_reference->responsability_on_project.' / ';
+        //         }
+        //         else {
+        //             $s = $s.$senior->name.' -> '.$senior_reference->responsability_on_project;
+        //         }
+        //     }
+        //     $templateProcessor->setValue('senior_staff', $s);
+        // }
+        // else {
+        //     $templateProcessor->setValue('senior_staff', '');   
+        // }
+
+        // // $templateProcessor->setValue('project_description', $reference->project_description);
+        // // $templateProcessor->setValue('service_description', $reference->service_description);
+
+        // //Save filled file
+        // $templateProcessor->saveAs(storage_path($new_file));
+        
+        // //Download the file & delete it from server
+        // return response()->download(storage_path($new_file))->deleteFileAfterSend(true);
     }
 
     public function generate_file_wb_fr($reference_id)
     {
-        \PhpOffice\PhpWord\Autoloader::register();
+        //Variable in template => database column
+        $fields_tab = [
+                'project_title'=>'project_name_fr',
+                'location'=>'location',
+                'project_cost'=>'total_project_cost',
+                'staff_number'=>'staff_number',
+                'service_cost'=>'seureca_services_cost',
+                'start_date'=>'start_date',
+                'end_date'=>'end_date',
+                'consultants_man_months'=>'consultants_man_months',
+                'project_description'=>'project_description_fr',
+                'service_description'=>'service_description_fr',
+                //Foreign keys
+                'firm'=>'subsidiary_id',
+                'country'=>'country',
+                'customer_name'=>'client',
+                'financing'=>'',
+                'consultant'=>'',
+                'senior_staff'=>'',
+        ];
 
-        //Retrieve reference
-        $reference = Reference::find($reference_id);
+        $file = ReferenceController::generate_file('Template_world_bank_fr', 'wb_fr', $reference_id, $fields_tab);
 
-        $template = 'app/Exports/Template_world_bank_fr.docx';
-        $new_file = 'app/Exports/'.$reference->project_number.'_wb_fr.docx';
+        return response()->download(storage_path($file))->deleteFileAfterSend(true);
 
-        //Create file from template
-        $templateProcessor = new TemplateProcessor(storage_path($template));
 
-        //Insert values in template variables
-        if ($reference->subsidiary_id) {
-            $subsidiary = Subsidiary::find($reference->subsidiary_id);
-            $templateProcessor->setValue('firm', $subsidiary->name);
-        }
-        else {
-            $templateProcessor->setValue('firm', 'Firm');   
-        }
 
-        $templateProcessor->setValue('project_title', $reference->dfac_name);
+        // \PhpOffice\PhpWord\Autoloader::register();
 
-        if ($reference->country) {
-            $country = Country::find($reference->country);
-            $templateProcessor->setValue('country', $country->name);
-        }
-        else {
-            $templateProcessor->setValue('country', '');
-        }
+        // //Retrieve reference
+        // $reference = Reference::find($reference_id);
 
-        $templateProcessor->setValue('location', $reference->location);
-        $templateProcessor->setValue('staff_number', $reference->staff_number);
-        // $templateProcessor->setValue('project_cost', $reference->total_project_cost);
+        // $template = 'app/Exports/Template_world_bank_fr.docx';
+        // $new_file = 'app/Exports/'.$reference->project_name.'_wb_fr.docx';
 
-        if ($reference->client) {
-            $client = Client::find($reference->client);
-            $templateProcessor->setValue('customer_name', $client->name_fr);
-        }
-        else {
-            $templateProcessor->setValue('customer_name', '');   
-        }
+        // //Create file from template
+        // $templateProcessor = new TemplateProcessor(storage_path($template));
 
-        if ($reference->contributors()->where('function_on_project', 'Consultant')->count() > 0) {
-            $c = '';
-            foreach ($reference->contributors()->where('function_on_project', 'Consultant')->get() as $key => $consultant) {
-                if ($key == 0) {
-                    $c = $consultant->name.' / ';
-                }
-                else {
-                    $c = $c.$consultant->name;
-                }
-            }
-            $templateProcessor->setValue('consultant', $c);
-        }
-        else {
-            $templateProcessor->setValue('consultant', '');   
-        }
+        // //Insert values in template variables
+        // if ($reference->subsidiary_id) {
+        //     $subsidiary = Subsidiary::find($reference->subsidiary_id);
+        //     $templateProcessor->setValue('firm', $subsidiary->name);
+        // }
+        // else {
+        //     $templateProcessor->setValue('firm', 'Firm');   
+        // }
 
-        $templateProcessor->setValue('consultants_man_months', $reference->consultants_man_months);
+        // // dd($reference->project_name);
+        // $templateProcessor->setValue('project_title', htmlspecialchars('O&M Proposal for 2 WWTP in Porto'));
 
-        if ($reference->fundings()->count() > 0) {
-            $f = '';
-            foreach ($reference->fundings as $key => $funding) {
-                if ($key == 0) {
-                    $f = $funding->name_fr.' / ';
-                }
-                else {
-                    $f = $f.$funding->name_fr;
-                }
-            }
-            $templateProcessor->setValue('financing', $f);
-        }
-        else {
-            $templateProcessor->setValue('financing', '');
-        }
+        // if ($reference->country) {
+        //     $country = Country::find($reference->country);
+        //     $templateProcessor->setValue('country', $country->name);
+        // }
+        // else {
+        //     $templateProcessor->setValue('country', '');
+        // }
 
-        $templateProcessor->setValue('start_date', $reference->start_date);
-        $templateProcessor->setValue('end_date', $reference->end_date);
-        $templateProcessor->setValue('service_cost', $reference->seureca_services_cost);
+        // $templateProcessor->setValue('location', $reference->location);
+        // $templateProcessor->setValue('staff_number', $reference->staff_number);
+        // // $templateProcessor->setValue('project_cost', $reference->total_project_cost);
 
-        if ($reference->contributors()->where('function_on_project', 'Senior')->count() > 0) {
-            $s = '';
-            foreach ($reference->contributors()->where('function_on_project', 'Senior')->get() as $key => $senior) {
-                $senior_reference = ContributorReference::where('reference_id', $reference->id)->where('contributor_id', $senior->id)->first();
-                if ($key == 0) {
-                    $s = $senior->name.' -> '.$senior_reference->responsability_on_project_fr.' / ';
-                }
-                else {
-                    $s = $s.$senior->name.' -> '.$senior_reference->responsability_on_project_fr;
-                }
-            }
-            $templateProcessor->setValue('senior_staff', $s);
-        }
-        else {
-            $templateProcessor->setValue('senior_staff', '');   
-        }
+        // if ($reference->client) {
+        //     $client = Client::find($reference->client);
+        //     $templateProcessor->setValue('customer_name', $client->name_fr);
+        // }
+        // else {
+        //     $templateProcessor->setValue('customer_name', '');   
+        // }
 
-        $templateProcessor->setValue('project_description', $reference->project_description_fr);
-        $templateProcessor->setValue('service_description', $reference->service_description_fr);
+        // if ($reference->contributors()->where('function_on_project', 'Consultant')->count() > 0) {
+        //     $c = '';
+        //     foreach ($reference->contributors()->where('function_on_project', 'Consultant')->get() as $key => $consultant) {
+        //         if ($key == 0) {
+        //             $c = $consultant->name.' / ';
+        //         }
+        //         else {
+        //             $c = $c.$consultant->name;
+        //         }
+        //     }
+        //     $templateProcessor->setValue('consultant', $c);
+        // }
+        // else {
+        //     $templateProcessor->setValue('consultant', '');   
+        // }
 
-        //Save filled file
-        $templateProcessor->saveAs(storage_path($new_file));
+        // $templateProcessor->setValue('consultants_man_months', $reference->consultants_man_months);
+
+        // if ($reference->fundings()->count() > 0) {
+        //     $f = '';
+        //     foreach ($reference->fundings as $key => $funding) {
+        //         if ($key == 0) {
+        //             $f = $funding->name_fr.' / ';
+        //         }
+        //         else {
+        //             $f = $f.$funding->name_fr;
+        //         }
+        //     }
+        //     $templateProcessor->setValue('financing', $f);
+        // }
+        // else {
+        //     $templateProcessor->setValue('financing', '');
+        // }
+
+        // $templateProcessor->setValue('start_date', $reference->start_date);
+        // $templateProcessor->setValue('end_date', $reference->end_date);
+        // $templateProcessor->setValue('service_cost', $reference->seureca_services_cost);
+
+        // if ($reference->contributors()->where('function_on_project', 'Senior')->count() > 0) {
+        //     $s = '';
+        //     foreach ($reference->contributors()->where('function_on_project', 'Senior')->get() as $key => $senior) {
+        //         $senior_reference = ContributorReference::where('reference_id', $reference->id)->where('contributor_id', $senior->id)->first();
+        //         if ($key == 0) {
+        //             $s = $senior->name.' -> '.$senior_reference->responsability_on_project_fr.' / ';
+        //         }
+        //         else {
+        //             $s = $s.$senior->name.' -> '.$senior_reference->responsability_on_project_fr;
+        //         }
+        //     }
+        //     $templateProcessor->setValue('senior_staff', $s);
+        // }
+        // else {
+        //     $templateProcessor->setValue('senior_staff', '');   
+        // }
+
+        // $templateProcessor->setValue('project_description', $reference->project_description_fr);
+        // $templateProcessor->setValue('service_description', $reference->service_description_fr);
+
+        // //Save filled file
+        // $templateProcessor->saveAs(storage_path($new_file));
         
-        //Download the file & delete it from server
-        return response()->download(storage_path($new_file))->deleteFileAfterSend(true);
+        // //Download the file & delete it from server
+        // return response()->download(storage_path($new_file))->deleteFileAfterSend(true);
     }
 
     public function generate_file_eu_en($reference_id)
@@ -1936,7 +2025,7 @@ class ReferenceController extends Controller
         $reference = Reference::find($reference_id);
 
         $template = 'app/Exports/Template_euro.docx';
-        $new_file = 'app/Exports/'.$reference->project_number.'_eu_en.docx';
+        $new_file = 'app/Exports/'.$reference->project_name.'_eu_en.docx';
 
         //Create file from template
         $templateProcessor = new TemplateProcessor(storage_path($template));
@@ -2031,13 +2120,13 @@ class ReferenceController extends Controller
         $reference = Reference::find($reference_id);
 
         $template = 'app/Exports/Template_euro_fr.docx';
-        $new_file = 'app/Exports/'.$reference->project_number.'_eu_fr.docx';
+        $new_file = 'app/Exports/'.$reference->project_name.'_eu_fr.docx';
 
         //Create file from template
         $templateProcessor = new TemplateProcessor(storage_path($template));
 
         //Insert values in template variables
-        $templateProcessor->setValue('project_number', $reference->project_number);
+        $templateProcessor->setValue('project_number', $reference->project_name);
         $templateProcessor->setValue('project_title', $reference->dfac_name);
 
         if ($reference->subsidiary_id) {
@@ -2114,5 +2203,201 @@ class ReferenceController extends Controller
         
         //Download the file & delete it from server
         return response()->download(storage_path($new_file))->deleteFileAfterSend(true);
+    }
+
+    public function generate_file_es($reference_id)
+    {
+        \PhpOffice\PhpWord\Autoloader::register();
+
+        //Retrieve reference
+        $reference = Reference::find($reference_id);
+
+        $template = 'app/Exports/Template_es.docx';
+        $new_file = 'app/Exports/'.$reference->project_name.'_wb_es.docx';
+
+        //Create file from template
+        $templateProcessor = new TemplateProcessor(storage_path($template));
+
+        //Insert values in template variables
+        // $templateProcessor->setValue('ProjectTitle', htmlspecialchars($reference->project_name));
+        $templateProcessor->setValue('Localisation', htmlspecialchars($reference->location));
+        $templateProcessor->setValue('NStaff', htmlspecialchars($reference->staff_number));
+        $templateProcessor->setValue('NMonthMan', htmlspecialchars($reference->seureca_man_months));
+        $templateProcessor->setValue('StartDate', htmlspecialchars($reference->start_date));
+        $templateProcessor->setValue('EndDate', htmlspecialchars($reference->end_date));
+        $templateProcessor->setValue('StudyCost', htmlspecialchars($reference->seureca_services_cost));
+        $templateProcessor->setValue('NStaffMonthConsultant', htmlspecialchars($reference->consultants_man_months));
+
+        //Save filled file
+        $templateProcessor->saveAs(storage_path($new_file));
+        
+        //Download the file & delete it from server
+        return response()->download(storage_path($new_file))->deleteFileAfterSend(true);
+    }
+
+    //Generate word files for base language (French and english)
+    public function generate_file_base($template_name, $kind_of_template, $reference_id)
+    {
+        \PhpOffice\PhpWord\Autoloader::register();
+
+        $reference = Reference::find($reference_id);
+        $country = Country::find($reference->country);
+        $subsidiary = Subsidiary::find($reference->subsidiary_id);
+        $country = Country::find($reference->country);
+        $client = Client::find($reference->client);
+
+        $template = storage_path('app/Exports/'.$template_name.'.docx');
+        $new_file = storage_path('app/Exports/'.snake_case($reference->project_number).'_'.$kind_of_template.'.docx');
+
+        $exists = Storage::disk('local')->has('Exports/'.$template_name.'.docx');
+
+        if ($exists) {
+            //Create file from template
+            $templateProcessor = new TemplateProcessor($template);
+
+            //Insert values in template variables
+            $templateProcessor->setValue('ProjectNumber', htmlspecialchars($reference->project_number));
+            $templateProcessor->setValue('ProjectTitle', htmlspecialchars($reference->project_name));
+            $templateProcessor->setValue('ProjectTitleFr', htmlspecialchars($reference->project_name_fr));
+            $templateProcessor->setValue('Subsidiary', htmlspecialchars($subsidiary->name));
+            $templateProcessor->setValue('Country', htmlspecialchars($country->name));
+            $templateProcessor->setValue('Location', htmlspecialchars($reference->location));
+            $templateProcessor->setValue('TotalCost', htmlspecialchars(number_format($reference->total_project_cost)));
+            $templateProcessor->setValue('WorkCost', htmlspecialchars(number_format($reference->work_cost)));
+            $templateProcessor->setValue('ServiceCost', htmlspecialchars(number_format($reference->seureca_services_cost)));
+            $templateProcessor->setValue('Comments', htmlspecialchars($reference->general_comments));
+            $service_proportion = (($reference->seureca_services_cost)*100)/$reference->total_project_cost;
+            $service_proportion = number_format($service_proportion, 2, '.', ',');
+            $templateProcessor->setValue('ServiceProportion', htmlspecialchars($service_proportion));
+            $templateProcessor->setValue('StaffMonths', htmlspecialchars($reference->seureca_man_months));
+            $templateProcessor->setValue('NbStaff', htmlspecialchars($reference->staff_number));
+            $templateProcessor->setValue('Customer', htmlspecialchars($client->name));
+            $templateProcessor->setValue('CustomerFr', htmlspecialchars($client->name_fr));
+
+            // $templateProcessor->setValue('Funding', htmlspecialchars('Test'));
+            if ($reference->fundings()->count() > 0) {
+                // $string = '';
+                // $templateProcessor->setValue('Funding', $string);
+                // foreach ($reference->fundings as $key => $value) {
+                //     $string = $string.'&#xA;'.'${Funding'.$key.'}';  &#xD;
+                // }
+                // $templateProcessor->setValue('Funding', $string);
+                $f = '';
+                $fr = '';
+                foreach ($reference->fundings as $key => $funding) {
+                    $f = $f.'-'.$funding->name;
+                    $fr = $fr.'-'.$funding->name_fr;
+                }
+                $templateProcessor->setValue('Funding', htmlspecialchars($f));
+                $templateProcessor->setValue('FundingFr', htmlspecialchars($fr));
+            }
+            else {
+                $TemplateProcessor->setValue('Funding', '');
+                $TemplateProcessor->setValue('FundingFr', '');
+            }
+
+            $templateProcessor->setValue('StartDate', htmlspecialchars($reference->start_date));
+            $templateProcessor->setValue('EndDate', htmlspecialchars($reference->end_date));
+
+            // $templateProcessor->setValue('Consultant', htmlspecialchars());
+            if ($reference->contributors()->where('function_on_project', 'Consultant')->count() > 0) {
+                $c = '';
+                foreach ($reference->contributors()->where('function_on_project', 'Consultant')->get() as $key => $consultant) {
+                    $c = $c.'-'.$consultant->name;
+                }
+                $templateProcessor->setValue('Consultant', $c);
+            }
+            else {
+                $templateProcessor->setValue('Consultant', '');
+            }
+
+            $templateProcessor->setValue('ConsultantManMonths', htmlspecialchars($reference->consultants_man_months));
+            $templateProcessor->setValue('ProjectDescription', htmlspecialchars($reference->project_description));
+            $templateProcessor->setValue('ProjectDescriptionFr', htmlspecialchars($reference->project_description_fr));
+            $templateProcessor->setValue('ServiceDescription', htmlspecialchars($reference->service_description));
+            $templateProcessor->setValue('ServiceDescriptionFr', htmlspecialchars($reference->service_description_fr));
+
+            if ($reference->contributors()->where('function_on_project', 'Senior')->count() > 0) {
+                $s = '';
+                foreach ($reference->contributors()->where('function_on_project', 'Senior')->get() as $key => $senior) {
+                    $senior_reference = ContributorReference::where('reference_id', $reference->id)->where('contributor_id', $senior->id)->first();
+                    if ($key == 0) {
+                        $s = $senior->name.' -> '.$senior_reference->responsability_on_project.' / ';
+                    }
+                    else {
+                        $s = $s.$senior->name.' -> '.$senior_reference->responsability_on_project;
+                    }
+                }
+                $templateProcessor->setValue('SeniorStaff', $s);
+            }
+            else {
+                $templateProcessor->setValue('SeniorStaff', '');   
+            }
+
+
+
+            //Save filled file
+            $templateProcessor->saveAs($new_file);
+            
+            //Download the file & delete it from server
+            return response()->download($new_file)->deleteFileAfterSend(true);
+        }
+        else {
+            return redirect()->back();
+        }
+    }
+
+    //Generate word files for all languages
+    public function generate_file_translations($reference_id, $language_id)
+    {
+        // dd($_POST);
+        \PhpOffice\PhpWord\Autoloader::register();
+
+        $reference = Reference::find($reference_id);
+        $country = Country::find($reference->country);
+        $language = Language::find($language_id);
+        $language_reference_join = LanguageReference::where('language_id', $language_id)->where('reference_id', $reference_id)->first();
+        $translations = $language_reference_join['attributes'];
+        // dd($translations);
+        $template = storage_path('app/Exports/'.$language->name.'/Template.docx');
+        $new_file = storage_path('app/Exports/'.$language->name.'/'.snake_case($reference->project_number).'_'.$language->name.'.docx');
+        
+        $exists = Storage::disk('local')->has('Exports/'.$language->name.'/Template.docx');
+
+        if ($exists) {
+            //Create file from template
+            $templateProcessor = new TemplateProcessor($template);
+
+            //Insert values in template variables
+            $templateProcessor->setValue('ProjectTitle', htmlspecialchars($translations['project_name']));
+            $templateProcessor->setValue('ProjectDescription', htmlspecialchars($translations['project_description']));
+            $templateProcessor->setValue('ServiceDescription', htmlspecialchars($translations['service_description']));
+            $templateProcessor->setValue('CustomerName', htmlspecialchars($translations['client']));
+            $templateProcessor->setValue('StudyComment', htmlspecialchars($translations['general_comments']));
+            $templateProcessor->setValue('Localisation', htmlspecialchars($translations['location']));
+            $templateProcessor->setValue('Country', htmlspecialchars($translations['country']));
+            $templateProcessor->setValue('CustomerAddress', htmlspecialchars($translations['customer_address']));
+            $templateProcessor->setValue('Partners', htmlspecialchars($translations['financing']));
+            $templateProcessor->setValue('SeniorProfile', htmlspecialchars($translations['staff']));
+            $templateProcessor->setValue('Consultants', htmlspecialchars($translations['consultants']));
+
+            // $templateProcessor->setValue('Localisation', htmlspecialchars($reference->location));
+            $templateProcessor->setValue('NStaff', htmlspecialchars($reference->staff_number));
+            $templateProcessor->setValue('NMonthMan', htmlspecialchars($reference->seureca_man_months));
+            $templateProcessor->setValue('StartDate', htmlspecialchars($reference->start_date));
+            $templateProcessor->setValue('EndDate', htmlspecialchars($reference->end_date));
+            $templateProcessor->setValue('StudyCost', number_format(htmlspecialchars($reference->seureca_services_cost)));
+            $templateProcessor->setValue('NStaffMonthConsultant', htmlspecialchars($reference->consultants_man_months));
+            $templateProcessor->setValue('NExperts', htmlspecialchars($reference->contributors()->where('function_on_project', 'Expert')->count()));
+
+            //Save filled file
+            $templateProcessor->saveAs($new_file);
+            
+            //Download the file & delete it from server
+            return response()->download($new_file)->deleteFileAfterSend(true);
+        }
+        else {
+            return redirect()->back();
+        }
     }
 }

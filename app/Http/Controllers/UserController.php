@@ -11,6 +11,7 @@ use App\AccessRequest;
 use Auth;
 use Hash;
 use App\Subsidiary;
+use App\Profile;
 
 class UserController extends Controller
 {
@@ -38,14 +39,23 @@ class UserController extends Controller
     {
         // dd($_POST);
         $subsidiary = Subsidiary::find($subsidiary_id);
+        $profiles = Profile::all();
 
-        $users = $subsidiary->users()->where(function ($query) use ($request) {
-                                $query->where('username', 'LIKE', '%'.$request->search_inp.'%')
-                                      ->orWhere('profile', 'LIKE', '%'.$request->search_inp.'%');
-                            })->paginate(20);
+        $searched_profiles = Profile::where('name', 'like', '%'.$request->search_inp.'%')->get();
+
+        $users = User::where('subsidiary_id', $subsidiary_id)->where( function($query) use ($request, $searched_profiles) {
+            $query->where('username', 'LIKE', '%'.$request->search_inp.'%')
+            ->orWhere( function ($q) use ($searched_profiles) {
+                foreach ($searched_profiles as $profile) {
+                    $q->orWhere('profile_id', $profile->id);
+                }
+            });
+        });
+
+        $users = $users->paginate(20);
         
-        $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users, 'search_inp'=>$request->search_inp]);
-        // $view = view('auth.index')->with('users', $users);
+        $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users, 'search_inp'=>$request->search_inp, 'profiles'=>$profiles]);
+
         return $view;
     }
 
@@ -57,21 +67,23 @@ class UserController extends Controller
     public function create($subsidiary_id)
     {
         $subsidiaries = Subsidiary::orderBy('name', 'asc')->get();
+        $profiles = Profile::all();
         
-        $view = view('auth.register', ['subsidiary_id'=>$subsidiary_id, 'subsidiaries'=>$subsidiaries]);
+        $view = view('auth.register', ['subsidiary_id'=>$subsidiary_id, 'subsidiaries'=>$subsidiaries, 'profiles'=>$profiles]);
         return $view;
     }
 
-    public function create_by_request($id)
+    public function create_by_request($request_id)
     {
         // dd($id);
-        $request = AccessRequest::find($id);
+        $request = AccessRequest::find($request_id);
         $username = strstr($request->email, '@', true);
+        $profiles = Profile::all();
         // $domain = substr($request->email, strpos($request->email, "@") + 1);
         // $subsidiary_name = strstr($domain, '.', true);
         $subsidiaries = Subsidiary::orderBy('name', 'asc')->get();
 
-        $view = view('auth.register_by_request', ['request'=>$request, 'username'=>$username, 'subsidiaries'=>$subsidiaries]);
+        $view = view('auth.register_by_request', ['request'=>$request, 'username'=>$username, 'subsidiaries'=>$subsidiaries, 'profiles'=>$profiles]);
         return $view;
     }
 
@@ -115,7 +127,7 @@ class UserController extends Controller
         // $user->username = $username;
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
-        $user->profile = $request->profile;
+        $user->profile_id = $request->profile;
         
         if ($request->subsidiary) {
             $user->subsidiary_id = $request->subsidiary;
@@ -133,12 +145,13 @@ class UserController extends Controller
         }
 
         //If $request->subsidiary exist, we want to go to the request access page
-        if ($request->subsidiary) {
-            return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
-        }
-        else {
-            return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
-        }
+        // if ($request->subsidiary) {
+            return redirect()->action('UserController@edit', [$subsidiary_id, $user->id]);
+            // return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+        // }
+        // else {
+        //     return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+        // }
     }
 
     public function store_by_request(Request $request)
@@ -152,10 +165,19 @@ class UserController extends Controller
             'subsidiary' => 'required',
         ]);
         $user = new User;
-        $user->username = $request->username;
+        // $user->username = $request->username;
+        $username = strstr($request->email, '@', true);
+        
+        $nb_users_in_db = User::where('username', 'like', $username.'%')->count();
+        if ($nb_users_in_db > 0) {
+            $user->username = $username.$nb_users_in_db;
+        }
+        else {
+            $user->username = $username;
+        }
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
-        $user->profile = $request->profile;
+        $user->profile_id = $request->profile;
         $user->subsidiary_id = $request->subsidiary;
         
         $user->save();
@@ -164,7 +186,10 @@ class UserController extends Controller
 
         AccessRequest::destroy($access_request->id);
 
-        return redirect()->action('AccessController@index');
+        $profiles = Profile::all();
+
+        // return redirect()->action('AccessController@index');
+        return view('auth.edit', ['subsidiary_id'=>$request->subsidiary, 'user'=>$user, 'created_from_request'=>true, 'profiles'=>$profiles]);
     }
 
     /**
@@ -189,7 +214,8 @@ class UserController extends Controller
     public function edit($subsidiary_id, $user_id)
     {
         $user = User::find($user_id);
-        $view = view('auth.edit', ['subsidiary_id'=>$subsidiary_id, 'user'=>$user]);
+        $profiles = Profile::all();
+        $view = view('auth.edit', ['subsidiary_id'=>$subsidiary_id, 'user'=>$user, 'profiles'=>$profiles]);
         return $view;
     }
 
@@ -211,7 +237,7 @@ class UserController extends Controller
         $user = User::find($user_id);
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->profile = $request->profile;
+        $user->profile_id = $request->profile;
 
         $user->save();
 
@@ -224,12 +250,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($subsidiary_id, $user_id)
+    public function destroy(Request $request, $subsidiary_id, $user_id)
     {
         // dd($_POST);
+        $user = User::find($user_id);
+        $user->profile()->dissociate();
+        $user->save();
+
         User::destroy($user_id);
 
-        return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+        if ($request->return_to_access_requests) {
+            return redirect()->action('AccessController@index');
+        }
+        else {
+            return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+        }
         
         // dd($_POST);
         // $ids = $request->input('id');
@@ -293,8 +328,9 @@ class UserController extends Controller
     public function manageAccount($id)
     {
         $user = User::find($id);
+        $profile = Profile::find($user->profile_id);
 
-        $view = view('auth.account_management')->with('user', $user);
+        $view = view('auth.account_management', ['user'=>$user, 'profile'=>$profile]);
 
         return $view;
     }
