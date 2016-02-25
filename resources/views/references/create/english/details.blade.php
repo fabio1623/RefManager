@@ -397,12 +397,12 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 			<input type="text" class="form-control" id="project_cost" name="project_cost" aria-describedby="basic-addon2">
 			<select id="project_cost_select" name="project_currency" class="selectpicker" data-width="22%" data-size="100%">
-			  <option>Euros</option>
-			  <option>Dollars</option>
+			  <option>M €</option>
+			  <option>M $</option>
 			</select>
 		</div>
 	</div>
@@ -411,12 +411,12 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="services_cost" class="col-sm-4 control-label">Cost of services provided by Seureca</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="services_cost" name="services_cost" aria-describedby="basic-addon2">
 			<select id="services_cost_select" class="selectpicker" data-width="22%" data-size="100%">
-			  <option>Euros</option>
-			  <option>Dollars</option>
+			  <option>M €</option>
+			  <option>M $</option>
 			</select>
 		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->
 		</div>
@@ -426,12 +426,12 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="works_cost" class="col-sm-4 control-label">Works cost</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="works_cost" name="works_cost" aria-describedby="basic-addon2">
 		  	<select id="works_cost_select" class="selectpicker" data-width="22%" data-size="100%">
-			  <option>Euros</option>
-			  <option>Dollars</option>
+			  <option>M €</option>
+			  <option>M $</option>
 			</select>
 		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->
 		</div>

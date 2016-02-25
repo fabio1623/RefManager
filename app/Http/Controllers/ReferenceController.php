@@ -623,9 +623,15 @@ class ReferenceController extends Controller
         // $reference->seureca_services_cost = $request->input('seureca_services_cost');
         $reference->work_cost = $request->input('work_cost');
 
-        $reference->currency = $request->project_currency;
+        if ($request->project_currency == 'M $') {
+            $reference->currency = 'Dollars';
+        }
+        else {
+            $reference->currency = 'Euros';
+        }
+        // $reference->currency = $request->project_currency;
 
-        if ($reference->currency == "Dollars") {
+        if ($request->project_currency == "M $") {
             $url = "https://currency-api.appspot.com/api/EUR/USD.json?amount=1.00";
 
             $result = file_get_contents($url);
@@ -1095,6 +1101,7 @@ class ReferenceController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->linked_languages['Spanish']);
+        // dd($_POST);
         // $this->validate($request, [
         //     'project_number' => 'required|unique:references',
         //     'country_id'     => 'required',
@@ -1284,9 +1291,15 @@ class ReferenceController extends Controller
         $reference->general_comments = $request->input('general_comments');
         $reference->general_comments_fr = $request->input('general_comments_fr');
 
-        $reference->currency = $request->project_currency;
+        if ($request->project_currency == 'M $') {
+            $reference->currency = 'Dollars';
+        }
+        else {
+            $reference->currency = 'Euros';   
+        }
+        // $reference->currency = $request->project_currency;
 
-        if ($reference->currency == "Dollars") {
+        if ($request->project_currency == "M $") {
             $url = "https://currency-api.appspot.com/api/EUR/USD.json?amount=1.00";
 
             $result = file_get_contents($url);
@@ -2292,8 +2305,8 @@ class ReferenceController extends Controller
                 $templateProcessor->setValue('FundingFr', htmlspecialchars($fr));
             }
             else {
-                $TemplateProcessor->setValue('Funding', '');
-                $TemplateProcessor->setValue('FundingFr', '');
+                $templateProcessor->setValue('Funding', '');
+                $templateProcessor->setValue('FundingFr', '');
             }
 
             $templateProcessor->setValue('StartDate', htmlspecialchars($reference->start_date));
@@ -2343,7 +2356,7 @@ class ReferenceController extends Controller
             return response()->download($new_file)->deleteFileAfterSend(true);
         }
         else {
-            return redirect()->back();
+            // return redirect()->back();
         }
     }
 

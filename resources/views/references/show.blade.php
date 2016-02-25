@@ -31,27 +31,27 @@
 							  </button>
 							  <ul class="dropdown-menu">
 							  	<li class="dropdown-header">WB</li>
-							    <li><a href="{{ action('ReferenceController@generate_file_wb_en', $reference->id) }}">
-							    	WB - EN
-						    	</a></li>
-							    <li><a href="{{ action('ReferenceController@generate_file_wb_fr', $reference->id) }}">
-							    	WB - FR
-						    	</a></li>
-						    	<li class="dropdown-header">EURO</li>
-							    <li><a href="{{ action('ReferenceController@generate_file_eu_en', $reference->id) }}">
-							    	EURO - EN
-						    	</a></li>
-							    <li><a href="{{ action('ReferenceController@generate_file_eu_fr', $reference->id) }}">
-							    	EURO - FR
-						    	</a></li>
-						    	@if ($linked_languages->count() > 0)
-									<li class="dropdown-header">OTHER</li>
-									@foreach ($linked_languages as $language)
-										<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
-											{{ $language->name }}
-										</a></li>	
-									@endforeach
-								@endif
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank', 'wb', $reference->id]) }}">
+											WB - EN
+										</a></li>
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank_fr', 'wb_fr', $reference->id]) }}">
+											WB - FR
+										</a></li>
+										<li class="dropdown-header">EURO</li>
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro', 'euro', $reference->id]) }}">
+											EURO - EN
+										</a></li>
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro_fr', 'euro_fr', $reference->id]) }}">
+											EURO - FR
+										</a></li>
+										@if ($linked_languages->count() > 0)
+											<li class="dropdown-header">OTHER</li>
+											@foreach ($linked_languages as $language)
+												<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
+													{{ $language->name }}
+												</a></li>	
+											@endforeach
+										@endif
 						    	<!-- <li class="dropdown-header">OTHER</li>
 						    	<li><a href="{{ action('ReferenceController@generate_file_es', $reference->id) }}">
 							    	ES

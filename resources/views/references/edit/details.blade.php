@@ -643,24 +643,24 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 			<input type="text" class="form-control" id="project_cost" name="total_project_cost" aria-describedby="basic-addon2" value="{{ $reference->total_project_cost }}">
 			<select id="project_cost_select" name="project_currency" class="selectpicker" data-width="22%" data-size="100%">
 				@if($reference->currency == 'Euros')
-					<option>Euros</option>
-			  		<option>Dollars</option>
+					<option>M €</option>
+			  		<option>M $</option>
 				@else
-					<option>Dollars</option>
-					<option>Euros</option>
+					<option>M $</option>
+					<option>M €</option>
 				@endif
 			</select>
 		</div>
 	</div>
 	@if ($reference->rate != 1)
-		<div class="col-sm-4 col-sm-offset-1">
+		<div class="col-sm-4 col-sm-offset-2">
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Contract rate ($)</span>
+				<span class="input-group-addon" id="basic-addon2">Contract rate (€)</span>
 			  <input type="text" class="form-control" placeholder="" aria-describedby="" value="{{ $reference->rate }}">
 			</div>
 		</div>
@@ -670,16 +670,16 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="services_cost" class="col-sm-4 control-label">Cost of services provided by Seureca</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="services_cost" name="seureca_services_cost" aria-describedby="basic-addon2" value="{{ $reference->seureca_services_cost }}">
 			<select id="services_cost_select" class="selectpicker" data-width="22%" data-size="100%">
 				@if($reference->currency == 'Euros')
-			  		<option>Euros</option>
-			  		<option>Dollars</option>
+			  		<option>M €</option>
+			  		<option>M $</option>
 		  		@else
-		  			<option>Dollars</option>
-					<option>Euros</option>
+		  			<option>M $</option>
+					<option>M €</option>
 	  			@endif
 			</select>
 		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->
@@ -690,16 +690,16 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="works_cost" class="col-sm-4 control-label">Works cost</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="works_cost" name="work_cost" aria-describedby="basic-addon2" value="{{ $reference->work_cost }}">
 		  	<select id="works_cost_select" class="selectpicker" data-width="22%" data-size="100%">
 		  		@if($reference->currency == 'Euros')
-			  		<option>Euros</option>
-			  		<option>Dollars</option>
+			  		<option>M €</option>
+			  		<option>M $</option>
 		  		@else
-		  			<option>Dollars</option>
-					<option>Euros</option>
+		  			<option>M $</option>
+					<option>M €</option>
 		  		@endif
 			</select>
 		  <!-- <span class="input-group-addon" id="basic-addon2">Euros</span> -->

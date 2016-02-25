@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\DefaultPassword;
+
+use Hash;
 
 class DefaultPasswordController extends Controller
 {
@@ -37,7 +40,8 @@ class DefaultPasswordController extends Controller
      */
     public function create()
     {
-        //
+        // $view = view('default_password.create');
+        // return $view;
     }
 
     /**
@@ -48,7 +52,16 @@ class DefaultPasswordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($_POST);
+        // $this->validate($request, [
+        //     'password' => 'required|min:5|max:255',
+        // ]);
+
+        // $new_password = new DefaultPassword;
+        // $new_password->password = Hash::make($request->password);
+        // $new_password->save();
+
+        // return redirect()->action('DefaultPasswordController@manage_password');
     }
 
     /**
@@ -82,7 +95,14 @@ class DefaultPasswordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($_POST);
+        // $this->validate($request, [
+        //     'password' => 'required|max:255',
+        // ]);
+
+        // $default_password = $request->password;
+
+        // return redirect()->back();
     }
 
     /**

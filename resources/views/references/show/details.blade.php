@@ -413,14 +413,18 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 			<input type="text" class="form-control" id="project_cost" aria-describedby="basic-addon2" value="{{ $reference->total_project_cost }}" disabled>
-			<span class="input-group-addon" id="basic-addon2">{{ $reference->currency }}</span>
+			@if ($reference->currency == 'Dollars')
+				<span class="input-group-addon" id="basic-addon2">M $</span>
+			@else
+				<span class="input-group-addon" id="basic-addon2">M €</span>
+			@endif
 		</div>
 	</div>
 	@if ($reference->rate != 1)
-		<div class="col-sm-4 col-sm-offset-1">
+		<div class="col-sm-4 col-sm-offset-2">
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Contract rate ($)</span>
 			  <input type="text" class="form-control" placeholder="" aria-describedby="" value="{{ $reference->rate }}" disabled>
@@ -432,10 +436,14 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="services_cost" class="col-sm-4 control-label">Cost of services provided by Seureca</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="services_cost" aria-describedby="basic-addon2" value="{{ $reference->seureca_services_cost }}" disabled>
-		  	<span class="input-group-addon" id="basic-addon2">{{ $reference->currency }}</span>
+		  	@if ($reference->currency == 'Dollars')
+				<span class="input-group-addon" id="basic-addon2">M $</span>
+			@else
+				<span class="input-group-addon" id="basic-addon2">M €</span>
+			@endif
 		</div>
 	</div>
 </div>
@@ -443,10 +451,14 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="works_cost" class="col-sm-4 control-label">Works cost</label>
-	<div class="col-sm-3">
+	<div class="col-sm-2">
 	    <div class="input-group">
 		  	<input type="text" class="form-control" id="works_cost" aria-describedby="basic-addon2" value="{{ $reference->work_cost }}" disabled>
-		  	<span class="input-group-addon" id="basic-addon2">{{ $reference->currency }}</span>
+		  	@if ($reference->currency == 'Dollars')
+				<span class="input-group-addon" id="basic-addon2">M $</span>
+			@else
+				<span class="input-group-addon" id="basic-addon2">M €</span>
+			@endif
 		</div>
 	</div>
 </div>

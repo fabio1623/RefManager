@@ -183,12 +183,12 @@
 										<li><a href="{{ action('UserController@manageAccount', Auth::user()->id) }}"> <span class="glyphicon glyphicon glyphicon-user"></span> My account</a></li>
 
 										@if(Auth::user()->profile_id == 5)
-										<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
-										<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests 
-											@if ( $requests_number > 0 )
-												<span class="badge">{{$requests_number}}</span>
-											@endif
-										</a></li>
+											<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
+											<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests 
+												@if ( $requests_number > 0 )
+													<span class="badge">{{$requests_number}}</span>
+												@endif
+											</a></li>
 										@endif
 
 										<li role="separator" class="divider"></li>
