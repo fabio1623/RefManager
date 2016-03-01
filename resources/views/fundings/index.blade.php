@@ -47,7 +47,7 @@
 									@foreach ($fundings as $funding)
 											<tr data-href="{{ action('FundingController@edit', $funding->id) }}">
 												<td>
-													<a class="btn btn-link" href="{{ action('FundingController@edit') }}">{{$funding->name}}</a>	
+													<a class="btn btn-link" href="{{ action('FundingController@edit', $funding->id) }}">{{$funding->name}}</a>	
 												</td>
 												<td class="check">
 													<input class="checkbox" type="checkbox" value="{{$funding->id}}" name=id[]>

@@ -31,10 +31,3 @@
   @endforeach
 
 </div>
-
-
-<script>
-  var domains = {!! $domains->toJson() !!};
-  var expertises = {!! $expertises->toJson() !!};
-  
-</script>

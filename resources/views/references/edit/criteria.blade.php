@@ -1,4 +1,4 @@
-<div id="domains_div"> <!-- ICI pour l'ajout des domaines -->
+<div id="domains_div">
 
 @for($i=0; $i < $domains->count(); $i++)
 
@@ -27,14 +27,4 @@
 
 @endfor
 
-</div> <!-- ICI -->
-
-<script>
-  var domains = {!! $domains->toJson() !!};
-  var expertises = {!! $expertises->toJson() !!};
-  var selected_expertises = {!! $reference->expertises !!};
-
-  for(var i=0; i<selected_expertises.length; i++) {
-    $('#expertise-' + selected_expertises[i].id).attr('checked', true);
-  };
-</script>
+</div>

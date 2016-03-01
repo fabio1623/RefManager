@@ -139,14 +139,3 @@
 	  	<textarea class="form-control" rows="3" id="general_comments_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][comments]">{{ $language_reference[$i]->general_comments }}</textarea>
 	</div>
 </div>
-<!-- EO line -->
-
-<script>
-	// $('#remove_translation_btn').click( function(e) {
-	// 	var confirm_box = confirm("Are you sure ?");
-	// 	if (confirm_box == false) {
-	// 		e.preventDefault();
-	// 	}
-	// });
-	$('textarea')
-</script>

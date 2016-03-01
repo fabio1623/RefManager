@@ -65,4 +65,9 @@ class HomeController extends Controller {
 		return redirect()->back();
 	}
 
+	public function contact_us()
+	{
+		return view('contact_us.index');
+	}
+
 }

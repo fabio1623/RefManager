@@ -79,22 +79,3 @@
   @endfor
 
 </div>
-
-<script>
-
-  var categories = {!! $categories->toJson() !!};
-  var measures = {!! $measures_values->toJson() !!};
-  var qualifiers = {!! $qualifiers_values->toJson() !!};
-
-  for (var i=0; i<measures.length; i++) {
-    $('#measure-' + measures[i].measure_id).val(measures[i].value);
-    if (measures[i].unit != "") {
-      $('#select-' + measures[i].measure_id).val(measures[i].unit);
-    };
-  };
-
-  for (var i=0; i<qualifiers.length; i++) {
-    $('#qualifier-' + qualifiers[i].qualifier_id).attr('checked', true);
-  };
-
-</script>

@@ -69,34 +69,3 @@
   @endfor
 
 </div>
-
-<script>
-
-  var categories = {!! $categories->toJson() !!};
-  var measures = {!! $measures_values->toJson() !!};
-  var qualifiers = {!! $qualifiers_values->toJson() !!};
-  var selected_measures = {!! $reference->measures->toJson() !!};
-
-  var categories_tab = [];
-  for (var i = 0; i < selected_measures.length; i++) {
-      if (jQuery.inArray(selected_measures[i].category_id, categories_tab) == -1) {
-          categories_tab.push(selected_measures[i].category_id);
-      }
-  }
-
-  for (var i = 0; i < categories_tab.length; i++) {
-      $('#category-' + categories_tab).removeClass('hidden');
-  }
-
-  for (var i=0; i<measures.length; i++) {
-    $('#measure-' + measures[i].measure_id).val(measures[i].value);
-    if (measures[i].unit != "") {
-      $('#select-' + measures[i].measure_id).val(measures[i].unit);
-    };
-  };
-
-  for (var i=0; i<qualifiers.length; i++) {
-    $('#qualifier-' + qualifiers[i].qualifier_id).attr('checked', true);
-  };
-
-</script>

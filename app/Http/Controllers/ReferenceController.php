@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use Storage;
 use File;
+use ZipArchive;
 
 use App\Reference;
 use App\Service;
@@ -51,8 +52,9 @@ class ReferenceController extends Controller
         $clients = Client::all();
         $zones = Zone::all();
         $kind_of_reference = 'All';
+        $languages = Language::has('references')->get();
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
         return $view;
     }
 
@@ -77,8 +79,9 @@ class ReferenceController extends Controller
         $clients = Client::all();
         $zones = Zone::all();
         $kind_of_reference = 'To approve';
+        $languages = Language::has('references')->get();
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
         return $view;
 
     }
@@ -90,8 +93,9 @@ class ReferenceController extends Controller
         $clients = Client::all();
         $zones = Zone::all();
         $kind_of_reference = 'Approved';
+        $languages = Language::has('references')->get();
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
         return $view;        
     }
 
@@ -102,8 +106,9 @@ class ReferenceController extends Controller
         $clients = Client::all();
         $zones = Zone::all();
         $kind_of_reference = 'Created by me';
+        $languages = Language::has('references')->get();
 
-        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
+        $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
         return $view;
     }
 
@@ -1004,7 +1009,8 @@ class ReferenceController extends Controller
             $linked_languages_tab[] = $language->id;
         }
 
-        $translation_languages = Language::orderBy('name', 'asc')->whereNotIn('id', $linked_languages_tab)->get();
+        // $translation_languages = Language::orderBy('name', 'asc')->whereNotIn('id', $linked_languages_tab)->get();
+        $translation_languages = $subsidiary->languages()->whereNotIn('id', $linked_languages_tab)->get();
         // dd($translation_languages);
         // $languagesValues = LanguageReference::where('reference_id', $id)->get();
         $language_reference = LanguageReference::where('reference_id', $id)->get();
@@ -2411,6 +2417,249 @@ class ReferenceController extends Controller
         }
         else {
             return redirect()->back();
+        }
+    }
+
+    public function generate_file_base_multiple(Request $request, $template_name, $kind_of_template)
+    {
+        // dd($_POST);
+
+        if ($request->ids) {
+            $currentDate = date('Y-m-d_H-i-s');
+            $folder_name = 'Files_to_zip_'.$currentDate;
+            $new_folder = 'Exports/'.$folder_name;
+
+            Storage::makeDirectory($new_folder);
+
+            foreach ($request->ids as $value) {
+                ReferenceController::generate_file_base2($new_folder, $template_name, $kind_of_template, $value);
+            }
+
+            $zip_file = ReferenceController::zip_files($folder_name);
+
+            return response()->download(storage_path('app/Exports/'.$zip_file))->deleteFileAfterSend(true);
+        }
+        else {
+            dd('You have to select at least 1 reference.');
+        }
+    }
+
+    public function generate_file_base2($folder, $template_name, $kind_of_template, $reference_id)
+    {
+        \PhpOffice\PhpWord\Autoloader::register();
+
+        $reference = Reference::find($reference_id);
+        $country = Country::find($reference->country);
+        $subsidiary = Subsidiary::find($reference->subsidiary_id);
+        $client = Client::find($reference->client);
+
+        $template = storage_path('app/Exports/'.$template_name.'.docx');
+        $new_file = storage_path('app/'.$folder.'/'.snake_case($reference->project_number).'_'.$kind_of_template.'.docx');
+
+        $exists = Storage::disk('local')->has('Exports/'.$template_name.'.docx');
+
+        if ($exists) {
+            //Create file from template
+            $templateProcessor = new TemplateProcessor($template);
+
+            //Insert values in template variables
+            $templateProcessor->setValue('ProjectNumber', htmlspecialchars($reference->project_number));
+            $templateProcessor->setValue('ProjectTitle', htmlspecialchars($reference->project_name));
+            $templateProcessor->setValue('ProjectTitleFr', htmlspecialchars($reference->project_name_fr));
+            if ($subsidiary) {
+                $templateProcessor->setValue('Subsidiary', htmlspecialchars($subsidiary->name));
+            }
+
+            if ($country) {
+                $templateProcessor->setValue('Country', htmlspecialchars($country->name));
+            }
+            $templateProcessor->setValue('Location', htmlspecialchars($reference->location));
+            $templateProcessor->setValue('TotalCost', htmlspecialchars(number_format($reference->total_project_cost)));
+            $templateProcessor->setValue('WorkCost', htmlspecialchars(number_format($reference->work_cost)));
+            $templateProcessor->setValue('ServiceCost', htmlspecialchars(number_format($reference->seureca_services_cost)));
+            $templateProcessor->setValue('Comments', htmlspecialchars($reference->general_comments));
+            $service_proportion = (($reference->seureca_services_cost)*100)/$reference->total_project_cost;
+            $service_proportion = number_format($service_proportion, 2, '.', ',');
+            $templateProcessor->setValue('ServiceProportion', htmlspecialchars($service_proportion));
+            $templateProcessor->setValue('StaffMonths', htmlspecialchars($reference->seureca_man_months));
+            $templateProcessor->setValue('NbStaff', htmlspecialchars($reference->staff_number));
+            if ($client) {
+                $templateProcessor->setValue('Customer', htmlspecialchars($client->name));
+                $templateProcessor->setValue('CustomerFr', htmlspecialchars($client->name_fr));
+            }
+
+            if ($reference->fundings()->count() > 0) {
+                $f = '';
+                $fr = '';
+                foreach ($reference->fundings as $key => $funding) {
+                    $f = $f.'-'.$funding->name;
+                    $fr = $fr.'-'.$funding->name_fr;
+                }
+                $templateProcessor->setValue('Funding', htmlspecialchars($f));
+                $templateProcessor->setValue('FundingFr', htmlspecialchars($fr));
+            }
+            else {
+                $templateProcessor->setValue('Funding', '');
+                $templateProcessor->setValue('FundingFr', '');
+            }
+
+            $templateProcessor->setValue('StartDate', htmlspecialchars($reference->start_date));
+            $templateProcessor->setValue('EndDate', htmlspecialchars($reference->end_date));
+
+            // $templateProcessor->setValue('Consultant', htmlspecialchars());
+            if ($reference->contributors()->where('function_on_project', 'Consultant')->count() > 0) {
+                $c = '';
+                foreach ($reference->contributors()->where('function_on_project', 'Consultant')->get() as $key => $consultant) {
+                    $c = $c.'-'.$consultant->name;
+                }
+                $templateProcessor->setValue('Consultant', $c);
+            }
+            else {
+                $templateProcessor->setValue('Consultant', '');
+            }
+
+            $templateProcessor->setValue('ConsultantManMonths', htmlspecialchars($reference->consultants_man_months));
+            $templateProcessor->setValue('ProjectDescription', htmlspecialchars($reference->project_description));
+            $templateProcessor->setValue('ProjectDescriptionFr', htmlspecialchars($reference->project_description_fr));
+            $templateProcessor->setValue('ServiceDescription', htmlspecialchars($reference->service_description));
+            $templateProcessor->setValue('ServiceDescriptionFr', htmlspecialchars($reference->service_description_fr));
+
+            if ($reference->contributors()->where('function_on_project', 'Senior')->count() > 0) {
+                $s = '';
+                foreach ($reference->contributors()->where('function_on_project', 'Senior')->get() as $key => $senior) {
+                    $senior_reference = ContributorReference::where('reference_id', $reference->id)->where('contributor_id', $senior->id)->first();
+                    if ($key == 0) {
+                        $s = $senior->name.' -> '.$senior_reference->responsability_on_project.' / ';
+                    }
+                    else {
+                        $s = $s.$senior->name.' -> '.$senior_reference->responsability_on_project;
+                    }
+                }
+                $templateProcessor->setValue('SeniorStaff', $s);
+            }
+            else {
+                $templateProcessor->setValue('SeniorStaff', '');   
+            }
+
+
+
+            //Save filled file
+            $templateProcessor->saveAs($new_file);
+
+        }
+        else {
+            dd('The template does not exist.');
+        }
+    }
+
+    public function zip_files($folder) {
+
+        // Here we choose the folder which will be used.       
+        $dirName = storage_path('app/Exports/'.$folder);
+
+        // Choose a name for the archive.
+        $zipFileName = $folder.'.zip';    
+
+        // Create "MyCoolName.zip" file in public directory of project.
+        $zip = new ZipArchive;
+        if ($zip->open(storage_path('app/Exports/').$zipFileName, ZipArchive::CREATE) === TRUE) {
+
+        // Copy all the files from the folder and place them in the archive.
+        foreach (glob($dirName . '/*') as $fileName) {
+                $file = basename($fileName);                
+                $zip->addFile($fileName, $file);
+            }                       
+            $zip->close();
+
+            $headers = array(
+                'Content-Type' => 'application/octet-stream',
+            );
+
+            File::cleanDirectory($dirName);
+            Storage::deleteDirectory('Exports/'.$folder);
+
+            return $zipFileName;
+        // Download .zip file.        
+        // return response()->download(storage_path('app/Exports') . '/' . $zipFileName, $zipFileName, $headers);            
+        } else {
+            echo 'failed';
+        }
+    }
+
+    public function generate_file_translations_multiple(Request $request, $language_id)
+    {
+        dd($_POST);
+        if ($request->ids) {
+            $language = Language::find($language_id);
+            $currentDate = date('Y-m-d_H-i-s');
+            $folder_name = 'Files_to_zip_'.$currentDate;
+            $new_folder = 'Exports/'.$language->name.'/'.$folder_name;
+
+            Storage::makeDirectory($new_folder);
+
+            foreach ($request->ids as $value) {
+                ReferenceController::generate_file_translations2($new_folder, $value, $language_id);
+            }
+
+            $zip_file = ReferenceController::zip_files($language->name.'/'.$folder_name);
+
+            return response()->download(storage_path('app/Exports/'.$zip_file))->deleteFileAfterSend(true);
+        }
+        else {
+            dd('You have to select at least 1 reference.');
+        }
+    }
+
+    public function generate_file_translations2($folder, $reference_id, $language_id)
+    {
+        // dd($_POST);
+        \PhpOffice\PhpWord\Autoloader::register();
+
+        $reference = Reference::find($reference_id);
+        $country = Country::find($reference->country);
+        $language = Language::find($language_id);
+        $language_reference_join = LanguageReference::where('language_id', $language_id)->where('reference_id', $reference_id)->first();
+        $translations = $language_reference_join['attributes'];
+        // dd($translations);
+        $template = storage_path('app/Exports/'.$language->name.'/Template.docx');
+        $new_file = storage_path('app/'.$folder.'/'.snake_case($reference->project_number).'_'.$language->name.'.docx');
+        
+        $exists = Storage::disk('local')->has('Exports/'.$language->name.'/Template.docx');
+
+        if ($exists) {
+            //Create file from template
+            $templateProcessor = new TemplateProcessor($template);
+
+            //Insert values in template variables
+            $templateProcessor->setValue('ProjectTitle', htmlspecialchars($translations['project_name']));
+            $templateProcessor->setValue('ProjectDescription', htmlspecialchars($translations['project_description']));
+            $templateProcessor->setValue('ServiceDescription', htmlspecialchars($translations['service_description']));
+            $templateProcessor->setValue('CustomerName', htmlspecialchars($translations['client']));
+            $templateProcessor->setValue('StudyComment', htmlspecialchars($translations['general_comments']));
+            $templateProcessor->setValue('Localisation', htmlspecialchars($translations['location']));
+            $templateProcessor->setValue('Country', htmlspecialchars($translations['country']));
+            $templateProcessor->setValue('CustomerAddress', htmlspecialchars($translations['customer_address']));
+            $templateProcessor->setValue('Partners', htmlspecialchars($translations['financing']));
+            $templateProcessor->setValue('SeniorProfile', htmlspecialchars($translations['staff']));
+            $templateProcessor->setValue('Consultants', htmlspecialchars($translations['consultants']));
+
+            // $templateProcessor->setValue('Localisation', htmlspecialchars($reference->location));
+            $templateProcessor->setValue('NStaff', htmlspecialchars($reference->staff_number));
+            $templateProcessor->setValue('NMonthMan', htmlspecialchars($reference->seureca_man_months));
+            $templateProcessor->setValue('StartDate', htmlspecialchars($reference->start_date));
+            $templateProcessor->setValue('EndDate', htmlspecialchars($reference->end_date));
+            $templateProcessor->setValue('StudyCost', number_format(htmlspecialchars($reference->seureca_services_cost)));
+            $templateProcessor->setValue('NStaffMonthConsultant', htmlspecialchars($reference->consultants_man_months));
+            $templateProcessor->setValue('NExperts', htmlspecialchars($reference->contributors()->where('function_on_project', 'Expert')->count()));
+
+            //Save filled file
+            $templateProcessor->saveAs($new_file);
+            
+            //Download the file & delete it from server
+            // return response()->download($new_file)->deleteFileAfterSend(true);
+        }
+        else {
+            dd('The template does not exist');
         }
     }
 }

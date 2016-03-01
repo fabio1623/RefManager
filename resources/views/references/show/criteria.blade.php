@@ -30,22 +30,5 @@
 </div> <!-- ICI -->
 
 <script>
-  var domains = {!! $domains->toJson() !!};
-  var expertises = {!! $expertises->toJson() !!};
-  var selected_expertises = {!! $reference->expertises !!};
-
-  var domains_tab = [];
-  for (var i = 0; i < selected_expertises.length; i++) {
-      if (jQuery.inArray(selected_expertises[i].domain_id, domains_tab) == -1) {
-          domains_tab.push(selected_expertises[i].domain_id);
-      }
-  }
-
-  for (var i = 0; i < domains_tab.length; i++) {
-      $('#domain-' + domains_tab[i]).removeClass('hidden'); 
-  }
-
-  for(var i=0; i<selected_expertises.length; i++) {
-      $('#expertise-' + selected_expertises[i].id).attr('checked', true);
-  };
+    
 </script>

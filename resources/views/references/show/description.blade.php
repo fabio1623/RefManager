@@ -3,16 +3,7 @@
 	<label for="project_number" class="col-sm-4 control-label">Project number</label>
 	<div class="col-sm-4">
 	  <input type="text" class="form-control" id="project_number" value="{{ $reference->project_number }}" disabled>
-	</div><!-- 
-	<div class="checkbox col-sm-2">
-		<label>
-			@if($reference->confidential == 1)
-				<input id="confidential_check" name="confidential" type="checkbox" checked> <b>Confidential</b>
-			@else
-				<input id="confidential_check" name="confidential" type="checkbox"> <b>Confidential</b>
-			@endif
-		</label>
-	</div> -->
+	</div>
 </div>
 <!-- EO line -->
 <!-- Line -->
@@ -137,41 +128,3 @@
 		</div>
 	@endforeach
 </div>
-<!-- EO line -->
-
-<script>
-	var zones = {!! $zones->toJson() !!};
-	var selected_internal_services = {!! $reference->internal_services !!};
-
-	function getManager(selected_zone_id) {
-		var manager_id = null;
-		if (selected_zone_id != '') {
-			for (var i = 0; i < zones.length; i++) {
-				if (zones[i].id == selected_zone_id) {
-					manager_id = zones[i].manager;
-					break;
-				}
-			}
-			if (manager_id == null) {
-				$('#zone_manager').val('No manager for this zone');
-			}
-			else {
-				for (var i = 0; i < zone_managers.length; i++) {
-					if (zone_managers[i].id == manager_id) {
-						$('#zone_manager').val( zone_managers[i].name );
-					}
-				}
-			}
-		}
-		else {
-			$('#zone_manager').val('');
-		}
-	}
-
-	getManager($('#zone').val());
-
-	if (selected_internal_services.length > 0) {
-		$('#internal_checkbox').attr('checked', true);
-		$('#internal_div').attr('class', 'form-group');
-	};
-</script>

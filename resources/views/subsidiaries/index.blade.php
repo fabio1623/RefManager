@@ -7,7 +7,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-9">List of subsidiaries</div>
+							<div class="col-sm-9">List of entities</div>
 							<div class="col-sm-3">
 								<button form="form_create" type="submit" class="btn btn-default btn-xs pull-right">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>

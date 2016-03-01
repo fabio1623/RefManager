@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Contributor;
 use App\Subsidiary;
 use App\Zone;
+use App\ContributorReference;
 
 class ContributorController extends Controller
 {
@@ -23,7 +24,7 @@ class ContributorController extends Controller
      */
     public function index($subsidiary_id, $zone_id)
     {
-        $contributors = Contributor::paginate(8);
+        $contributors = Contributor::paginate(20);
         $view = view('contributors.index', ['subsidiary_id'=>$subsidiary_id, 'contributors'=>$contributors]);
         return $view;
     }
@@ -105,9 +106,16 @@ class ContributorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($subsidiary_id, $zone_id, $contributor_id)
     {
-        //
+        $contributor = Contributor::find($contributor_id);
+        $references = $contributor->references()->get();
+
+        $contributor_reference_join = ContributorReference::where('contributor_id', $contributor_id)->get();
+
+        $zones = Zone::where('manager', $contributor_id)->get();
+
+        return view('contributors.edit', ['contributor'=>$contributor, 'contributor_reference_join'=>$contributor_reference_join, 'references'=>$references, 'subsidiary_id'=>$subsidiary_id, 'zone_id'=>$zone_id, 'zones'=>$zones]);
     }
 
     /**
@@ -117,9 +125,18 @@ class ContributorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $subsidiary_id, $zone_id, $contributor_id)
     {
-        //
+        // dd($_POST);
+        $this->validate($request, [
+            'name' => 'required|alpha|max:255|unique:contributors,name,'.$contributor_id,
+        ]);
+
+        $contributor = Contributor::find($contributor_id);
+        $contributor->name = $request->name;
+        $contributor->save();
+
+        return redirect()->action('ContributorController@edit', [$subsidiary_id, $zone_id, $contributor_id]);
     }
 
     /**
@@ -128,9 +145,24 @@ class ContributorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($subsidiary_id, $zone_id, $contributor_id)
     {
-        //
+        // dd($_POST);
+        $contributor = Contributor::find($contributor_id);
+        $zones = Zone::where('manager', $contributor_id)->get();
+
+        foreach ($zones as $zone) {
+            $zone->manager = null;
+            $zone->save();
+        }
+
+        foreach ($contributor->references as $reference) {
+            $reference->contributors()->detach($contributor_id);
+        }
+
+        Contributor::destroy($contributor_id);
+
+        return redirect()->action('ContributorController@index', [$subsidiary_id, $zone_id]);
     }
 
     public function destroyMultiple(Request $request, $subsidiary_id, $zone_id)

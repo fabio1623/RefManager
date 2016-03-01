@@ -38,6 +38,7 @@ Route::resource('default_password', 'DefaultPasswordController');
 
 //Home
 Route::post('upload', 'HomeController@upload_file');
+Route::get('home/contact_us', 'HomeController@contact_us');
 Route::get('home', 'HomeController@index');
 
 //Subsidiaries
@@ -144,7 +145,14 @@ Route::get('references/{reference}/generate_file_eu_fr', 'ReferenceController@ge
 Route::get('references/{reference}/generate_file_es', 'ReferenceController@generate_file_es');
 Route::get('references/{reference}/languages/{language}/generate_file_translations', 'ReferenceController@generate_file_translations');
 Route::get('{template}/{kind_of_file}/reference/{reference}/generate_file_base', 'ReferenceController@generate_file_base');
+Route::post('{template}/{kind_of_file}/generate_file_base_multiple', 'ReferenceController@generate_file_base_multiple');
+Route::post('languages/{language}/generate_file_translations_multiple', 'ReferenceController@generate_file_translations_multiple');
 Route::get('subsidiaries/{subsidiary}/match_page', 'ReferenceController@match_page');
+
+//Languages
+Route::post('subsidiaries/{subsidiary}/link_languages', 'LanguageController@link_languages');
+Route::get('subsidiaries/{subsidiary}/search', 'LanguageController@search');
+Route::resource('subsidiaries.languages', 'LanguageController');
 
 Route::get('test', function () {
 

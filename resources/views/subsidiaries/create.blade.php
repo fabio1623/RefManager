@@ -5,7 +5,7 @@
 	<div class="row col-sm-6 col-sm-offset-3">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">New Subsidiary</h3>
+					<h3 class="panel-title">New entity</h3>
 				</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
@@ -23,7 +23,7 @@
 						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
-							<label class="col-sm-4 control-label">Subsidiary Name</label>
+							<label class="col-sm-4 control-label">Entity Name</label>
 							<div class="col-sm-6">
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
 							</div>

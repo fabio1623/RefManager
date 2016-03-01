@@ -21,7 +21,7 @@ class FundingController extends Controller
      */
     public function index()
     {
-        $fundings = Funding::paginate(8);
+        $fundings = Funding::paginate(20);
         $view = view('fundings.index')->with('fundings', $fundings);
         return $view;
     }
@@ -66,7 +66,10 @@ class FundingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $funding = Funding::find($id);
+        $references = $funding->references()->get();
+
+        return view('fundings.edit', ['funding'=>$funding, 'references'=>$references]);
     }
 
     /**

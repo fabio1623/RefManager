@@ -4,11 +4,11 @@
 	<div class="col-sm-4">
 	  <input type="text" class="form-control" id="project_name_{{ strtolower($linked_languages[$i]->name)}}" value="{{ $language_reference[$i]->project_name }}" disabled>
 	</div>
-	<div class="col-sm-4">
+	<!-- <div class="col-sm-4">
 		<a class="btn btn-default btn-sm pull-right" href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $linked_languages[$i]->id]) }}">
 			<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Extract
 		</a>
-	</div>
+	</div> -->
 </div>
 <!-- EO line -->
 <div class="form-group">

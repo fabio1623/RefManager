@@ -82,14 +82,3 @@
   @endfor
 
 </div>
-
-<!-- Modals -->
-@include("references.create.english.modals.categories_modal")
-@include("references.create.english.modals.measures_modal")
-
-
-<script>
-
-  var categories = {!! $categories->toJson() !!};
-
-</script>

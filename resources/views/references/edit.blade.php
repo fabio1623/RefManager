@@ -53,16 +53,6 @@
 												</a></li>	
 											@endforeach
 										@endif
-										<!-- <li class="dropdown-header">OTHER</li>
-										<li><a href="{{ action('ReferenceController@generate_file_es', $reference->id) }}">
-											ES
-										</a></li>
-										<li><a href="{{ action('ReferenceController@generate_file_eu_fr', $reference->id) }}">
-											PT
-										</a></li>
-										<li><a href="{{ action('ReferenceController@generate_file_eu_fr', $reference->id) }}">
-											RU
-										</a></li> -->
 									</ul>
 								</div>
 								<button form="form_save" type="submit" class="btn btn-default btn-sm">
@@ -150,40 +140,37 @@
 
 <script>
 	var linked_languages = {!! $linked_languages->toJson() !!};
+	var countries = {!! $countries->toJson() !!};
+	var zones = {!! $zones->toJson() !!};
+	var seniors = {!! $seniors->toJson() !!};
+	var experts = {!! $experts->toJson() !!};
+	var selected_external_services = {!! $reference->external_services !!};
+	var selected_internal_services = {!! $reference->internal_services !!};
+	var country_zone = {!! $country_zone->toJson() !!};
+	var zone_managers = {!! $zone_managers->toJson() !!};
 
-	$('#btn_delete').click( function(e) {
-		var confirm_box = confirm("Are you sure ?");
-		if (confirm_box == false) {
-			e.preventDefault();
-		}
-	});
+	var domains = {!! $domains->toJson() !!};
+	var expertises = {!! $expertises->toJson() !!};
+	var selected_expertises = {!! $reference->expertises !!};
 
-	$('#language_btn').click( function (e) {
-		if (linked_languages.length < 1) {
-			var confirm_box = confirm("There is no translation. Do you want to add one ?");
-			if (confirm_box == false) {
-				e.preventDefault();
-			}
-			else {
-				$('#select_language_modal').modal();		
-			}
-		}
-		else {
-			$('#base_btn').attr("class", "btn btn-default btn-sm");
-			$(this).attr("class", "btn btn-default btn-sm active");
-			$('#btn_language_selector').attr("class", "btn btn-default btn-sm");
-		}
-	});
+	var fundings_in_db = {!! $fundings->toJson() !!}
+	var involved_staff_db = {!! $seniors->toJson() !!}
+	var experts_db = {!! $exps->toJson() !!}
+	var consultants_db = {!! $consults->toJson() !!}
+	var senior_profiles = {!! $senior_profiles->toJson() !!}
+	var expert_profiles = {!! $expert_profiles->toJson() !!}
+	var contacts = {!! $contacts->toJson() !!}
+	var clients = {!! $clients->toJson() !!}
+	var linked_fundings = {!! $financings->toJson() !!}
+	var linked_staff = {!! $staff_name->toJson() !!}
+	var linked_experts = {!! $experts_name->toJson() !!}
+	var language_reference = {!! $language_reference->toJson() !!}
+	var reference = {!! $reference->toJson() !!}
 
-	$('#base_btn').click( function () {
-		$('#language_btn').attr("class", "btn btn-default btn-sm");
-		$(this).attr("class", "btn btn-default btn-sm active");
-		$('#btn_language_selector').attr("class", "btn btn-default btn-sm hidden");
-	});
-
-	$('#btn_language_selector').click(function () {
-		$('#select_language_modal').modal();
-	});
+	var categories = {!! $categories->toJson() !!};
+	var measures = {!! $measures_values->toJson() !!};
+	var qualifiers = {!! $qualifiers_values->toJson() !!};
 </script>
+<script type="text/javascript" src="/js/ref-edit-scripts.js"></script>
 
 @endsection

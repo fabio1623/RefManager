@@ -17,10 +17,18 @@
 
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css">
-		<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/theme.default.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/jquery.tablesorter.pager.min.css">
+		<!-- 2e -->
+		<!-- <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" /> -->
+		<!-- <link rel="stylesheet" href="/css/datepicker.css"> -->
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css"> -->
+		<link rel="stylesheet" href="/css/bootstrap-select.css">
+		<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.css" /> -->
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/theme.default.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/jquery.tablesorter.pager.min.css"> -->
+		<link rel="stylesheet" href="/bower_components/tablesorter/css/theme.default.min.css">
+		<link rel="stylesheet" href="/css/custom-css.css">
+
+		<!-- <link rel="stylesheet/less" type="text/css" href="/js/datepicker/less/datepicker.less" /> -->
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,20 +45,28 @@
 
 		<!-- Custom JS -->
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script>
-		<script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.min.js"></script>
+		<!-- 2e -->
+		<!-- <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+		<script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script> -->
+		<!-- <script src="/js/bootstrap-datepicker.js"></script> -->
+		<script src="/js/bootstrap-select.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script> -->
+		<!-- <script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.min.js"></script> -->
 		<script src="/js/bootstrap3-typeahead.js"></script>
-		<script src="//cdn.bootcss.com/typeahead.js/0.11.1/bloodhound.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.js"></script>
+		<script src="/js/bloodhound.js"></script>
+		<!-- <script src="//cdn.bootcss.com/typeahead.js/0.11.1/bloodhound.js"></script> -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.js"></script> -->
+		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.js"></script>
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.widgets.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/extras/jquery.tablesorter.pager.min.js"></script>
-		
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/extras/jquery.tablesorter.pager.min.js"></script> -->
+		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.widgets.js"></script>
+		<script type="text/javascript" src="/js/custom-functions.js"></script>	
 	</head>
 
-	<body>
-		<!-- Body container -->
-		<div class="container-fluid">
-			<!-- Navbar -->
+	<body role='document'>
+
+			<!-- Fixed navbar -->
 			<nav class="navbar navbar-default navbar-fixed-top">
 				<div class="container-fluid">
 					<div class="navbar-header">
@@ -60,7 +76,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#"><img alt="Brand" src="{{ asset('/veolia_logo.png') }}"></a>
+						<a class="navbar-brand" href="{{ url('home') }}"><img alt="Brand" src="{{ asset('/img/veolia_logo.png') }}"></a>
 					</div>
 
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -71,10 +87,10 @@
 								<!-- Users Administrator -->
 								@if (Auth::user()->profile_id == 5)
 									<li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-briefcase"></span> Subsidiaries<span class="caret"></span></a>
+							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-briefcase"></span> Entities<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
-							            <li><a href="{{ action ('SubsidiaryController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a subsidiary</a></li>
-							            <li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of subsidiaries</a></li>
+							            <li><a href="{{ action ('SubsidiaryController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add an entity</a></li>
+							            <li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of entities</a></li>
 							          </ul>
 							        </li>
 									<li class="dropdown">
@@ -200,19 +216,17 @@
 					</div>
 				</div>
 			</nav>
-			<!-- #./Navbar -->
 
-<!-- <div class="container"> -->
-			<h3>Fixed Navbar</h3>
-			@yield('content')
-<!-- </div> -->
-		</div>
-		<!-- #./Body container -->
+			<div class="container-fluid theme-showcase" role="main">
+				@yield('content')
+			</div>
 	</body>
+
 <script>
 	$('#upload_link').click( function(e) {
 		e.preventDefault();
 		$('#upload_input').click();
 	} );
 </script>
+
 </html>

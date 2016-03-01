@@ -33,31 +33,3 @@
 		@endif
 	@endfor
 </div>
-
-<script>
-	// $('#nav_tab').hover( 
-	// 	function() {
-	// 		$('#test').removeClass('hidden');
-	// 	},
-	// 	function() {
-	// 		$('#test').addClass('hidden');
-	// 	}
-	// );
-	
-	$('.nav_tab').hover(
-		function() {
-			// $(this + ':first-child a > span:last-child').removeClass('hidden');
-			$(this).find('.glyphicon glyphicon-remove hidden').removeClass('hidden');
-		},
-		function() {
-			// $('#test').addClass('hidden');
-		}	
-	);
-
-	$('.remove_translation_btn').click( function(e) {
-		var confirm_box = confirm("Are you sure ?");
-		if (confirm_box == false) {
-			e.preventDefault();
-		}
-	});
-</script>

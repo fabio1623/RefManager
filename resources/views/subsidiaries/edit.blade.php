@@ -88,6 +88,16 @@
 								</a>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<label class="col-md-4 control-label">Translations</label>
+						<div class="col-md-4">
+								<a class="btn btn-primary btn-sm" href="{{ action('LanguageController@index', $subsidiary->id) }}" role="button">
+									<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+								</a>
+						</div>
+					</div>
+
 				</form>
 				<form class="form-horizontal" role="form" action="{{ action('UserController@search', $subsidiary->id) }}" method="GET">
 

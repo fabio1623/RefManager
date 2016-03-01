@@ -45,4 +45,9 @@ class Subsidiary extends Model
     {
         return $this->belongsToMany('App\Measure');
     }
+
+    public function languages()
+    {
+        return $this->belongsToMany('App\Language');
+    }
 }
