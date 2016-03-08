@@ -36,7 +36,7 @@
 <div class="form-group">
 	<label for="continent" class="col-sm-4 control-label">Continent</label>
 	<div class="col-sm-2">
-	  	<input type="text" class="form-control" id="continent" readonly>
+	  	<input type="text" class="form-control" id="continent" disabled>
 	</div>
 </div>
 <!-- EO line -->
@@ -57,7 +57,7 @@
 <div class="form-group">
 	<label for="zone_manager" class="col-sm-4 control-label">Zone manager</label>
 	<div class="col-sm-4">
-	  	<input type="text" class="form-control" id="zone_manager" readonly>
+	  	<input type="text" class="form-control" id="zone_manager" disabled>
 	</div>
 </div>
 <!-- EO line -->

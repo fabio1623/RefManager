@@ -108,7 +108,7 @@ class SubsidiaryController extends Controller
 
         $subsidiary->save();
 
-        return redirect()->action('SubsidiaryController@index');
+        return redirect()->action('SubsidiaryController@edit', $id);
     }
 
     /**

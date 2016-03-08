@@ -12,15 +12,15 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
 								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								  </button>
-								  <button form="form_back" type="submit" class="btn btn-default btn-sm">
-								  	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								  </button>
+								  <a class="btn btn-default btn-sm" href="{{ action('FundingController@index') }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
 								</div>
 								
 							</div>
@@ -29,14 +29,10 @@
 				</div>
 
 
-				<form id="form_delete" action="" method="POST">
+				<form id="form_delete" action="{{ action('FundingController@destroy', $funding->id) }}" method="POST">
 					<?php echo method_field('DELETE'); ?>
 				    <?php echo csrf_field(); ?>
 				</form>
-
-				<form id="form_back" action="{{ action('FundingController@index') }}" method="GET">
-				</form>
-
 
 				<div class="panel-body">
 					@if (count($errors) > 0)
@@ -50,21 +46,21 @@
 						</div>
 					@endif
 
-					<form id="form_save" class="form-horizontal" role="form" method="POST" action="">
+					<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('FundingController@update', $funding->id) }}">
 						<?php echo method_field('PUT'); ?>
 					    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Name</label>
+							<label for="english_name" class="col-md-4 control-label">English name</label>
 							<div class="col-md-5">
-								<input type="text" class="form-control" name="name" value="{{ $funding->name }}">
+								<input type="text" class="form-control" id="english_name" name="english_name" value="{{ $funding->name }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">French name</label>
+							<label for="french_name" class="col-md-4 control-label">French name</label>
 							<div class="col-md-5">
-								<input type="text" class="form-control" name="name_fr" value="{{ $funding->name_fr }}">
+								<input type="text" class="form-control" id="french_name" name="french_name" value="{{ $funding->name_fr }}">
 							</div>
 						</div>
 					</form>
@@ -89,11 +85,9 @@
 							@foreach($references as $reference)
 								<tr>
 									<td>
-										<li>
-											<a href="{{ action('ReferenceController@edit', $reference->id) }}">
-												{{ $reference->project_number }}
-											</a>
-										</li>
+										<a href="{{ action('ReferenceController@edit', $reference->id) }}">
+											{{ $reference->project_number }}
+										</a>
 									</td>
 									<td>
 										{{ $reference->start_date }}
@@ -118,13 +112,23 @@
 				if (confirm_box == false) {
 					e.preventDefault();
 				}
+				else {
+					$('#form_delete').submit();
+				}
 			}
 			else {
 				var confirm_box = confirm("Are you sure ?");
 				if (confirm_box == false) {
 					e.preventDefault();
 				}
+				else {
+					$('#form_delete').submit();
+				}
 			}
 		});
+
+		$('#save_btn').click(function(e){
+	  		$('#form_save').submit();
+	  	});
 	</script>
 @endsection

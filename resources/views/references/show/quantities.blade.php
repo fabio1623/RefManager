@@ -1,5 +1,13 @@
 <div id="categories_div">
 
+@if (count($reference->measures) == 0)
+  <div class="form-group">
+    <div class="col-sm-12">
+      <h5>This reference has no measure.</h5>
+    </div>
+  </div>
+@else
+
   @for($i=0; $i < $categories->count(); $i++)
 
     <div id="category-{{ $categories[$i]->id }}" class="col-sm-8 col-sm-offset-2 hidden">
@@ -67,5 +75,7 @@
     </div>
 
   @endfor
+
+@endif
 
 </div>

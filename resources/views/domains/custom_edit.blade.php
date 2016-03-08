@@ -10,17 +10,16 @@
 							<div class="col-sm-8">{{ $domain->name }}</div>
 							<div class="col-sm-4">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button form="form_link_expertises" type="submit" class="btn btn-default btn-sm">
-										<span class="glyphicon glyphicon-save" aria-hidden="true"></span> 
+									<button id="link_btn" form="form_link_expertises" type="submit" class="btn btn-default btn-sm">
+										<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> 
 										Save expertises
 									</button>
 									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
-										Delete
 									</button>
-									<button form="form_back" type="submit" class="btn btn-default btn-sm">
+									<a class="btn btn-default btn-sm" href="{{ action('DomainController@custom_index', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-									</button>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -38,9 +37,6 @@
 						</div>
 					@endif
 
-					<form id="form_back" action="{{ action('DomainController@custom_index', $subsidiary->id) }}" method="GET">
-					</form>
-
 					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('DomainController@update', [$subsidiary->id, $domain->id]) }}">
 						<?php echo method_field('PUT'); ?>
 					    <?php echo csrf_field(); ?>
@@ -52,7 +48,7 @@
 									<input type="text" class="form-control" name="name" value="{{$domain->name}}">
 									<span class="input-group-btn">
 							        <button class="btn btn-default" type="submit">
-							        	<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+							        	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 						        	</button>
 							      </span>
 							    </div>
@@ -113,14 +109,8 @@
 											</td>
 											<td class="check">
 												@if ($linked_expertises->contains($expertise))
-													<!-- <a class="btn btn-link center-block" href="{{ action('ExpertiseController@detach_expertise', [$subsidiary->id, $expertise->id]) }}">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-													</a> -->
 													<input class="checkbox" type="checkbox" value="{{ $expertise->id }}" name=id[] checked>
 												@else
-													<!-- <a class="btn btn-link center-block" href="{{ action('ExpertiseController@link_expertise', [$subsidiary->id, $expertise->id]) }}">
-														<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-													</a> -->
 													<input class="checkbox" type="checkbox" value="{{ $expertise->id }}" name=id[]>
 												@endif
 											</td>
@@ -143,7 +133,14 @@
 		if (confirm_box == false) {
 			e.preventDefault();
 		}
+		else {
+			$('#form_delete').submit();
+		}
 	});
+
+	$('#link_btn').click(function(e){
+  		$('#form_link_expertises').submit();
+  	});
 
 	$("tbody > tr").click(function() {
 		var href = $(this).data("href");

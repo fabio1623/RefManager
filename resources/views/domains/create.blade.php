@@ -11,12 +11,10 @@
 								New Domain	
 							</div>
 							<div class="col-sm-2">
-								<button form="form_back" type="submit" class="btn btn-default btn-xs pull-right">
+								<a class="btn btn-default btn-xs pull-right" href="{{ action('DomainController@custom_index', $subsidiary->id) }}">
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								</button>
+								</a>
 							</div>
-							<form id="form_back" action="{{ action('DomainController@custom_index', $subsidiary->id) }}" method="GET">
-							</form>
 						</div>
 					</h3>
 				</div>

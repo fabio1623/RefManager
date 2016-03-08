@@ -10,15 +10,15 @@
 							<div class="col-sm-6">{{ $zone->name }}</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
 								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								  </button>
-								  <button form="form_back" type="submit" class="btn btn-default btn-sm">
-								  	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								  </button>
+								  <a class="btn btn-default btn-sm" href="{{ action('ZoneController@index', $subsidiary_id) }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -28,9 +28,6 @@
 				<form id="form_delete" action="{{ action('ZoneController@destroy', [$subsidiary_id, $zone->id]) }}" method="POST">
 					<?php echo method_field('DELETE'); ?>
 				    <?php echo csrf_field(); ?>
-				</form>
-
-				<form id="form_back" action="{{ action('ZoneController@index', $subsidiary_id) }}" method="GET">
 				</form>
 
 				<div class="panel-body">
@@ -100,7 +97,7 @@
 							@foreach ($zone_countries as $zone_country)
 									<tr data-href="">
 										<td>
-											<a class="btn btn-link zone_links" href="">{{$zone_country->name}}
+											<a class="btn btn-link zone_links" href="">{{$zone_country->name}}</a>
 										</td>
 										<td>
 											<a class="btn btn-link" href="{{ action('ZoneController@detach_country', [$zone->id, $zone_country->id]) }}">
@@ -141,7 +138,14 @@
 			if (confirm_box == false) {
 				e.preventDefault();
 			}
+			else {
+				$('#form_delete').submit();
+			}
 		});
+
+		$('#save_btn').click(function(e){
+	  		$('#form_save').submit();
+	  	});
 
 		$('#add_country_btn').click( function(e){
 			if ($('#countries').val() == '') {

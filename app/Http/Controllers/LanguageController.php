@@ -12,6 +12,11 @@ use App\Language;
 
 class LanguageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +26,8 @@ class LanguageController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $languages = Language::paginate(20);
+        // $languages = Language::paginate(20);
+        $languages = Language::orderBy('name', 'asc')->get();
         $linked_languages = $subsidiary->languages()->get();
 
         return view('languages.index', ['subsidiary'=>$subsidiary, 'languages'=>$languages, 'linked_languages'=>$linked_languages]);
@@ -52,6 +58,7 @@ class LanguageController extends Controller
 
     public function link_languages(Request $request, $subsidiary_id)
     {
+        // dd($_POST);
         $subsidiary = Subsidiary::find($subsidiary_id);
 
         $subsidiary->languages()->detach();

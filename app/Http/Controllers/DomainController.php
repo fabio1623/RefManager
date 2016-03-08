@@ -182,7 +182,8 @@ class DomainController extends Controller
 
         $domain = Domain::find($domain_id);
 
-        $expertises = $domain->expertises()->paginate(9);
+        // $expertises = $domain->expertises()->paginate(9);
+        $expertises = $domain->expertises()->get();
 
         $linked_expertises = $subsidiary->expertises()->get();
 
@@ -214,7 +215,7 @@ class DomainController extends Controller
             $domain->save();
         }
 
-        return redirect()->action('DomainController@custom_index', $subsidiary_id);
+        return redirect()->action('DomainController@custom_edit', [$subsidiary_id, $id]);
     }
 
     /**

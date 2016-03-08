@@ -12,12 +12,12 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
-								  <button form="form_back" type="submit" class="btn btn-default btn-sm">
-								  	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								  </button>
+									<a class="btn btn-default btn-sm" href="{{ action('ZoneController@index', $subsidiary_id) }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -34,9 +34,6 @@
 							</ul>
 						</div>
 					@endif
-
-					<form id="form_back" action="{{ action('ZoneController@index', $subsidiary_id) }}" method="GET">
-					</form>
 
 					<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ZoneController@store', $subsidiary_id) }}">
 						<?php echo csrf_field(); ?>
@@ -59,23 +56,14 @@
 								</select>
 							</div>
 						</div>
-
-						<!-- <div class="form-group">
-							<div class="col-sm-6 col-sm-offset-4">
-								<button type="submit" class="btn btn-primary btn-sm">
-									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
-								</button>
-								<a class="btn btn-primary btn-sm" href="{{ action('ZoneController@index', $subsidiary_id) }}" role="button">
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
-								</a>
-							</div>
-						</div> -->
 					</form>
 				</div>
 			</div>
 	</div>
 
 <script>
-
+	$('#save_btn').click(function(e){
+  		$('#form_save').submit();
+  	});
 </script>
 @endsection

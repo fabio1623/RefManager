@@ -11,20 +11,20 @@
 							<div class="col-sm-4">List of contributors</div>
 							<!-- #./Left column -->
 							<!-- Center column -->
-							<div class="col-sm-7">
+							<div class="col-sm-8">
 								<form action="{{ action('ContributorController@custom_create', $subsidiary_id) }}" method="GET">
-									<button type="submit" id="add_btn" class="btn btn-success btn-sm pull-right">
+									<button type="submit" id="add_btn" class="btn btn-success btn-xs pull-right">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>
 								</form>
 							</div>
 							<!-- #./Center column -->
 							<!-- Right column -->
-							<div class="col-sm-1">
+							<!-- <div class="col-sm-1">
 								<button type="submit" form="form_delete" id="remove_btn" class="btn btn-danger btn-sm pull-right">
 									<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 								</button>
-							</div>
+							</div> -->
 							<!-- #./Right column -->
 						</div>
 					</h3>
@@ -32,11 +32,11 @@
 				
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover">
+					<table class="table table-bordered table-hover table-condensed table-striped">
 						<thead>
 							<tr>
-								<th class="col-sm-10">Contributor name</th>
-						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-11">Contributor name</th>
+						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>

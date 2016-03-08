@@ -9,16 +9,13 @@
 						<div class="row">
 							<div class="col-sm-9">List of entities</div>
 							<div class="col-sm-3">
-								<button form="form_create" type="submit" class="btn btn-default btn-xs pull-right">
+								<a class="btn btn-default btn-xs pull-right" href="{{ action('SubsidiaryController@create') }}">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-								</button>
+								</a>
 							</div>
 						</div>
 					</h3>
 				</div>
-
-				<form id="form_create" action="{{ action('SubsidiaryController@create') }}" method="GET">
-				</form>
 
 				<div class="table-responsive">
 

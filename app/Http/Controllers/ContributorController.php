@@ -129,7 +129,7 @@ class ContributorController extends Controller
     {
         // dd($_POST);
         $this->validate($request, [
-            'name' => 'required|alpha|max:255|unique:contributors,name,'.$contributor_id,
+            'name' => 'required|max:255|unique:contributors,name,'.$contributor_id,
         ]);
 
         $contributor = Contributor::find($contributor_id);

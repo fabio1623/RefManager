@@ -56,20 +56,23 @@
   <div class="container">
     <!-- Example row of columns -->
     <div class="row">
+      <!-- If user is not a basic user -->
+      @if (Auth::user()->profile_id != 1)
+        <div class="col-md-4">
+          <h2>Record</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-default" href="{{ action('ReferenceController@create') }}" role="button">Record a new reference &raquo;</a></p>
+        </div>
+      @endif
       <div class="col-md-4">
-        <h2>Saisir</h2>
+        <h2>Follow</h2>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="{{ action('ReferenceController@create') }}" role="button">Effectuer une nouvelle référence &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-        <h2>Suivre</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="{{ action('ReferenceController@index_approved') }}" role="button">Suivre les références en cours &raquo;</a></p>
+        <p><a class="btn btn-default" href="{{ action('ReferenceController@index_approved') }}" role="button">Follow references in progress &raquo;</a></p>
      </div>
       <div class="col-md-4">
-        <h2>Prendre contact</h2>
+        <h2>Contact</h2>
         <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-default" href="{{ action('HomeController@contact_us') }}" role="button">Nous contacter &raquo;</a></p>
+        <p><a class="btn btn-default" href="{{ action('HomeController@contact_us') }}" role="button">Contact us &raquo;</a></p>
       </div>
     </div>
   </div> <!-- /container -->

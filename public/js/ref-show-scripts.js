@@ -1,3 +1,13 @@
+$('#btn_delete').click( function(e) {
+	var confirm_box = confirm("Are you sure ?");
+	if (confirm_box == false) {
+		e.preventDefault();
+	}
+	else {
+		$('#form_delete').submit();
+	}
+});
+
 $('#language_btn').click( function () {
 	$('#base_btn').attr("class", "btn btn-default btn-sm");
 	$(this).attr("class", "btn btn-default btn-sm active");

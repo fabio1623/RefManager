@@ -1,5 +1,13 @@
 <div id="domains_div"> <!-- ICI pour l'ajout des domaines -->
 
+@if (count($reference->expertises) == 0)
+  <div class="form-group">
+    <div class="col-sm-12">
+      <h5>This reference has no expertise.</h5>
+    </div>
+  </div>
+@else
+
 @for($i=0; $i < $domains->count(); $i++)
 
   <div id="domain-{{ $domains[$i]->id }}" class="col-sm-8 col-sm-offset-2 hidden">
@@ -26,6 +34,8 @@
   </div>
 
 @endfor
+
+@endif
 
 </div> <!-- ICI -->
 

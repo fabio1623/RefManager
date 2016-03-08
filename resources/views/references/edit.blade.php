@@ -16,13 +16,13 @@
 
 								@if(Auth::user()->profile_id == 3)
 									@if($reference->dcom_approval == 0)
-										<button form="form_approve" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
-										  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Approve
-										</button>
+										<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@approve', $reference->id) }}">
+											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Approve
+										</a>
 									@else
-										<button form="form_disapprove" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
-										  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Disapprove
-										</button>
+										<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@disapprove', $reference->id) }}">
+											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Disapprove
+										</a>
 									@endif
 								@endif
 								<div class="btn-group">
@@ -55,7 +55,7 @@
 										@endif
 									</ul>
 								</div>
-								<button form="form_save" type="submit" class="btn btn-default btn-sm">
+								<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								</button>
 								<button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
@@ -74,9 +74,9 @@
 								<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
-								<button form="form_back" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								</button>
+								<a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
+									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+								</a>
 
 							</div>
 						</div>
@@ -96,14 +96,11 @@
 				</div>
 			@endif
 
-			<form id="form_approve" role="form" method="get" action="{{ action('ReferenceController@approve', $reference->id) }}">
+			<!-- <form id="form_approve" role="form" method="get" action="{{ action('ReferenceController@approve', $reference->id) }}">
 			</form>
 
 			<form id="form_disapprove" role="form" method="get" action="{{ action('ReferenceController@disapprove', $reference->id) }}">
-			</form>
-
-			<form id="form_back" role="form" method="get" action="{{ action('ReferenceController@index') }}">
-			</form>	
+			</form> -->
 
 			<form id="form_delete" role="form" method="POST" action="{{ action('ReferenceController@destroy', $reference->id) }}">
 				<?php echo method_field('DELETE'); ?>
@@ -170,6 +167,7 @@
 	var categories = {!! $categories->toJson() !!};
 	var measures = {!! $measures_values->toJson() !!};
 	var qualifiers = {!! $qualifiers_values->toJson() !!};
+
 </script>
 <script type="text/javascript" src="/js/ref-edit-scripts.js"></script>
 

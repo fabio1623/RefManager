@@ -354,8 +354,9 @@ class UserController extends Controller
         }
 
         
-        $view = view('home');
+        // $view = view('home');
 
-        return $view;
+        // return $view;
+        return redirect()->action('HomeController@index');
     }
 }

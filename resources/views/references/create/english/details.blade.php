@@ -346,7 +346,7 @@
 <hr></hr>
 <!-- Line -->
 <div class="form-group">
-	<label for="financing" class="col-sm-4 control-label">Financing</label>
+	<label for="financing" class="col-sm-4 control-label">Fundings</label>
 	<div class="col-sm-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">

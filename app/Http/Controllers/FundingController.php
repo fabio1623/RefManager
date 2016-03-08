@@ -33,7 +33,7 @@ class FundingController extends Controller
      */
     public function create()
     {
-        //
+        return view('fundings.create');
     }
 
     /**
@@ -44,7 +44,18 @@ class FundingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'english_name' => 'required|max:255|unique:fundings,name',
+            'french_name' => 'required|max:255|unique:fundings,name_fr',
+        ]);
+
+        $new_funding = new Funding;
+        $new_funding->name = $request->english_name;
+        $new_funding->name_fr = $request->french_name;
+
+        $new_funding->save();
+
+        return redirect()->action('FundingController@index');
     }
 
     /**
@@ -79,9 +90,20 @@ class FundingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $funding_id)
     {
-        //
+        $this->validate($request, [
+            'english_name' => 'required|max:255|unique:fundings,name,'.$funding_id,
+            'french_name' => 'required|max:255|unique:fundings,name_fr,'.$funding_id,
+        ]);
+
+        $funding = Funding::find($funding_id);
+        $funding->name = $request->english_name;
+        $funding->name_fr = $request->french_name;
+
+        $funding->save();
+
+        return redirect()->action('FundingController@edit', $funding_id);
     }
 
     /**
@@ -90,24 +112,29 @@ class FundingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($funding_id)
     {
-        //
+        $funding = Funding::find($funding_id);
+        $funding->references()->detach();
+
+        Funding::destroy($funding_id);
+
+        return redirect()->action('FundingController@index');
     }
 
-    public function destroyMultiple(Request $request)
-    {
-        // dd($_POST);
+    // public function destroyMultiple(Request $request)
+    // {
+    //     // dd($_POST);
 
-        // $ids = $request->input('id');
+    //     // $ids = $request->input('id');
 
-        // foreach ($ids as $id) {
-        //     $zone = Zone::find($id);
-        //     $zone->countries()->detach();
-        // }
+    //     // foreach ($ids as $id) {
+    //     //     $zone = Zone::find($id);
+    //     //     $zone->countries()->detach();
+    //     // }
 
-        // Zone::destroy($ids);
+    //     // Zone::destroy($ids);
 
-        return redirect()->action('ZoneController@index');  
-    }
+    //     return redirect()->action('ZoneController@index');  
+    // }
 }

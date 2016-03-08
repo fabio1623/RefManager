@@ -190,7 +190,8 @@ class CategoryController extends Controller
 
         $category = Category::find($category_id);
 
-        $measures = $category->measures()->paginate(9);
+        // $measures = $category->measures()->paginate(9);
+        $measures = $category->measures()->get();
 
         $linked_measures = $subsidiary->measures()->get();
 

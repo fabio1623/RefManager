@@ -8,6 +8,9 @@ body {
   color: #5a5a5a;
 }
 
+.tablesorter thead .disabled {
+  display: none;
+}
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */

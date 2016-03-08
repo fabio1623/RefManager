@@ -10,22 +10,17 @@
 							<div class="col-sm-9">List of external services</div>
 							<div class="col-sm-3">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button id="add_btn" form="form_create" type="submit" class="btn btn-default btn-sm">
+									<a class="btn btn-default btn-sm" href="{{ action('ServiceController@create', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-									</button>
-									<button form="form_save" type="submit" class="btn btn-default btn-sm">
+									</a>
+									<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 										<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 									</button>
-									<button form="form_back" type="submit" class="btn btn-default btn-sm">
-											<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-									</button>
+									<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
 								</div>
 							</div>
-
-							<form id="form_create" action="{{ action('ServiceController@create', $subsidiary->id) }}" method="GET">
-							</form>
-							<form id="form_back" action="{{ action('SubsidiaryController@edit', $subsidiary->id) }}" method="GET">
-							</form>
 						</div>
 					</h3>
 				</div>
@@ -93,5 +88,9 @@
     $("#select_all").change(function(){
       $(".checkbox").prop("checked", $(this).prop("checked"));
     });
+
+    $('#save_btn').click(function(e){
+  		$('#form_save').submit();
+  	});
 </script>
 @endsection

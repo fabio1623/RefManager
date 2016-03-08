@@ -12,12 +12,12 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
-								  <button form="form_back" type="submit" class="btn btn-default btn-sm">
-								  	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								  </button>
+								  <a class="btn btn-default btn-sm" href="{{ action('ContributorController@index', [$subsidiary_id, 1]) }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -35,9 +35,6 @@
 						</div>
 					@endif
 
-					<form id="form_back" action="{{ action('ContributorController@index', [$subsidiary_id, 1]) }}" method="GET">
-					</form>
-
 					<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ContributorController@custom_store', [$subsidiary_id, 1]) }}">
 						<?php echo csrf_field(); ?>
 
@@ -53,4 +50,10 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$('#save_btn').click(function(e){
+  		$('#form_save').submit();
+  	});
+</script>
 @endsection

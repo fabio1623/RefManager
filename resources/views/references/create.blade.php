@@ -13,12 +13,12 @@
 					<div class="col-sm-4 pull-right">
 						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
-								<button form="form_save" type="submit" class="btn btn-default btn-sm">
+								<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								</button>
-								<button form="form_back" type="submit" class="btn btn-default btn-sm">
+								<a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								</button>
+								</a>
 							</div>
 						</div>
 					</div>			
@@ -36,9 +36,6 @@
 					</ul>
 				</div>
 			@endif
-
-			<form id="form_back" action="{{ action('ReferenceController@index') }}" method="GET">
-			</form>
 
 			<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@store') }}">
 				<?php echo csrf_field(); ?>
@@ -80,6 +77,10 @@
 
 	var domains = {!! $domains->toJson() !!};
 	var expertises = {!! $expertises->toJson() !!};
+
+  	$('#save_btn').click(function(e){
+  		$('#form_save').submit();
+  	});
 </script>
 <script type="text/javascript" src="/js/ref-create-scripts.js"></script>
 @endsection

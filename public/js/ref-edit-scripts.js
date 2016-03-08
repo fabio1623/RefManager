@@ -1,7 +1,14 @@
+$('#save_btn').click(function(e){
+	$('#form_save').submit();
+});
+
 $('#btn_delete').click( function(e) {
 	var confirm_box = confirm("Are you sure ?");
 	if (confirm_box == false) {
 		e.preventDefault();
+	}
+	else {
+		$('#form_delete').submit();
 	}
 });
 

@@ -146,7 +146,8 @@ Route::get('references/{reference}/generate_file_es', 'ReferenceController@gener
 Route::get('references/{reference}/languages/{language}/generate_file_translations', 'ReferenceController@generate_file_translations');
 Route::get('{template}/{kind_of_file}/reference/{reference}/generate_file_base', 'ReferenceController@generate_file_base');
 Route::post('{template}/{kind_of_file}/generate_file_base_multiple', 'ReferenceController@generate_file_base_multiple');
-Route::post('languages/{language}/generate_file_translations_multiple', 'ReferenceController@generate_file_translations_multiple');
+// Route::post('languages/{language}/generate_file_translations_multiple', 'ReferenceController@generate_file_translations_multiple');
+Route::post('generate_file_translations_multiple', 'ReferenceController@generate_file_translations_multiple');
 Route::get('subsidiaries/{subsidiary}/match_page', 'ReferenceController@match_page');
 
 //Languages

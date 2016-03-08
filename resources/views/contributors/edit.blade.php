@@ -12,15 +12,15 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
 								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 								  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								  </button>
-								  <button form="form_back" type="submit" class="btn btn-default btn-sm">
-								  	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								  </button>
+								  <a class="btn btn-default btn-sm" href="{{ action('ContributorController@index', [$subsidiary_id, $zone_id]) }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
 								</div>
 								
 							</div>
@@ -33,10 +33,6 @@
 					<?php echo method_field('DELETE'); ?>
 				    <?php echo csrf_field(); ?>
 				</form>
-
-				<form id="form_back" action="{{ action('ContributorController@index', [$subsidiary_id, $zone_id]) }}" method="GET">
-				</form>
-
 
 				<div class="panel-body">
 					@if (count($errors) > 0)
@@ -99,11 +95,9 @@
 									<td>
 										@foreach($references as $reference)
 											@if($reference->id == $project->reference_id)
-												<li>
-													<a href="{{ action('ReferenceController@edit', $reference->id) }}">
-														{{ $reference->project_number }}
-													</a>
-												</li>
+												<a href="{{ action('ReferenceController@edit', $reference->id) }}">
+													{{ $reference->project_number }}
+												</a>
 											@endif
 										@endforeach
 									</td>
@@ -130,13 +124,23 @@
 				if (confirm_box == false) {
 					e.preventDefault();
 				}
+				else {
+					$('#form_delete').submit();
+				}
 			}
 			else {
 				var confirm_box = confirm("Are you sure ?");
 				if (confirm_box == false) {
 					e.preventDefault();
 				}
+				else {
+					$('#form_delete').submit();
+				}
 			}
 		});
+
+		$('#save_btn').click(function(e){
+	  		$('#form_save').submit();
+	  	});
 	</script>
 @endsection

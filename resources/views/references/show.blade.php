@@ -13,54 +13,99 @@
 					<div class="col-sm-4 pull-right">
 						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
-								@if(Auth::user()->profile == 'Dcom manager')
+								<!-- If Dcom manager -->
+								@if(Auth::user()->profile_id == 3)
 									@if($reference->dcom_approval == 0)
-										<button form="form_approve" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
-										  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Approve
-										</button>
+										<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@approve', $reference->id) }}">
+											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Approve
+										</a>
 									@else
-										<button form="form_disapprove" type="submit" class="btn btn-default btn-sm" aria-label="Left Align">
-										  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Disapprove
-										</button>
+										<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@disapprove', $reference->id) }}">
+											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Disapprove
+										</a>
 									@endif
 								@endif
-								<div class="btn-group">
-								  <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								    <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span><span class="caret"></span>
-								    Extract
-								  </button>
-								  <ul class="dropdown-menu">
-								  	<li class="dropdown-header">WB</li>
-											<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank', 'wb', $reference->id]) }}">
-												WB - EN
-											</a></li>
-											<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank_fr', 'wb_fr', $reference->id]) }}">
-												WB - FR
-											</a></li>
-											<li class="dropdown-header">EURO</li>
-											<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro', 'euro', $reference->id]) }}">
-												EURO - EN
-											</a></li>
-											<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro_fr', 'euro_fr', $reference->id]) }}">
-												EURO - FR
-											</a></li>
-											@if ($linked_languages->count() > 0)
-												<li class="dropdown-header">OTHER</li>
-												@foreach ($linked_languages as $language)
-													<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
-														{{ $language->name }}
-													</a></li>	
-												@endforeach
-											@endif
-								  </ul>
-								</div>
+								@if ($reference->confidential)
+									<!-- If Dcom manager or User administrator -->
+									@if (Auth::user()->profile_id == 3 || Auth::user()->profile_id == 5)
+										<div class="btn-group">
+										  <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span><span class="caret"></span>
+										    Extract
+										  </button>
+										  <ul class="dropdown-menu">
+										  	<li class="dropdown-header">WB</li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank', 'wb', $reference->id]) }}">
+													WB - EN
+												</a></li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank_fr', 'wb_fr', $reference->id]) }}">
+													WB - FR
+												</a></li>
+												<li class="dropdown-header">EURO</li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro', 'euro', $reference->id]) }}">
+													EURO - EN
+												</a></li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro_fr', 'euro_fr', $reference->id]) }}">
+													EURO - FR
+												</a></li>
+												@if ($linked_languages->count() > 0)
+													<li class="dropdown-header">OTHER</li>
+													@foreach ($linked_languages as $language)
+														<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
+															{{ $language->name }}
+														</a></li>	
+													@endforeach
+												@endif
+										  </ul>
+										</div>
+									@endif
+								@else
+									<div class="btn-group">
+									  <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span><span class="caret"></span>
+									    Extract
+									  </button>
+									  <ul class="dropdown-menu">
+									  	<li class="dropdown-header">WB</li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank', 'wb', $reference->id]) }}">
+													WB - EN
+												</a></li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank_fr', 'wb_fr', $reference->id]) }}">
+													WB - FR
+												</a></li>
+												<li class="dropdown-header">EURO</li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro', 'euro', $reference->id]) }}">
+													EURO - EN
+												</a></li>
+												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro_fr', 'euro_fr', $reference->id]) }}">
+													EURO - FR
+												</a></li>
+												@if ($linked_languages->count() > 0)
+													<li class="dropdown-header">OTHER</li>
+													@foreach ($linked_languages as $language)
+														<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
+															{{ $language->name }}
+														</a></li>	
+													@endforeach
+												@endif
+									  </ul>
+									</div>
+								@endif
 								<button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
 								  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
 								</button>
-								<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
-								  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Translations
-								</button>
-								<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index') }}">
+								@if (count($linked_languages) > 1)
+									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
+									  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Translations
+									</button>
+								@endif
+								<!-- If Dcom manager, User admin, or creator -->
+								@if (Auth::user()->profile_id == 3 || Auth::user()->profile_id == 5 || Auth::user()->profile_id == $reference->created_by)
+									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									</button>
+								@endif
+								<a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 								</a>
 
@@ -80,18 +125,11 @@
 						@endforeach
 					</ul>
 				</div>
-			@endif
+			@endif	
 
-			<form id="form_approve" role="form" method="get" action="{{ action('ReferenceController@approve', $reference->id) }}">
-			</form>
-
-			<form id="form_disapprove" role="form" method="get" action="{{ action('ReferenceController@disapprove', $reference->id) }}">
-			</form>
-
-			<form id="form_index" role="form" method="get" action="{{ action('ReferenceController@index') }}">
-			</form>	
-
-			<form id="form_generate" role="form" method="get" action="{{ action('ReferenceController@generate_file_wb_en', $reference->id) }}">
+			<form id="form_delete" role="form" method="POST" action="{{ action('ReferenceController@destroy', $reference->id) }}">
+				<?php echo method_field('DELETE'); ?>
+			    <?php echo csrf_field(); ?>
 			</form>	
 
 			<form id="form" class="form-horizontal" role="form">

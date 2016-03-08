@@ -10,7 +10,7 @@
 							<div class="col-sm-8">{{ $category->name }}</div>
 							<div class="col-sm-4">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button form="form_link_measures" type="submit" class="btn btn-default btn-sm">
+									<button id="link_btn" form="form_link_measures" type="submit" class="btn btn-default btn-sm">
 										<span class="glyphicon glyphicon-save" aria-hidden="true"></span> 
 										Save measures
 									</button>
@@ -18,9 +18,9 @@
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
 										Delete
 									</button>
-									<button form="form_back" type="submit" class="btn btn-default btn-sm">
+									<a class="btn btn-default btn-sm" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-									</button>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -37,9 +37,6 @@
 							</ul>
 						</div>
 					@endif
-
-					<form id="form_back" action="{{ action('CategoryController@custom_index', $subsidiary->id) }}" method="GET">
-					</form>
 
 					<form id="form_update" class="form-horizontal" role="form" method="POST" action="{{ action('CategoryController@update', [$subsidiary->id, $category->id]) }}">
 						<?php echo method_field('PUT'); ?>
@@ -149,6 +146,9 @@
 		if (confirm_box == false) {
 			e.preventDefault();
 		}
+		else {
+			$('#form_delete').submit();
+		}
 	});
 	
 	$("tbody > tr").click(function() {
@@ -165,6 +165,10 @@
 	$("#select_all").change(function(){
 		$(".checkbox").prop("checked", $(this).prop("checked"));
 	});
+
+	$('#link_btn').click(function(e){
+  		$('#form_link_measures').submit();
+  	});
 </script>
 
 @endsection

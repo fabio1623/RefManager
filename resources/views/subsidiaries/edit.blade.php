@@ -10,15 +10,15 @@
 						<div class="col-sm-6">{{ $subsidiary->name }}</div>
 						<div class="col-sm-6">
 							<div class="btn-group pull-right" role="group" aria-label="...">
-							  <button form="form_save" type="submit" class="btn btn-default btn-sm">
+							  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 							  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 							  </button>
 							  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 							  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							  </button>
-							  <button form="form_back" type="submit" class="btn btn-default btn-sm">
-							  	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-							  </button>
+								<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@index') }}">
+									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -39,9 +39,6 @@
 				<form id="form_delete" action="{{ action('SubsidiaryController@destroy', $subsidiary->id) }}" method="POST">
 					<?php echo method_field('DELETE'); ?>
 				    <?php echo csrf_field(); ?>
-				</form>
-
-				<form id="form_back" action="{{ action('SubsidiaryController@index') }}" method="GET">
 				</form>
 
 				<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('SubsidiaryController@update', $subsidiary->id) }}">
@@ -174,7 +171,14 @@
 			if (confirm_box == false) {
 				e.preventDefault();
 			}
+			else {
+				$('#form_delete').submit();
+			}
 		});
+
+		$('#save_btn').click(function(e){
+	  		$('#form_save').submit();
+	  	});
 	</script>
 @endsection
 

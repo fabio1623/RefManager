@@ -5,7 +5,18 @@
 <div class="col-sm-10 col-sm-offset-1">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 class="panel-title">Search a reference</h3>
+			<h3 class="panel-title">
+				<div class="row">
+					<div class="col-sm-4">
+						Search a reference	
+					</div>
+					<div class="col-sm-8">
+						<button id="search_btn" form="form_search" type="submit" class="btn btn-default btn-xs pull-right">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</h3>
 		</div>
 		<div class="panel-body">
 			@if (session('status'))
@@ -25,7 +36,7 @@
 				</div>
 			@endif
 
-			<form class="form-horizontal" role="form" method="GET" action="{{ action('ReferenceController@results') }}">
+			<form id="form_search" class="form-horizontal" role="form" method="GET" action="{{ action('ReferenceController@results') }}">
 				<!-- Line -->
 				<div class="form-group">
 				    <label class="control-label col-sm-4" for="keyword">Keyword</label>
@@ -236,11 +247,11 @@
 			  	</div>
 			  	<!-- EO line -->
 			  <!-- Line -->
-			  <div class="form-group">
+			  <!-- <div class="form-group">
 			  	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
 				</button>
-			  </div>
+			  </div> -->
 			  <!-- EO line -->
 			</form>
 		</div>
@@ -268,5 +279,9 @@
 	}).on('changeDate', function (e) {
 		$('#date_picker_start').datepicker('setEndDate', $('#date_picker_end').datepicker('getDate'));
 	});
+
+	$('#search_btn').click(function(e){
+  		$('#form_search').submit();
+  	});
 </script>
 @endsection
