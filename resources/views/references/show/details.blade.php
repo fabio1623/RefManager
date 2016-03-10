@@ -27,6 +27,8 @@
 	  <p class="form-control-static">{{ $reference->project_description_fr }}</p>
 	</div>
 </div>
+
+<hr>
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
@@ -62,6 +64,7 @@
 @if (count($staff_involved) > 0)
 
 	@for ($i=0; $i < count($staff_involved); $i++)
+	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">
 			<table class="table table-bordered table-condensed">
 				<tbody>
@@ -70,7 +73,9 @@
 							<em>Name</em>
 						</td>
 						<td colspan="2" class="col-sm-10">
-							{{ $experts_name[$i]['name'] }}
+							@if($staff_involved[$i]->contributor_id)
+								{{ $staff_name[$i]['name'] }}
+							@endif
 						</td>
 					</tr>
 					<tr>
@@ -78,15 +83,16 @@
 							<em>Responsabilities</em>
 						</td>
 						<td class="col-sm-5">
-							{{ $staff_involved[$i]['responsability_on_project'] }}
+							{{ $staff_involved[$i]->responsability_on_project }}
 						</td>
 						<td class="col-sm-5">
-							{{ $staff_involved[$i]['responsability_on_project_fr'] }}
+							{{ $staff_involved[$i]->responsability_on_project_fr }}
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+	</div>
 	@endfor
 
 @else
@@ -106,6 +112,7 @@
 </div>
 @if (count($experts) > 0)
 	@for ($i=0; $i < count($experts); $i++)
+	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">
 			<table class="table table-bordered table-condensed">
 				<tbody>
@@ -114,7 +121,9 @@
 							<em>Name</em>
 						</td>
 						<td colspan="2" class="col-sm-10">
-							{{ $experts_name[$i]['name'] }}
+							@if($experts[$i]->contributor_id)
+								{{ $experts_name[$i]['name'] }}
+							@endif
 						</td>
 					</tr>
 					<tr>
@@ -131,6 +140,7 @@
 				</tbody>
 			</table>
 		</div>
+	</div>
 	@endfor
 @else
 	<div class="form-group">
@@ -253,16 +263,30 @@
 <!-- </div> -->
 <!-- Line -->
 <div class="form-group">
-	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
-	@if ($client != null)
-		<div class="col-sm-4">
-			<p class="form-control-static">{{ $client->name }}</p>
-		</div>
-		<div class="col-sm-4">
-		  	<p class="form-control-static">{{ $client->name_fr }}</p>
-		</div>
-	@endif
+	<label class="col-sm-4 control-label">Client</label>
 </div>
+@if ($client != null)
+	<div class="form-group">
+		<!-- <label for="client_name" class="col-sm-4 control-label">Name of the client</label> -->
+			<div class="col-sm-4 col-sm-offset-4">
+				<p class="form-control-static"><strong><em>Name :</em></strong> {{ $client->name }}</p>
+			</div>
+			<div class="col-sm-4">
+			  	<p class="form-control-static"><strong><em>Name :</em></strong> {{ $client->name_fr }}</p>
+			</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+		  	<p class="form-control-static"><strong><em>Address :</em></strong> {{ $client->address }}</p>
+		</div>
+	</div>
+@else
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+			<p class="form-control-static"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No client</p>
+		</div>
+	</div>
+@endif
 <!-- EO line -->
 <hr>
 <!-- Line -->

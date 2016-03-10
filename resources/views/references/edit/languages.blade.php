@@ -11,25 +11,61 @@
 	</div>
 </div>
 
+<!-- Line -->
 <div class="form-group">
-	<label for="country_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Country</label>
+	<label for="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Detailed description of project</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="country_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][country]" value="{{ $language_reference[$i]->country }}">
+	  	<textarea class="form-control" rows="5" id="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][project_description]">{{ $language_reference[$i]->project_description }}</textarea>
 	</div>
-	<!-- <div class="col-sm-4">
-		<a class="btn btn-default btn-sm pull-right" href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $linked_languages[$i]->id]) }}">
-			<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Extract
-		</a>
-	</div> -->
+</div>
+<!-- EO line -->
+<hr>
+<!-- Line -->
+<div class="form-group">
+	<label for="project_title_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Title of services provided by Seureca</label>
+	<div class="col-sm-4">
+	  <input type="text" class="form-control" id="project_title_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][service_title]" value="{{ $language_reference[$i]->service_name }}">
+	</div>
+</div>
+<!-- EO line -->
+<!-- Line -->
+<div class="form-group">
+	<label for="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Detailed description of service</label>
+	<div class="col-sm-4">
+	  	<textarea class="form-control" rows="5" id="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][service_description]">{{ $language_reference[$i]->service_description }}</textarea>
+	</div>
+</div>
+<!-- EO line -->
+<hr>
+<div class="form-group">
+	<label class="col-sm-4 control-label">Location</label>
+</div>
+<div class="form-group">
+	<!-- <label for="country_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Country</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+				Country
+			</span>
+	  		<input type="text" class="form-control" id="country_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][country]" value="{{ $language_reference[$i]->country }}">
+  		</div>
+	</div>
 </div>
 
 <div class="form-group">
-	<label for="location_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Location</label>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="location_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][location]" value="{{ $language_reference[$i]->location }}">
+	<!-- <label for="location_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Location</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+				Address
+			</span>
+	  		<input type="text" class="form-control" id="location_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][location]" value="{{ $language_reference[$i]->location }}">
+  		</div>
 	</div>
 </div>
-
+<hr>
 <div class="form-group">
 	<label for="staff_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Staff</label>
 	<div class="col-sm-4">
@@ -52,30 +88,6 @@
 	</div>
 </div>
 <!-- EO line -->
-<!-- Line -->
-<div class="form-group">
-	<label for="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Detailed description of project</label>
-	<div class="col-sm-4">
-	  	<textarea class="form-control" rows="5" id="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][project_description]">{{ $language_reference[$i]->project_description }}</textarea>
-	</div>
-</div>
-<!-- EO line -->
-<!-- Line -->
-<div class="form-group">
-	<label for="project_title_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Title of services provided by Seureca</label>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="project_title_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][service_title]" value="{{ $language_reference[$i]->service_name }}">
-	</div>
-</div>
-<!-- EO line -->
-<!-- Line -->
-<div class="form-group">
-	<label for="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Detailed description of service</label>
-	<div class="col-sm-4">
-	  	<textarea class="form-control" rows="5" id="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][service_description]">{{ $language_reference[$i]->service_description }}</textarea>
-	</div>
-</div>
-<!-- EO line -->
 <div id="contact_info">
 	<hr>
 	<div class="form-group">
@@ -83,25 +95,40 @@
 	</div>
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_name_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][contact_name]" value="{{ $language_reference[$i]->contact_name }}">
+		<!-- <label for="contact_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Name
+				</span>
+		  		<input type="text" class="form-control" id="contact_name_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][contact_name]" value="{{ $language_reference[$i]->contact_name }}">
+	  		</div>
 		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_department_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Department</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_department_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][contact_department]" value="{{ $language_reference[$i]->contact_department }}">
+		<!-- <label for="contact_department_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Department</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Department
+				</span>
+		  		<input type="text" class="form-control" id="contact_department_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][contact_department]" value="{{ $language_reference[$i]->contact_department }}">
+	  		</div>
 		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_email_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Email</label>
-		<div class="col-sm-4">
-		  <input type="email" class="form-control" id="contact_email_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][contact_email]" value="{{ $language_reference[$i]->contact_email }}">
+		<!-- <label for="contact_email_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Email</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Email
+				</span>
+		  		<input type="email" class="form-control" id="contact_email_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][contact_email]" value="{{ $language_reference[$i]->contact_email }}">
+	  		</div>
 		</div>
 	</div>
 	<!-- EO line -->
@@ -110,19 +137,35 @@
 
 <!-- Line -->
 <div class="form-group">
-	<label for="client_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name of the client</label>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="client_name_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][customer_name]" value="{{ $language_reference[$i]->client }}">
+	<label class="col-sm-4 control-label">Client</label>
+</div>
+<div class="form-group">
+	<!-- <label for="client_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name of the client</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+	  		<input type="text" class="form-control" id="client_name_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][customer_name]" value="{{ $language_reference[$i]->client }}">
+  		</div>
 	</div>
 </div>
 
 <div class="form-group">
-	<label for="client_address_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Address of the client</label>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="client_address_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][customer_address]" value="{{ $language_reference[$i]->customer_address }}">
+	<!-- <label for="client_address_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Address of the client</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+				Address
+			</span>
+	  		<input type="text" class="form-control" id="client_address_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][customer_address]" value="{{ $language_reference[$i]->customer_address }}">
+  		</div>
 	</div>
 </div>
 <!-- EO line -->
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="financing_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Financing</label>
@@ -132,6 +175,7 @@
 	</div>
 </div>
 <!-- EO line -->
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="general_comments_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">General comments / Key words</label>

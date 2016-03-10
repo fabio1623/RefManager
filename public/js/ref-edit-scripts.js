@@ -1,3 +1,10 @@
+$('.deleteFile').click(function(e){
+	var confirm_box = confirm("Do you really want to delete " + $(this).attr('id') + " ?");
+	if (confirm_box == false) {
+		e.preventDefault();
+	}
+});
+
 $('#save_btn').click(function(e){
 	$('#form_save').submit();
 });
@@ -185,6 +192,7 @@ customTypeahead(contacts, 'contact_name', 'name');
 
 customTypeahead(clients, 'client_name', 'name');
 customTypeahead(clients, 'client_name_fr', 'name_fr');
+customTypeahead(clients, 'client_address', 'address');
 
 // Array of checkboxes and their children
 var checkboxs = [

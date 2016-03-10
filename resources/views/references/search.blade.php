@@ -237,7 +237,7 @@
 				<div class="form-group">
 				    <label for="financing" class="control-label col-sm-4" for="financing">Financing</label>
 				    <div class="col-sm-3">
-				    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" name="financings[]">
+				    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" name="financings[]" data-live-search="true">
 				    		<option></option>
 				    		@foreach($fundings as $funding)
 				    			<option value="{{ $funding->id }}">{{ $funding->name }}</option>
@@ -245,14 +245,6 @@
 			    		</select>
 				    </div>
 			  	</div>
-			  	<!-- EO line -->
-			  <!-- Line -->
-			  <!-- <div class="form-group">
-			  	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
-				</button>
-			  </div> -->
-			  <!-- EO line -->
 			</form>
 		</div>
 	</div>

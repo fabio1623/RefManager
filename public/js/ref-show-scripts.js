@@ -54,7 +54,7 @@ for (var i = 0; i < selected_measures.length; i++) {
 }
 
 for (var i = 0; i < categories_tab.length; i++) {
-  $('#category-' + categories_tab).removeClass('hidden');
+  $('#category-' + categories_tab[i]).removeClass('hidden');
 }
 
 for (var i=0; i<measures.length; i++) {

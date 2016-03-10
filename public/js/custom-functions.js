@@ -42,6 +42,11 @@ function getTranslation (filledField, jsonCollection, attribute1, attribute2, tr
 	if ($('#' + filledField).val() != '') {
 		for (var i = 0; i < jsonCollection.length; i++) {
 			if (jsonCollection[i][attribute1] == $('#' + filledField).val() ) {
+				if (filledField == 'client_name' || filledField == 'client_name_fr') {
+					if (jsonCollection[i]['address'] != '') {
+						$('#client_address').val(jsonCollection[i]['address']);	
+					}
+				}
 				if (jsonCollection[i][attribute2] != '') {
 					$('#' + translationField).val(jsonCollection[i][attribute2]);
 				};

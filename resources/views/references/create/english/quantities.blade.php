@@ -31,7 +31,7 @@
 
                     <!-- <input type="text" class="form-control" id="unit-{{ $measure->id }}" name="units[{{ $measure->id }}]"> -->
 
-                    <select id="{{ $measure->id }}" name="units[{{ $measure->id }}]" class="selectpicker" data-width="22%" data-size="100%">
+                    <select id="{{ $measure->id }}" name="units[{{ $measure->id }}]" class="selectpicker" data-width="auto">
                       @foreach($measure->units as $unit)
                         <option>{{ $unit->name }}</option>
                       @endforeach

@@ -129,8 +129,28 @@
 				</div>
 				<!-- /#menu content -->
 			</form>
+
 		</div>
 	</div>
+	<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_file', $reference->id) }}" enctype="multipart/form-data">
+		<?php echo csrf_field(); ?>
+		<label for="exampleInputFile">Import file</label>
+		<input type="file" id="exampleInputFile" name="file" accept="*">
+		<p class="help-block">Import your file here.</p>
+		<input class="btn btn-default" type="submit" value="Submit">
+	</form>
+	<br>
+	@foreach ($file_tab as $file_name)
+		<!-- <p>{{ $file_name }}</p> -->
+		<p>
+			<a href="{{ action('ReferenceController@download_file', [$reference->id, $file_name])  }}" target="_blank">
+				{{ $file_name }}
+			</a>
+			<a id="{{ $file_name }}" class="btn btn-link deleteFile" href="{{ action('ReferenceController@delete_file', [$reference->id, $file_name])  }}">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			</a>
+		</p>
+	@endforeach
 </div>
 
 

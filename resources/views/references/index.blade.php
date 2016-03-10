@@ -61,7 +61,8 @@
 			<table id="sortedTable" class="table table-bordered table-hover table-condensed table-striped">
 				<thead>
 					<tr>
-						<th class="col-sm-2">Project number</th>
+						<th class="col-sm-1">Activity</th>
+						<th class="col-sm-1">Project number</th>
 				    	<th class="col-sm-1">DFAC name</th>
 				    	<th class="col-sm-1">Start date</th>
 				    	<th class="col-sm-1">End date</th>
@@ -69,23 +70,25 @@
 				    	<th class="col-sm-1">Country</th>
 				    	<th class="col-sm-1">Zone</th>
 				    	<th class="col-sm-1">Cost</th>
-				    	<th class="col-sm-1"><input id="select_all" type="checkbox"> All</th>
+				    	<th class="col-sm-2"><input id="select_all" type="checkbox"> All</th>
 					</tr>
 				</thead>
 				<tfoot>
 					
-				      <th colspan="9" class="ts-pager form-horizontal">
+				      <th colspan="10" class="ts-pager form-horizontal">
 				        <button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				        <button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
 				        <button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
 				        <button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+				        <label class="control-label">References</label>
 				        <select class="pagesize input-mini" title="Select page size">
 				          <option selected="selected" value="10">10</option>
 				          <option value="20">20</option>
 				          <option value="30">30</option>
 				          <option value="40">40</option>
 				        </select>
+				        <label class="control-label">Page</label>
 				        <select class="pagenum input-mini" title="Select page number"></select>
 				      </th>
 				    </tr>
@@ -96,6 +99,9 @@
 							@foreach ($references as $reference)
 								<tr>
 								@if($reference->confidential)
+									<td>
+										
+									</td>
 									<td>
 										<strong><p class="text-danger">
 											{{$reference->project_number}} (Confidential)
@@ -174,6 +180,13 @@
 								@else
 									<td>
 										<strong><p class="text-primary">
+											@for($i=0; $i < count($ref_array[$reference->id]); $i++)
+												{{ $categories[$ref_array[$reference->id][$i]-1]->name }} /
+											@endfor
+										</p></strong>
+									</td>
+									<td>
+										<strong><p class="text-primary">
 											{{$reference->project_number}}
 										</p></strong>
 									</td>
@@ -221,7 +234,7 @@
 									</td>
 									<td>
 										<strong><p class="text-primary text-center">
-											{{ number_format($reference->total_project_cost) }}
+											{{ number_format($reference->total_project_cost, 2) }}
 										</p></strong>
 									</td>
 									<td class="check">
@@ -245,7 +258,7 @@
 							@endforeach
 						@else
 							<tr>
-								<td colspan="9">
+								<td colspan="10">
 									No references
 								</td>
 							</tr>
@@ -290,7 +303,7 @@
   // call the tablesorter plugin and apply the uitheme widget
   $("table").tablesorter({
   	headers: {
-					8: {
+					9: {
 						sorter:false,
 						filter:false
 					}

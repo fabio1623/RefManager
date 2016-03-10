@@ -66,7 +66,11 @@
 		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.widgets.js"></script>
 		<script type="text/javascript" src="/js/custom-functions.js"></script>	
 	</head>
-
+	<style type="text/css">
+		/*body {
+		    background: url('http://demos.creative-tim.com/light-bootstrap-dashboard-pro/assets/img/full-screen-image-4.jpg') repeat-x, repeat-y;
+		 }*/
+	</style>
 	<body role='document'>
 
 			<!-- Fixed navbar -->

@@ -50,13 +50,16 @@
 <!-- EO line -->
 <hr>
 <!-- Line -->
+<div class="form-group">
+	<label class="col-sm-4 control-label">Staff involved</label>
+</div>
 @if (count($staff_involved) > 0)
 
 @for ($i=0; $i < count($staff_involved); $i++)
 		@if ($i == 0)
 			<div class="form-group">
-				<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
-				<div class="col-sm-4">
+				<!-- <label for="involved_staff" class="col-sm-4 control-label">Staff involved</label> -->
+				<div class="col-sm-4 col-sm-offset-4">
 		@else
 			<div class="template">
 				<div class="form-group">
@@ -67,7 +70,11 @@
 					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 					Name
 				</span>
-				<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="{{ $staff_name[$i]['name'] }}">
+				@if($staff_involved[$i]->contributor_id)
+					<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="{{ $staff_name[$i]['name'] }}">
+				@else
+					<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="">
+				@endif
 				<span class="input-group-btn">
 					@if ($i == 0)
 						<button class="btn btn-default addButton" type="button">
@@ -120,8 +127,8 @@
 @else
 
 <div class="form-group">
-	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
-	<div class="col-sm-4">
+	<!-- <label for="involved_staff" class="col-sm-4 control-label">Staff involved</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -190,13 +197,16 @@
 </div>
 <hr>
 <!-- Line -->
+<div class="form-group">
+	<label class="col-sm-4 control-label">Experts employed</label>
+</div>
 @if (count($experts) > 0)
 
 @for ($i=0; $i < count($experts); $i++)
 		@if ($i == 0)
 			<div class="form-group">
-				<label for="experts" class="col-sm-4 control-label">Experts employed</label>
-				<div class="col-sm-4">
+				<!-- <label for="experts" class="col-sm-4 control-label">Experts employed</label> -->
+				<div class="col-sm-4 col-sm-offset-4">
 		@else
 			<div class="expertTemplate">
 				<div class="form-group">
@@ -207,7 +217,11 @@
 					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 					Name
 				</span>
-				<input type="text" class="form-control experts" id="experts" name="experts[]" value="{{ $experts_name[$i]['name'] }}" autocomplete="off">
+				@if($experts[$i]->contributor_id)
+					<input type="text" class="form-control experts" id="experts" name="experts[]" value="{{ $experts_name[$i]['name'] }}" autocomplete="off">
+				@else
+					<input type="text" class="form-control experts" id="experts" name="experts[]" value="" autocomplete="off">
+				@endif
 				<span class="input-group-btn">
 					@if ($i == 0)
 						<button class="btn btn-default addExpertButton" type="button">
@@ -259,8 +273,8 @@
 @else
 <!-- Line -->
 <div class="form-group">
-	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
-	<div class="col-sm-4">
+	<!-- <label for="experts" class="col-sm-4 control-label">Experts employed</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -360,12 +374,15 @@
 <!-- EO line -->
 <hr>
 <!-- Line -->
+<div class="form-group">
+	<label class="col-sm-4 control-label">Associated consultants</label>
+</div>
 @if (count($consultants) > 0)
 	@for ($i=0; $i < count($consultants); $i++)
 		@if ($i == 0)
 			<div class="form-group">
-				<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
-				<div class="col-sm-4">
+				<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label> -->
+				<div class="col-sm-4 col-sm-offset-4">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon2">
 							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -406,8 +423,8 @@
 	@endfor
 @else
 <div class="form-group">
-	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
-	<div class="col-sm-4">
+	<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -462,78 +479,143 @@
 	</div>
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_name_en" class="col-sm-4 control-label">Name</label>
+		<!-- <label for="contact_name_en" class="col-sm-4 control-label">Name</label> -->
 		@if ($contact)
-			<div class="col-sm-4">
-			  <input type="text" class="form-control contact_name" id="contact_name_en" name="contact_name" value="{{ $contact->name }}">
+			<div class="col-sm-4 col-sm-offset-4">
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon2">
+						Name
+					</span>
+			  		<input type="text" class="form-control contact_name" id="contact_name_en" name="contact_name" value="{{ $contact->name }}">
+		  		</div>
 			</div>
-			<!-- <div class="col-sm-4">
-			  <input type="text" class="form-control contact_name" id="contact_name_fr" value="{{ $contact->name }}">
-			</div>	 -->
 		@else
-			<div class="col-sm-4">
-			  <input type="text" class="form-control contact_name" id="contact_name_en" name="contact_name" value="">
+			<div class="col-sm-4 col-sm-offset-4">
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon2">
+						Name
+					</span>
+			  		<input type="text" class="form-control contact_name" id="contact_name_en" name="contact_name" value="">
+		  		</div>
 			</div>
-			<!-- <div class="col-sm-4">
-			  <input type="text" class="form-control contact_name" id="contact_name_fr" value="">
-			</div> -->
 		@endif
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_department" class="col-sm-4 control-label">Department</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_department" name="contact_department" value="{{ $reference->contact_department }}">
+		<!-- <label for="contact_department" class="col-sm-4 control-label">Department</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Department
+				</span>
+		  		<input type="text" class="form-control" id="contact_department" name="contact_department" value="{{ $reference->contact_department }}">
+	  		</div>
 		</div>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_department_fr" name="contact_department_fr" value="{{ $reference->contact_department_fr }}">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Department
+				</span>
+		  		<input type="text" class="form-control" id="contact_department_fr" name="contact_department_fr" value="{{ $reference->contact_department_fr }}">
+	  		</div>
 		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_phone_en" class="col-sm-4 control-label">Phone</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_phone_en" name="contact_phone" value="{{ $reference->contact_phone }}">
+		<!-- <label for="contact_phone_en" class="col-sm-4 control-label">Phone</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Phone
+				</span>
+		  		<input type="text" class="form-control" id="contact_phone_en" name="contact_phone" value="{{ $reference->contact_phone }}">
+	  		</div>
 		</div>
-		<!-- <div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_phone_fr" value="{{ $reference->contact_phone }}">
-		</div> -->
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_email_en" class="col-sm-4 control-label">Email</label>
-		<div class="col-sm-4">
-		  <input type="email" class="form-control" id="contact_email_en" name="contact_email" value="{{ $reference->contact_email }}">
+		<!-- <label for="contact_email_en" class="col-sm-4 control-label">Email</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Email
+				</span>
+		  		<input type="email" class="form-control" id="contact_email_en" name="contact_email" value="{{ $reference->contact_email }}">
+	  		</div>
 		</div>
-		<!-- <div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_email_fr" value="{{ $reference->contact_email }}">
-		</div> -->
 	</div>
 	<!-- EO line -->
 	<hr>
 </div>
 <!-- Line -->
 <div class="form-group">
-	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
-	@if ($client != null)
-		<div class="col-sm-4">
-			<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="{{ $client->name }}" autocomplete="off">
-		</div>
-		<div class="col-sm-4">
-		  	<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="{{ $client->name }}" autocomplete="off">
-		</div>
-	@else
-		<div class="col-sm-4">
-		  	<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="" autocomplete="off">
-		</div>
-		<div class="col-sm-4">
-		  	<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="" autocomplete="off">
-		</div>
-	@endif
+	<label class="col-sm-4 control-label">Client</label>
 </div>
+<!-- <div class="form-group"> -->
+	<!-- <label for="client_name" class="col-sm-4 control-label">Name of the client</label> -->
+	@if ($client != null)
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+				</span>
+				<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="{{ $client->name }}" autocomplete="off">
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+				</span>
+		  		<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="{{ $client->name }}" autocomplete="off">
+	  		</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-8 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Address
+				</span>
+				<input type="text" class="form-control client_address" id="client_address" name="client_address" value="{{ $client->address }}">
+			</div>
+		</div>
+	</div>
+	@else
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+				</span>
+		  		<input type="text" class="form-control client_name" id="client_name" name="client_name_en" value="" autocomplete="off">
+	  		</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+				</span>
+		  		<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" value="" autocomplete="off">
+	  		</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-8 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Address
+				</span>
+				<input type="text" class="form-control client_address" id="client_address" name="client_address">
+			</div>
+		</div>
+	</div>	
+	@endif
+<!-- </div> -->
 <!-- EO line -->
 <hr>
 <!-- Line -->
@@ -553,7 +635,10 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
 						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default addFinancingButton" type="button">
@@ -576,7 +661,10 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon2">Name</span>
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+							Name
+						</span>
 						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default removeFinancingButton" type="button">
@@ -602,7 +690,10 @@
 		</div>
 		<div class="col-sm-4">
 			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">Name</span>
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
 				<input id="financ_fr_0" type="text" class="form-control" name="financing[0][]" autocomplete="off">
 				<span class="input-group-btn">
 					<button class="btn btn-default addFinancingButton" type="button">
@@ -628,7 +719,10 @@
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
 			<input type="text" class="form-control financingFrInput" id="financing_fr_input" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeFinancingButton" type="button">

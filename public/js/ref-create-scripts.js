@@ -128,6 +128,7 @@ customTypeahead(contacts, 'contact_name_fr', 'name');
 
 customTypeahead(clients, 'client_name', 'name');
 customTypeahead(clients, 'client_name_fr', 'name_fr');
+customTypeahead(clients, 'client_address', 'address');
 
 // ./TYPEAHEAD FIELDS
 

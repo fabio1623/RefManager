@@ -48,11 +48,14 @@
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
-<!-- Line -->
+<hr>
+
 <div class="form-group">
-	<label for="involved_staff" class="col-sm-4 control-label">Staff involved</label>
-	<div class="col-sm-4">
+	<label class="col-sm-4 control-label">Staff involved</label>
+</div>
+<div class="form-group">
+	<!-- <label for="involved_staff" class="col-sm-4 control-label">Staff involved</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -123,11 +126,14 @@
 	    </div>
 	</div>
 </div>
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
-	<label for="experts" class="col-sm-4 control-label">Experts employed</label>
-	<div class="col-sm-4">
+	<label class="col-sm-4 control-label">Experts employed</label>
+</div>
+<div class="form-group">
+	<!-- <label for="experts" class="col-sm-4 control-label">Experts employed</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -199,7 +205,7 @@
 	</div>
 </div>
 
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
@@ -230,11 +236,14 @@
 	  </div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
-	<label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label>
-	<div class="col-sm-4">
+	<label class="col-sm-4 control-label">Associated consultants</label>
+</div>
+<div class="form-group">
+	<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -281,73 +290,114 @@
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <div id="contact_info">
-	<!-- <hr></hr> -->
 	<label for="contact_name_en" class="col-sm-4 control-label">Contact information</label>
 	<br></br>
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_name_en" class="col-sm-4 control-label">Name</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control contact_name_en" id="contact_name_en" name="contact_name">
-		</div>
-		<!-- <div class="col-sm-4">
-		  <input type="text" class="form-control contact_name_fr" id="contact_name_fr">
-		</div> -->
-	</div>
-	<!-- EO line -->
-	<!-- Line -->
-	<div class="form-group">
-		<label for="contact_department" class="col-sm-4 control-label">Department</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_department" name="contact_department">
-		</div>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_department_fr" name="contact_department_fr">
+		<!-- <label for="contact_name_en" class="col-sm-4 control-label">Name</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Name
+				</span>
+		  		<input type="text" class="form-control contact_name_en" id="contact_name_en" name="contact_name">
+	  		</div>
 		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_phone_en" class="col-sm-4 control-label">Phone</label>
-		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_phone_en" name="contact_phone">
+		<!-- <label for="contact_department" class="col-sm-4 control-label">Department</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Department
+				</span>
+		  		<input type="text" class="form-control" id="contact_department" name="contact_department">
+	  		</div>
 		</div>
-		<!-- <div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_phone_fr">
-		</div> -->
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Department
+				</span>
+		  		<input type="text" class="form-control" id="contact_department_fr" name="contact_department_fr">
+		  	</div>
+		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
 	<div class="form-group">
-		<label for="contact_email_en" class="col-sm-4 control-label">Email</label>
-		<div class="col-sm-4">
-		  <input type="email" class="form-control" id="contact_email_en" name="contact_email">
+		<!-- <label for="contact_phone_en" class="col-sm-4 control-label">Phone</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Phone
+				</span>
+		  		<input type="text" class="form-control" id="contact_phone_en" name="contact_phone">
+	  		</div>
 		</div>
-		<!-- <div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_email_fr">
-		</div> -->
 	</div>
 	<!-- EO line -->
-	<hr></hr>
+	<!-- Line -->
+	<div class="form-group">
+		<!-- <label for="contact_email_en" class="col-sm-4 control-label">Email</label> -->
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					Email
+				</span>
+		  		<input type="email" class="form-control" id="contact_email_en" name="contact_email">
+	  		</div>
+		</div>
+	</div>
+	<!-- EO line -->
+	<hr>
 </div>
 <!-- Line -->
 <div class="form-group">
-	<label for="client_name" class="col-sm-4 control-label">Name of the client</label>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control client_name" id="client_name" name="client_name_en">
+	<label class="col-sm-4 control-label">Client</label>
+</div>
+<div class="form-group">
+	<!-- <label for="client_name" class="col-sm-4 control-label">Name</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+			</span>
+	  		<input type="text" class="form-control client_name" id="client_name" name="client_name_en" autocomplete="off" value="{{ old('client_name_en') }}">
+	  	</div>
 	</div>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+			</span>
+	  		<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" autocomplete="off" value="{{ old('client_name_fr') }}">
+  		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-8 col-sm-offset-4">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Address
+			</span>
+			<input type="text" class="form-control client_address" id="client_address" name="client_address" autocomplete="off" value="{{ old('client_address') }}">
+		</div>
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
-	<label for="financing" class="col-sm-4 control-label">Fundings</label>
-	<div class="col-sm-4">
+	<label class="col-sm-4 control-label">Fundings</label>
+</div>
+<div class="form-group">
+	<!-- <label for="financing" class="col-sm-4 control-label">Fundings</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
@@ -358,7 +408,10 @@
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
 			<input id="financ_fr_0" type="text" class="form-control financing_fr" name="financing[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addFinancingButton" type="button">
@@ -382,8 +435,13 @@
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Name</span>
-			<input id="financing_fr_input_temp" type="text" class="form-control financingFrInput" data-provide="typeahead" autocomplete="off">
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon2">
+					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+					Name
+				</span>
+				<input id="financing_fr_input_temp" type="text" class="form-control financingFrInput" data-provide="typeahead" autocomplete="off">
+			</div>
 			<span class="input-group-btn">
 				<button class="btn btn-default removeFinancingButton" type="button">
 					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
@@ -393,7 +451,7 @@
 	</div>
 </div>
 
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
@@ -438,7 +496,7 @@
 	</div>
 </div>
 <!-- EO line -->
-<hr></hr>
+<hr>
 <!-- Line -->
 <div class="form-group">
 	<label for="general_comments" class="col-sm-4 control-label">General comments / Key words</label>
