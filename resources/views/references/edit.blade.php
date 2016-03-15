@@ -74,9 +74,15 @@
 								<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
-								<a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								</a>
+								@if(Auth::user()->profile_id == 3)
+									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index') }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
+								@else
+									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index_approved') }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
+								@endif
 
 							</div>
 						</div>
@@ -132,25 +138,23 @@
 
 		</div>
 	</div>
-	<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_file', $reference->id) }}" enctype="multipart/form-data">
+	<form id="form_upload" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@upload_file', $reference->id) }}" enctype="multipart/form-data">
 		<?php echo csrf_field(); ?>
-		<label for="exampleInputFile">Import file</label>
-		<input type="file" id="exampleInputFile" name="file" accept="*">
+		<label for="import_input">Import file</label>
+		<input type="file" id="import_input" name="file" accept="*">
 		<p class="help-block">Import your file here.</p>
-		<input class="btn btn-default" type="submit" value="Submit">
+		<input id="upload_btn" class="btn btn-default" type="submit" value="Submit">
 	</form>
-	<br>
-	@foreach ($file_tab as $file_name)
-		<!-- <p>{{ $file_name }}</p> -->
-		<p>
-			<a href="{{ action('ReferenceController@download_file', [$reference->id, $file_name])  }}" target="_blank">
-				{{ $file_name }}
-			</a>
-			<a id="{{ $file_name }}" class="btn btn-link deleteFile" href="{{ action('ReferenceController@delete_file', [$reference->id, $file_name])  }}">
-				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-			</a>
-		</p>
-	@endforeach
+
+	<form id="form_delete_file" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@delete_file', $reference->id)  }}">
+		<?php echo csrf_field(); ?>
+		<input id="file_input_delete" type="text" name="file" value="">
+	</form>
+
+	<form id="form_download" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@download_file', $reference->id)  }}">
+		<?php echo csrf_field(); ?>
+		<input id="file_input_download" type="text" name="file" value="">
+	</form>
 </div>
 
 

@@ -987,7 +987,18 @@ class ReferenceController extends Controller
         $contacts = Contact::all();
         $clients = Client::all();
 
-        $view = view('references.show', ['reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
+        $files = Storage::files('References/'.$reference->project_number);
+        // dd($files);
+        $user_profile = Auth::user()->profile_id;
+
+        if (Auth::user()->username == $reference->created_by) {
+            $is_creator = 1;
+        }
+        else {
+            $is_creator = 0;
+        }
+
+        $view = view('references.show', ['is_creator'=>$is_creator, 'user_profile'=>$user_profile, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
         
         return $view;
     }
@@ -1081,19 +1092,9 @@ class ReferenceController extends Controller
         $country_zone = CountryZone::all();
         $zone_managers = Contributor::where('profile', 'In-house')->orderBy('name', 'asc')->get();
 
-        $dirName = storage_path('app/References/'.$reference->project_number);
+        $files = Storage::files('References/'.$reference->project_number);
 
-        $file_tab = [];
-        foreach (glob($dirName . '/*') as $fileName) {
-            // $file = basename($fileName);                
-            // $zip->addFile($fileName, $file);
-            array_push($file_tab, basename($fileName));
-        }
-
-        // $files = Storage::files(storage_path('app/References/'.$reference->project_number));
-        // dd($files);
-
-        $view = view('references.edit', ['file_tab'=>$file_tab, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings, 'country_zone'=>$country_zone, 'zone_managers'=>$zone_managers, 'translation_languages'=>$translation_languages]);
+        $view = view('references.edit', ['files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings, 'country_zone'=>$country_zone, 'zone_managers'=>$zone_managers, 'translation_languages'=>$translation_languages]);
         
         return $view;
     }
@@ -1511,7 +1512,8 @@ class ReferenceController extends Controller
                     $reference->contributors()->attach($new_expert->id, ['responsability_on_project'=>$request->expert_functions[$key], 'responsability_on_project_fr'=>$request->expert_functions_fr[$key],'function_on_project'=>'Expert']);
                 }
             }
-            if ($request->expert_functions[$key] != '' || $request->expert_functions_fr[$key] != '') {
+            else {
+                if ($request->expert_functions[$key] != '' || $request->expert_functions_fr[$key] != '') {
                     $new_link = new ContributorReference;
                     $new_link->reference_id = $reference->id;
                     $new_link->responsability_on_project = $request->expert_functions[$key] ;
@@ -1520,6 +1522,7 @@ class ReferenceController extends Controller
 
                     $new_link->save();
                 }
+            }
         }
 
         //Attach the consultants
@@ -1842,6 +1845,7 @@ class ReferenceController extends Controller
             if ($client) {
                 $templateProcessor->setValue('Customer', htmlspecialchars($client->name));
                 $templateProcessor->setValue('CustomerFr', htmlspecialchars($client->name_fr));
+                $templateProcessor->setValue('CustomerAddress', htmlspecialchars($client->address));
             }
 
             if ($reference->fundings()->count() > 0) {
@@ -1986,47 +1990,52 @@ class ReferenceController extends Controller
 
     public function upload_file(Request $request, $reference_id)
     {
-        // dd($request->file('file')->getClientOriginalName());
-        // dd($request->file('file'));
-
-        // $destinationPath = 'imports';
-        // $fileName = 'ref_import.pdf';
-
-        // dd($_FILES);
-
-        // if ($request->hasFile('file')) {
-        //     // dd('Has file');
-        //     if ($request->file('file')->isValid()) {
-        //         // dd('Is valid');
-        //         // $file = $request->file('file');
-        //         $request->file('file')->move($destinationPath, $fileName);
-        //     }
-        // }
-
         $reference = Reference::find($reference_id);
         $file = $request->file('file');
         $file_name = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        // dd($file_name);
 
-        // Storage::copy($request->file('file'), 'References/'.$reference->project_number.'/');
-        // Storage::put($request->file('file'), $request->file('file'));
-        $request->file('file')->move(storage_path('app/References/'.$reference->project_number), $file_name);
+        if ($request->hasFile('file')) {
+            if ($request->file('file')->isValid()) {
+                // $request->file('file')->move(storage_path('app/References/'.$reference->project_number), $file_name);
+                Storage::disk('local')->put('References/'.$reference->project_number.'/'.$file_name,  File::get($file));
+            }
+        }
 
         return redirect()->back();
     }
 
-    public function download_file($reference_id, $file)
+    // public function download_file($reference_id, $file)
+    // {
+    //     $reference = Reference::find($reference_id);
+
+    //     return response()->download(storage_path('app/References/'.$reference->project_number.'/'.$file));
+    // }
+
+    public function download_file(Request $request, $reference_id)
     {
+        // dd($_POST);
         $reference = Reference::find($reference_id);
 
-        return response()->download(storage_path('app/References/'.$reference->project_number.'/'.$file));
+        return response()->download(storage_path('app/References/'.$reference->project_number.'/'.$request->file));
     }
 
-    public function delete_file($reference_id, $file)
+    // public function delete_file($reference_id, $file)
+    // {
+    //     $reference = Reference::find($reference_id);
+
+    //     Storage::delete('References/'.$reference->project_number.'/'.$file);
+
+    //     return redirect()->back();
+    // }
+
+    public function delete_file(Request $request, $reference_id)
     {
+        // dd($_POST);
         $reference = Reference::find($reference_id);
 
-        // Storage::delete(storage_path('app/References/'.$reference->project_number.'/'.$file));
-        Storage::delete('app/References/'.$reference->project_number.'/'.$file);
+        Storage::delete('References/'.$reference->project_number.'/'.$request->file);
 
         return redirect()->back();
     }

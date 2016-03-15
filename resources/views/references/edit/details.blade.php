@@ -19,10 +19,10 @@
 <div class="form-group">
 	<label for="detailed_project" class="col-sm-4 control-label">Detailed description of project</label>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_project" name="project_description">{{ $reference->project_description }}</textarea>
+	  <textarea class="form-control" rows="10" id="detailed_project" name="project_description">{{ $reference->project_description }}</textarea>
 	</div>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_project_fr" name="project_description_fr">{{ $reference->project_description_fr }}</textarea>
+	  <textarea class="form-control" rows="10" id="detailed_project_fr" name="project_description_fr">{{ $reference->project_description_fr }}</textarea>
 	</div>
 </div>
 <!-- EO line -->
@@ -41,10 +41,10 @@
 <div class="form-group">
 	<label for="detailed_service" class="col-sm-4 control-label">Detailed description of service</label>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_service" name="service_description">{{ $reference->service_description }}</textarea>
+	  <textarea class="form-control" rows="10" id="detailed_service" name="service_description">{{ $reference->service_description }}</textarea>
 	</div>
 	<div class="col-sm-4">
-	  <textarea class="form-control" rows="5" id="detailed_service_fr" name="service_description_fr">{{ $reference->service_description_fr }}</textarea>
+	  <textarea class="form-control" rows="10" id="detailed_service_fr" name="service_description_fr">{{ $reference->service_description_fr }}</textarea>
 	</div>
 </div>
 <!-- EO line -->

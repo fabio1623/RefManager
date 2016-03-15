@@ -1,28 +1,34 @@
 <!-- Line -->
 <div class="form-group">
-	<label for="project_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name of the project</label>
-	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="project_name_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][project_name]" value="{{ $language_reference[$i]->project_name }}">
-	</div>
-	<div class="col-sm-4">
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Project</span></h4>
+	<div class="col-sm-8">
 		<a class="btn btn-sm btn-default pull-right remove_translation_btn" href="{{ action('ReferenceController@detach_translation', [$reference->id, $linked_languages[$i]->id]) }}">
 			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Remove translation
 		</a>
 	</div>
 </div>
+<div class="form-group">
+	<label for="project_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name</label>
+	<div class="col-sm-4">
+	  <input type="text" class="form-control" id="project_name_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][project_name]" value="{{ $language_reference[$i]->project_name }}">
+	</div>
+</div>
 
 <!-- Line -->
 <div class="form-group">
-	<label for="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Detailed description of project</label>
+	<label for="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Description</label>
 	<div class="col-sm-4">
-	  	<textarea class="form-control" rows="5" id="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][project_description]">{{ $language_reference[$i]->project_description }}</textarea>
+	  	<textarea class="form-control" rows="10" id="detailed_project_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][project_description]">{{ $language_reference[$i]->project_description }}</textarea>
 	</div>
 </div>
 <!-- EO line -->
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label for="project_title_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Title of services provided by Seureca</label>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Services</span></h4>
+</div>
+<div class="form-group">
+	<label for="project_title_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Title</label>
 	<div class="col-sm-4">
 	  <input type="text" class="form-control" id="project_title_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][service_title]" value="{{ $language_reference[$i]->service_name }}">
 	</div>
@@ -30,15 +36,15 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Detailed description of service</label>
+	<label for="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Description</label>
 	<div class="col-sm-4">
-	  	<textarea class="form-control" rows="5" id="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][service_description]">{{ $language_reference[$i]->service_description }}</textarea>
+	  	<textarea class="form-control" rows="10" id="detailed_service_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][service_description]">{{ $language_reference[$i]->service_description }}</textarea>
 	</div>
 </div>
 <!-- EO line -->
 <hr>
 <div class="form-group">
-	<label class="col-sm-4 control-label">Location</label>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Location</span></h4>
 </div>
 <div class="form-group">
 	<!-- <label for="country_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Country</label> -->
@@ -67,6 +73,9 @@
 </div>
 <hr>
 <div class="form-group">
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Staff</span></h4>
+</div>
+<div class="form-group">
 	<label for="staff_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Staff</label>
 	<div class="col-sm-4">
 	  	<textarea class="form-control" rows="5" id="staff_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][staff]">{{ $language_reference[$i]->staff }}</textarea>
@@ -81,7 +90,7 @@
 </div>
 
 <div class="form-group">
-	<label for="experts_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Experts employed</label>
+	<label for="experts_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Experts</label>
 	<div class="col-sm-4">
 		<textarea class="form-control" rows="5" id="experts_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][experts]">{{ $language_reference[$i]->experts }}</textarea>
 		<!-- <input type="text" class="form-control" id="experts_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][experts]" value="{{ $language_reference[$i]->experts }}"> -->
@@ -91,7 +100,7 @@
 <div id="contact_info">
 	<hr>
 	<div class="form-group">
-		<label for="contact_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Contact information</label>
+		<h4><span class="label label-default col-sm-2 col-sm-offset-2">Contact information</span></h4>
 	</div>
 	<!-- Line -->
 	<div class="form-group">
@@ -137,7 +146,7 @@
 
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Client</label>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Client</span></h4>
 </div>
 <div class="form-group">
 	<!-- <label for="client_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name of the client</label> -->
@@ -168,8 +177,11 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label for="financing_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Financing</label>
-	<div class="col-sm-4">
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Fundings</span></h4>
+</div>
+<div class="form-group">
+	<!-- <label for="financing_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Financing</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 		<textarea class="form-control" rows="5" id="financing_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][funding]">{{ $language_reference[$i]->financing }}</textarea>
 	  <!-- <input type="text" class="form-control" id="financing_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][funding]" value="{{ $language_reference[$i]->financing }}"> -->
 	</div>
@@ -178,8 +190,11 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label for="general_comments_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">General comments / Key words</label>
-	<div class="col-sm-4">
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2">General comments</span></h4>
+</div>
+<div class="form-group">
+	<!-- <label for="general_comments_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">General comments / Key words</label> -->
+	<div class="col-sm-4 col-sm-offset-4">
 	  	<textarea class="form-control" rows="3" id="general_comments_{{ strtolower($linked_languages[$i]->name)}}" name="linked_languages[{{ $linked_languages[$i]->name }}][comments]">{{ $language_reference[$i]->general_comments }}</textarea>
 	</div>
 </div>

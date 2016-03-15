@@ -1,3 +1,41 @@
+$('#upload_btn').click(function(e){
+	if (document.getElementById("import_input").files.length != true) {
+		e.preventDefault();
+		alert('Please, select a file.');
+	}
+});
+
+$('li').click(function(e){
+	if ($(this).attr('id') == 'files_pane' && (user_profile == 3 || user_profile == 5 || is_creator)) {
+		$('#form_upload').removeClass('hidden');
+	}
+	else {
+		if ($('#form_upload').hasClass('hidden') == false) {
+			$('#form_upload').addClass('hidden');		
+		}
+	}
+});
+
+$('.deleteFile').click(function(e){
+	var confirm_box = confirm("Do you really want to delete " + $(this).attr('href') + " ?");
+	if (confirm_box == false) {
+		e.preventDefault();
+	}
+	else {
+		e.preventDefault();	
+		$('#file_input_delete').val($(this).attr('href'));
+		$('#form_delete_file').submit();
+	}
+});
+
+$('.downloadFile').click(function(e){
+	// $('#form_download').submit();
+	e.preventDefault();
+	$('#file_input_download').val($(this).attr('href'));
+	$('#form_download').submit();
+	// alert($(this).attr('href'));
+});
+
 $('#btn_delete').click( function(e) {
 	var confirm_box = confirm("Are you sure ?");
 	if (confirm_box == false) {

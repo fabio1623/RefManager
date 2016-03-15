@@ -9,6 +9,7 @@
 	<li id="quantities_pane" role="presentation" class="hide"><a data-toggle="tab" href="#measure_menu"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Quantities</a></li>
 	<li id="details_pane" role="presentation" class="hide"><a data-toggle="tab" href="#detail_menu"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Details</a></li>
   @endif
+  <li id="files_pane" role="presentation" class="pull-right"><a data-toggle="tab" href="#files_menu"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Files ({{ count($files) }})</a></li>
 </ul>
 
 <!-- Content menu -->
@@ -30,6 +31,10 @@
 	<div id="detail_menu" class="tab-pane fade">
 		<h3></h3>
 		@include("references.show.details")
+	</div>
+	<div id="files_menu" class="tab-pane fade">
+		<h3></h3>
+		@include("references.show.files")
 	</div>
 
 </div>

@@ -6,11 +6,11 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<div class="row">
-					<div class="col-sm-7">
+					<div class="col-sm-6">
 						<h4>{{ $reference->project_number }} @if($reference->confidential == 1) : Confidential @endif</h4>
 					</div>
 					<!-- Button toolbar -->
-					<div class="col-sm-4 pull-right">
+					<div class="col-sm-6 pull-right">
 						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
 								<!-- If Dcom manager -->
@@ -94,7 +94,7 @@
 								<button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
 								  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
 								</button>
-								@if (count($linked_languages) > 1)
+								@if (count($linked_languages) > 0)
 									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
 									  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Translations
 									</button>
@@ -105,9 +105,15 @@
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 									</button>
 								@endif
-								<a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								</a>
+								@if(Auth::user()->profile_id == 3)
+									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index') }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
+								@else
+									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index_approved') }}">
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									</a>
+								@endif
 
 							</div>
 						</div>
@@ -148,9 +154,28 @@
 			</form>
 		</div>
 	</div>
+	<form id="form_upload" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@upload_file', $reference->id) }}" enctype="multipart/form-data">
+		<?php echo csrf_field(); ?>
+		<label for="import_input">Import file</label>
+		<input type="file" id="import_input" name="file" accept="*">
+		<p class="help-block">Import your file here.</p>
+		<input id="upload_btn" class="btn btn-default" type="submit" value="Submit">
+	</form>
+
+	<form id="form_delete_file" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@delete_file', $reference->id)  }}">
+		<?php echo csrf_field(); ?>
+		<input id="file_input_delete" type="text" name="file" value="">
+	</form>
+
+	<form id="form_download" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@download_file', $reference->id)  }}">
+		<?php echo csrf_field(); ?>
+		<input id="file_input_download" type="text" name="file" value="">
+	</form>
 </div>
 
 <script>
+	var user_profile = {!! $user_profile !!};
+	var is_creator = {!! $is_creator !!};
 	var zones = {!! $zones->toJson() !!};
 	var selected_internal_services = {!! $reference->internal_services !!};
 
