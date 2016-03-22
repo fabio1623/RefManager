@@ -998,7 +998,17 @@ class ReferenceController extends Controller
             $is_creator = 0;
         }
 
-        $view = view('references.show', ['is_creator'=>$is_creator, 'user_profile'=>$user_profile, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
+        $directory = storage_path('app/Exports');
+        $languages_with_template = array();
+
+        foreach (glob($directory.'/*', GLOB_ONLYDIR) as $folder) {
+            $folder_name = basename($folder);
+            if ($folder_name != 'Other templates') {
+                array_push($languages_with_template, $folder_name);
+            }
+        }
+
+        $view = view('references.show', ['languages_with_template'=>$languages_with_template, 'is_creator'=>$is_creator, 'user_profile'=>$user_profile, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
         
         return $view;
     }
@@ -1094,7 +1104,17 @@ class ReferenceController extends Controller
 
         $files = Storage::files('References/'.$reference->project_number);
 
-        $view = view('references.edit', ['files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings, 'country_zone'=>$country_zone, 'zone_managers'=>$zone_managers, 'translation_languages'=>$translation_languages]);
+        $directory = storage_path('app/Exports');
+        $languages_with_template = array();
+
+        foreach (glob($directory.'/*', GLOB_ONLYDIR) as $folder) {
+            $folder_name = basename($folder);
+            if ($folder_name != 'Other templates') {
+                array_push($languages_with_template, $folder_name);
+            }
+        }
+
+        $view = view('references.edit', ['languages_with_template'=>$languages_with_template, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings, 'country_zone'=>$country_zone, 'zone_managers'=>$zone_managers, 'translation_languages'=>$translation_languages]);
         
         return $view;
     }
@@ -1978,10 +1998,9 @@ class ReferenceController extends Controller
                 }
 
                 $zip_file = ReferenceController::zip_files($language->name.'/'.$folder_name);
-                // dd('Stop');
+
                 return response()->download(storage_path('app/Exports/'.$zip_file))->deleteFileAfterSend(true);
-            }
-            // dd($_POST);            
+            }        
         }
         else {
             dd('You have to select at least 1 reference.');
@@ -1998,20 +2017,18 @@ class ReferenceController extends Controller
 
         if ($request->hasFile('file')) {
             if ($request->file('file')->isValid()) {
-                // $request->file('file')->move(storage_path('app/References/'.$reference->project_number), $file_name);
-                Storage::disk('local')->put('References/'.$reference->project_number.'/'.$file_name,  File::get($file));
+                $request->file('file')->move(storage_path('app/References/'.$reference->project_number), $file_name);
             }
+            else {
+                dd('File not valid');
+            }
+        }
+        else {
+            dd('No file');
         }
 
         return redirect()->back();
     }
-
-    // public function download_file($reference_id, $file)
-    // {
-    //     $reference = Reference::find($reference_id);
-
-    //     return response()->download(storage_path('app/References/'.$reference->project_number.'/'.$file));
-    // }
 
     public function download_file(Request $request, $reference_id)
     {
@@ -2020,15 +2037,6 @@ class ReferenceController extends Controller
 
         return response()->download(storage_path('app/References/'.$reference->project_number.'/'.$request->file));
     }
-
-    // public function delete_file($reference_id, $file)
-    // {
-    //     $reference = Reference::find($reference_id);
-
-    //     Storage::delete('References/'.$reference->project_number.'/'.$file);
-
-    //     return redirect()->back();
-    // }
 
     public function delete_file(Request $request, $reference_id)
     {

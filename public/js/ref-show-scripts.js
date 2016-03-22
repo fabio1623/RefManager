@@ -3,9 +3,23 @@ $('#upload_btn').click(function(e){
 		e.preventDefault();
 		alert('Please, select a file.');
 	}
+	else if (document.getElementById("import_input").files[0].size >= 4294967295){
+		e.preventDefault();
+		$('#import_input').val('');
+		alert('File too big.');
+	}
+	else {
+		var file_name = document.getElementById("import_input").files[0].name;
+		$('#myModal').find('.modal-title').text('Uploading : ' + file_name);
+		$('#myModal').modal('show');
+	}
 });
 
-$('li').click(function(e){
+$('#upload_modal_cancel').click(function(){
+  $(this).addClass('canceled');
+});
+
+$('#content_menu > li').click(function(e){
 	if ($(this).attr('id') == 'files_pane' && (user_profile == 3 || user_profile == 5 || is_creator)) {
 		$('#form_upload').removeClass('hidden');
 	}
@@ -47,12 +61,16 @@ $('#btn_delete').click( function(e) {
 });
 
 $('#language_btn').click( function () {
+	$('#form_upload').addClass('hidden');
 	$('#base_btn').attr("class", "btn btn-default btn-sm");
 	$(this).attr("class", "btn btn-default btn-sm active");
 	$('#btn_language_selector').attr("class", "btn btn-default btn-sm");
 });
 
 $('#base_btn').click( function () {
+	if ($('#files_pane').hasClass('active') == true) {
+		$('#form_upload').removeClass('hidden');
+	}
 	$('#language_btn').attr("class", "btn btn-default btn-sm");
 	$(this).attr("class", "btn btn-default btn-sm active");
 	$('#btn_language_selector').attr("class", "btn btn-default btn-sm hidden");

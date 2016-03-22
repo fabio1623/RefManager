@@ -46,6 +46,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 		<!-- Custom JS -->
+		<script src="http://malsup.github.com/jquery.form.js"></script> 
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 		<!-- 2e -->
 		<!-- <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
@@ -66,11 +67,6 @@
 		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.widgets.js"></script>
 		<script type="text/javascript" src="/js/custom-functions.js"></script>	
 	</head>
-	<style type="text/css">
-		/*body {
-		    background: url('http://demos.creative-tim.com/light-bootstrap-dashboard-pro/assets/img/full-screen-image-4.jpg') repeat-x, repeat-y;
-		 }*/
-	</style>
 	<body role='document'>
 
 			<!-- Fixed navbar -->
@@ -114,40 +110,6 @@
 							            <li><a href=""><span class="glyphicon glyphicon-import"></span> Import</a></li>
 							          </ul>
 							        </li>
-							        <!-- <li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Users<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							            <li><a href="{{ action ('UserController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a user</a></li>
-							            <li><a href="{{ action('UserController@index') }}"><span class="glyphicon glyphicon-list"></span> List of users</a></li>
-							          </ul>
-							        </li> -->
-							        <!-- <li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-retweet"></span> Services<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							          	<li class="dropdown-header">External services</li>
-							            <li><a href="{{ action('ServiceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
-							            <li><a href="{{ action('ServiceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of external services</a></li>
-							            <li><a href="{{ action('ServiceController@subsidiary_external_services') }}"><span class="glyphicon glyphicon-list"></span> External services</a></li>
-							            <li role="separator" class="divider"></li>
-							            <li class="dropdown-header">Internal services</li>
-							            <li><a href="{{ action('ServiceController@internal_create') }}"><span class="glyphicon glyphicon-plus"></span> New service</a></li>
-							            <li><a href="{{ action('ServiceController@internal_index') }}"><span class="glyphicon glyphicon-list"></span> List of internal services</a></li>
-							          </ul>
-							        </li>
-							        <li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-indent-left"></span> Domains<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							            <li><a href="{{ action ('DomainController@create') }}"><span class="glyphicon glyphicon-plus"></span> New domain</a></li>
-							            <li><a href="{{ action('DomainController@index') }}"><span class="glyphicon glyphicon-list"></span> List of domains</a></li>
-							          </ul>
-							        </li>
-							        <li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-inbox"></span> Categories<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							            <li><a href="{{ action ('CategoryController@create') }}"><span class="glyphicon glyphicon-plus"></span> New category</a></li>
-							            <li><a href="{{ action('CategoryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of categories</a></li>
-							          </ul>
-							        </li> -->
 							        <li class="dropdown">
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-inbox"></span> Management<span class="caret"></span></a>
 							          <ul class="dropdown-menu">

@@ -400,42 +400,60 @@
 
   $('#wb_en').click( function(e){
   		e.preventDefault();
-  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_world_bank", "wb"]) }}');
-  		$('#form_extract_base').submit();
+  		if ($('.box:checked').length == 0) {
+			alert('You have to select at least 1 reference.');
+		}
+		else {
+	  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_world_bank", "wb"]) }}');
+	  		$('#form_extract_base').submit();
+		}
   });
 
   $('#wb_fr').click( function(e){
   		e.preventDefault();
-  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_world_bank_fr", "wb_fr"]) }}');
-  		$('#form_extract_base').submit();
+  		if ($('.box:checked').length == 0) {
+			alert('You have to select at least 1 reference.');
+		}
+		else {
+			$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_world_bank_fr", "wb_fr"]) }}');
+  			$('#form_extract_base').submit();
+		}
   });
 
   $('#eur_en').click( function(e){
   		e.preventDefault();
-  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_euro", "euro"]) }}');
-  		$('#form_extract_base').submit();
+  		if ($('.box:checked').length == 0) {
+			alert('You have to select at least 1 reference.');
+		}
+		else {
+			$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_euro", "euro"]) }}');
+  			$('#form_extract_base').submit();
+		}
   });
 
   $('#eur_fr').click( function(e){
   		e.preventDefault();
-  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_euro_fr", "euro_fr"]) }}');
-  		$('#form_extract_base').submit();
+  		if ($('.box:checked').length == 0) {
+			alert('You have to select at least 1 reference.');
+		}
+		else {
+			$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_base_multiple", ["Template_euro_fr", "euro_fr"]) }}');
+  			$('#form_extract_base').submit();
+		}
   });
 
   $('.translation_extract').click( function(e){
   		e.preventDefault();
-  		var language_id = $(this).attr('id');
-  		$('#form_extract_base').append('<input type="text" class="hidden" name="language_id" value="' + language_id + '">');
-  		
-
-  		// var action = "action('ReferenceController@generate_file_translations_multiple', " + language_id + ")";
-  		// alert(language_id);
-
-  		// var action = '{{ action("ReferenceController@generate_file_translations_multiple", 89) }}';
-  		
-  		// $('#form_extract_base').attr('action', action);
-  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_translations_multiple") }}');
-  		$('#form_extract_base').submit();
+  		if ($('.box:checked').length == 0) {
+			alert('You have to select at least 1 reference.');
+		}
+		else {
+			var language_id = $(this).attr('id');
+	  		$('#form_extract_base').append('<input type="text" class="hidden" name="language_id" value="' + language_id + '">');
+	  		
+	  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_translations_multiple") }}');
+	  		$('#form_extract_base').submit();
+		}
   })
 </script>
 

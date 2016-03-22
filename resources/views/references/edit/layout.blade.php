@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul id="content_menu" class="nav nav-tabs">
   <li role="presentation" class="active"><a data-toggle="tab" href="#description_menu"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Description</a></li>
   @if ($reference->confidential == 0)
 	<li id="criteria_pane" role="presentation"><a data-toggle="tab" href="#criteria_menu"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Criteria</a></li>

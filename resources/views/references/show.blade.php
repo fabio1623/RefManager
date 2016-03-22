@@ -83,9 +83,11 @@
 												@if ($linked_languages->count() > 0)
 													<li class="dropdown-header">OTHER</li>
 													@foreach ($linked_languages as $language)
-														<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
-															{{ $language->name }}
-														</a></li>	
+														@if(in_array($language->name, $languages_with_template))
+															<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
+																{{ $language->name }}
+															</a></li>
+														@endif
 													@endforeach
 												@endif
 									  </ul>
@@ -162,6 +164,28 @@
 		<input id="upload_btn" class="btn btn-default" type="submit" value="Submit">
 	</form>
 
+	<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" data-backdrop="static">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Uploading</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="progress">
+				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%;">
+					<div class="percent">0%</div>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button id="upload_modal_cancel" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<form id="form_delete_file" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@delete_file', $reference->id)  }}">
 		<?php echo csrf_field(); ?>
 		<input id="file_input_delete" type="text" name="file" value="">
@@ -187,6 +211,44 @@
 	var measures = {!! $measures_values->toJson() !!};
 	var qualifiers = {!! $qualifiers_values->toJson() !!};
 	var selected_measures = {!! $reference->measures->toJson() !!};
+
+	var bar = $('.progress-bar');
+	var percent = $('.percent');
+	   
+	$('#form_upload').ajaxForm({
+	    beforeSend: function(event) {
+	        var percentVal = '0%';
+	        bar.width(percentVal);
+	        percent.html(percentVal);
+	        $('#upload_modal_cancel').click(event.abort);
+	    },
+	    uploadProgress: function(event, position, total, percentComplete) {
+	        var percentVal = percentComplete + '%';
+	        bar.width(percentVal);
+	        percent.html(percentVal);
+	    },
+	    success: function() {
+	        var percentVal = '100%';
+	        bar.width(percentVal);
+	        percent.html(percentVal);
+	        $('#myModal').modal('hide');
+	        alert('Upload succeed !');
+	    },
+	    error: function(event) {
+	    	if ($('#upload_modal_cancel').hasClass('canceled') == false) {
+				event.abort;
+				$('#myModal').modal('hide');
+				$('#upload_modal_cancel').addClass('canceled');
+				alert('An error occured. Please, try again.');
+			}
+	    },
+		complete: function(xhr) {
+			if ($('#upload_modal_cancel').hasClass('canceled') == false) {
+				location.reload();
+			}
+			$('#upload_modal_cancel').removeClass('canceled');
+		}
+	}); 
 </script>
 <script type="text/javascript" src="/js/ref-show-scripts.js"></script>
 
