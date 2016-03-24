@@ -160,6 +160,12 @@ Route::post('subsidiaries/{subsidiary}/link_languages', 'LanguageController@link
 Route::get('subsidiaries/{subsidiary}/search', 'LanguageController@search');
 Route::resource('subsidiaries.languages', 'LanguageController');
 
+//Templates
+Route::post('templates/upload', 'TemplateController@upload_template');
+Route::get('templates/{language}/download', 'TemplateController@download_template');
+Route::get('templates/{language}/delete', 'TemplateController@delete_template');
+Route::resource('templates', 'TemplateController');
+
 Route::get('test', function () {
 
 });

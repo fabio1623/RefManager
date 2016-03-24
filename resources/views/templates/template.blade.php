@@ -120,6 +120,7 @@
 							            <li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-credit-card"></span> Fundings</a></li>
 							            <li><a id="upload_link" href=""><span class="glyphicon glyphicon-import"></span> Upload</a></li>
 							            <li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
+							            <li><a href="{{ action('TemplateController@index') }}"><span class="glyphicon glyphicon-duplicate"></span> Templates</a></li>
 							          </ul>
 							        </li>
 							        <input type="file" id="upload_input" class="hidden">
