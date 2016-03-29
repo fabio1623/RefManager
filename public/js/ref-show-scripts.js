@@ -3,7 +3,7 @@ $('#upload_btn').click(function(e){
 		e.preventDefault();
 		alert('Please, select a file.');
 	}
-	else if (document.getElementById("import_input").files[0].size >= 4294967295){
+	else if (document.getElementById("import_input").files[0].size >= 1472028672){
 		e.preventDefault();
 		$('#import_input').val('');
 		alert('File too big.');

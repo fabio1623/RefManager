@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Storage;
 use File;
 use ZipArchive;
+use Auth;
+use Excel;
 
 use App\Reference;
 use App\Service;
@@ -30,8 +32,8 @@ use App\Contact;
 use App\Funding;
 use App\ContributorReference;
 use App\Subsidiary;
-use Auth;
 use App\CountryZone;
+
 use \PhpOffice\PhpWord\TemplateProcessor;
 
 class ReferenceController extends Controller
@@ -490,11 +492,21 @@ class ReferenceController extends Controller
                     $query->whereIn('id', $financings);
                 });
             }
+        }        
+
+        // $references = $references->paginate(20);
+        $references = $references->get();
+
+        $ref_array = array();
+        foreach ($references as $key => $reference) {
+            $cat_array = array();
+            foreach ($reference->measures as $measure) {
+                if (in_array($measure->category_id, $cat_array) == false) {
+                    array_push($cat_array, $measure->category_id);
+                }
+            }
+            $ref_array[$reference->id] = $cat_array;
         }
-
-        
-
-        $references = $references->paginate(20);
 
         $zones = Zone::all();
         $external_services = ExternalService::all();
@@ -504,8 +516,9 @@ class ReferenceController extends Controller
         $clients = Client::all();
         $kind_of_reference = 'Search';
         $languages = Language::has('references')->get();
+        $categories = Category::all();
 
-        $view = view('references.index', ['kind_of_reference'=>$kind_of_reference, 'languages'=>$languages, 'references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
+        $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages, 'references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
         return $view;
     }
 
@@ -2044,6 +2057,45 @@ class ReferenceController extends Controller
         $reference = Reference::find($reference_id);
 
         Storage::delete('References/'.$reference->project_number.'/'.$request->file);
+
+        return redirect()->back();
+    }
+
+    public function import_page()
+    {
+        $view = view('references.import.index', []);
+        return $view;
+    }
+
+    public function upload_references(Request $request)
+    {
+        $file = $request->file('file');
+        $file_name = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+
+        $has_folder = Storage::disk('local')->has('Imports');
+
+        if ($has_folder == false) {
+            Storage::makeDirectory('Imports');
+        }
+
+        $destination_path = storage_path('app/Imports/');
+
+        if ($request->hasFile('file')) {
+            if ($file->isValid()) {
+                $file->move($destination_path, 'reference_import.xls');
+
+                Excel::load('reference_import.xls', function($reader) {
+                    // reader methods
+                });
+            }
+            else {
+                dd('File not valid');
+            }
+        }
+        else {
+            dd('No file');
+        }
 
         return redirect()->back();
     }

@@ -107,7 +107,7 @@
 							            <li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search a reference</a></li>
-							            <li><a href=""><span class="glyphicon glyphicon-import"></span> Import</a></li>
+							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
 							          </ul>
 							        </li>
 							        <li class="dropdown">
@@ -118,7 +118,7 @@
 							            <li><a href="{{ action('ZoneController@index', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-globe"></span> Zones</a></li>
 							            <li><a href="{{ action('ContributorController@index', [Auth::user()->subsidiary_id, 1]) }}"><span class="glyphicon glyphicon-user"></span> Contributors</a></li>
 							            <li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-credit-card"></span> Fundings</a></li>
-							            <li><a id="upload_link" href=""><span class="glyphicon glyphicon-import"></span> Upload</a></li>
+							            <!-- <li><a id="upload_link" href=""><span class="glyphicon glyphicon-import"></span> Upload</a></li> -->
 							            <li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
 							            <li><a href="{{ action('TemplateController@index') }}"><span class="glyphicon glyphicon-duplicate"></span> Templates</a></li>
 							          </ul>

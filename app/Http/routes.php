@@ -46,6 +46,8 @@ Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti')
 Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
+Route::get('references/import', 'ReferenceController@import_page');
+Route::post('references/upload', 'ReferenceController@upload_references');
 Route::post('references/{reference}/delete', 'ReferenceController@delete_file');
 // Route::get('references/{reference}/files/{file}/delete', 'ReferenceController@delete_file');
 Route::post('references/{reference}/download', 'ReferenceController@download_file');

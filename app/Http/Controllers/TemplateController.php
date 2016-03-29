@@ -45,7 +45,7 @@ class TemplateController extends Controller
 
         $languages = Language::orderBy('name', 'asc')->get();
 
-        $view = view('references.export.template_upload', ['language_folders'=>$language_folders, 'languages'=>$languages]);
+        $view = view('references.import.template_upload', ['language_folders'=>$language_folders, 'languages'=>$languages]);
         return $view;
     }
 
