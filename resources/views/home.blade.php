@@ -13,7 +13,7 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <img src="{{ asset('/img/carousel1.jpg') }}" alt="..." width="100%">
+      <img src="{{ asset('/img/_SB_0819_2.jpg') }}" alt="..." width="100%">
       <div class="carousel-caption">
         <h1>REFERENCES</h1>
         <p class="lead">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="item">
-      <img src="{{ asset('/img/carousel2.jpg') }}" alt="..." width="100%">
+      <img src="{{ asset('/img/BO8A9337_2.jpg') }}" alt="..." width="100%">
       <div class="carousel-caption">
         <h1>Une source documentaire fiable</h1>
         <p class="lead">
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="item">
-      <img src="{{ asset('/img/carousel3.jpg') }}" alt="..." width="100%">
+      <img src="{{ asset('/img/KC8A7287.jpg') }}" alt="..." width="100%">
       <div class="carousel-caption">
         <h1>Une source documentaire fiable</h1>
         <p class="lead">
@@ -67,7 +67,7 @@
       <div class="col-md-4">
         <h2>Search</h2>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="{{ action('ReferenceController@index_approved') }}" role="button">Follow references in progress &raquo;</a></p>
+        <p><a class="btn btn-default" href="{{ action('ReferenceController@search') }}" role="button">Follow references in progress &raquo;</a></p>
      </div>
       <div class="col-md-4">
         <h2>Contact</h2>

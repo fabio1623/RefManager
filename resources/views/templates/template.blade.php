@@ -101,7 +101,8 @@
 							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> References<span class="caret"></span></a>
 							          <ul class="dropdown-menu">
 							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a reference</a></li>
-							            <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
+							            <!-- <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li> -->
+							            <li><a href="{{ action('ReferenceController@references', ['created_at', 'desc']) }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
 							            <li><a href="{{ action('ReferenceController@index_to_approve') }}"><span class="glyphicon glyphicon-list"></span> References to approve</a></li>
 							            <li><a href="{{ action('ReferenceController@index_approved') }}"><span class="glyphicon glyphicon-list"></span> Approved references</a></li>
 							            <li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>

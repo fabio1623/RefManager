@@ -67,6 +67,7 @@ Route::get('references/basic_search', 'ReferenceController@basic_search');
 Route::post('references/{reference}/link_translation', 'ReferenceController@link_translation');
 Route::get('references/{reference}/languages/{language}/detach_translation', 'ReferenceController@detach_translation');
 Route::get('references/{reference}/{error}/edit', 'ReferenceController@edit');
+Route::get('references/{order}/{sort_direction}', 'ReferenceController@references');
 Route::resource('references', 'ReferenceController');
 
 //Users

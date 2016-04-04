@@ -151,6 +151,7 @@ return [
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::Class,
+        Gbrock\Table\Providers\TableServiceProvider::Class,
 
     ],
 
@@ -204,6 +205,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::Class,
+        'Table'     => Gbrock\Table\Facades\Table::Class,
 
     ],
 

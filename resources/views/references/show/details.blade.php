@@ -276,7 +276,7 @@
 			</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-4 col-sm-offset-4">
+		<div class="col-sm-8 col-sm-offset-4">
 		  	<p class="form-control-static"><strong><em>Address :</em></strong> {{ $client->address }}</p>
 		</div>
 	</div>

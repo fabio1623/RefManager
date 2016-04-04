@@ -11,6 +11,7 @@ use File;
 use ZipArchive;
 use Auth;
 use Excel;
+use App;
 
 use App\Reference;
 use App\Service;
@@ -35,6 +36,7 @@ use App\Subsidiary;
 use App\CountryZone;
 
 use \PhpOffice\PhpWord\TemplateProcessor;
+use Table;
 
 class ReferenceController extends Controller
 {
@@ -49,27 +51,127 @@ class ReferenceController extends Controller
      */
     public function index()
     {
-        // $references = Reference::orderBy('created_at', 'desc')->paginate(20);
-        $references = Reference::orderBy('created_at', 'desc')->get();
-        $countries = Country::all();
-        $clients = Client::all();
-        $zones = Zone::all();
-        $kind_of_reference = 'All';
+        $references = Reference::orderBy('created_at', 'desc')->paginate(20);
+        // $rows = Reference::sorted()->paginate();
+        // $table = Table::create($rows, ['Activities', 'project_number', 'dfac_name', 'start_date', 'end_date', 'client', 'country', 'zone', 'total_project_cost']);
+        // $table->addColumn('created_at', 'Added', function($model) {
+        //     return 'test';
+        // });
+        $activities = array();
+        $clients = array();
+        $countries = array();
+        $zones = array();
         $languages = Language::has('references')->get();
-        $categories = Category::all();
-
-        $ref_array = array();
+        // $kind_of_reference = 'All';
         foreach ($references as $key => $reference) {
+            // Get client name
+            if ($reference->client) {
+                $client_ref = Client::find($reference->client);
+                $clients[$reference->id] = $client_ref->name;
+            }
+            else {
+                $clients[$reference->id] = '';   
+            }
+            // Get linked activities
             $cat_array = array();
             foreach ($reference->measures as $measure) {
-                if (in_array($measure->category_id, $cat_array) == false) {
-                    array_push($cat_array, $measure->category_id);
+                $category = Category::find($measure->category_id);
+                if (in_array($category->name, $cat_array) == false) {
+                    array_push($cat_array, $category->name);
                 }
             }
-            $ref_array[$reference->id] = $cat_array;
+            $activities[$reference->id] = $cat_array;
+            // Get country name
+            if ($reference->country) {
+                $country_ref = Country::find($reference->country);
+                $countries[$reference->id] = $country_ref->name;
+            }
+            else {
+                $countries[$reference->id] = '';
+            }
+            // Get zone name
+            if ($reference->zone) {
+                $zone_ref = Zone::find($reference->zone);
+                $zones[$reference->id] = $zone_ref->name;
+            }
+            else {
+                $zones[$reference->id] = '';
+            }
+        }
+        // dd($activities);
+        $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages]);
+        return $view;
+
+        // 2sd method
+        // $references = Reference::orderBy('created_at', 'desc')->get();
+        // $countries = Country::all();
+        // $clients = Client::all();
+        // $zones = Zone::all();
+        // $kind_of_reference = 'All';
+        // $languages = Language::has('references')->get();
+        // $categories = Category::all();
+
+        // $ref_array = array();
+        // foreach ($references as $key => $reference) {
+        //     $cat_array = array();
+        //     foreach ($reference->measures as $measure) {
+        //         if (in_array($measure->category_id, $cat_array) == false) {
+        //             array_push($cat_array, $measure->category_id);
+        //         }
+        //     }
+        //     $ref_array[$reference->id] = $cat_array;
+        // }
+
+        // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
+        // return $view;
+    }
+
+    public function references($order, $sort_direction)
+    {
+        $references = Reference::orderBy($order, $sort_direction)->paginate(10);
+        $activities = array();
+        $clients = array();
+        $countries = array();
+        $zones = array();
+        $languages = Language::has('references')->get();
+
+        foreach ($references as $key => $reference) {
+            // Get client name
+            if ($reference->client) {
+                $client_ref = Client::find($reference->client);
+                $clients[$reference->id] = $client_ref->name;
+            }
+            else {
+                $clients[$reference->id] = '';   
+            }
+            // Get linked activities
+            $cat_array = array();
+            foreach ($reference->measures as $measure) {
+                $category = Category::find($measure->category_id);
+                if (in_array($category->name, $cat_array) == false) {
+                    array_push($cat_array, $category->name);
+                }
+            }
+            $activities[$reference->id] = $cat_array;
+            // Get country name
+            if ($reference->country) {
+                $country_ref = Country::find($reference->country);
+                $countries[$reference->id] = $country_ref->name;
+            }
+            else {
+                $countries[$reference->id] = '';
+            }
+            // Get zone name
+            if ($reference->zone) {
+                $zone_ref = Zone::find($reference->zone);
+                $zones[$reference->id] = $zone_ref->name;
+            }
+            else {
+                $zones[$reference->id] = '';
+            }
         }
 
-        $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
+        $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
         return $view;
     }
 
@@ -495,30 +597,76 @@ class ReferenceController extends Controller
         }        
 
         // $references = $references->paginate(20);
-        $references = $references->get();
+        // $references = $references->get();
 
-        $ref_array = array();
+        // $ref_array = array();
+        // foreach ($references as $key => $reference) {
+        //     $cat_array = array();
+        //     foreach ($reference->measures as $measure) {
+        //         if (in_array($measure->category_id, $cat_array) == false) {
+        //             array_push($cat_array, $measure->category_id);
+        //         }
+        //     }
+        //     $ref_array[$reference->id] = $cat_array;
+        // }
+
+        $references = $references->orderBy('created_at', 'desc')->paginate(10);
+        $activities = array();
+        $clients = array();
+        $countries = array();
+        $zones = array();
+        $languages = Language::has('references')->get();
+
         foreach ($references as $key => $reference) {
+            // Get client name
+            if ($reference->client) {
+                $client_ref = Client::find($reference->client);
+                $clients[$reference->id] = $client_ref->name;
+            }
+            else {
+                $clients[$reference->id] = '';   
+            }
+            // Get linked activities
             $cat_array = array();
             foreach ($reference->measures as $measure) {
-                if (in_array($measure->category_id, $cat_array) == false) {
-                    array_push($cat_array, $measure->category_id);
+                $category = Category::find($measure->category_id);
+                if (in_array($category->name, $cat_array) == false) {
+                    array_push($cat_array, $category->name);
                 }
             }
-            $ref_array[$reference->id] = $cat_array;
+            $activities[$reference->id] = $cat_array;
+            // Get country name
+            if ($reference->country) {
+                $country_ref = Country::find($reference->country);
+                $countries[$reference->id] = $country_ref->name;
+            }
+            else {
+                $countries[$reference->id] = '';
+            }
+            // Get zone name
+            if ($reference->zone) {
+                $zone_ref = Zone::find($reference->zone);
+                $zones[$reference->id] = $zone_ref->name;
+            }
+            else {
+                $zones[$reference->id] = '';
+            }
         }
 
-        $zones = Zone::all();
-        $external_services = ExternalService::all();
-        $internal_services = InternalService::all();
-        $domains = Domain::all();
-        $countries = Country::all();
-        $clients = Client::all();
-        $kind_of_reference = 'Search';
-        $languages = Language::has('references')->get();
-        $categories = Category::all();
+        // $zones = Zone::all();
+        // $external_services = ExternalService::all();
+        // $internal_services = InternalService::all();
+        // $domains = Domain::all();
+        // $countries = Country::all();
+        // $clients = Client::all();
+        // $kind_of_reference = 'Search';
+        // $languages = Language::has('references')->get();
+        // $categories = Category::all();
 
-        $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages, 'references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
+        // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages, 'references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
+        // return $view;
+
+        $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>'created_at', 'sort_direction'=>'desc']);
         return $view;
     }
 
@@ -560,11 +708,11 @@ class ReferenceController extends Controller
         //Description panel
         $reference->project_number = $request->input('project_number');
 
-        if ($request->input('confidential')) {
-            $reference->confidential = true;
+        if ($request->confidential) {
+            $reference->confidential = 1;
         }
         else {
-            $reference->confidential = false;   
+            $reference->confidential = 0;   
         }
 
         $reference->dfac_name = $request->input('dfac_name');
@@ -1172,7 +1320,7 @@ class ReferenceController extends Controller
         //Description panel
         $reference->project_number = $request->input('project_number');
 
-        if ($request->input('confidential')) {
+        if ($request->confidential) {
             $reference->confidential = 1;
         }
         else{
@@ -2083,10 +2231,403 @@ class ReferenceController extends Controller
 
         if ($request->hasFile('file')) {
             if ($file->isValid()) {
-                $file->move($destination_path, 'reference_import.xls');
+                // $file->move($destination_path, 'reference_import.xls');
 
-                Excel::load('reference_import.xls', function($reader) {
+                // $excel = App::make('excel');
+                // $excel->load($destination_path.'reference_import.xls');
+                // Excel::load($destination_path.'reference_import.xls', function($reader) {
+                Excel::load($file, function($reader) {
+
                     // reader methods
+                    // $reader->take(1);
+                    // Skip and take
+                    // $reader->skip(577)->take(1);
+                    // dd($reader->get());
+                    $reader->each(function($row){
+                        // dd($row);
+                        $reference = Reference::where('project_number', $row->noaffaire)->first();
+
+                        // If reference does not already exists
+                        if (!$reference) {
+                            //Create new reference
+                            $new_reference = new Reference;
+                            if ($row->noaffaire) {
+                                $new_reference->project_number = $row->noaffaire;
+                            }
+                            if ($row->nomaffaire) {
+                                $new_reference->dfac_name = $row->nomaffaire;
+                            }
+                            if ($row->dureemission) {
+                                $new_reference->estimated_duration = $row->dureemission;
+                            }
+                            if ($row->projecttitle) {
+                                $new_reference->project_name = $row->projecttitle;
+                            }
+                            if ($row->servicestitle) {
+                                $new_reference->service_name = $row->servicestitle;
+                            }
+                            if ($row->projectdescription) {
+                                $new_reference->project_description = $row->projectdescription;
+                            }
+                            if ($row->servicesdescription) {
+                                $new_reference->service_description = $row->servicesdescription;
+                            }
+                            if ($row->nstaff) {
+                                $new_reference->staff_number = $row->nstaff;
+                            }
+                            if ($row->nstaffmonthtotal) {
+                                $new_reference->seureca_man_months = $row->nstaffmonthtotal;
+                            }
+                            if ($row->nstaffmonthconsultant) {
+                                $new_reference->consultants_man_months = $row->nstaffmonthconsultant;
+                            }
+                            if ($row->projectcosteuro) {
+                                $new_reference->total_project_cost = $row->projectcosteuro;
+                            }
+                            if ($row->studycosteuro) {
+                                $new_reference->seureca_services_cost = $row->studycosteuro;
+                            }
+                            if ($row->constructioncosteuro) {
+                                $new_reference->work_cost = $row->constructioncosteuro;
+                            }
+                            if ($row->autre) {
+                                $new_reference->general_comments = $row->autre;
+                            }
+
+                            if ($row->location) {
+                                $new_reference->location = $row->location;
+                            }
+
+                            //Link zone
+                            if ($row->codezone) {
+                                $zone = Zone::where('name', $row->codezone)->first();
+                                if ($zone) {
+                                    $new_reference->zone = $zone->id;
+                                }
+                                else {
+                                    $new_zone = new Zone;
+                                    $new_zone->name = $row->codezone;
+                                    $new_zone->save();
+
+                                    $new_reference->zone = $new_zone->id;
+                                }
+                            }
+
+                            //Link country
+                            if ($row->country) {
+                                $country = Country::where('name', $row->country)->first();
+                                if ($country) {
+                                    $new_reference->country = $country->id;
+                                }
+                                else {
+                                    $new_country = new Country;
+                                    $new_country->name = $row->country;
+                                    $new_country->save();
+
+                                    $new_reference->country = $new_country->id;
+                                }
+                            }
+
+                            if ($row->startyear) {
+                                if ($row->startmonth) {
+                                    if ($row->startmonth < 10) {
+                                        $start_date = '0'.$row->startmonth.'-'.$row->startyear;
+                                    }
+                                    else {
+                                        $start_date = $row->startmonth.'-'.$row->startyear;
+                                    }
+                                }
+                                else {
+                                    $start_date = '01-'.$row->startyear;
+                                }
+                                $new_reference->start_date = $start_date;
+                            }
+
+                            if ($row->endyear) {
+                                if ($row->endmonth) {
+                                    if ($row->endmonth < 10) {
+                                        $end_date = '0'.$row->endmonth.'-'.$row->endyear;
+                                    }
+                                    else {
+                                        $end_date = $row->endmonth.'-'.$row->endyear;
+                                    }
+                                }
+                                else {
+                                    $end_date = '01-'.$row->endyear;
+                                }
+                                $new_reference->end_date = $end_date;
+                            }
+
+                            if ($row->nameclient) {
+                                $client = Client::where('name', $row->nameclient)->first();
+                                if ($client) {
+                                    if ($client->address == '') {
+                                        if ($row->adressclient) {
+                                            $client->address = $row->adressclient;
+                                            $client->save();
+                                        }
+                                    }
+                                    $new_reference->client = $client->id;
+                                }
+                                else {
+                                    $new_client = new Client;
+                                    $new_client->name = $row->nameclient;
+                                    if ($row->adressclient) {
+                                        $new_client->address = $row->adressclient;
+                                    }
+                                    $new_client->save();
+                                    $new_reference->client = $new_client->id;
+                                }
+                            }
+
+                            // $new_reference->start_date = $row->location;
+                            // $new_reference->location = $row->location;
+
+                            $new_reference->save();
+
+                            //Link project manager (Senior staff)
+                            // if ($row->chefprojet) {
+                            //     //If there is 2 managers
+                            //     if (str_contains($row->chefprojet, '/')) {
+                            //         $project_manager1 = strstr($row->chefprojet, '/', true);
+                            //         $project_manager2 = substr($row->chefprojet, strpos($row->chefprojet, "/") + 1);
+
+                            //         //Project manager 1
+                            //         $pm1 = Contributor::where('name', $project_manager1)->first();
+                            //         if ($pm1) {
+                            //             $new_reference->contributors()->attach($pm1->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
+                            //         }
+                            //         else {
+                            //             $new_project_manager = new Contributor;
+                            //             $new_project_manager->name = $project_manager1;
+                            //             $new_project_manager->save();
+                            //             $new_reference->contributors()->attach($new_project_manager->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
+                            //         }
+
+                            //         //Project manager 2
+                            //         $pm2 = Contributor::where('name', $project_manager2)->first();
+                            //         if ($pm2) {
+                            //             $new_reference->contributors()->attach($pm2->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
+                            //         }
+                            //         else {
+                            //             $new_project_manager = new Contributor;
+                            //             $new_project_manager->name = $project_manager2;
+                            //             $new_project_manager->save();
+                            //             $new_reference->contributors()->attach($new_project_manager->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
+                            //         }
+                            //     }
+                            //     else {
+                            //         $project_manager = Contributor::where('name', $row->chefprojet)->first();
+                            //         if ($project_manager) {
+                            //             $new_reference->contributors()->attach($project_manager->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
+                            //         }
+                            //         else {
+                            //             $new_project_manager = new Contributor;
+                            //             $new_project_manager->name = $row->chefprojet;
+                            //             $new_project_manager->save();
+                            //             $new_reference->contributors()->attach($new_project_manager->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
+                            //         }
+                            //     }
+                            // }
+
+                            //Measures
+                            if ($row->inhabitants) {
+                                // $measure = Measure::find(1);
+                                $new_reference->measures()->attach(1, ['value'=>$row->inhabitants]);
+                            }
+                            if ($row->subscribers_water_supp) {
+                                $new_reference->measures()->attach(2, ['value'=>$row->subscribers_water_supp]);
+                            }
+                            if ($row->subscribers_waste_water) {
+                                $new_reference->measures()->attach(6, ['value'=>$row->subscribers_waste_water]);
+                            }
+                            if ($row->subscribers_energie) {
+                                $new_reference->measures()->attach(10, ['value'=>$row->subscribers_energie]);
+                            }
+                            if ($row->capacity) {
+                                $new_reference->measures()->attach(3, ['value'=>$row->capacity, 'unit'=>'m³/d']);
+                            }
+                            // if ($row->networklength_ws) {
+                            //     $new_reference->measures()->attach(3, ['value'=>$row->networklength_ws, 'unit'=>'m³/d']);
+                            // }
+                            if ($row->networklength_ww) {
+                                $new_reference->measures()->attach(8, ['value'=>$row->networklength_ww]);
+                            }
+                            if ($row->networklength_energie) {
+                                $new_reference->measures()->attach(25, ['value'=>$row->networklength_energie]);
+                            }
+                            if ($row->networklength_energie) {
+                                $new_reference->measures()->attach(25, ['value'=>$row->networklength_energie]);
+                            }
+                            if ($row->capacity_drinking_water) {
+                                if (!$row->capacity) {
+                                    $new_reference->measures()->attach(3, ['value'=>$row->capacity_drinking_water, 'unit'=>'m³/d']);
+                                }
+                            }
+                            if ($row->capacity_wastewater) {
+                                $new_reference->measures()->attach(7, ['value'=>$row->capacity_wastewater, 'unit'=>'m³/d']);
+                            }
+                            if ($row->capacity_energie) {
+                                $new_reference->measures()->attach(11, ['value'=>$row->capacity_energie, 'unit'=>'Mw']);
+                            }
+
+                            //Expertises
+                            if ($row->watertreatment) {
+                                $new_reference->expertises()->attach(36);
+                            }
+                            if ($row->industrial) {
+                                $new_reference->expertises()->attach(25);
+                            }
+                            if ($row->seweragesystem) {
+                                $new_reference->expertises()->attach(31);
+                                $new_reference->expertises()->attach(32);
+                                $new_reference->expertises()->attach(33);
+                                $new_reference->expertises()->attach(34);
+                            }
+                            if ($row->industrial) {
+                                $new_reference->expertises()->attach(39);
+                            }
+                            if ($row->environment) {
+                                $new_reference->expertises()->attach(29);
+                            }
+                            if ($row->financialtariffinstitutional) {
+                                $new_reference->expertises()->attach(51);
+                            }
+                            if ($row->management_environmental_iso14000) {
+                                $new_reference->expertises()->attach(27);
+                            }
+                            if ($row->impactassessment) {
+                                $new_reference->expertises()->attach(26);
+                            }
+                            if ($row->customerservice) {
+                                $new_reference->expertises()->attach(49);
+                            }
+                            if ($row->solid_waste) {
+                                $new_reference->expertises()->attach(24);
+                            }
+                            if ($row->water_distribution_system_modelisation) {
+                                $new_reference->expertises()->attach(35);
+                            }
+                            if ($row->pompage_eau_potable) {
+                                $new_reference->expertises()->attach(42);
+                            }
+                            // if ($row->sewerage_system_gravitaire) {
+                            //     $new_reference->expertises()->attach(32);
+                            // }
+                            // if ($row->sewerage_system_sous_pression) {
+                            //     $new_reference->expertises()->attach(34);
+                            // }
+                            if ($row->wwtp_filiere_classique) {
+                                $new_reference->expertises()->attach(37);
+                            }
+                            if ($row->wwtp_filiere_biofiltre_mbr) {
+                                $new_reference->expertises()->attach(38);
+                            }
+                            if ($row->wwtp_reutilisation_eaux_usees) {
+                                $new_reference->expertises()->attach(40);
+                            }
+                            if ($row->gestion_des_boues) {
+                                $new_reference->expertises()->attach(41);
+                            }
+                            if ($row->pompage_relevement) {
+                                $new_reference->expertises()->attach(42);
+                            }
+                            if ($row->demographie_socio_eco) {
+                                $new_reference->expertises()->attach(54);
+                            }
+                            if ($row->urbanisme) {
+                                $new_reference->expertises()->attach(55);
+                            }
+                            if ($row->demande_en_eau) {
+                                $new_reference->expertises()->attach(56);
+                            }
+                            if ($row->energie_modelisation_electrique) {
+                                $new_reference->expertises()->attach(3);
+                            }
+                            if ($row->chauffage) {
+                                $new_reference->expertises()->attach(4);
+                            }
+                            // if ($row->gestion_du_patrimoine_rehabilitation) {
+                            //     $new_reference->expertises()->attach(7);
+                            // }
+                            if ($row->exploitation_maintenance) {
+                                $new_reference->expertises()->attach(44);
+                            }
+                            if ($row->management_qualite) {
+                                $new_reference->expertises()->attach(45);
+                            }
+                            if ($row->hygiene_et_seurite) {
+                                $new_reference->expertises()->attach(46);
+                            }
+                            if ($row->juridique) {
+                                $new_reference->expertises()->attach(47);
+                            }
+                            if ($row->service_clientele) {
+                                $new_reference->expertises()->attach(49);
+                            }
+                            if ($row->analyse_tarifaire_et_fin) {
+                                $new_reference->expertises()->attach(50);
+                                $new_reference->expertises()->attach(51);
+                            }
+                            if ($row->rh) {
+                                $new_reference->expertises()->attach(48);
+                            }
+
+                            //External Services
+                            if ($row->emasterplan) {
+                                $new_reference->external_services()->attach(1);
+                            }
+                            if ($row->efeasibilitystudy) {
+                                $new_reference->external_services()->attach(2);
+                            }
+                            if ($row->eprelimirarydesign) {
+                                $new_reference->external_services()->attach(3);
+                            }
+                            if ($row->edetaileddesign) {
+                                $new_reference->external_services()->attach(4);
+                            }
+                            if ($row->etenderdocuments) {
+                                $new_reference->external_services()->attach(5);
+                            }
+                            if ($row->ebidanalysisevaluation) {
+                                $new_reference->external_services()->attach(6);
+                            }
+                            if ($row->eworksupervision) {
+                                $new_reference->external_services()->attach(7);
+                                $new_reference->external_services()->attach(8);
+                            }
+                            if ($row->etechnicalassistance) {
+                                $new_reference->external_services()->attach(9);
+                            }
+                            if ($row->etraining) {
+                                $new_reference->external_services()->attach(10);
+                            }
+
+                            //Internal Services
+                            if ($row->vwmanagmentcontract || $row->vwleasecontract || $row->vwconcessioncontract) {
+                                $new_reference->internal_services()->attach(2);
+                                if ($row->vwmanagmentcontract) {
+                                    $new_reference->internal_services()->attach(3);
+                                }
+                                if ($row->vwleasecontract) {
+                                    $new_reference->internal_services()->attach(4);
+                                }
+                                if ($row->vwconcessioncontract) {
+                                    $new_reference->internal_services()->attach(5);
+                                }
+                            }
+                            if ($row->vwbot) {
+                                $new_reference->internal_services()->attach(8);
+                            }
+                            if ($row->vwoperatorstechnicalassistance) {
+                                $new_reference->internal_services()->attach(1);
+                            }
+                            if ($row->etechnicalassistance) {
+                                $new_reference->internal_services()->attach(9);
+                            }
+                        }
+                        // dd($reference);
+                    });
                 });
             }
             else {

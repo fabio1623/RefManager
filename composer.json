@@ -13,7 +13,8 @@
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "phpoffice/phpword": "dev-master",
         "zendframework/zend-validator": "^2.5",
-        "maatwebsite/excel": "~2.1.0"
+        "maatwebsite/excel": "~2.1.0",
+        "gbrock/laravel-table": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
