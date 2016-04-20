@@ -13,6 +13,6 @@ class Contributor extends Model
 
     public function zones()
     {
-        return $this->belongsToMany('App\Zone');
+        return $this->hasMany('App\Zone', 'manager', 'id');
     }
 }

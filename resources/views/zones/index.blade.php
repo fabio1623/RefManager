@@ -35,8 +35,9 @@
 					<table class="table table-bordered table-hover table-striped table-condensed">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Zones</th>
-						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-3">Zones</th>
+								<th class="col-sm-7">Manager</th>
+						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -47,6 +48,9 @@
 											<tr data-href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">
 												<td>
 													<a class="btn btn-link" href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">{{$zone->name}}</a>	
+												</td>
+												<td>
+													
 												</td>
 												<td class="check">
 													<input class="checkbox" type="checkbox" value="{{$zone->id}}" name=id[]>

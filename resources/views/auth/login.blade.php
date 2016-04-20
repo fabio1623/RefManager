@@ -5,7 +5,7 @@
     <div class="row col-sm-8 col-sm-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Login</h3>
+                    <h3 class="panel-title"><img alt="Brand" src="{{ asset('/img/VE_small_logo.png') }}"> Login</h3>
                 </div>
                 <div class="panel-body">
                     @if (count($errors) > 0)

@@ -1,13 +1,13 @@
 @extends('templates.template')
 
 @section('content')
-<div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-12">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h4>{{ $reference->project_number }} @if($reference->confidential == 1) : Confidential @endif</h4>
+						<h4>{{ $reference->project_number }} - {{ $reference->dfac_name }} @if($reference->confidential == 1) : Confidential @endif</h4>
 					</div>
 					<!-- Button toolbar -->
 					<div class="col-sm-6 pull-right">
@@ -67,29 +67,29 @@
 									  </button>
 									  <ul class="dropdown-menu">
 									  	<li class="dropdown-header">WB</li>
-												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank', 'wb', $reference->id]) }}">
-													WB - EN
-												</a></li>
-												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank_fr', 'wb_fr', $reference->id]) }}">
-													WB - FR
-												</a></li>
-												<li class="dropdown-header">EURO</li>
-												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro', 'euro', $reference->id]) }}">
-													EURO - EN
-												</a></li>
-												<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro_fr', 'euro_fr', $reference->id]) }}">
-													EURO - FR
-												</a></li>
-												@if ($linked_languages->count() > 0)
-													<li class="dropdown-header">OTHER</li>
-													@foreach ($linked_languages as $language)
-														@if(in_array($language->name, $languages_with_template))
-															<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
-																{{ $language->name }}
-															</a></li>
-														@endif
-													@endforeach
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank', 'wb', $reference->id]) }}">
+											WB - EN
+										</a></li>
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_world_bank_fr', 'wb_fr', $reference->id]) }}">
+											WB - FR
+										</a></li>
+										<li class="dropdown-header">EURO</li>
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro', 'euro', $reference->id]) }}">
+											EURO - EN
+										</a></li>
+										<li><a href="{{ action('ReferenceController@generate_file_base', ['Template_euro_fr', 'euro_fr', $reference->id]) }}">
+											EURO - FR
+										</a></li>
+										@if ($linked_languages->count() > 0)
+											<li class="dropdown-header">OTHER</li>
+											@foreach ($linked_languages as $language)
+												@if(in_array($language->name, $languages_with_template))
+													<li><a href="{{ action('ReferenceController@generate_file_translations', [$reference->id, $language->id]) }}">
+														{{ $language->name }}
+													</a></li>
 												@endif
+											@endforeach
+										@endif
 									  </ul>
 									</div>
 								@endif
@@ -109,10 +109,6 @@
 								@endif
 								@if(Auth::user()->profile_id == 3)
 									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index') }}">
-										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-									</a>
-								@else
-									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index_approved') }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								@endif

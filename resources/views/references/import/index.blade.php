@@ -11,43 +11,60 @@
 		</p>
 	</div>
 
-	<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_references') }}" enctype="multipart/form-data">
-		<?php echo csrf_field(); ?>
+	<div class="row">
+		<div class="col-sm-6">
+			<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_references') }}" enctype="multipart/form-data">
+				<?php echo csrf_field(); ?>
 
-		<label for="import_input">Import your file</label>
-		<input type="file" id="import_input" name="file" accept=".xlsx">
-		<p class="help-block">Just select your Microsoft Access file and click on import.</p>
+				<label for="import_input">Import your references</label>
+				<input type="file" id="import_input" name="file" accept=".xlsx">
+				<p class="help-block">Just select your Microsoft Access file and click on import.</p>
 
-		<input id="upload_btn" class="btn btn-default" type="submit" value="Import">
-	</form>
+				<input id="upload_ref_btn" class="btn btn-default" type="submit" value="Import">
+			</form>
 
-	<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" data-backdrop="static">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Uploading</h4>
-	      </div>
-	      <div class="modal-body">
-	        <div class="progress">
-				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%;">
-					<div class="percent">0%</div>
-				</div>
-			</div>
-	      </div>
-	      <div class="modal-footer">
-	        <button id="upload_modal_cancel" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+			<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" data-backdrop="static">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">Uploading</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="progress">
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%;">
+							<div class="percent">0%</div>
+						</div>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button id="upload_modal_cancel" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+		</div>
+		<div class="col-sm-6">
+			<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_translation') }}" enctype="multipart/form-data">
+				<?php echo csrf_field(); ?>
+
+				<label for="import_trans_input">Import your translations</label>
+				<input type="file" id="import_trans_input" name="file" accept=".xlsx">
+				<p class="help-block">Just select your Microsoft Access file and click on import.</p>
+
+				<input id="upload_trans_btn" class="btn btn-default" type="submit" value="Import">
+			</form>
+		</div>
+	</div>
+
+	
 
 </div>
 
 <script type="text/javascript">
 
-	$('#upload_btn').click(function(e){
+	$('#upload_ref_btn').click(function(e){
 		if (document.getElementById("import_input").files.length != true) {
 			e.preventDefault();
 			alert('Please, select a file.');

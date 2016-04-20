@@ -10,27 +10,15 @@
 
 		<!-- Bootstrap -->
 		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
 		<!-- Optional theme -->
-		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
 
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
-		<!-- 2e -->
-		<!-- <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" /> -->
-		<!-- <link rel="stylesheet" href="/css/datepicker.css"> -->
-		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css"> -->
 		<link rel="stylesheet" href="/css/bootstrap-select.css">
-		<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.css" /> -->
-		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/theme.default.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/jquery.tablesorter.pager.min.css"> -->
-		<!-- <link rel="stylesheet" href="/bower_components/tablesorter/css/theme.default.min.css"> -->
-		<link rel="stylesheet" href="/bower_components/tablesorter/css/theme.bootstrap.min.css">
-		<link rel="stylesheet" href="/bower_components/tablesorter/css/jquery.tablesorter.pager.min.css">
 		<link rel="stylesheet" href="/css/custom-css.css">
-
-		<!-- <link rel="stylesheet/less" type="text/css" href="/js/datepicker/less/datepicker.less" /> -->
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,160 +31,108 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 		<!-- Custom JS -->
 		<script src="http://malsup.github.com/jquery.form.js"></script> 
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-		<!-- 2e -->
-		<!-- <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
-		<script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script> -->
-		<!-- <script src="/js/bootstrap-datepicker.js"></script> -->
 		<script src="/js/bootstrap-select.js"></script>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script> -->
-		<!-- <script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.7.1/bootstrap-tagsinput.min.js"></script> -->
 		<script src="/js/bootstrap3-typeahead.js"></script>
 		<script src="/js/bloodhound.js"></script>
-		<!-- <script src="//cdn.bootcss.com/typeahead.js/0.11.1/bloodhound.js"></script> -->
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.js"></script> -->
-		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.js"></script>
-
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.widgets.js"></script> -->
-		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.pager.min.js"></script>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/extras/jquery.tablesorter.pager.min.js"></script> -->
-		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.widgets.js"></script>
-		<script type="text/javascript" src="/js/custom-functions.js"></script>	
+		<script type="text/javascript" src="/js/custom-functions.js"></script>
 	</head>
-	<body role='document'>
+	
+	<body>
 
-			<!-- Fixed navbar -->
-			<nav class="navbar navbar-default navbar-fixed-top">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-							<span class="sr-only">Toggle Navigation</span>
+		<!-- Fixed navbar -->
+		@if (Auth::guest())
+		@else
+		    <nav class="navbar navbar-default navbar-fixed-top">
+		      	<div class="container">
+		      		<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="{{ url('home') }}"><img alt="Brand" width="125px" height="26px" src="{{ asset('/img/logo_veolia.ico') }}"></a>
-						<!-- <a class="navbar-brand" href="{{ url('home') }}"><img alt="Brand" width="144px" height="60px" src="https://www.google.com/a/veolia.com/images/logo.gif?alpha=1&service=google_default"></a> -->
-					</div>
-
-					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<a class="navbar-brand" href="{{ url('home') }}"><img alt="Brand" src="{{ asset('/img/VE_small_logo.png') }}"></a>
+			        </div>
+			        <div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							@if (Auth::guest())
-							@else
-								<li class="visible-lg"><a href="{{ url('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-								<!-- Users Administrator -->
-								@if (Auth::user()->profile_id == 5)
-									<!-- <li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-briefcase"></span> Entities<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							            <li><a href="{{ action ('SubsidiaryController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add an entity</a></li>
-							            <li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-list"></span> List of entities</a></li>
-							          </ul>
-							        </li> -->
-									<li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> References<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> Add a reference</a></li>
-							            <!-- <li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li> -->
-							            <li><a href="{{ action('ReferenceController@references', ['created_at', 'desc']) }}"><span class="glyphicon glyphicon-list"></span> List of references</a></li>
-							            <li><a href="{{ action('ReferenceController@index_to_approve') }}"><span class="glyphicon glyphicon-list"></span> References to approve</a></li>
-							            <li><a href="{{ action('ReferenceController@index_approved') }}"><span class="glyphicon glyphicon-list"></span> Approved references</a></li>
-							            <li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>
-							            <li role="separator" class="divider"></li>
-							            <li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search a reference</a></li>
-							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
-							          </ul>
-							        </li>
-							        <li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-inbox"></span> Management<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							          	<li><a href="{{ action('SubsidiaryController@edit', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-wrench"></span> My entity</a></li>
-							          	<li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-briefcase"></span> Entities</a></li>
-							            <li><a href="{{ action('ZoneController@index', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-globe"></span> Zones</a></li>
-							            <li><a href="{{ action('ContributorController@index', [Auth::user()->subsidiary_id, 1]) }}"><span class="glyphicon glyphicon-user"></span> Contributors</a></li>
-							            <li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-credit-card"></span> Fundings</a></li>
-							            <!-- <li><a id="upload_link" href=""><span class="glyphicon glyphicon-import"></span> Upload</a></li> -->
-							            <li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
-							            <li><a href="{{ action('TemplateController@index') }}"><span class="glyphicon glyphicon-duplicate"></span> Templates</a></li>
-							          </ul>
-							        </li>
-							        <input type="file" id="upload_input" class="hidden">
-						        @endif
-						        <!-- References Administrator or Dcom manager -->
-						        @if (Auth::user()->profile_id == 2 || Auth::user()->profile_id == 3)
-									<li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							            <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li>
-							            @if (Auth::user()->profile_id == 3)
-							            	<li><a href="{{ action('ReferenceController@index') }}">List of references</a></li>
-							            	<li><a href="{{ action('ReferenceController@index_to_approve') }}">References to approve</a></li>
-							            @endif
-							            <li><a href="{{ action('ReferenceController@index_approved') }}">Approved references</a></li>
-							            <li role="separator" class="divider"></li>
-							            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
-							          </ul>
-							        </li>
-						        @endif
-						        <!-- Basic User -->
-						        @if (Auth::user()->profile_id == 1)
-						        	<li class="dropdown">
-							          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">References<span class="caret"></span></a>
-							          <ul class="dropdown-menu">
-							            <!-- <li><a href="{{ action('ReferenceController@create') }}">Add a reference</a></li> -->
-							            <li><a href="{{ action('ReferenceController@index_approved') }}">List of references</a></li>
-							            <li role="separator" class="divider"></li>
-							            <li><a href="{{ action('ReferenceController@search') }}">Search a reference</a></li>
-							          </ul>
-							        </li>
-						        @endif
-					        @endif
-						</ul>
-
-						<ul class="nav navbar-nav navbar-right">
-							@if (Auth::guest())
-								<!-- <li><a href="{{ url('/auth/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-								<li><a href="{{ url('/auth/register') }}"><span class="glyphicon glyphicon-registration-mark"></span> Register</a></li> -->
-							@else
-								@if (Auth::user()->avatar != '')
-									<img width="50px" height="50px" src="{{Auth::user()->avatar}}" class="profile-image img-circle">
-								@endif
+							<li class="active"><a href="{{ url('home') }}">Home</a></li>
+							<!-- If user admin or dcom manager -->
+							@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
 								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">	   {{ Auth::user()->username }} 
-										@if ($requests_number > 0)
-											<span class="badge">{{$requests_number}}</span>
-										@endif
-										<span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="{{ action('UserController@manageAccount', Auth::user()->id) }}"> <span class="glyphicon glyphicon glyphicon-user"></span> My account</a></li>
-
-										@if(Auth::user()->profile_id == 5)
-											<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
-											<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests 
-												@if ( $requests_number > 0 )
-													<span class="badge">{{$requests_number}}</span>
-												@endif
-											</a></li>
-										@endif
-
+								  	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list"></span> References <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> All</a></li>
+										<li><a href="{{ action('ReferenceController@references_list', 'to_approve') }}"><span class="glyphicon glyphicon-list"></span> To approve</a></li>
+							            <li><a href="{{ action('ReferenceController@references_list', 'approved') }}"><span class="glyphicon glyphicon-list"></span> Approved</a></li>
+							            <li><a href="{{ action('ReferenceController@references_list', 'created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>
 										<li role="separator" class="divider"></li>
-										<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
+							            <li role="separator" class="divider"></li>
+							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>
 									</ul>
 								</li>
+								<li class="dropdown">
+								  	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-wrench"></span> Management <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="{{ action('SubsidiaryController@edit', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-wrench"></span> My entity</a></li>
+											<li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-briefcase"></span> Entities</a></li>
+										<li><a href="{{ action('ZoneController@index', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-globe"></span> Zones</a></li>
+										<li><a href="{{ action('ContributorController@index', [Auth::user()->subsidiary_id, 1]) }}"><span class="glyphicon glyphicon-user"></span> Contributors</a></li>
+										<li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-credit-card"></span> Fundings</a></li>
+										<li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
+										<li><a href="{{ action('TemplateController@index') }}"><span class="glyphicon glyphicon-duplicate"></span> Templates</a></li>
+									</ul>
+								</li>
+							@else
+								<li><a href="{{ action('ReferenceController@references_list', 'approved') }}"><span class="glyphicon glyphicon-list"></span> References</a></li>
+								@if(Auth::user()->profile_id == 2)
+									<li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>
+								@endif
 							@endif
+							<li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Research</a></li>
 						</ul>
-					</div>
-				</div>
-			</nav>
+						<ul class="nav navbar-nav navbar-right">
+							@if (Auth::user()->avatar != '')
+								<img width="50px" height="50px" src="{{Auth::user()->avatar}}" class="profile-image img-circle">
+							@endif
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">	   {{ Auth::user()->username }}
+									<!-- If user admin -->
+									@if (Auth::user()->profile_id == 5 && $requests_number > 0)
+										<span class="badge">{{$requests_number}}</span>
+									@endif
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="{{ action('UserController@manageAccount', Auth::user()->id) }}"> <span class="glyphicon glyphicon glyphicon-user"></span> My account</a></li>
+									<!-- If user admin -->
+									@if(Auth::user()->profile_id == 5)
+										<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
+										<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests 
+											@if ( $requests_number > 0 )
+												<span class="badge">{{$requests_number}}</span>
+											@endif
+										</a></li>
+									@endif
 
-			<div class="container-fluid theme-showcase" role="main">
-				@yield('content')
-			</div>
+									<li role="separator" class="divider"></li>
+									<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+		    	</div>
+		    </nav>
+	    @endif
+
+		<div class="container" role="main">
+			@yield('content')
+		</div>
 	</body>
 
 <script>

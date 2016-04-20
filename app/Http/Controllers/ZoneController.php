@@ -26,7 +26,7 @@ class ZoneController extends Controller
     public function index($subsidiary_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
-        $zones = Zone::paginate(20);
+        $zones = Zone::orderBy('name', 'asc')->with('manager')->paginate(20);
 
         $view = view('zones.index', ['subsidiary'=>$subsidiary, 'zones'=>$zones]);
         return $view;
@@ -91,21 +91,9 @@ class ZoneController extends Controller
     {
         $zone = Zone::find($zone_id);
         $zone_countries = $zone->countries()->get();
-
-        // $id_tab = [];
-
-        // foreach ($zone->countries as $country) {
-        //     $id_tab[] = $country->id;
-        // }
-
-        // $countries = Country::whereNotIn('id', $id_tab)->get();
         $countries = Country::orderBy('name', 'asc')->get();
 
-        // $contributors = Contributor::whereHas('references', function ($query) {
-        //     $query->where('function_on_project', 'Senior');
-        // })->get();
-
-        $contributors = Contributor::where('profile', 'In-house')->get();
+        $contributors = Contributor::where('profile', 'In-house')->orderBy('name', 'asc')->get();
 
         $view = view('zones.edit', ['subsidiary_id'=>$subsidiary_id, 'zone'=>$zone, 'countries'=>$countries, 'zone_countries'=>$zone_countries, 'contributors'=>$contributors]);
         return $view;

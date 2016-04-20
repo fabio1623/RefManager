@@ -21,7 +21,7 @@ class FundingController extends Controller
      */
     public function index()
     {
-        $fundings = Funding::paginate(20);
+        $fundings = Funding::orderBy('name', 'asc')->paginate(20);
         $view = view('fundings.index')->with('fundings', $fundings);
         return $view;
     }

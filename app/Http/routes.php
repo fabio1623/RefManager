@@ -47,16 +47,17 @@ Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
 Route::get('references/import', 'ReferenceController@import_page');
-Route::post('references/upload', 'ReferenceController@upload_references');
+Route::post('references/upload/references', 'ReferenceController@upload_references');
+Route::post('references/upload/translations', 'ReferenceController@upload_translation');
 Route::post('references/{reference}/delete', 'ReferenceController@delete_file');
 // Route::get('references/{reference}/files/{file}/delete', 'ReferenceController@delete_file');
 Route::post('references/{reference}/download', 'ReferenceController@download_file');
 // Route::get('references/{reference}/files/{file}/download', 'ReferenceController@download_file');
 Route::post('references/{reference}/upload', 'ReferenceController@upload_file');
-Route::get('references/index_created_by_me', 'ReferenceController@index_created_by_me');
-Route::get('references/index_approved', 'ReferenceController@index_approved');
-Route::get('references/index_to_approve', 'ReferenceController@index_to_approve');
-Route::get('references/search/results_by_project_number', 'ReferenceController@results_by_project_number');
+// Route::get('references/{order}/{sort_direction}/created_by_me', 'ReferenceController@index_created_by_me');
+// Route::get('references/{order}/{sort_direction}/approved', 'ReferenceController@index_approved');
+// Route::get('references/{order}/{sort_direction}/to_approve', 'ReferenceController@index_to_approve');
+// Route::get('references/search/results_by_project_number', 'ReferenceController@results_by_project_number');
 Route::get('references/approve/{id}', 'ReferenceController@approve');
 Route::get('references/disapprove/{id}', 'ReferenceController@disapprove');
 Route::get('references/custom_index/{id}', 'ReferenceController@subsidiary_references');
@@ -67,7 +68,9 @@ Route::get('references/basic_search', 'ReferenceController@basic_search');
 Route::post('references/{reference}/link_translation', 'ReferenceController@link_translation');
 Route::get('references/{reference}/languages/{language}/detach_translation', 'ReferenceController@detach_translation');
 Route::get('references/{reference}/{error}/edit', 'ReferenceController@edit');
-Route::get('references/{order}/{sort_direction}', 'ReferenceController@references');
+// Route::get('references/{order}/{sort_direction}/all', 'ReferenceController@references');
+Route::get('references/{page}/{order}/{sort_direction}/sorted', 'ReferenceController@references');
+Route::get('references/{filter}/list', 'ReferenceController@references_list');
 Route::resource('references', 'ReferenceController');
 
 //Users

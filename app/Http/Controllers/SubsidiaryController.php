@@ -24,7 +24,7 @@ class SubsidiaryController extends Controller
      */
     public function index()
     {
-        $subsidiaries = Subsidiary::paginate(4);
+        $subsidiaries = Subsidiary::orderBy('name', 'asc')->paginate(4);
         // $subsidiaries->setPath('index');
         $view = view('subsidiaries.index')->with('subsidiaries', $subsidiaries);
         return $view;

@@ -35,8 +35,8 @@
 					<table class="table table-bordered table-hover table-condensed table-striped">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Contributor name</th>
-						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-10">Contributor name</th>
+						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>

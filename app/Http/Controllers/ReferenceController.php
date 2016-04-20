@@ -36,7 +36,7 @@ use App\Subsidiary;
 use App\CountryZone;
 
 use \PhpOffice\PhpWord\TemplateProcessor;
-use Table;
+// use Table;
 
 class ReferenceController extends Controller
 {
@@ -51,19 +51,19 @@ class ReferenceController extends Controller
      */
     public function index()
     {
-        $references = Reference::orderBy('created_at', 'desc')->paginate(20);
-        // $rows = Reference::sorted()->paginate();
-        // $table = Table::create($rows, ['Activities', 'project_number', 'dfac_name', 'start_date', 'end_date', 'client', 'country', 'zone', 'total_project_cost']);
-        // $table->addColumn('created_at', 'Added', function($model) {
-        //     return 'test';
-        // });
+        $order = 'created_at';
+        $sort_direction = 'desc';
+        $page = 'all';
+
+        $references = Reference::orderBy($order, $sort_direction)->paginate(10);
+
         $activities = array();
         $clients = array();
         $countries = array();
         $zones = array();
         $languages = Language::has('references')->get();
-        // $kind_of_reference = 'All';
-        foreach ($references as $key => $reference) {
+
+        foreach ($references as $reference) {
             // Get client name
             if ($reference->client) {
                 $client_ref = Client::find($reference->client);
@@ -98,44 +98,43 @@ class ReferenceController extends Controller
                 $zones[$reference->id] = '';
             }
         }
-        // dd($activities);
-        $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages]);
+
+        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
         return $view;
-
-        // 2sd method
-        // $references = Reference::orderBy('created_at', 'desc')->get();
-        // $countries = Country::all();
-        // $clients = Client::all();
-        // $zones = Zone::all();
-        // $kind_of_reference = 'All';
-        // $languages = Language::has('references')->get();
-        // $categories = Category::all();
-
-        // $ref_array = array();
-        // foreach ($references as $key => $reference) {
-        //     $cat_array = array();
-        //     foreach ($reference->measures as $measure) {
-        //         if (in_array($measure->category_id, $cat_array) == false) {
-        //             array_push($cat_array, $measure->category_id);
-        //         }
-        //     }
-        //     $ref_array[$reference->id] = $cat_array;
-        // }
-
-        // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
-        // return $view;
     }
 
-    public function references($order, $sort_direction)
+    public function references_list($filter)
     {
-        $references = Reference::orderBy($order, $sort_direction)->paginate(10);
+        $order = 'created_at';
+        $sort_direction = 'desc';
+
+        switch ($filter) {
+            case 'to_approve':
+                $references = Reference::where('dcom_approval', false);
+                break;
+
+            case 'approved':
+                $references = Reference::where('dcom_approval', true);
+                break;
+
+            case 'created_by_me':
+                $references = Reference::where('created_by', Auth::user()->username);
+                break;
+            
+            default:
+                // $references = Reference::orderBy($order, $sort_direction);
+                break;
+        }
+
+        $references = $references->orWhere('created_by', Auth::user()->username)->orderBy($order, $sort_direction)->paginate(10);
+
         $activities = array();
         $clients = array();
         $countries = array();
         $zones = array();
         $languages = Language::has('references')->get();
 
-        foreach ($references as $key => $reference) {
+        foreach ($references as $reference) {
             // Get client name
             if ($reference->client) {
                 $client_ref = Client::find($reference->client);
@@ -171,7 +170,111 @@ class ReferenceController extends Controller
             }
         }
 
-        $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
+        $view = view('references.index2', ['page'=>$filter, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
+        return $view;
+    }
+
+    // Sort function
+    public function references($page, $order, $sort_direction, Request $request)
+    {
+        // If needed to sort from foreign key column
+        if ($order == 'client' || $order == 'country' || $order == 'zone') {
+            $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')
+            ->select('references.*', str_plural($order).'.name');
+
+            switch ($page) {
+                case 'to_approve':
+                    $references->where('dcom_approval', false)->orWhere('created_by', Auth::user()->username)->orderBy(str_plural($order).'.name', $sort_direction)->paginate(10);
+                    break;
+
+                case 'approved':
+                    $references->where('dcom_approval', true)->orWhere('created_by', Auth::user()->username)->orderBy(str_plural($order).'.name', $sort_direction)->paginate(10);
+                    break;
+
+                case 'created_by_me':
+                    $references->where('created_by', Auth::user()->username)->orderBy(str_plural($order).'.name', $sort_direction)->paginate(10);
+                    break;
+
+                case 'search_results':
+                    dd('Search foreign');
+                    break;
+                
+                default:
+                    // dd('all foreign');
+                    $references->orderBy(str_plural($order).'.name', $sort_direction)->paginate(10);
+                    break;
+            }
+
+            $references = $references->orWhere('created_by', Auth::user()->username)->orderBy(str_plural($order).'.name', $sort_direction)->paginate(10);
+        }
+        else {
+            switch ($page) {
+                case 'to_approve':
+                    $references = Reference::where('dcom_approval', false)->orWhere('created_by', Auth::user()->username)->orderBy($order, $sort_direction)->paginate(10);
+                    break;
+
+                case 'approved':
+                    $references = Reference::where('dcom_approval', true)->orWhere('created_by', Auth::user()->username)->orderBy($order, $sort_direction)->paginate(10);
+                    break;
+
+                case 'created_by_me':
+                    $references = Reference::where('created_by', Auth::user()->username)->orderBy($order, $sort_direction)->paginate(10);
+                    break;
+                case 'search_results':
+                    // dd($_GET);
+                    dd('Search');
+                    break;
+                
+                default:
+                    // dd('all');
+                    $references = Reference::orderBy($order, $sort_direction)->paginate(10);
+                    break;
+            }
+        }
+
+        $activities = array();
+        $clients = array();
+        $countries = array();
+        $zones = array();
+        $languages = Language::has('references')->get();
+
+        foreach ($references as $reference) {
+            // Get client name
+            if ($reference->client) {
+                $client_ref = Client::find($reference->client);
+                $clients[$reference->id] = $client_ref->name;
+            }
+            else {
+                $clients[$reference->id] = '';   
+            }
+            // Get linked activities
+            $cat_array = array();
+            foreach ($reference->measures as $measure) {
+                $category = Category::find($measure->category_id);
+                if (in_array($category->name, $cat_array) == false) {
+                    array_push($cat_array, $category->name);
+                }
+            }
+            $activities[$reference->id] = $cat_array;
+            // Get country name
+            if ($reference->country) {
+                $country_ref = Country::find($reference->country);
+                $countries[$reference->id] = $country_ref->name;
+            }
+            else {
+                $countries[$reference->id] = '';
+            }
+            // Get zone name
+            if ($reference->zone) {
+                $zone_ref = Zone::find($reference->zone);
+                $zones[$reference->id] = $zone_ref->name;
+            }
+            else {
+                $zones[$reference->id] = '';
+            }
+        }
+
+        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
         return $view;
     }
 
@@ -189,108 +292,281 @@ class ReferenceController extends Controller
         return $view; 
     }
 
-    public function index_to_approve()
-    {
-        $references = Reference::where('dcom_approval', false)->orderBy('created_at', 'desc')->paginate(8);
-        $countries = Country::all();
-        $clients = Client::all();
-        $zones = Zone::all();
-        $kind_of_reference = 'To approve';
-        $languages = Language::has('references')->get();
-        $categories = Category::all();
+    // public function index_to_approve($order, $sort_direction)
+    // {
+    //     // If needed to sort from foreign key column
+    //     if ($order == 'client' || $order == 'country' || $order == 'zone') {
+    //         $references = Reference::join(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')
+    //         ->select('references.*', str_plural($order).'.name')
+    //         ->where('dcom_approval', false)
+    //         ->orderBy(str_plural($order).'.name', $sort_direction)
+    //         ->paginate(10);
+    //     }
+    //     else {
+    //         $references = Reference::where('dcom_approval', false)->orderBy($order, $sort_direction)->paginate(10);
+    //     }
 
-        $ref_array = array();
-        foreach ($references as $key => $reference) {
-            $cat_array = array();
-            foreach ($reference->measures as $measure) {
-                if (in_array($measure->category_id, $cat_array) == false) {
-                    array_push($cat_array, $measure->category_id);
-                }
-            }
-            $ref_array[$reference->id] = $cat_array;
-        }
+    //     $activities = array();
+    //     $clients = array();
+    //     $countries = array();
+    //     $zones = array();
+    //     $languages = Language::has('references')->get();
 
-        $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
-        return $view;
+    //     foreach ($references as $reference) {
+    //         // Get client name
+    //         if ($reference->client) {
+    //             $client_ref = Client::find($reference->client);
+    //             $clients[$reference->id] = $client_ref->name;
+    //         }
+    //         else {
+    //             $clients[$reference->id] = '';   
+    //         }
+    //         // Get linked activities
+    //         $cat_array = array();
+    //         foreach ($reference->measures as $measure) {
+    //             $category = Category::find($measure->category_id);
+    //             if (in_array($category->name, $cat_array) == false) {
+    //                 array_push($cat_array, $category->name);
+    //             }
+    //         }
+    //         $activities[$reference->id] = $cat_array;
+    //         // Get country name
+    //         if ($reference->country) {
+    //             $country_ref = Country::find($reference->country);
+    //             $countries[$reference->id] = $country_ref->name;
+    //         }
+    //         else {
+    //             $countries[$reference->id] = '';
+    //         }
+    //         // Get zone name
+    //         if ($reference->zone) {
+    //             $zone_ref = Zone::find($reference->zone);
+    //             $zones[$reference->id] = $zone_ref->name;
+    //         }
+    //         else {
+    //             $zones[$reference->id] = '';
+    //         }
+    //     }
 
-    }
+    //     $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
+    //     return $view;
 
-    public function index_approved()
-    {
-        $references = Reference::where('dcom_approval', true)->orderBy('created_at', 'desc')->paginate(8);
-        $countries = Country::all();
-        $clients = Client::all();
-        $zones = Zone::all();
-        $kind_of_reference = 'Approved';
-        $languages = Language::has('references')->get();
-        $categories = Category::all();
+    //     // $references = Reference::where('dcom_approval', false)->orderBy('created_at', 'desc')->paginate(8);
+    //     // $countries = Country::all();
+    //     // $clients = Client::all();
+    //     // $zones = Zone::all();
+    //     // $kind_of_reference = 'To approve';
+    //     // $languages = Language::has('references')->get();
+    //     // $categories = Category::all();
 
-        $ref_array = array();
-        foreach ($references as $key => $reference) {
-            $cat_array = array();
-            foreach ($reference->measures as $measure) {
-                if (in_array($measure->category_id, $cat_array) == false) {
-                    array_push($cat_array, $measure->category_id);
-                }
-            }
-            $ref_array[$reference->id] = $cat_array;
-        }
+    //     // $ref_array = array();
+    //     // foreach ($references as $key => $reference) {
+    //     //     $cat_array = array();
+    //     //     foreach ($reference->measures as $measure) {
+    //     //         if (in_array($measure->category_id, $cat_array) == false) {
+    //     //             array_push($cat_array, $measure->category_id);
+    //     //         }
+    //     //     }
+    //     //     $ref_array[$reference->id] = $cat_array;
+    //     // }
 
-        $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
-        return $view;        
-    }
+    //     // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
+    //     // return $view;
 
-    public function index_created_by_me()
-    {
-        $references = Reference::where('created_by', Auth::user()->username)->orderBy('created_at', 'desc')->paginate(8);
-        $countries = Country::all();
-        $clients = Client::all();
-        $zones = Zone::all();
-        $kind_of_reference = 'Created by me';
-        $languages = Language::has('references')->get();
-        $categories = Category::all();
+    // }
 
-        $ref_array = array();
-        foreach ($references as $key => $reference) {
-            $cat_array = array();
-            foreach ($reference->measures as $measure) {
-                if (in_array($measure->category_id, $cat_array) == false) {
-                    array_push($cat_array, $measure->category_id);
-                }
-            }
-            $ref_array[$reference->id] = $cat_array;
-        }
+    // public function index_approved($order, $sort_direction)
+    // {
 
-        $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
-        return $view;
-    }
+    //     // If needed to sort from foreign key column
+    //     if ($order == 'client' || $order == 'country' || $order == 'zone') {
+    //         $references = Reference::join(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')
+    //         ->select('references.*', str_plural($order).'.name')
+    //         ->where('dcom_approval', true)
+    //         ->orderBy(str_plural($order).'.name', $sort_direction)
+    //         ->paginate(10);
+    //     }
+    //     else {
+    //         $references = Reference::where('dcom_approval', true)->orderBy($order, $sort_direction)->paginate(10);
+    //     }
 
-    public function customize()
-    {
-        $languages = Language::all();
-        $external_services = ExternalService::all();
-        $internal_services = InternalService::all();
-        $domains = Domain::all();
-        $expertises = Expertise::all();
-        $categories = Category::all();
-        $countries = Country::orderBy('name', 'asc')->get();
-        $zones = Zone::orderBy('name','asc')->get();
+    //     $activities = array();
+    //     $clients = array();
+    //     $countries = array();
+    //     $zones = array();
+    //     $languages = Language::has('references')->get();
 
-        $seniors = Contributor::where('profile', 'In-house')
-                                    ->orderBy('name', 'asc')
-                                    ->get();
-        $experts = Contributor::where('profile', 'In-house')
-                                    ->orWhere('profile', 'Sub-contractor')
-                                        ->orderBy('name', 'asc')
-                                        ->get();
+    //     foreach ($references as $reference) {
+    //         // Get client name
+    //         if ($reference->client) {
+    //             $client_ref = Client::find($reference->client);
+    //             $clients[$reference->id] = $client_ref->name;
+    //         }
+    //         else {
+    //             $clients[$reference->id] = '';   
+    //         }
+    //         // Get linked activities
+    //         $cat_array = array();
+    //         foreach ($reference->measures as $measure) {
+    //             $category = Category::find($measure->category_id);
+    //             if (in_array($category->name, $cat_array) == false) {
+    //                 array_push($cat_array, $category->name);
+    //             }
+    //         }
+    //         $activities[$reference->id] = $cat_array;
+    //         // Get country name
+    //         if ($reference->country) {
+    //             $country_ref = Country::find($reference->country);
+    //             $countries[$reference->id] = $country_ref->name;
+    //         }
+    //         else {
+    //             $countries[$reference->id] = '';
+    //         }
+    //         // Get zone name
+    //         if ($reference->zone) {
+    //             $zone_ref = Zone::find($reference->zone);
+    //             $zones[$reference->id] = $zone_ref->name;
+    //         }
+    //         else {
+    //             $zones[$reference->id] = '';
+    //         }
+    //     }
 
-        $consultants = Contributor::where('profile', 'Consultant')
-                                        ->orderBy('name', 'asc')
-                                        ->get();
+    //     $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
+    //     return $view;
 
-        $view = view('references.customize', ['languages'=>$languages, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants]);
-        return $view;
-    }
+    //     // $references = Reference::where('dcom_approval', true)->orderBy('created_at', 'desc')->paginate(8);
+    //     // $countries = Country::all();
+    //     // $clients = Client::all();
+    //     // $zones = Zone::all();
+    //     // $kind_of_reference = 'Approved';
+    //     // $languages = Language::has('references')->get();
+    //     // $categories = Category::all();
+
+    //     // $ref_array = array();
+    //     // foreach ($references as $key => $reference) {
+    //     //     $cat_array = array();
+    //     //     foreach ($reference->measures as $measure) {
+    //     //         if (in_array($measure->category_id, $cat_array) == false) {
+    //     //             array_push($cat_array, $measure->category_id);
+    //     //         }
+    //     //     }
+    //     //     $ref_array[$reference->id] = $cat_array;
+    //     // }
+
+    //     // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
+    //     // return $view;        
+    // }
+
+    // public function index_created_by_me($order, $sort_direction)
+    // {
+
+    //     // If needed to sort from foreign key column
+    //     if ($order == 'client' || $order == 'country' || $order == 'zone') {
+    //         $references = Reference::join(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')
+    //         ->select('references.*', str_plural($order).'.name')
+    //         ->where('created_by', Auth::user()->username)
+    //         ->orderBy(str_plural($order).'.name', $sort_direction)
+    //         ->paginate(10);
+    //     }
+    //     else {
+    //         $references = Reference::where('created_by', Auth::user()->username)->orderBy($order, $sort_direction)->paginate(10);
+    //     }
+
+    //     $activities = array();
+    //     $clients = array();
+    //     $countries = array();
+    //     $zones = array();
+    //     $languages = Language::has('references')->get();
+
+    //     foreach ($references as $reference) {
+    //         // Get client name
+    //         if ($reference->client) {
+    //             $client_ref = Client::find($reference->client);
+    //             $clients[$reference->id] = $client_ref->name;
+    //         }
+    //         else {
+    //             $clients[$reference->id] = '';   
+    //         }
+    //         // Get linked activities
+    //         $cat_array = array();
+    //         foreach ($reference->measures as $measure) {
+    //             $category = Category::find($measure->category_id);
+    //             if (in_array($category->name, $cat_array) == false) {
+    //                 array_push($cat_array, $category->name);
+    //             }
+    //         }
+    //         $activities[$reference->id] = $cat_array;
+    //         // Get country name
+    //         if ($reference->country) {
+    //             $country_ref = Country::find($reference->country);
+    //             $countries[$reference->id] = $country_ref->name;
+    //         }
+    //         else {
+    //             $countries[$reference->id] = '';
+    //         }
+    //         // Get zone name
+    //         if ($reference->zone) {
+    //             $zone_ref = Zone::find($reference->zone);
+    //             $zones[$reference->id] = $zone_ref->name;
+    //         }
+    //         else {
+    //             $zones[$reference->id] = '';
+    //         }
+    //     }
+
+    //     $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
+    //     return $view;
+
+    //     // $references = Reference::where('created_by', Auth::user()->username)->orderBy('created_at', 'desc')->paginate(8);
+    //     // $countries = Country::all();
+    //     // $clients = Client::all();
+    //     // $zones = Zone::all();
+    //     // $kind_of_reference = 'Created by me';
+    //     // $languages = Language::has('references')->get();
+    //     // $categories = Category::all();
+
+    //     // $ref_array = array();
+    //     // foreach ($references as $key => $reference) {
+    //     //     $cat_array = array();
+    //     //     foreach ($reference->measures as $measure) {
+    //     //         if (in_array($measure->category_id, $cat_array) == false) {
+    //     //             array_push($cat_array, $measure->category_id);
+    //     //         }
+    //     //     }
+    //     //     $ref_array[$reference->id] = $cat_array;
+    //     // }
+
+    //     // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
+    //     // return $view;
+    // }
+
+    // public function customize()
+    // {
+    //     $languages = Language::all();
+    //     $external_services = ExternalService::all();
+    //     $internal_services = InternalService::all();
+    //     $domains = Domain::all();
+    //     $expertises = Expertise::all();
+    //     $categories = Category::all();
+    //     $countries = Country::orderBy('name', 'asc')->get();
+    //     $zones = Zone::orderBy('name','asc')->get();
+
+    //     $seniors = Contributor::where('profile', 'In-house')
+    //                                 ->orderBy('name', 'asc')
+    //                                 ->get();
+    //     $experts = Contributor::where('profile', 'In-house')
+    //                                 ->orWhere('profile', 'Sub-contractor')
+    //                                     ->orderBy('name', 'asc')
+    //                                     ->get();
+
+    //     $consultants = Contributor::where('profile', 'Consultant')
+    //                                     ->orderBy('name', 'asc')
+    //                                     ->get();
+
+    //     $view = view('references.customize', ['languages'=>$languages, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'countries'=>$countries, 'zones'=>$zones, 'seniors'=>$seniors, 'experts'=>$experts, 'consultants'=>$consultants]);
+    //     return $view;
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -388,11 +664,11 @@ class ReferenceController extends Controller
         $zones = Zone::all();
         $external_services = ExternalService::all();
         $internal_services = InternalService::all();
-        $domains = Domain::all();
+        $domains = Domain::orderBy('name', 'asc')->get();
         // $countries = Country::all();
         $countries = Country::has('zones')->orderBy('name', 'asc')->get();
         $categories = Category::all();
-        $zones = Zone::all();
+        $zones = Zone::orderBy('name', 'asc')->get();
         $fundings = Funding::orderBy('name', 'asc')->get();
 
         $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories, 'zones'=>$zones, 'fundings'=>$fundings]);
@@ -402,6 +678,7 @@ class ReferenceController extends Controller
     public function results(Request $request)
     {
         // dd($_GET);
+        $page = 'search_results';
 
         //Get right references
         $references = Reference::where(function ($query) use ($request) {
@@ -439,7 +716,13 @@ class ReferenceController extends Controller
                                           }
                                 });
 
-        $references->where('dcom_approval', 1);
+        if (isset($request->approval)) {
+            $references->where('dcom_approval', 0);
+        }
+        else {
+            $references->where('dcom_approval', 1);   
+        }
+        $references->orWhere('created_by', Auth::user()->username);
 
         if ($request->continent) {
             $countries = Country::all();
@@ -594,23 +877,12 @@ class ReferenceController extends Controller
                     $query->whereIn('id', $financings);
                 });
             }
-        }        
-
-        // $references = $references->paginate(20);
-        // $references = $references->get();
-
-        // $ref_array = array();
-        // foreach ($references as $key => $reference) {
-        //     $cat_array = array();
-        //     foreach ($reference->measures as $measure) {
-        //         if (in_array($measure->category_id, $cat_array) == false) {
-        //             array_push($cat_array, $measure->category_id);
-        //         }
-        //     }
-        //     $ref_array[$reference->id] = $cat_array;
-        // }
+        }
 
         $references = $references->orderBy('created_at', 'desc')->paginate(10);
+
+        // dd($references->url(2));
+
         $activities = array();
         $clients = array();
         $countries = array();
@@ -653,20 +925,7 @@ class ReferenceController extends Controller
             }
         }
 
-        // $zones = Zone::all();
-        // $external_services = ExternalService::all();
-        // $internal_services = InternalService::all();
-        // $domains = Domain::all();
-        // $countries = Country::all();
-        // $clients = Client::all();
-        // $kind_of_reference = 'Search';
-        // $languages = Language::has('references')->get();
-        // $categories = Category::all();
-
-        // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages, 'references'=>$references, 'zones'=>$zones,'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'clients'=>$clients, 'inputs'=>$request->except('page')]);
-        // return $view;
-
-        $view = view('references.index2', ['references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>'created_at', 'sort_direction'=>'desc']);
+        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>'created_at', 'sort_direction'=>'desc']);
         return $view;
     }
 
@@ -2149,18 +2408,25 @@ class ReferenceController extends Controller
                 $currentDate = date('Y-m-d_H-i-s');
                 $folder_name = 'References_'.$currentDate;
                 $new_folder = 'Exports/'.$language->name.'/'.$folder_name;
+                $nb = 0;
 
                 Storage::makeDirectory($new_folder);
-
                 foreach ($request->ids as $value) {
                     // ReferenceController::generate_file_translations2($new_folder, $value, $language_id);
                     $new_file = ReferenceController::generate_file_translations_generic($value, $request->language_id, $new_folder);
-
+                    if ($new_file != null) {
+                        $nb++;
+                    }
                 }
+                
+                if ($nb > 0) {
+                    $zip_file = ReferenceController::zip_files($language->name.'/'.$folder_name);
 
-                $zip_file = ReferenceController::zip_files($language->name.'/'.$folder_name);
-
-                return response()->download(storage_path('app/Exports/'.$zip_file))->deleteFileAfterSend(true);
+                    return response()->download(storage_path('app/Exports/'.$zip_file))->deleteFileAfterSend(true);
+                }
+                else {
+                    return redirect()->back();   
+                }
             }        
         }
         else {
@@ -2213,6 +2479,17 @@ class ReferenceController extends Controller
     {
         $view = view('references.import.index', []);
         return $view;
+    }
+
+    public function upload_translations(Request $request)
+    {
+        dd('Translation upload');
+
+        $file = $request->file('file');
+        $file_name = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+
+
     }
 
     public function upload_references(Request $request)
@@ -2380,9 +2657,6 @@ class ReferenceController extends Controller
                                 }
                             }
 
-                            // $new_reference->start_date = $row->location;
-                            // $new_reference->location = $row->location;
-
                             $new_reference->save();
 
                             //Link project manager (Senior staff)
@@ -2511,12 +2785,6 @@ class ReferenceController extends Controller
                             if ($row->pompage_eau_potable) {
                                 $new_reference->expertises()->attach(42);
                             }
-                            // if ($row->sewerage_system_gravitaire) {
-                            //     $new_reference->expertises()->attach(32);
-                            // }
-                            // if ($row->sewerage_system_sous_pression) {
-                            //     $new_reference->expertises()->attach(34);
-                            // }
                             if ($row->wwtp_filiere_classique) {
                                 $new_reference->expertises()->attach(37);
                             }
@@ -2547,9 +2815,6 @@ class ReferenceController extends Controller
                             if ($row->chauffage) {
                                 $new_reference->expertises()->attach(4);
                             }
-                            // if ($row->gestion_du_patrimoine_rehabilitation) {
-                            //     $new_reference->expertises()->attach(7);
-                            // }
                             if ($row->exploitation_maintenance) {
                                 $new_reference->expertises()->attach(44);
                             }

@@ -10,4 +10,9 @@ class Client extends Model
     {
         return $this->belongsToMany('App\Contact');
     }
+
+    public function references()
+    {
+        return $this->hasMany('App\Reference', 'client');
+    }
 }

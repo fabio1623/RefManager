@@ -2,39 +2,45 @@
 
 @section('content')
 
-<div class="container-fluid">
-	<!-- Extract button -->
-	<div class="btn-group">
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Extract <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-			<li class="dropdown-header">WB</li>
-			<li id="wb_en"><a href="">
-				WB - EN
-			</a></li>
-			<li><a id="wb_fr" href="">
-				WB - FR
-			</a></li>
-			<li class="dropdown-header">EURO</li>
-			<li><a id="eur_en" href="">
-				EURO - EN
-			</a></li>
-			<li><a id="eur_fr" href="">
-				EURO - FR
-			</a></li>
-			@if ($languages->count() > 0)
-				<li class="dropdown-header">OTHER</li>
-				@foreach ($languages as $language)
-					<li><a id="{{ $language->id }}" class="translation_extract" href="">
-						{{ $language->name }}
-					</a></li>
-				@endforeach
-			@endif
-		</ul>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-sm-6 col-xs-6">References</div>
+			<div class="col-sm-6 col-xs-6">
+				<!-- Extract button -->
+				<div class="btn-group pull-right">
+					<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Extract <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li class="dropdown-header">WB</li>
+						<li id="wb_en"><a href="">
+							WB - EN
+						</a></li>
+						<li><a id="wb_fr" href="">
+							WB - FR
+						</a></li>
+						<li class="dropdown-header">EURO</li>
+						<li><a id="eur_en" href="">
+							EURO - EN
+						</a></li>
+						<li><a id="eur_fr" href="">
+							EURO - FR
+						</a></li>
+						@if ($languages->count() > 0)
+							<li class="dropdown-header">OTHER</li>
+							@foreach ($languages as $language)
+								<li><a id="{{ $language->id }}" class="translation_extract" href="">
+									{{ $language->name }}
+								</a></li>
+							@endforeach
+						@endif
+					</ul>
+				</div>
+				<!-- /. Extract button -->		
+			</div>
+		</div>
 	</div>
-	<!-- /. Extract button -->
-	<p></p>
 	<div class="table-responsive">
 		<table class="table table-hover table-condensed">
 	  		<thead>
@@ -42,75 +48,75 @@
 					<th class="col-sm-1"><a id="activity_col" href="">Activity</a></th>
 					@if($order == 'project_number')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['project_number', 'desc']) }}">Project n°<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'project_number', 'desc']) }}">Project n°<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['project_number', 'asc']) }}">Project n°<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'project_number', 'asc']) }}">Project n°<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['project_number', 'asc']) }}">Project n°</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'project_number', 'asc']) }}">Project n°</a></th>
 					@endif
 					@if($order == 'dfac_name')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['dfac_name', 'desc']) }}">DFAC name<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'dfac_name', 'desc']) }}">DFAC name<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['dfac_name', 'asc']) }}">DFAC name<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'dfac_name', 'asc']) }}">DFAC name<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['dfac_name', 'asc']) }}">DFAC name</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'dfac_name', 'asc']) }}">DFAC name</a></th>
 					@endif
 					@if($order == 'start_date')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['start_date', 'desc']) }}">Start date<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'start_date', 'desc']) }}">Start date<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['start_date', 'asc']) }}">Start date<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'start_date', 'asc']) }}">Start date<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['start_date', 'asc']) }}">Start date</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'start_date', 'asc']) }}">Start date</a></th>
 					@endif
 					@if($order == 'end_date')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['end_date', 'desc']) }}">End date<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'end_date', 'desc']) }}">End date<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['end_date', 'asc']) }}">End date<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'end_date', 'asc']) }}">End date<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['end_date', 'asc']) }}">End date</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'end_date', 'asc']) }}">End date</a></th>
 					@endif
 					@if($order == 'client')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['client', 'desc']) }}">Client<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'client', 'desc']) }}">Client<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['client', 'asc']) }}">Client<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'client', 'asc']) }}">Client<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['client', 'asc']) }}">Client</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'client', 'asc']) }}">Client</a></th>
 					@endif
 					@if($order == 'country')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['country', 'desc']) }}">Country<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'country', 'desc']) }}">Country<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['country', 'asc']) }}">Country<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'country', 'asc']) }}">Country<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['country', 'asc']) }}">Country</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'country', 'asc']) }}">Country</a></th>
 					@endif
 					@if($order == 'zone')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['zone', 'desc']) }}">Zone<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'zone', 'desc']) }}">Zone<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['zone', 'asc']) }}">Zone<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'zone', 'asc']) }}">Zone<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['zone', 'asc']) }}">Zone</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'zone', 'asc']) }}">Zone</a></th>
 					@endif
 					@if($order == 'total_project_cost')
 						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['total_project_cost', 'desc']) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-top"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'total_project_cost', 'desc']) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-top"></span></a></th>
 						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['total_project_cost', 'asc']) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
+							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'total_project_cost', 'asc']) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
 						@endif
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', ['total_project_cost', 'asc']) }}">Cost (M€)</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'total_project_cost', 'asc']) }}">Cost (M€)</a></th>
 					@endif
 			    	<th class="col-sm-1"><input id="select_all" type="checkbox"> <a id="select_all_col" href="">All</a></th>
 				</tr>
@@ -133,7 +139,11 @@
 							{{ $reference->project_number }}
 						</td>
 						<td>
-							{{ $reference->dfac_name }}
+							@if(strlen($reference->dfac_name) >10)
+								<abbr title="{{ $reference->dfac_name }}">{{ str_limit($reference->dfac_name, 10) }}</abbr>
+							@else
+								{{ $reference->dfac_name }}
+							@endif
 						</td>
 						<td>
 							{{ $reference->start_date }}
@@ -142,10 +152,18 @@
 							{{ $reference->end_date }}
 						</td>
 						<td>
-							{{ $clients[$reference->id] }}
+							@if(strlen($clients[$reference->id]) > 10)
+							<abbr title="{{ $clients[$reference->id] }}">{{ str_limit($clients[$reference->id], 10) }}</abbr>
+							@else
+								{{ $clients[$reference->id] }}
+							@endif
 						</td>
 						<td>
-							{{ $countries[$reference->id] }}
+							@if(strlen($countries[$reference->id]) >10)
+								<abbr title="{{ $countries[$reference->id] }}">{{ str_limit($countries[$reference->id], 10) }}</abbr>
+							@else
+								{{ $countries[$reference->id] }}
+							@endif
 						</td>
 						<td>
 							{{ $zones[$reference->id] }}
@@ -154,13 +172,25 @@
 							{{ number_format($reference->total_project_cost, 2) }}
 						</td>
 						<td>
-							<input class="box" type="checkbox" value="{{ $reference->id }}" name=ids[]>
+							@if($reference->confidential)
+								<!-- If admin or dcom profile -->
+								@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
+									<input class="box" type="checkbox" value="{{ $reference->id }}" name=ids[]>
+								@else
+									<input type="checkbox" disabled>
+								@endif
+							@else
+								<input class="box" type="checkbox" value="{{ $reference->id }}" name=ids[]>
+							@endif
 							<a class="btn btn-link" href="{{ action('ReferenceController@show', $reference->id) }}">
 								<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 							</a>
-							<a class="btn btn-link" href="{{ action('ReferenceController@edit', $reference->id) }}">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</a>
+							<!-- If creator, admin or dcom profile -->
+							@if (Auth::user()->username == $reference->created_by || Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
+								<a class="btn btn-link" href="{{ action('ReferenceController@edit', $reference->id) }}">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								</a>
+							@endif
 						</td>
 					</tr>
 					@endforeach
@@ -168,7 +198,9 @@
 			</tbody>
 		</table>
 	</div>
-	{!! $references->render() !!}
+	<div class="pull-right">
+		{!! $references->render() !!}
+	</div>
 </div>
 
 

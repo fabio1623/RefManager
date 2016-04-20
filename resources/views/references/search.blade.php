@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-12">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
@@ -49,7 +49,7 @@
 			  	<div class="form-group">
 					<label for="continent" class="col-sm-4 control-label">Continent</label>
 					<div class="col-sm-3">
-					  	<select class="form-control selectpicker show-tick" multiple data-selected-text-format="count" id="continent" name="continent[]">
+					  	<select class="form-control selectpicker" multiple data-selected-text-format="count" id="continent" name="continent[]">
 					  		<optgroup label="Continents">
 								<option>Africa</option>
 								<option>Asia</option>
@@ -60,6 +60,16 @@
 							</optgroup>
 						</select>
 					</div>
+					<!-- If User admin or Dcom manager -->
+					@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
+					<div class="col-sm-5">
+						<div class="checkbox">
+							<label>
+							  <input type="checkbox" name="approval"> Not approved
+							</label>
+						</div>
+					</div>
+					@endif
 				</div>
 			  	<!-- EO line -->
 			  	<!-- Line -->
@@ -158,16 +168,16 @@
 				<div class="form-group">
 					<label for="start_date" class="col-sm-4 control-label">Started</label>
 					<div class="col-sm-3">
-					<label class="radio-inline">
-					  <input type="radio" name="started_radio" id="" value="<="> Before
-					</label>
-					<label class="radio-inline">
-					  <input type="radio" name="started_radio" id="" value=">="> After
-					</label>
-					<label class="radio-inline">
-					  <input type="radio" name="started_radio" id="" value="="> On
-					</label>
-				</div>
+						<label class="radio-inline">
+						  <input type="radio" name="started_radio" id="" value="<="> Before
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="started_radio" id="" value=">="> After
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="started_radio" id="" value="="> On
+						</label>
+					</div>
 					<div class="col-sm-2">
 					    <div id="date_picker_start" class="input-group input-append date">
 					      <input type="text" class="form-control" id="start_date" name="started" readonly>

@@ -1,7 +1,7 @@
 @extends('templates.template')
 
 @section('content')
-<div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-12">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
@@ -16,12 +16,12 @@
 								<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								</button>
-								<a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
+								<!-- <a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								</a>
+								</a> -->
 							</div>
 						</div>
-					</div>			
+					</div>		
 				</div>
 			</h3>
 		</div>

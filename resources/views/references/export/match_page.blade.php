@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="row col-sm-6 col-sm-offset-3">
+<div class="row col-sm-8 col-sm-offset-2">
 	<p></p>
-	<div class="panel panel-default">
+	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<div class="row">
 				<div class="col-sm-5">

@@ -1,7 +1,7 @@
 @extends('templates.template')
 
 @section('content')
-<div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-12">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">

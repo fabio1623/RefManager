@@ -3,19 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Gbrock\Table\Traits\Sortable;
 
 class Reference extends Model
 {
-    use Sortable;
-
-    /**
-     * The attributes which may be used for sorting dynamically.
-     *
-     * @var array
-     */
-    protected $sortable = ['project_number', 'dfac_name', 'start_date', 'end_date', 'client', 'country', 'zone', 'total_project_cost'];
-
     public function subsidiary()
     {
         return $this->belongsTo('App\Subsidiary');
@@ -58,5 +48,20 @@ class Reference extends Model
     public function fundings()
     {
         return $this->belongsToMany('App\Funding');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo('App\Client', 'client');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo('App\Country', 'country');
+    }
+
+    public function zone()
+    {
+        return $this->belongsTo('App\Zone', 'zone');
     }
 }

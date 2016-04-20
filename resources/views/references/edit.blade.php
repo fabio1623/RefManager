@@ -1,13 +1,13 @@
 @extends('templates.template')
 
 @section('content')
-<div class="col-sm-10 col-sm-offset-1">
+<div class="col-sm-12">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h4>{{ $reference->project_number }}</h4>
+						<h4>{{ $reference->project_number }} - {{ $reference->dfac_name }}</h4>
 					</div>
 					<!-- Button toolbar -->
 					<div class="col-sm-6 pull-right">
@@ -78,10 +78,6 @@
 								</button>
 								@if(Auth::user()->profile_id == 3)
 									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index') }}">
-										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-									</a>
-								@else
-									<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@index_approved') }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								@endif

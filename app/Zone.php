@@ -13,6 +13,6 @@ class Zone extends Model
 
     public function manager()
     {
-    	return $this->belongsTo('App\Contributor');
+    	return $this->belongsTo('App\Contributor', 'manager');
     }
 }
