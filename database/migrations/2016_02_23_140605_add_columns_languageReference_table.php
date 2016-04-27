@@ -15,6 +15,7 @@ class AddColumnsLanguageReferenceTable extends Migration
         Schema::table('language_reference', function (Blueprint $table) {
             $table->string('country');
             $table->string('location');
+            $table->text('team');
             $table->string('customer_address');
             $table->text('staff');
             $table->text('consultants');
@@ -38,7 +39,7 @@ class AddColumnsLanguageReferenceTable extends Migration
     public function down()
     {
         Schema::table('language_reference', function (Blueprint $table) {
-            $table->dropColumn(['country', 'location', 'team', 'customer_address', 'staff', 'consultants']);
+            $table->dropColumn(['country', 'localisation', 'team', 'customer_address', 'staff', 'consultants']);
             $table->dropColumn(['financing', 'experts']);
         });
 

@@ -8,7 +8,7 @@
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-4">
-						Search a reference	
+						Search a reference
 					</div>
 					<div class="col-sm-8">
 						<button id="search_btn" form="form_search" type="submit" class="btn btn-default btn-xs pull-right">
@@ -65,7 +65,7 @@
 					<div class="col-sm-5">
 						<div class="checkbox">
 							<label>
-							  <input type="checkbox" name="approval"> Not approved
+							  <input type="checkbox" name="approval" checked> Approved
 							</label>
 						</div>
 					</div>
@@ -263,7 +263,7 @@
 <script>
 	$('#date_picker_start').datepicker({
 	    format: "mm-yyyy",
-	    viewMode: "months", 
+	    viewMode: "months",
 	    minViewMode: "months",
 	    autoclose: true,
 	    clearBtn: true,
@@ -274,7 +274,7 @@
 
 	$('#date_picker_end').datepicker({
 	    format: "mm-yyyy",
-	    viewMode: "months", 
+	    viewMode: "months",
 	    minViewMode: "months",
 	    autoclose: true,
 	    clearBtn: true,

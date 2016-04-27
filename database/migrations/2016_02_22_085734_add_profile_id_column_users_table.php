@@ -3,9 +3,6 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-use App\User;
-use App\Profile;
-
 class AddProfileIdColumnUsersTable extends Migration
 {
     /**
@@ -18,16 +15,6 @@ class AddProfileIdColumnUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->integer('profile_id')->unsigned()->nullable();
             $table->foreign('profile_id')->references('id')->on('profiles');
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            $users = User::all();
-
-            foreach ($users as $user) {
-                $profile = Profile::where('name', $user->profile)->first();
-                $user->profile_id = $profile->id;
-                $user->save();
-            }
         });
     }
 

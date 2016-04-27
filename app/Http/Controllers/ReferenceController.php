@@ -49,58 +49,59 @@ class ReferenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $order = 'created_at';
-        $sort_direction = 'desc';
-        $page = 'all';
+        // $order = $request->get('sort', 'created_at');
+        // $sort_direction = $request->get('sort_direction', 'desc');
+        // $page = 'all';
 
-        $references = Reference::orderBy($order, $sort_direction)->paginate(10);
+        // $references = Reference::orderBy($order, $sort_direction)->paginate(10);
 
-        $activities = array();
-        $clients = array();
-        $countries = array();
-        $zones = array();
-        $languages = Language::has('references')->get();
+        // $activities = array();
+        // $clients = array();
+        // $countries = array();
+        // $zones = array();
+        // $languages = Language::has('references')->get();
 
-        foreach ($references as $reference) {
-            // Get client name
-            if ($reference->client) {
-                $client_ref = Client::find($reference->client);
-                $clients[$reference->id] = $client_ref->name;
-            }
-            else {
-                $clients[$reference->id] = '';   
-            }
-            // Get linked activities
-            $cat_array = array();
-            foreach ($reference->measures as $measure) {
-                $category = Category::find($measure->category_id);
-                if (in_array($category->name, $cat_array) == false) {
-                    array_push($cat_array, $category->name);
-                }
-            }
-            $activities[$reference->id] = $cat_array;
-            // Get country name
-            if ($reference->country) {
-                $country_ref = Country::find($reference->country);
-                $countries[$reference->id] = $country_ref->name;
-            }
-            else {
-                $countries[$reference->id] = '';
-            }
-            // Get zone name
-            if ($reference->zone) {
-                $zone_ref = Zone::find($reference->zone);
-                $zones[$reference->id] = $zone_ref->name;
-            }
-            else {
-                $zones[$reference->id] = '';
-            }
-        }
+        // foreach ($references as $reference) {
+        //     // Get client name
+        //     if ($reference->client) {
+        //         $client_ref = Client::find($reference->client);
+        //         $clients[$reference->id] = $client_ref->name;
+        //     }
+        //     else {
+        //         $clients[$reference->id] = '';
+        //     }
+        //     // Get linked activities
+        //     $cat_array = array();
+        //     foreach ($reference->measures as $measure) {
+        //         $category = Category::find($measure->category_id);
+        //         if (in_array($category->name, $cat_array) == false) {
+        //             array_push($cat_array, $category->name);
+        //         }
+        //     }
+        //     $activities[$reference->id] = $cat_array;
+        //     // Get country name
+        //     if ($reference->country) {
+        //         $country_ref = Country::find($reference->country);
+        //         $countries[$reference->id] = $country_ref->name;
+        //     }
+        //     else {
+        //         $countries[$reference->id] = '';
+        //     }
+        //     // Get zone name
+        //     if ($reference->zone) {
+        //         $zone_ref = Zone::find($reference->zone);
+        //         $zones[$reference->id] = $zone_ref->name;
+        //     }
+        //     else {
+        //         $zones[$reference->id] = '';
+        //     }
+        // }
 
-        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction]);
-        return $view;
+        // $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction, 'query'=>$request->query()]);
+        // return $view;
+        return $this->results($request);
     }
 
     public function references_list($filter)
@@ -120,7 +121,7 @@ class ReferenceController extends Controller
             case 'created_by_me':
                 $references = Reference::where('created_by', Auth::user()->username);
                 break;
-            
+
             default:
                 // $references = Reference::orderBy($order, $sort_direction);
                 break;
@@ -141,7 +142,7 @@ class ReferenceController extends Controller
                 $clients[$reference->id] = $client_ref->name;
             }
             else {
-                $clients[$reference->id] = '';   
+                $clients[$reference->id] = '';
             }
             // Get linked activities
             $cat_array = array();
@@ -198,7 +199,7 @@ class ReferenceController extends Controller
                 case 'search_results':
                     dd('Search foreign');
                     break;
-                
+
                 default:
                     // dd('all foreign');
                     $references->orderBy(str_plural($order).'.name', $sort_direction)->paginate(10);
@@ -224,7 +225,7 @@ class ReferenceController extends Controller
                     // dd($_GET);
                     dd('Search');
                     break;
-                
+
                 default:
                     // dd('all');
                     $references = Reference::orderBy($order, $sort_direction)->paginate(10);
@@ -245,7 +246,7 @@ class ReferenceController extends Controller
                 $clients[$reference->id] = $client_ref->name;
             }
             else {
-                $clients[$reference->id] = '';   
+                $clients[$reference->id] = '';
             }
             // Get linked activities
             $cat_array = array();
@@ -289,7 +290,7 @@ class ReferenceController extends Controller
         $kind_of_reference = 'From '.$subsidiary->name;
 
         $view = view('references.index', ['references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference]);
-        return $view; 
+        return $view;
     }
 
     // public function index_to_approve($order, $sort_direction)
@@ -319,7 +320,7 @@ class ReferenceController extends Controller
     //             $clients[$reference->id] = $client_ref->name;
     //         }
     //         else {
-    //             $clients[$reference->id] = '';   
+    //             $clients[$reference->id] = '';
     //         }
     //         // Get linked activities
     //         $cat_array = array();
@@ -403,7 +404,7 @@ class ReferenceController extends Controller
     //             $clients[$reference->id] = $client_ref->name;
     //         }
     //         else {
-    //             $clients[$reference->id] = '';   
+    //             $clients[$reference->id] = '';
     //         }
     //         // Get linked activities
     //         $cat_array = array();
@@ -455,7 +456,7 @@ class ReferenceController extends Controller
     //     // }
 
     //     // $view = view('references.index', ['categories'=>$categories, 'ref_array'=>$ref_array, 'references'=>$references, 'countries'=>$countries, 'clients'=>$clients, 'zones'=>$zones, 'kind_of_reference'=>$kind_of_reference, 'languages'=>$languages]);
-    //     // return $view;        
+    //     // return $view;
     // }
 
     // public function index_created_by_me($order, $sort_direction)
@@ -486,7 +487,7 @@ class ReferenceController extends Controller
     //             $clients[$reference->id] = $client_ref->name;
     //         }
     //         else {
-    //             $clients[$reference->id] = '';   
+    //             $clients[$reference->id] = '';
     //         }
     //         // Get linked activities
     //         $cat_array = array();
@@ -677,7 +678,7 @@ class ReferenceController extends Controller
 
     public function results(Request $request)
     {
-        // dd($_GET);
+        // dd($request->all());
         $page = 'search_results';
 
         //Get right references
@@ -716,11 +717,11 @@ class ReferenceController extends Controller
                                           }
                                 });
 
-        if (isset($request->approval)) {
-            $references->where('dcom_approval', 0);
-        }
-        else {
-            $references->where('dcom_approval', 1);   
+        if ((Auth::user()->profile_id != 3 && Auth::user()->profile_id != 5)
+            || $request->approval == 'on') {
+            $references->where('dcom_approval', true);
+        } elseif ($request->approval == 'off') {
+            $references->where('dcom_approval', false);
         }
         $references->orWhere('created_by', Auth::user()->username);
 
@@ -785,7 +786,7 @@ class ReferenceController extends Controller
             }
 
             $nb_selected_domains = count($request->domain);
-            
+
             //Filter request to remove references with less expertises than domains selected
             $filtered_references = Reference::has('expertises', '>=', $nb_selected_domains)->get();
             $references_to_get = [];
@@ -842,7 +843,7 @@ class ReferenceController extends Controller
                     }
                 }
             }
-        }   
+        }
 
         //Get the right references corresponding to the selected criteria
         if ($request->cost != '') {
@@ -879,7 +880,9 @@ class ReferenceController extends Controller
             }
         }
 
-        $references = $references->orderBy('created_at', 'desc')->paginate(10);
+        $order = $request->get('order', 'created_at');
+        $sort_direction = $request->get('sort_direction', 'desc');
+        $references = $references->orderBy($order, $sort_direction)->paginate(10);
 
         // dd($references->url(2));
 
@@ -896,7 +899,7 @@ class ReferenceController extends Controller
                 $clients[$reference->id] = $client_ref->name;
             }
             else {
-                $clients[$reference->id] = '';   
+                $clients[$reference->id] = '';
             }
             // Get linked activities
             $cat_array = array();
@@ -925,7 +928,7 @@ class ReferenceController extends Controller
             }
         }
 
-        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>'created_at', 'sort_direction'=>'desc']);
+        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction, 'query'=>$request->query()]);
         return $view;
     }
 
@@ -971,7 +974,7 @@ class ReferenceController extends Controller
             $reference->confidential = 1;
         }
         else {
-            $reference->confidential = 0;   
+            $reference->confidential = 0;
         }
 
         $reference->dfac_name = $request->input('dfac_name');
@@ -998,7 +1001,7 @@ class ReferenceController extends Controller
         $reference->service_name_fr = $request->input('service_name_fr');
         $reference->service_description = $request->input('service_description');
         $reference->service_description_fr = $request->input('service_description_fr');
-        
+
         if ($request->input('staff_number')) {
             $reference->staff_number = $request->input('staff_number');
         }
@@ -1032,7 +1035,7 @@ class ReferenceController extends Controller
         $reference->contact_department_fr = $request->input('contact_department_fr');
         $reference->contact_phone = $request->input('contact_phone');
         $reference->contact_email = $request->input('contact_email');
-        
+
         //Client infos
         if ($request->input('client_name_en') != "") {
             $client_in_db_en = Client::where('name', $request->input('client_name_en'))
@@ -1083,7 +1086,7 @@ class ReferenceController extends Controller
                         $client_in_db_en->address = $request->client_address;
                     }
 
-                    $client_in_db_en->save(); 
+                    $client_in_db_en->save();
                 }
              }
         }
@@ -1177,7 +1180,7 @@ class ReferenceController extends Controller
                             $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
                         }
                         else {
-                            $reference->measures()->attach($key, ['value' => $value]);   
+                            $reference->measures()->attach($key, ['value' => $value]);
                         }
                     }
                 }
@@ -1360,7 +1363,7 @@ class ReferenceController extends Controller
         $consultants = $reference->contributors()->where('function_on_project', 'Consultant')->get();
 
         $financings = $reference->fundings()->get();
-        
+
         // dd($financings);
 
         // $external_services = ExternalService::all();
@@ -1429,7 +1432,7 @@ class ReferenceController extends Controller
         }
 
         $view = view('references.show', ['languages_with_template'=>$languages_with_template, 'is_creator'=>$is_creator, 'user_profile'=>$user_profile, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
-        
+
         return $view;
     }
 
@@ -1481,7 +1484,7 @@ class ReferenceController extends Controller
         $consultants = $reference->contributors()->where('function_on_project', 'Consultant')->get();
 
         $financings = $reference->fundings()->get();
-        
+
         // dd($financings);
 
         // $external_services = ExternalService::all();
@@ -1535,7 +1538,7 @@ class ReferenceController extends Controller
         }
 
         $view = view('references.edit', ['languages_with_template'=>$languages_with_template, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'countries'=>$countries, 'zones'=>$zones, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings, 'country_zone'=>$country_zone, 'zone_managers'=>$zone_managers, 'translation_languages'=>$translation_languages]);
-        
+
         return $view;
     }
 
@@ -1583,11 +1586,11 @@ class ReferenceController extends Controller
             $reference->confidential = 1;
         }
         else{
-            $reference->confidential = 0;   
+            $reference->confidential = 0;
         }
 
         $reference->dfac_name = $request->input('dfac_name');
-        
+
         if ($request->input('country') != "") {
             $reference->country = $request->input('country');
         }
@@ -1606,7 +1609,7 @@ class ReferenceController extends Controller
 
             // $month_start = strstr($request->start_date, '-', true);
             // $year_start = substr($request->start_date, strpos($request->start_date, '-') + 1);
-            
+
             // $reference->start_date = $year_start.'-'.$month_start.'-01';
         $reference->start_date = $request->start_date;
 
@@ -1617,7 +1620,7 @@ class ReferenceController extends Controller
         $reference->end_date = $request->end_date;
 
         $reference->estimated_duration = $request->input('estimated_duration');
-        
+
         //Details panel
         $reference->project_name = $request->input('project_name');
         $reference->project_name_fr = $request->input('project_name_fr');
@@ -1632,21 +1635,21 @@ class ReferenceController extends Controller
             $reference->staff_number = $request->staff_number;
         }
         else {
-            $reference->staff_number = null;   
+            $reference->staff_number = null;
         }
 
         if ($request->seureca_man_months != '' && $request->seureca_man_months != 0) {
             $reference->seureca_man_months = $request->seureca_man_months;
         }
         else {
-            $reference->seureca_man_months = null;   
+            $reference->seureca_man_months = null;
         }
 
         if ($request->consultants_man_months != '' && $request->consultants_man_months != 0) {
             $reference->consultants_man_months = $request->consultants_man_months;
         }
         else {
-            $reference->consultants_man_months = null;   
+            $reference->consultants_man_months = null;
         }
 
         //Contact infos
@@ -1712,7 +1715,7 @@ class ReferenceController extends Controller
                 if ($client_in_db_en->name_fr == "") {
                     $client_in_db_en->name_fr = $request->input('client_name_fr');
 
-                    $client_in_db_en->save(); 
+                    $client_in_db_en->save();
                 }
              }
         }
@@ -1762,7 +1765,7 @@ class ReferenceController extends Controller
             $reference->currency = 'Dollars';
         }
         else {
-            $reference->currency = 'Euros';   
+            $reference->currency = 'Euros';
         }
         // $reference->currency = $request->project_currency;
 
@@ -1831,7 +1834,7 @@ class ReferenceController extends Controller
                             $reference->measures()->attach($key, ['value' => $value, 'unit' => $request->units[$key]]);
                         }
                         else {
-                            $reference->measures()->attach($key, ['value' => $value]);   
+                            $reference->measures()->attach($key, ['value' => $value]);
                         }
                     }
                 }
@@ -1854,7 +1857,7 @@ class ReferenceController extends Controller
         $reference->fundings()->detach();
 
         //Attach the fundings to the reference
-        
+
         foreach ($request->financing as $key => $f) {
             if ($f[0] != '') {
                 if ($f[1] != '') {
@@ -1883,7 +1886,7 @@ class ReferenceController extends Controller
                 }
                 $isLinked = $reference->fundings()->where('id', $funding_in_db->id)->first();
                 if ($isLinked) {
-                    
+
                 }
                 else {
                     $reference->fundings()->attach($funding_in_db->id);
@@ -1994,14 +1997,14 @@ class ReferenceController extends Controller
             foreach ($request->linked_languages as $key => $language) {
                 $language_in_db = Language::where('name', $key)->first();
 
-                
+
 
                 $reference->languages()->attach($language_in_db->id, [
                     'project_name'=>$language['project_name'],
                     'country'=>$language['country'],
                     'location'=>$language['location'],
                     'staff'=>$language['staff'],
-                    'consultants'=>$language['consultants'], 
+                    'consultants'=>$language['consultants'],
                     'project_description'=>$language['project_description'],
                     'service_name'=>$language['service_title'],
                     'service_description'=>$language['service_description'],
@@ -2071,7 +2074,7 @@ class ReferenceController extends Controller
 
         Reference::destroy($id);
 
-        return redirect()->action('ReferenceController@index');    
+        return redirect()->action('ReferenceController@index');
     }
 
     public function match_page($subsidiary_id)
@@ -2110,7 +2113,7 @@ class ReferenceController extends Controller
         ];
 
         $view = view('references.export.match_page', ['fields'=>$fields]);
-        return $view; 
+        return $view;
     }
 
     //Generate word files for base language (French and english)
@@ -2137,11 +2140,11 @@ class ReferenceController extends Controller
         $language = Language::find($language_id);
         $language_reference_join = LanguageReference::where('language_id', $language_id)->where('reference_id', $reference_id)->first();
         $template_file = 'Template.docx';
-        
+
         $template_exists = Storage::disk('local')->has('Exports/'.$language->name.'/'.$template_file);
 
         if ($template_exists && $language_reference_join) {
-            
+
             $reference = Reference::find($reference_id);
             $country = Country::find($reference->country);
             $translations = $language_reference_join['attributes'];
@@ -2187,7 +2190,7 @@ class ReferenceController extends Controller
 
             //Save filled file
             $templateProcessor->saveAs($new_file);
-            
+
             //Download the file & delete it from server
             return $new_file;
         }
@@ -2231,7 +2234,7 @@ class ReferenceController extends Controller
 
     public function generate_file_base2($folder, $template_name, $kind_of_template, $reference_id)
     {
-        \PhpOffice\PhpWord\Autoloader::register();     
+        \PhpOffice\PhpWord\Autoloader::register();
 
         $template = storage_path('app/Exports/'.$template_name.'.docx');
 
@@ -2338,7 +2341,7 @@ class ReferenceController extends Controller
                 $templateProcessor->setValue('SeniorStaff', $s);
             }
             else {
-                $templateProcessor->setValue('SeniorStaff', '');   
+                $templateProcessor->setValue('SeniorStaff', '');
             }
 
 
@@ -2356,20 +2359,20 @@ class ReferenceController extends Controller
 
     public function zip_files($folder) {
 
-        // Here we choose the folder which will be used.       
+        // Here we choose the folder which will be used.
         $dirName = storage_path('app/Exports/'.$folder);
 
         // Choose a name for the archive.
-        $zipFileName = $folder.'.zip';    
+        $zipFileName = $folder.'.zip';
 
         // Create "MyCoolName.zip" file in public directory of project.
         $zip = new ZipArchive;
         if ($zip->open(storage_path('app/Exports/').$zipFileName, ZipArchive::CREATE) === TRUE) {
             // Copy all the files from the folder and place them in the archive.
             foreach (glob($dirName . '/*') as $fileName) {
-                $file = basename($fileName);                
+                $file = basename($fileName);
                 $zip->addFile($fileName, $file);
-            }                       
+            }
             $zip->close();
 
                 $headers = array(
@@ -2380,9 +2383,9 @@ class ReferenceController extends Controller
                 Storage::deleteDirectory('Exports/'.$folder);
 
                 return $zipFileName;
-            // Download .zip file.        
+            // Download .zip file.
             // return response()->download(storage_path('app/Exports') . '/' . $zipFileName, $zipFileName, $headers);
-        } 
+        }
         else {
             echo 'failed';
         }
@@ -2418,16 +2421,16 @@ class ReferenceController extends Controller
                         $nb++;
                     }
                 }
-                
+
                 if ($nb > 0) {
                     $zip_file = ReferenceController::zip_files($language->name.'/'.$folder_name);
 
                     return response()->download(storage_path('app/Exports/'.$zip_file))->deleteFileAfterSend(true);
                 }
                 else {
-                    return redirect()->back();   
+                    return redirect()->back();
                 }
-            }        
+            }
         }
         else {
             dd('You have to select at least 1 reference.');

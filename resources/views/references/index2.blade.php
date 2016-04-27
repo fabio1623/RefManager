@@ -37,7 +37,7 @@
 						@endif
 					</ul>
 				</div>
-				<!-- /. Extract button -->		
+				<!-- /. Extract button -->
 			</div>
 		</div>
 	</div>
@@ -47,76 +47,45 @@
 				<tr>
 					<th class="col-sm-1"><a id="activity_col" href="">Activity</a></th>
 					@if($order == 'project_number')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'project_number', 'desc']) }}">Project n°<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'project_number', 'asc']) }}">Project n°<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						{{-- TODO --}}
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Project n°<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'project_number', 'asc']) }}">Project n°</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'project_number', 'sort_direction'=>'asc'])) }}">Project n°</a></th>
 					@endif
 					@if($order == 'dfac_name')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'dfac_name', 'desc']) }}">DFAC name<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'dfac_name', 'asc']) }}">DFAC name<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">DFAC name<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'dfac_name', 'asc']) }}">DFAC name</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'dfac_name', 'sort_direction'=>'asc'])) }}">DFAC name</a></th>
 					@endif
 					@if($order == 'start_date')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'start_date', 'desc']) }}">Start date<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'start_date', 'asc']) }}">Start date<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Start date<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'start_date', 'asc']) }}">Start date</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'start_date', 'sort_direction'=>'asc'])) }}">Start date</a></th>
 					@endif
 					@if($order == 'end_date')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'end_date', 'desc']) }}">End date<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'end_date', 'asc']) }}">End date<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">End date<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'end_date', 'asc']) }}">End date</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'end_date', 'sort_direction'=>'asc'])) }}">End date</a></th>
 					@endif
 					@if($order == 'client')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'client', 'desc']) }}">Client<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'client', 'asc']) }}">Client<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Client<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'client', 'asc']) }}">Client</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'client', 'sort_direction'=>'asc'])) }}">Client</a></th>
 					@endif
 					@if($order == 'country')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'country', 'desc']) }}">Country<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'country', 'asc']) }}">Country<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Client<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'country', 'asc']) }}">Country</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'country', 'sort_direction'=>'asc'])) }}">Client</a></th>
 					@endif
 					@if($order == 'zone')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'zone', 'desc']) }}">Zone<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'zone', 'asc']) }}">Zone<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Zone<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'zone', 'asc']) }}">Zone</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'zone', 'sort_direction'=>'asc'])) }}">Zone</a></th>
 					@endif
 					@if($order == 'total_project_cost')
-						@if($sort_direction == 'asc')
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'total_project_cost', 'desc']) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-top"></span></a></th>
-						@else
-							<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'total_project_cost', 'asc']) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-bottom"></span></a></th>
-						@endif
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 					@else
-						<th class="col-sm-1"><a href="{{ action('ReferenceController@references', [$page, 'total_project_cost', 'asc']) }}">Cost (M€)</a></th>
+						<th class="col-sm-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'total_project_cost', 'sort_direction'=>'asc'])) }}">Cost (M€)</a></th>
 					@endif
 			    	<th class="col-sm-1"><input id="select_all" type="checkbox"> <a id="select_all_col" href="">All</a></th>
 				</tr>
@@ -199,7 +168,7 @@
 		</table>
 	</div>
 	<div class="pull-right">
-		{!! $references->render() !!}
+		{!! $references->appends($_GET)->render() !!}
 	</div>
 </div>
 
@@ -210,7 +179,7 @@
 	$("#select_all").change(function(){
       $(".box").prop("checked", $(this).prop("checked"));
     });
-    //If all the references are manually selected, select 'All' checkbox 
+    //If all the references are manually selected, select 'All' checkbox
     $('.box').change(function(e) {
     	if ($('.box:checked').length == $('.box').length) {
 			$('#select_all').prop('checked', true);
@@ -287,7 +256,7 @@
 		else {
 			var language_id = $(this).attr('id');
 	  		$('#form_extract_base').append('<input type="text" class="hidden" name="language_id" value="' + language_id + '">');
-	  		
+
 	  		$('#form_extract_base').attr('action', '{{ action("ReferenceController@generate_file_translations_multiple") }}');
 	  		$('#form_extract_base').submit();
 		}

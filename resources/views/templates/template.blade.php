@@ -34,14 +34,14 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 		<!-- Custom JS -->
-		<script src="http://malsup.github.com/jquery.form.js"></script> 
+		<script src="http://malsup.github.com/jquery.form.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 		<script src="/js/bootstrap-select.js"></script>
 		<script src="/js/bootstrap3-typeahead.js"></script>
 		<script src="/js/bloodhound.js"></script>
 		<script type="text/javascript" src="/js/custom-functions.js"></script>
 	</head>
-	
+
 	<body>
 
 		<!-- Fixed navbar -->
@@ -67,8 +67,8 @@
 								  	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list"></span> References <span class="caret"></span></a>
 									<ul class="dropdown-menu">
 										<li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> All</a></li>
-										<li><a href="{{ action('ReferenceController@references_list', 'to_approve') }}"><span class="glyphicon glyphicon-list"></span> To approve</a></li>
-							            <li><a href="{{ action('ReferenceController@references_list', 'approved') }}"><span class="glyphicon glyphicon-list"></span> Approved</a></li>
+										<li><a href="{{ action('ReferenceController@index', ['approval'=>'off']) }}"><span class="glyphicon glyphicon-list"></span> To approve</a></li>
+							            <li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><span class="glyphicon glyphicon-list"></span> Approved</a></li> {{-- TODO --}}
 							            <li><a href="{{ action('ReferenceController@references_list', 'created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>
 										<li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
@@ -113,7 +113,7 @@
 									<!-- If user admin -->
 									@if(Auth::user()->profile_id == 5)
 										<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
-										<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests 
+										<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests
 											@if ( $requests_number > 0 )
 												<span class="badge">{{$requests_number}}</span>
 											@endif

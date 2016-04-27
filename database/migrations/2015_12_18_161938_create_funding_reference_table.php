@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyFundingReferenceTable extends Migration
+class CreateFundingReferenceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,14 @@ class ModifyFundingReferenceTable extends Migration
      */
     public function up()
     {
-        Schema::table('funding_reference', function (Blueprint $table) {
+        Schema::create('funding_reference', function (Blueprint $table) {
             $table->integer('funding_id')->unsigned();
             $table->foreign('funding_id')->references('id')->on('fundings');
 
             $table->integer('reference_id')->unsigned();
             $table->foreign('reference_id')->references('id')->on('references');
-
-            $table->dropColumn('id');
+            
+            $table->timestamps();
         });
     }
 
@@ -30,9 +30,6 @@ class ModifyFundingReferenceTable extends Migration
      */
     public function down()
     {
-        Schema::table('funding_reference', function (Blueprint $table) {
-            $table->increments('id');
-            $table->dropColumn(['funding_id', 'reference_id']);
-        });
+        Schema::drop('funding_reference');
     }
 }

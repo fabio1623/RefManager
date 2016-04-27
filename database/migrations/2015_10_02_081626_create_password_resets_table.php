@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class InsertReferences extends Migration
+class CreatePasswordResetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,11 @@ class InsertReferences extends Migration
      */
     public function up()
     {
-        Schema::table('references', function (Blueprint $table) {
-            //
+        Schema::create('password_resets', function(Blueprint $table)
+        {
+            $table->string('email')->index();
+            $table->string('token')->index();
+            $table->timestamp('created_at');
         });
     }
 
@@ -24,8 +27,6 @@ class InsertReferences extends Migration
      */
     public function down()
     {
-        Schema::table('references', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('password_resets');
     }
 }
