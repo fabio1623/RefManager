@@ -71,6 +71,8 @@ Route::get('references/{reference}/{error}/edit', 'ReferenceController@edit');
 // Route::get('references/{order}/{sort_direction}/all', 'ReferenceController@references');
 Route::get('references/{page}/{order}/{sort_direction}/sorted', 'ReferenceController@references');
 Route::get('references/{filter}/list', 'ReferenceController@references_list');
+Route::get('references/management', 'ReferenceController@management_page');
+Route::get('references/destroy/all', 'ReferenceController@destroy_all');
 Route::resource('references', 'ReferenceController');
 
 //Users

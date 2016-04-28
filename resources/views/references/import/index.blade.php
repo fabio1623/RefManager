@@ -5,7 +5,7 @@
 	<!-- Main component for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<h1>Reference importation</h1>
-		<p>Select your Microsoft Access database file and upload it to import your references</p>
+		<p>Select your Microsoft Access database file (Excel) and upload it to import your references</p>
 		<p>
 		  <a class="btn btn-lg btn-primary" href="" role="button">More &raquo;</a>
 		</p>
@@ -17,7 +17,7 @@
 				<?php echo csrf_field(); ?>
 
 				<label for="import_input">Import your references</label>
-				<input type="file" id="import_input" name="file" accept=".xlsx">
+				<input type="file" id="import_input" name="file" accept="*">
 				<p class="help-block">Just select your Microsoft Access file and click on import.</p>
 
 				<input id="upload_ref_btn" class="btn btn-default" type="submit" value="Import">
@@ -50,7 +50,7 @@
 				<?php echo csrf_field(); ?>
 
 				<label for="import_trans_input">Import your translations</label>
-				<input type="file" id="import_trans_input" name="file" accept=".xlsx">
+				<input type="file" id="import_trans_input" name="file" accept="*">
 				<p class="help-block">Just select your Microsoft Access file and click on import.</p>
 
 				<input id="upload_trans_btn" class="btn btn-default" type="submit" value="Import">

@@ -49,6 +49,16 @@ class ReferenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function management_page()
+    {
+        $nb_total_ref = Reference::all()->count();
+        $nb_approved = Reference::where('dcom_approval', 1)->count();
+        $nb_not_approved = Reference::where('dcom_approval', 0)->count();
+
+        $view = view('references.management_page', ['nb_total_ref'=>$nb_total_ref, 'nb_approved'=>$nb_approved, 'nb_not_approved'=>$nb_not_approved]);
+        return $view;
+    }
+
     public function index(Request $request)
     {
         // $order = $request->get('sort', 'created_at');
@@ -720,9 +730,22 @@ class ReferenceController extends Controller
         if ((Auth::user()->profile_id != 3 && Auth::user()->profile_id != 5)
             || $request->approval == 'on') {
             $references->where('dcom_approval', true);
-        } elseif ($request->approval == 'off') {
+        } 
+        elseif ($request->approval == 'off') {
             $references->where('dcom_approval', false);
         }
+        // If not admin
+        // if (Auth::user()->profile_id != 3 && Auth::user()->profile_id != 5) {
+        //     $references->where('dcom_approval', true);
+        // }
+        // else {
+        //     if ($request->approval == 'off') {
+        //         $references->where('dcom_approval', false);
+        //     }
+        //     else {
+        //         $references->where('dcom_approval', true);
+        //     }
+        // }
         $references->orWhere('created_by', Auth::user()->username);
 
         if ($request->continent) {
@@ -1579,6 +1602,11 @@ class ReferenceController extends Controller
 
         $reference = Reference::find($id);
 
+        // If user is not DCOM MANAGER, desapprove the reference
+        if (Auth::user()->profile_id != 3) {
+            $reference->dcom_approval = false;
+        }
+
         //Description panel
         $reference->project_number = $request->input('project_number');
 
@@ -2055,6 +2083,32 @@ class ReferenceController extends Controller
 
     public function destroy($id)
     {
+        // $reference = Reference::find($id);
+
+        // $reference->external_services()->detach();
+        // $reference->internal_services()->detach();
+        // $reference->expertises()->detach();
+        // $reference->measures()->detach();
+        // $reference->qualifiers()->detach();
+        // $reference->languages()->detach();
+        // $reference->fundings()->detach();
+        // $reference->contributors()->detach();
+
+        // $has_folder = Storage::disk('local')->has('References/'.$reference->project_number);
+
+        // if ($has_folder) {
+        //     Storage::deleteDirectory('References/'.$reference->project_number);
+        // }
+
+        // Reference::destroy($id);
+
+        ReferenceController::destroy_reference($id);
+
+        return redirect()->action('ReferenceController@index');
+    }
+
+    public function destroy_reference($id)
+    {
         $reference = Reference::find($id);
 
         $reference->external_services()->detach();
@@ -2073,8 +2127,18 @@ class ReferenceController extends Controller
         }
 
         Reference::destroy($id);
+    }
 
-        return redirect()->action('ReferenceController@index');
+    public function destroy_all()
+    {
+        $references = Reference::all();
+
+        if ($references->count() > 0) {
+            foreach ($references as $ref) {
+                ReferenceController::destroy_reference($ref->id);
+            }
+        }
+        return redirect()->action('ReferenceController@management_page');
     }
 
     public function match_page($subsidiary_id)
@@ -2519,56 +2583,68 @@ class ReferenceController extends Controller
                 Excel::load($file, function($reader) {
 
                     // reader methods
+                    $reader->take(374);
                     // $reader->take(1);
                     // Skip and take
-                    // $reader->skip(577)->take(1);
+                    // $reader->skip(24)->take(1);
                     // dd($reader->get());
                     $reader->each(function($row){
-                        // dd($row);
-                        $reference = Reference::where('project_number', $row->noaffaire)->first();
+
+                        // if ($row->staff_provided_profiles) {
+                        //     $experts = explode('/', $row->staff_provided_profiles);
+
+                        //     foreach ($experts as $key => $exp) {
+                        //         $exp = trim($exp);
+                        //         $experts[$key] = $exp;
+                        //     }
+                        // }
+
+                        // dd($experts);
+
+                        $reference = Reference::where('project_number', $row->no_affaire)->first();
 
                         // If reference does not already exists
                         if (!$reference) {
                             //Create new reference
                             $new_reference = new Reference;
-                            if ($row->noaffaire) {
-                                $new_reference->project_number = $row->noaffaire;
+                            if ($row->no_affaire) {
+                                $new_reference->project_number = $row->no_affaire;
                             }
-                            if ($row->nomaffaire) {
-                                $new_reference->dfac_name = $row->nomaffaire;
+                            if ($row->nom_affaire) {
+                                $new_reference->dfac_name = $row->nom_affaire;
                             }
                             if ($row->dureemission) {
                                 $new_reference->estimated_duration = $row->dureemission;
                             }
-                            if ($row->projecttitle) {
-                                $new_reference->project_name = $row->projecttitle;
+                            if ($row->project_title) {
+                                $new_reference->project_name = $row->project_title;
                             }
-                            if ($row->servicestitle) {
-                                $new_reference->service_name = $row->servicestitle;
+                            if ($row->services_title) {
+                                $new_reference->service_name = $row->services_title;
                             }
-                            if ($row->projectdescription) {
-                                $new_reference->project_description = $row->projectdescription;
+                            if ($row->project_description) {
+                                $new_reference->project_description = $row->project_description;
                             }
-                            if ($row->servicesdescription) {
-                                $new_reference->service_description = $row->servicesdescription;
+                            if ($row->services_description) {
+                                $new_reference->service_description = $row->services_description;
                             }
                             if ($row->nstaff) {
                                 $new_reference->staff_number = $row->nstaff;
                             }
-                            if ($row->nstaffmonthtotal) {
-                                $new_reference->seureca_man_months = $row->nstaffmonthtotal;
+                            if ($row->n_staff_month_total) {
+                                $new_reference->seureca_man_months = $row->n_staff_month_total;
                             }
-                            if ($row->nstaffmonthconsultant) {
-                                $new_reference->consultants_man_months = $row->nstaffmonthconsultant;
+                            if ($row->n_staff_month_consultant) {
+                                $new_reference->consultants_man_months = $row->n_staff_month_consultant;
                             }
-                            if ($row->projectcosteuro) {
-                                $new_reference->total_project_cost = $row->projectcosteuro;
+                            if ($row->project_cost_euro) {
+                                $new_reference->total_project_cost = $row->project_cost_euro;
                             }
-                            if ($row->studycosteuro) {
-                                $new_reference->seureca_services_cost = $row->studycosteuro;
+                            if ($row->study_cost_euro) {
+                                $new_reference->seureca_services_cost = $row->study_cost_euro;
                             }
-                            if ($row->constructioncosteuro) {
-                                $new_reference->work_cost = $row->constructioncosteuro;
+                            if ($row->construction_cost_euro) {
+                                $new_reference->work_cost = $row->construction_cost_euro;
                             }
                             if ($row->autre) {
                                 $new_reference->general_comments = $row->autre;
@@ -2579,14 +2655,14 @@ class ReferenceController extends Controller
                             }
 
                             //Link zone
-                            if ($row->codezone) {
-                                $zone = Zone::where('name', $row->codezone)->first();
+                            if ($row->code_zone) {
+                                $zone = Zone::where('name', $row->code_zone)->first();
                                 if ($zone) {
                                     $new_reference->zone = $zone->id;
                                 }
                                 else {
                                     $new_zone = new Zone;
-                                    $new_zone->name = $row->codezone;
+                                    $new_zone->name = $row->code_zone;
                                     $new_zone->save();
 
                                     $new_reference->zone = $new_zone->id;
@@ -2608,32 +2684,32 @@ class ReferenceController extends Controller
                                 }
                             }
 
-                            if ($row->startyear) {
-                                if ($row->startmonth) {
-                                    if ($row->startmonth < 10) {
-                                        $start_date = '0'.$row->startmonth.'-'.$row->startyear;
+                            if ($row->start_year) {
+                                if ($row->start_month) {
+                                    if ($row->start_month < 10) {
+                                        $start_date = '0'.$row->start_month.'-'.$row->start_year;
                                     }
                                     else {
-                                        $start_date = $row->startmonth.'-'.$row->startyear;
+                                        $start_date = $row->start_month.'-'.$row->start_year;
                                     }
                                 }
                                 else {
-                                    $start_date = '01-'.$row->startyear;
+                                    $start_date = '01-'.$row->start_year;
                                 }
                                 $new_reference->start_date = $start_date;
                             }
 
-                            if ($row->endyear) {
-                                if ($row->endmonth) {
-                                    if ($row->endmonth < 10) {
-                                        $end_date = '0'.$row->endmonth.'-'.$row->endyear;
+                            if ($row->end_year) {
+                                if ($row->end_month) {
+                                    if ($row->end_month < 10) {
+                                        $end_date = '0'.$row->end_month.'-'.$row->end_year;
                                     }
                                     else {
-                                        $end_date = $row->endmonth.'-'.$row->endyear;
+                                        $end_date = $row->end_month.'-'.$row->end_year;
                                     }
                                 }
                                 else {
-                                    $end_date = '01-'.$row->endyear;
+                                    $end_date = '01-'.$row->end_year;
                                 }
                                 $new_reference->end_date = $end_date;
                             }
@@ -2642,8 +2718,8 @@ class ReferenceController extends Controller
                                 $client = Client::where('name', $row->nameclient)->first();
                                 if ($client) {
                                     if ($client->address == '') {
-                                        if ($row->adressclient) {
-                                            $client->address = $row->adressclient;
+                                        if ($row->adress_client) {
+                                            $client->address = $row->adress_client;
                                             $client->save();
                                         }
                                     }
@@ -2652,15 +2728,61 @@ class ReferenceController extends Controller
                                 else {
                                     $new_client = new Client;
                                     $new_client->name = $row->nameclient;
-                                    if ($row->adressclient) {
-                                        $new_client->address = $row->adressclient;
+                                    if ($row->adress_client) {
+                                        $new_client->address = $row->adress_client;
                                     }
                                     $new_client->save();
                                     $new_reference->client = $new_client->id;
                                 }
                             }
 
+                            $new_reference->dcom_approval = true;
+
                             $new_reference->save();
+
+                            //Link project managers
+                            if($row->chef_projet) {
+                                $managers = explode('/', $row->chef_projet);
+
+                                foreach ($managers as $key => $name) {
+                                    $name = trim($name);
+                                    $managers[$key] = $name;
+                                    $contributors_bdd = Contributor::where('name', $name)->first();
+
+                                    if ($contributors_bdd) {
+                                        $new_reference->contributors()->attach($contributors_bdd->id, ['responsability_on_project'=>'Manager', 'function_on_project'=>'Senior']);
+                                    }
+                                    else {
+                                        $new_contributor = new Contributor;
+                                        $new_contributor->name = $name;
+                                        $new_contributor->save();
+                                        $new_reference->contributors()->attach($new_contributor->id, ['responsability_on_project'=>'Manager', 'function_on_project'=>'Senior']);
+                                    }
+                                }
+                            }
+
+                            //Link consultants
+                            if ($row->partners) {
+                                $partners = explode('/', $row->partners);
+
+                                foreach ($partners as $key => $name) {
+                                    $name = trim($name);
+                                    $partners[$key] = $name;
+                                    $consultant_bdd = Contributor::where('name', $name)->first();
+
+                                    if ($consultant_bdd) {
+                                        $new_reference->contributors()->attach($consultant_bdd->id, ['function_on_project'=>'Consultant']);
+                                    }
+                                    else {
+                                        $new_consultant = new Contributor;
+                                        $new_consultant->name = $name;
+                                        $new_consultant->save();
+                                        $new_reference->contributors()->attach($new_consultant->id, ['function_on_project'=>'Consultant']);
+                                    }
+                                }
+                            }
+
+
 
                             //Link project manager (Senior staff)
                             // if ($row->chefprojet) {

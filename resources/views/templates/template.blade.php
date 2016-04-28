@@ -69,7 +69,8 @@
 										<li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> All</a></li>
 										<li><a href="{{ action('ReferenceController@index', ['approval'=>'off']) }}"><span class="glyphicon glyphicon-list"></span> To approve</a></li>
 							            <li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><span class="glyphicon glyphicon-list"></span> Approved</a></li> {{-- TODO --}}
-							            <li><a href="{{ action('ReferenceController@references_list', 'created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li>
+							            <li><a href="{{ action('ReferenceController@management_page') }}"><span class="glyphicon glyphicon-wrench"></span> Management</a></li>
+							            <!-- <li><a href="{{ action('ReferenceController@references_list', 'created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li> -->
 										<li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
 							            <li role="separator" class="divider"></li>
@@ -89,7 +90,8 @@
 									</ul>
 								</li>
 							@else
-								<li><a href="{{ action('ReferenceController@references_list', 'approved') }}"><span class="glyphicon glyphicon-list"></span> References</a></li>
+								<!-- <li><a href="{{ action('ReferenceController@references_list', 'approved') }}"><span class="glyphicon glyphicon-list"></span> References</a></li> -->
+								<li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><span class="glyphicon glyphicon-list"></span> References</a></li>
 								@if(Auth::user()->profile_id == 2)
 									<li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>
 								@endif
