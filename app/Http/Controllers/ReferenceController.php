@@ -692,40 +692,44 @@ class ReferenceController extends Controller
         $page = 'search_results';
 
         //Get right references
-        $references = Reference::where(function ($query) use ($request) {
-                                    $countries = Country::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-                                    $contacts = Contact::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-                                    $clients = Client::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-                                    $query->where('project_number', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('estimated_duration', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('project_name', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('service_name', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('project_description', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('service_description', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('general_comments', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('location', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('project_name_fr', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('service_name_fr', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('project_description_fr', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('service_description_fr', 'LIKE', '%'.$request->keyword.'%')
-                                          ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%');
-                                          if ($countries) {
-                                            foreach ($countries as $country) {
-                                                $query->orWhere('country', $country->id);
-                                            }
-                                          }
-                                          if ($contacts) {
-                                            foreach ($contacts as $contact) {
-                                                $query->orWhere('contact', $contact->id);
-                                            }
-                                          }
-                                          if ($clients) {
-                                            foreach ($clients as $client) {
-                                                $query->orWhere('client', $client->id);
-                                            }
-                                          }
-                                });
+        $references = with(new Reference)->newQuery();
+        if ($request->keyword) {
+            $references->where(function ($query) use ($request) {
+                                        $countries = Country::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+                                        $contacts = Contact::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+                                        $clients = Client::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
+                                        $query->where('project_number', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('estimated_duration', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('project_name', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('service_name', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('project_description', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('service_description', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('general_comments', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('location', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('project_name_fr', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('service_name_fr', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('project_description_fr', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('service_description_fr', 'LIKE', '%'.$request->keyword.'%')
+                                              ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%');
+                                              if ($countries) {
+                                                foreach ($countries as $country) {
+                                                    $query->orWhere('country', $country->id);
+                                                    }
+                                              }
+                                              if ($contacts) {
+                                                foreach ($contacts as $contact) {
+                                                    $query->orWhere('contact', $contact->id);
+                                                }
+                                              }
+                                              if ($clients) {
+                                                foreach ($clients as $client) {
+                                                    $query->orWhere('client', $client->id);
+                                                }
+                                              }
+                                    });
+        
+        }
 
         if ((Auth::user()->profile_id != 3 && Auth::user()->profile_id != 5)
             || $request->approval == 'on') {
@@ -746,7 +750,8 @@ class ReferenceController extends Controller
         //         $references->where('dcom_approval', true);
         //     }
         // }
-        $references->orWhere('created_by', Auth::user()->username);
+
+        // $references->orWhere('created_by', Auth::user()->username); // FIXME
 
         if ($request->continent) {
             $countries = Country::all();
@@ -903,9 +908,10 @@ class ReferenceController extends Controller
             }
         }
 
+        // dd($references->toSql());
         $order = $request->get('order', 'created_at');
         $sort_direction = $request->get('sort_direction', 'desc');
-        $references = $references->orderBy($order, $sort_direction)->paginate(10);
+        $references = $references->orderBy($order, $sort_direction)->paginate(100);
 
         // dd($references->url(2));
 
@@ -2687,14 +2693,17 @@ class ReferenceController extends Controller
                             if ($row->start_year) {
                                 if ($row->start_month) {
                                     if ($row->start_month < 10) {
-                                        $start_date = '0'.$row->start_month.'-'.$row->start_year;
+                                        // $start_date = '0'.$row->start_month.'-'.$row->start_year;
+                                        $start_date = $row->start_year.'-0'.$row->start_month;
                                     }
                                     else {
-                                        $start_date = $row->start_month.'-'.$row->start_year;
+                                        // $start_date = $row->start_month.'-'.$row->start_year;
+                                        $start_date = $row->start_year.'-'.$row->start_month;
                                     }
                                 }
                                 else {
-                                    $start_date = '01-'.$row->start_year;
+                                    // $start_date = '01-'.$row->start_year;
+                                    $start_date = $row->start_year.'-01';
                                 }
                                 $new_reference->start_date = $start_date;
                             }
@@ -2702,14 +2711,17 @@ class ReferenceController extends Controller
                             if ($row->end_year) {
                                 if ($row->end_month) {
                                     if ($row->end_month < 10) {
-                                        $end_date = '0'.$row->end_month.'-'.$row->end_year;
+                                        // $end_date = '0'.$row->end_month.'-'.$row->end_year;
+                                        $end_date = $row->end_year.'-0'.$row->end_month;
                                     }
                                     else {
-                                        $end_date = $row->end_month.'-'.$row->end_year;
+                                        // $end_date = $row->end_month.'-'.$row->end_year;
+                                        $end_date = $row->end_year.'-'.$row->end_month;
                                     }
                                 }
                                 else {
-                                    $end_date = '01-'.$row->end_year;
+                                    // $end_date = '01-'.$row->end_year;
+                                    $end_date = $row->end_year.'-01';
                                 }
                                 $new_reference->end_date = $end_date;
                             }
@@ -2778,6 +2790,27 @@ class ReferenceController extends Controller
                                         $new_consultant->name = $name;
                                         $new_consultant->save();
                                         $new_reference->contributors()->attach($new_consultant->id, ['function_on_project'=>'Consultant']);
+                                    }
+                                }
+                            }
+
+                            //Link financings
+                            if ($row->financing) {
+                                $financings = explode('/', $row->financing);
+
+                                foreach ($financings as $key => $name) {
+                                    $name = trim($name);
+                                    $financings[$key] = $name;
+                                    $financing_bdd = Funding::where('name', $name)->first();
+
+                                    if ($financing_bdd) {
+                                        $new_reference->fundings()->attach($financing_bdd->id);
+                                    }
+                                    else {
+                                        $new_financing = new Funding;
+                                        $new_financing->name = $name;
+                                        $new_financing->save();
+                                        $new_reference->fundings()->attach($new_financing->id);   
                                     }
                                 }
                             }

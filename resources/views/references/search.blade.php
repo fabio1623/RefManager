@@ -62,12 +62,19 @@
 					</div>
 					<!-- If User admin or Dcom manager -->
 					@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
-					<div class="col-sm-5">
-						<div class="checkbox">
-							<label>
+					<label for="continent" class="col-sm-2 control-label">Approved</label>
+					<div class="col-sm-3">
+						<!-- <div class="checkbox"> -->
+							<!-- <label>
 							  <input type="checkbox" name="approval" checked> Approved
+							</label> -->
+							<label class="radio-inline">
+							  <input type="radio" name="approval" value="on" checked> On
 							</label>
-						</div>
+							<label class="radio-inline">
+							  <input type="radio" name="approval" value="off"> Off
+							</label>
+						<!-- </div> -->
 					</div>
 					@endif
 				</div>
@@ -76,7 +83,7 @@
 			  	<div class="form-group">
 				    <label class="control-label col-sm-4" for="country">Country</label>
 				    <div class="col-sm-3">
-				    	<select class="form-control selectpicker" multiple data-selected-text-format="count" data-live-search="true" id="country" name="country[]">
+				    	<select class="form-control selectpicker" multiple data-selected-text-format="count" data-live-search="true" data-size="8" id="country" name="country[]">
 				    		<optgroup label="Countries">
 								@foreach ($countries as $country)
 									<option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -90,7 +97,7 @@
 			  	<div class="form-group">
 				    <label class="control-label col-sm-4" for="country">Zone</label>
 				    <div class="col-sm-3">
-				    	<select class="form-control selectpicker" multiple data-selected-text-format="count" id="zone" name="zone[]">
+				    	<select class="form-control selectpicker" multiple data-selected-text-format="count" data-size="8" id="zone" name="zone[]">
 							<optgroup label="Zones">
 								@foreach ($zones as $zone)
 									<option value="{{ $zone->id }}">{{ $zone->name }}</option>
@@ -155,9 +162,9 @@
 				    <div class="col-sm-3 col-sm-offset-4">
 				    	<div class="input-group">
 				    		<select id="" class="selectpicker" name="measure_symbol">
-							  <option value="<="> < </option>
-							  <option value=">="> > </option>
-							  <option value="="> = </option>
+							  <option value="<="> &le; </option>
+							  <option value=">="> &ge; </option>
+							  <option value="="> &#61; </option>
 							</select>
 							<input type="text" class="form-control" id="measure" name="measure" placeholder="Ex: 10M$">
 				    	</div>
@@ -234,9 +241,9 @@
 				    <div class="col-sm-3 col-sm-offset-4">
 				    	<div class="input-group">
 				    		<select id="" class="selectpicker" name="cost_symbol">
-							  <option value="<=" > < </option>
-							  <option value=">="> > </option>
-							  <option value="="> = </option>
+							  <option value="<="> &le; </option>
+							  <option value=">="> &ge; </option>
+							  <option value="="> &#61; </option>
 							</select>
 							<input type="text" class="form-control" id="cost" name="cost" placeholder="Ex: 10M$">
 				    	</div>
@@ -247,7 +254,7 @@
 				<div class="form-group">
 				    <label for="financing" class="control-label col-sm-4" for="financing">Financing</label>
 				    <div class="col-sm-3">
-				    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" name="financings[]" data-live-search="true">
+				    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" data-size="8" name="financings[]" data-live-search="true">
 				    		<option></option>
 				    		@foreach($fundings as $funding)
 				    			<option value="{{ $funding->id }}">{{ $funding->name }}</option>

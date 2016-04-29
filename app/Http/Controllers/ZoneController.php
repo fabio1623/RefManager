@@ -28,6 +28,8 @@ class ZoneController extends Controller
         $subsidiary = Subsidiary::find($subsidiary_id);
         $zones = Zone::orderBy('name', 'asc')->with('manager')->paginate(20);
 
+        // dd($zones);
+
         $view = view('zones.index', ['subsidiary'=>$subsidiary, 'zones'=>$zones]);
         return $view;
     }

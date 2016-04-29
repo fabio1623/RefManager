@@ -132,7 +132,7 @@
 		    </nav>
 	    @endif
 
-		<div class="container" role="main">
+		<div class="container">
 			@yield('content')
 		</div>
 	</body>
