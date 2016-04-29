@@ -15,4 +15,9 @@ class Zone extends Model
     {
     	return $this->belongsTo('App\Contributor', 'manager');
     }
+
+    public function references()
+    {
+    	return $this->hasMany('App\Reference', 'zone');	
+    }
 }

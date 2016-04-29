@@ -50,7 +50,7 @@
 													<a class="btn btn-link" href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">{{$zone->name}}</a>	
 												</td>
 												<td>
-													{{ with($m=$zone->manager()->first()) ? $m->name : null }}
+													<a class="btn btn-link" href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">{{ with($m=$zone->manager()->first()) ? $m->name : null }}</a>
 												</td>
 												<td class="check">
 													<input class="checkbox" type="checkbox" value="{{$zone->id}}" name=id[]>

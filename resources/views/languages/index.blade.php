@@ -2,88 +2,86 @@
 
 @section('content')
 
-	<div class="row col-sm-6 col-sm-offset-3">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						<div class="row">
-							<div class="col-sm-6">Translation languages in forms</div>
-							<div class="col-sm-4">
-							</div>
-							<div class="col-sm-2">
-								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
-										<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-									</button>
-									<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
-										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-									</a>
-								</div>
-							</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<div class="row">
+					<div class="col-sm-6">Translation languages in forms</div>
+					<div class="col-sm-4">
+					</div>
+					<div class="col-sm-2">
+						<div class="btn-group pull-right" role="group" aria-label="...">
+							<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+							</button>
+							<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+								<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+							</a>
 						</div>
-					</h3>
+					</div>
 				</div>
-				
-				<div class="table-responsive">
+			</h3>
+		</div>
+		
+		<div class="table-responsive">
 
-					<table> <!-- bootstrap classes added by the uitheme widget -->
-					  <thead>
-					    <tr>
-							<th class="col-sm-2">Codes</th>
-							<th class="col-sm-8">Langages</th>
-							@if(count($linked_languages) == count($languages))
-								<th class="col-sm-2"><input type="checkbox" id="select_all" checked> All</th>
-							@else
-								<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
-							@endif
-						</tr>
-					  </thead>
-					  <tfoot>
-					    <tr>
-					      <th colspan="7" class="ts-pager form-horizontal">
-					        <button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
-					        <button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
-					        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
-					        <button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
-					        <button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
-					        <label class="control-label">Languages</label>
-					        <select class="pagesize input-mini" title="Select page size">
-					          <option selected="selected" value="10">10</option>
-					          <option value="20">20</option>
-					          <option value="30">30</option>
-					          <option value="40">40</option>
-					        </select>
-					        <label class="control-label">Page</label>
-					        <select class="pagenum input-mini" title="Select page number"></select>
-					      </th>
-					    </tr>
-					  </tfoot>
-					  <tbody>
-					    <!-- <form id="form_save" action="{{ action('LanguageController@link_languages', $subsidiary->id) }}" method="POST"> -->
-						    <?php echo csrf_field(); ?>
+			<table> <!-- bootstrap classes added by the uitheme widget -->
+			  <thead>
+			    <tr>
+					<th class="col-sm-2">Codes</th>
+					<th class="col-sm-8">Langages</th>
+					@if(count($linked_languages) == count($languages))
+						<th class="col-sm-2"><input type="checkbox" id="select_all" checked> All</th>
+					@else
+						<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+					@endif
+				</tr>
+			  </thead>
+			  <tfoot>
+			    <tr>
+			      <th colspan="7" class="ts-pager form-horizontal">
+			        <button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
+			        <button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
+			        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+			        <button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
+			        <button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+			        <label class="control-label">Languages</label>
+			        <select class="pagesize input-mini" title="Select page size">
+			          <option selected="selected" value="10">10</option>
+			          <option value="20">20</option>
+			          <option value="30">30</option>
+			          <option value="40">40</option>
+			        </select>
+			        <label class="control-label">Page</label>
+			        <select class="pagenum input-mini" title="Select page number"></select>
+			      </th>
+			    </tr>
+			  </tfoot>
+			  <tbody>
+			    <!-- <form id="form_save" action="{{ action('LanguageController@link_languages', $subsidiary->id) }}" method="POST"> -->
+				    <?php echo csrf_field(); ?>
 
-							@foreach ($languages as $language)
-									<tr data-href="">
-										<td>
-											{{ $language->code }}
-										</td>
-										<td>
-											{{$language->name}}	
-										</td>
-										<td class="check">
-											@if ($linked_languages->contains($language))
-												<input class="checkbox" type="checkbox" value="{{ $language->id }}" name=ids[] checked>
-											@else
-												<input class="checkbox" type="checkbox" value="{{ $language->id }}" name=ids[]>
-											@endif
-										</td>
-									</tr>
-							@endforeach
-						<!-- </form> -->
-					  </tbody>
-					</table>
-				</div>
-			</div>
+					@foreach ($languages as $language)
+							<tr data-href="">
+								<td>
+									{{ $language->code }}
+								</td>
+								<td>
+									{{$language->name}}	
+								</td>
+								<td class="check">
+									@if ($linked_languages->contains($language))
+										<input class="checkbox" type="checkbox" value="{{ $language->id }}" name=ids[] checked>
+									@else
+										<input class="checkbox" type="checkbox" value="{{ $language->id }}" name=ids[]>
+									@endif
+								</td>
+							</tr>
+					@endforeach
+				<!-- </form> -->
+			  </tbody>
+			</table>
+		</div>
 	</div>
 	<form id="form_save" action="{{ action('LanguageController@link_languages', $subsidiary->id) }}" method="POST">
 		<?php echo csrf_field(); ?>

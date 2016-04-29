@@ -18,6 +18,6 @@ class Country extends Model
 
     public function references()
     {
-    	return $this->hasMany('App\Reference');	
+    	return $this->hasMany('App\Reference', 'country');	
     }
 }

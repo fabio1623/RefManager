@@ -19,6 +19,8 @@
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
 		<link rel="stylesheet" href="/css/bootstrap-select.css">
 		<link rel="stylesheet" href="/css/custom-css.css">
+		<link rel="stylesheet" href="/bower_components/tablesorter/css/theme.bootstrap.min.css">
+		<link rel="stylesheet" href="/bower_components/tablesorter/css/jquery.tablesorter.pager.min.css">
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,6 +42,9 @@
 		<script src="/js/bootstrap3-typeahead.js"></script>
 		<script src="/js/bloodhound.js"></script>
 		<script type="text/javascript" src="/js/custom-functions.js"></script>
+		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.js"></script>
+		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.pager.min.js"></script>
+		<script type="text/javascript" src="/bower_components/tablesorter/js/jquery.tablesorter.widgets.js"></script>
 	</head>
 
 	<body>
@@ -56,7 +61,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="{{ url('home') }}"><img alt="Brand" src="{{ asset('/img/VE_small_logo.png') }}"></a>
+						<a class="navbar-brand" href="{{ url('home') }}"><img alt="Brand" src="{{ asset('/img/veolia_logo.png') }}"></a>
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">

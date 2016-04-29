@@ -13,7 +13,7 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <img src="{{ asset('/img/_SB_0819_2.jpg') }}" alt="..." width="100%">
+      <img src="{{ asset('/img/carousel/carousel1.png') }}" alt="..." width="100%">
       <div class="carousel-caption">
         <h1>REFERENCES</h1>
         <p class="lead">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="item">
-      <img src="{{ asset('/img/BO8A9337_2.jpg') }}" alt="..." width="100%">
+      <img src="{{ asset('/img/carousel/carousel2.png') }}" alt="..." width="100%">
       <div class="carousel-caption">
         <h1>Une source documentaire fiable</h1>
         <p class="lead">
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="item">
-      <img src="{{ asset('/img/KC8A7287.jpg') }}" alt="..." width="100%">
+      <img src="{{ asset('/img/carousel/carousel3.png') }}" alt="..." width="100%">
       <div class="carousel-caption">
         <h1>Une source documentaire fiable</h1>
         <p class="lead">

@@ -677,10 +677,13 @@ class ReferenceController extends Controller
         $internal_services = InternalService::all();
         $domains = Domain::orderBy('name', 'asc')->get();
         // $countries = Country::all();
-        $countries = Country::has('zones')->orderBy('name', 'asc')->get();
+        // $countries = Country::has('zones')->orderBy('name', 'asc')->get();
+        $countries = Country::has('references')->orderBy('name', 'asc')->get();
         $categories = Category::all();
-        $zones = Zone::orderBy('name', 'asc')->get();
-        $fundings = Funding::orderBy('name', 'asc')->get();
+        // $zones = Zone::orderBy('name', 'asc')->get();
+        $zones = Zone::has('references')->orderBy('name', 'asc')->get();
+        // $fundings = Funding::orderBy('name', 'asc')->get();
+        $fundings = Funding::has('references')->orderBy('name', 'asc')->get();
 
         $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories, 'zones'=>$zones, 'fundings'=>$fundings]);
         return $view;
