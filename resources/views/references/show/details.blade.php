@@ -59,7 +59,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Staff involved</label>
+	<label class="col-sm-4 control-label">Senior staff</label>
 </div>
 @if (count($staff_involved) > 0)
 
@@ -99,7 +99,7 @@
 	<div class="form-group">
 		<div class="col-sm-8 col-sm-offset-4">
 			<div class="input-group">
-				<p class="form-control-static"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No staff involved</p>
+				<p class="form-control-static"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No senior staff</p>
 			</div>
 		</div>
 	</div>
@@ -108,7 +108,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Experts employed</label>
+	<label class="col-sm-4 control-label">Staff provided</label>
 </div>
 @if (count($experts) > 0)
 	@for ($i=0; $i < count($experts); $i++)
@@ -146,7 +146,7 @@
 	<div class="form-group">
 		<div class="col-sm-8 col-sm-offset-4">
 			<div class="input-group">
-				<p class="form-control-static"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No expert employed</p>
+				<p class="form-control-static"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No staff provided</p>
 			</div>
 		</div>
 	</div>
@@ -173,7 +173,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Associated consultants)</label>
+	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Partners)</label>
 	<div class="col-sm-3">
 	    <div class="input-group">
 		  <!-- <input type="text" class="form-control" id="consultants_man_months" aria-describedby="basic-addon2" value="{{ $reference->consultants_man_months }}" disabled>
@@ -186,7 +186,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Consultants</label>
+	<label class="col-sm-4 control-label">Partners</label>
 </div>
 @if (count($consultants) > 0)
 	@for ($i=0; $i < count($consultants); $i++)
@@ -205,7 +205,7 @@
 	<div class="form-group">
 		<div class="col-sm-8 col-sm-offset-4">
 			<div class="input-group">
-				<p class="form-control-static"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No consultant</p>
+				<p class="form-control-static"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No partner</p>
 			</div>
 		</div>
 	</div>

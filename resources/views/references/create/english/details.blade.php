@@ -51,7 +51,7 @@
 <hr>
 
 <div class="form-group">
-	<label class="col-sm-4 control-label">Staff involved</label>
+	<label class="col-sm-4 control-label">Senior staff</label>
 </div>
 <div class="form-group">
 	<!-- <label for="involved_staff" class="col-sm-4 control-label">Staff involved</label> -->
@@ -129,7 +129,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Experts employed</label>
+	<label class="col-sm-4 control-label">Staff provided</label>
 </div>
 <div class="form-group">
 	<!-- <label for="experts" class="col-sm-4 control-label">Experts employed</label> -->
@@ -227,7 +227,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Associated consultants)</label>
+	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Partners)</label>
 	<div class="col-sm-3">
 	    <div class="input-group">
 		  <input type="text" class="form-control" id="consultants_man_months" name="consultants_man_months" aria-describedby="basic-addon2">
@@ -239,10 +239,10 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Associated consultants</label>
+	<label class="col-sm-4 control-label">Partners</label>
 </div>
 <div class="form-group">
-	<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label> -->
+	<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of Partners</label> -->
 	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">

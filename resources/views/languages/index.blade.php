@@ -2,6 +2,7 @@
 
 @section('content')
 
+<div class="container stand-page">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
@@ -87,6 +88,7 @@
 		<?php echo csrf_field(); ?>
 		<!-- <input id="test" type="checkbox" value="" name=ids[]> -->
 	</form>
+</div>
 <script>
 
 $(function() {

@@ -26,7 +26,7 @@ class MeasureController extends Controller
      */
     public function index()
     {
-        $measures = Measure::paginate(4);
+        $measures = Measure::paginate(100);
         $measures->setPath('index');
 
         $view = view('measures.index')->with('measures', $measures);

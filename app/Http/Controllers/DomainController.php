@@ -24,7 +24,7 @@ class DomainController extends Controller
      */
     public function index()
     {
-        $domains = Domain::paginate(8);
+        $domains = Domain::paginate(100);
         // $domains->setPath('index');
         $view = view('domains.index')->with('domains', $domains);
         return $view;
@@ -33,7 +33,7 @@ class DomainController extends Controller
     public function custom_index($id)
     {
         $subsidiary = Subsidiary::find($id);
-        $domains = Domain::paginate(20);
+        $domains = Domain::paginate(100);
         $linked_domains = $subsidiary->domains()->get();
 
         $view = view('domains.custom_index', ['domains'=>$domains, 'subsidiary'=>$subsidiary, 'linked_domains'=>$linked_domains]);

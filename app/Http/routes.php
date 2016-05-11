@@ -174,6 +174,6 @@ Route::get('templates/{language}/download', 'TemplateController@download_templat
 Route::get('templates/{language}/delete', 'TemplateController@delete_template');
 Route::resource('templates', 'TemplateController');
 
-Route::get('test', function () {
+// Route::get('test', function () {
 
-});
+// });

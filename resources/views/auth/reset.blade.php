@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="row col-md-8 col-md-offset-2">
+	<div class="container stand-page">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Reset Password</h3>

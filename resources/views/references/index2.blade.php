@@ -1,10 +1,8 @@
 @extends('templates.template')
 
 @section('content')
-<!-- Closing the container in the template -->
-</div>
 
-<div class="container-fluid">
+<div class="container-fluid stand-page">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<div class="row">
@@ -179,8 +177,6 @@
 		</div>
 	</div>
 </div>
-<!-- Opening a div for the container in the template -->
-<div>
 
 
 <script>

@@ -29,7 +29,7 @@ class UserController extends Controller
         $subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
 
         // $users = User::paginate(8);
-        $users = $subsidiary->users()->paginate(8);
+        $users = $subsidiary->users()->paginate(100);
         // $users->setPath('index');
         $view = view('auth.index')->with('users', $users);
         return $view;

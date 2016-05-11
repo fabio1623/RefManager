@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container marketing">
+<div class="container marketing stand-page">
 
 <!-- Three columns of text below the carousel -->
 <div class="row">

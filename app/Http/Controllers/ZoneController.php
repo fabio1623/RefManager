@@ -26,7 +26,7 @@ class ZoneController extends Controller
     public function index($subsidiary_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
-        $zones = Zone::orderBy('name', 'asc')->with('manager')->paginate(20);
+        $zones = Zone::orderBy('name', 'asc')->with('manager')->paginate(100);
 
         // dd($zones);
 

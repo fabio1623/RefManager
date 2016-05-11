@@ -51,14 +51,14 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Staff involved</label>
+	<label class="col-sm-4 control-label">Senior staff</label>
 </div>
 @if (count($staff_involved) > 0)
 
 @for ($i=0; $i < count($staff_involved); $i++)
 		@if ($i == 0)
 			<div class="form-group">
-				<!-- <label for="involved_staff" class="col-sm-4 control-label">Staff involved</label> -->
+				<!-- <label for="involved_staff" class="col-sm-4 control-label">Senior staff</label> -->
 				<div class="col-sm-4 col-sm-offset-4">
 		@else
 			<div class="template">
@@ -127,7 +127,7 @@
 @else
 
 <div class="form-group">
-	<!-- <label for="involved_staff" class="col-sm-4 control-label">Staff involved</label> -->
+	<!-- <label for="involved_staff" class="col-sm-4 control-label">Senior staff</label> -->
 	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
@@ -198,14 +198,14 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Experts employed</label>
+	<label class="col-sm-4 control-label">Staff provided</label>
 </div>
 @if (count($experts) > 0)
 
 @for ($i=0; $i < count($experts); $i++)
 		@if ($i == 0)
 			<div class="form-group">
-				<!-- <label for="experts" class="col-sm-4 control-label">Experts employed</label> -->
+				<!-- <label for="experts" class="col-sm-4 control-label">Staff provided</label> -->
 				<div class="col-sm-4 col-sm-offset-4">
 		@else
 			<div class="expertTemplate">
@@ -273,7 +273,7 @@
 @else
 <!-- Line -->
 <div class="form-group">
-	<!-- <label for="experts" class="col-sm-4 control-label">Experts employed</label> -->
+	<!-- <label for="experts" class="col-sm-4 control-label">Staff provided</label> -->
 	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
@@ -363,7 +363,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Associated consultants)</label>
+	<label for="consultants_man_months" class="col-sm-4 control-label">Total number man/months (Partners)</label>
 	<div class="col-sm-3">
 	    <div class="input-group">
 		  <input type="text" class="form-control" id="consultants_man_months" name="consultants_man_months" aria-describedby="basic-addon2" value="{{ $reference->consultants_man_months }}">
@@ -375,13 +375,13 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Associated consultants</label>
+	<label class="col-sm-4 control-label">Partners</label>
 </div>
 @if (count($consultants) > 0)
 	@for ($i=0; $i < count($consultants); $i++)
 		@if ($i == 0)
 			<div class="form-group">
-				<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label> -->
+				<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of Partners</label> -->
 				<div class="col-sm-4 col-sm-offset-4">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon2">
@@ -423,7 +423,7 @@
 	@endfor
 @else
 <div class="form-group">
-	<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of associated consultants</label> -->
+	<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of Partners</label> -->
 	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">

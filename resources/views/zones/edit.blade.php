@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="row col-sm-8 col-sm-offset-2">
+	<div class="container stand-page">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -100,7 +100,7 @@
 											<a class="btn btn-link zone_links" href="">{{$zone_country->name}}</a>
 										</td>
 										<td>
-											<a class="btn btn-link" href="{{ action('ZoneController@detach_country', [$zone->id, $zone_country->id]) }}">
+											<a class="btn btn-link center-block" href="{{ action('ZoneController@detach_country', [$zone->id, $zone_country->id]) }}">
 												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 											</a>
 										</td>

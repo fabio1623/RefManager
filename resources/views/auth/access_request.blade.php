@@ -2,10 +2,10 @@
 
 @section('content')
 
-	<div class="row col-sm-8 col-sm-offset-2">
+	<div class="container stand-page">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">Ask your access</h3>
+					<h3 class="panel-title"><img alt="Brand" src="{{ asset('/img/veolia_logo.png') }}"> Ask your access</h3>
 				</div>
 				<div class="panel-body">
 					@if (session('status'))

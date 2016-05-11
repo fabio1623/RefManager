@@ -1,7 +1,7 @@
 @extends('templates.template')
 
 @section('content')
-<div class="col-sm-12">
+<div class="container stand-page">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
@@ -13,8 +13,8 @@
 					<div class="col-sm-6 pull-right">
 						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
-								<!-- If Dcom manager -->
-								@if(Auth::user()->profile_id == 3)
+								<!-- If user admin or dcom manager -->
+								@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
 									@if($reference->dcom_approval == 0)
 										<a class="btn btn-default btn-sm" href="{{ action('ReferenceController@approve', $reference->id) }}">
 											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Approve

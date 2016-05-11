@@ -24,7 +24,7 @@ class ExpertiseController extends Controller
      */
     public function index()
     {
-        $expertises = Expertise::paginate(2);
+        $expertises = Expertise::paginate(100);
         // $domains->setPath('index');
         $view = view('expertises.index')->with('expertises', $expertises);
         return $view;

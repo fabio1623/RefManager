@@ -31,7 +31,7 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $external_services = ExternalService::paginate(8);
+        $external_services = ExternalService::paginate(100);
 
         $view = view('services.external.index')->with('external_services', $external_services);
         return $view;
@@ -41,7 +41,7 @@ class ServiceController extends Controller
     {
         $subsidiary = Subsidiary::find($id);
         // $external_services = $subsidiary->external_services()->paginate(8);
-        $external_services = ExternalService::paginate(20);
+        $external_services = ExternalService::paginate(100);
         $linked_services = $subsidiary->external_services()->get();
         // dd($linked_services);
 
@@ -222,7 +222,7 @@ class ServiceController extends Controller
 
     public function internal_index()
     {
-        $internal_services = InternalService::paginate(8);
+        $internal_services = InternalService::paginate(100);
         // dd($external_services);
 
         $view = view('services.internal.index')->with('internal_services', $internal_services);
@@ -233,7 +233,7 @@ class ServiceController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $internal_services = InternalService::paginate(20);
+        $internal_services = InternalService::paginate(100);
         $linked_services = $subsidiary->internal_services()->get();
         // dd($linked_services);
 

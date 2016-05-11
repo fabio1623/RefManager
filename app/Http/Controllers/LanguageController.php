@@ -39,7 +39,7 @@ class LanguageController extends Controller
         $subsidiary = Subsidiary::find($subsidiary_id);
 
         $languages = Language::where('name', 'like', '%'.$request->search_input.'%')->
-                                orWhere('code', 'like', '%'.$request->search_input.'%')->paginate(20);
+                                orWhere('code', 'like', '%'.$request->search_input.'%')->paginate(100);
         $linked_languages = $subsidiary->languages()->get();
 
 

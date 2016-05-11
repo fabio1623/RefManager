@@ -12,6 +12,7 @@ use ZipArchive;
 use Auth;
 use Excel;
 use App;
+use DB;
 
 use App\Reference;
 use App\Service;
@@ -36,7 +37,6 @@ use App\Subsidiary;
 use App\CountryZone;
 
 use \PhpOffice\PhpWord\TemplateProcessor;
-// use Table;
 
 class ReferenceController extends Controller
 {
@@ -137,7 +137,7 @@ class ReferenceController extends Controller
                 break;
         }
 
-        $references = $references->orWhere('created_by', Auth::user()->username)->orderBy($order, $sort_direction)->paginate(10);
+        $references = $references->orWhere('created_by', Auth::user()->username)->orderBy($order, $sort_direction)->paginate(100);
 
         $activities = array();
         $clients = array();
@@ -912,9 +912,20 @@ class ReferenceController extends Controller
         }
 
         // dd($references->toSql());
-        $order = $request->get('order', 'created_at');
+
+        // Default order is 'end_date'
+        $order = $request->get('order', 'end_date');
         $sort_direction = $request->get('sort_direction', 'desc');
-        $references = $references->orderBy($order, $sort_direction)->paginate(100);
+
+        // If needed to sort from foreign key column
+        if ($order == 'client' || $order == 'country' || $order == 'zone') {
+            // $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')
+            // ->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->paginate(100);
+            $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->paginate(100);
+        }
+        else{
+            $references = $references->orderBy($order, $sort_direction)->paginate(100);
+        }
 
         // dd($references->url(2));
 
@@ -966,7 +977,7 @@ class ReferenceController extends Controller
 
     public function results_by_project_number()
     {
-        $references = Reference::orderBy('project_number', 'asc')->paginate(8);
+        $references = Reference::orderBy('project_number', 'asc')->paginate(100);
         // dd($references);
 
         $zones = Zone::all();

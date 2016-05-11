@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row col-sm-8 col-sm-offset-2">
+<div class="container stand-page">
 	<p></p>
 	<div class="panel panel-primary">
 		<div class="panel-heading">

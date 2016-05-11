@@ -53,7 +53,7 @@
 		@if (Auth::guest())
 		@else
 		    <nav class="navbar navbar-default navbar-fixed-top">
-		      	<div class="container">
+		      	<div class="container-fluid">
 		      		<div class="navbar-header">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 							<span class="sr-only">Toggle navigation</span>
@@ -61,11 +61,11 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="{{ url('home') }}"><img alt="Brand" src="{{ asset('/img/veolia_logo.png') }}"></a>
+						<a class="navbar-brand visible-xs small-screen-brand" href="{{ url('home') }}"><img alt="Brand" src="{{ asset('/img/seureca_logo.png') }}" height="50"></a>
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li class="active"><a href="{{ url('home') }}">Home</a></li>
+			        	<!-- Left side of navbar -->
+						<ul class="nav navbar-nav navbar-left">
 							<!-- If user admin or dcom manager -->
 							@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
 								<li class="dropdown">
@@ -75,7 +75,6 @@
 										<li><a href="{{ action('ReferenceController@index', ['approval'=>'off']) }}"><span class="glyphicon glyphicon-list"></span> To approve</a></li>
 							            <li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><span class="glyphicon glyphicon-list"></span> Approved</a></li> {{-- TODO --}}
 							            <li><a href="{{ action('ReferenceController@management_page') }}"><span class="glyphicon glyphicon-wrench"></span> Management</a></li>
-							            <!-- <li><a href="{{ action('ReferenceController@references_list', 'created_by_me') }}"><span class="glyphicon glyphicon-list"></span> Created by me</a></li> -->
 										<li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
 							            <li role="separator" class="divider"></li>
@@ -95,7 +94,6 @@
 									</ul>
 								</li>
 							@else
-								<!-- <li><a href="{{ action('ReferenceController@references_list', 'approved') }}"><span class="glyphicon glyphicon-list"></span> References</a></li> -->
 								<li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><span class="glyphicon glyphicon-list"></span> References</a></li>
 								@if(Auth::user()->profile_id == 2)
 									<li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>
@@ -103,12 +101,14 @@
 							@endif
 							<li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Research</a></li>
 						</ul>
+						<!-- Center of the navbar -->
+						<ul class="nav navbar-nav navbar-middle">
+							<a class="navbar-brand hidden-xs big-screen-brand" href="{{ url('home') }}"><img alt="Brand" src="{{ asset('/img/seureca_logo.png') }}" height="50"></a>
+						</ul>
+						<!-- Right side of navbar -->
 						<ul class="nav navbar-nav navbar-right">
-							@if (Auth::user()->avatar != '')
-								<img width="50px" height="50px" src="{{Auth::user()->avatar}}" class="profile-image img-circle">
-							@endif
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">	   {{ Auth::user()->username }}
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{ Auth::user()->username }}
 									<!-- If user admin -->
 									@if (Auth::user()->profile_id == 5 && $requests_number > 0)
 										<span class="badge">{{$requests_number}}</span>
@@ -131,15 +131,17 @@
 									<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 								</ul>
 							</li>
+							@if (Auth::user()->avatar != '')
+								<img width="50px" height="50px" src="{{Auth::user()->avatar}}" class="profile-image img-circle hidden-xs">
+							@endif
 						</ul>
 					</div><!--/.nav-collapse -->
 		    	</div>
 		    </nav>
 	    @endif
 
-		<div class="container">
-			@yield('content')
-		</div>
+		@yield('content')
+		
 	</body>
 
 <script>

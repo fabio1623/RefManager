@@ -24,7 +24,7 @@ class ContributorController extends Controller
      */
     public function index($subsidiary_id, $zone_id)
     {
-        $contributors = Contributor::orderBy('name', 'asc')->paginate(20);
+        $contributors = Contributor::orderBy('name', 'asc')->paginate(100);
         $view = view('contributors.index', ['subsidiary_id'=>$subsidiary_id, 'contributors'=>$contributors]);
         return $view;
     }

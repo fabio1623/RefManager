@@ -1,8 +1,7 @@
 @extends('templates.template')
 
 @section('content')
-<!-- <div class="container col-sm-6 col-sm-offset-3"> -->
-	<div class="row col-sm-6 col-sm-offset-3">
+		<div class="container stand-page">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">

@@ -21,7 +21,7 @@ class SubServiceController extends Controller
         $sub_services = Service::where('subsidiary', 'Seureca')
                                     ->where('service_type', 'external')
                                     ->first()->subServices()
-                                        ->paginate(8);
+                                        ->paginate(100);
         $view = view('services.external.index')->with('services', $sub_services);
         return $view;
     }
@@ -31,7 +31,7 @@ class SubServiceController extends Controller
         $sub_services = Service::where('subsidiary', 'Seureca')
                                     ->where('service_type', 'internal')
                                     ->first()->subServices()
-                                        ->paginate(8);
+                                        ->paginate(100);
         $view = view('services.internal.index')->with('services', $sub_services);
         return $view;
     }
@@ -88,7 +88,7 @@ class SubServiceController extends Controller
                                 ->where('service_type', 'external')
                                 ->first()->subServices()
                                     ->where('service_name', 'LIKE', '%'.$request->input('search_inp').'%')
-                                    ->paginate(8);
+                                    ->paginate(100);
         $subservices->setPath('/services');
         $view = view('services.index')->with('services', $subservices);
         return $view;

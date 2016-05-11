@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(8);
+        $categories = Category::paginate(100);
         $categories->setPath('index');
 
         $view = view('categories.index')->with('categories', $categories);
@@ -37,7 +37,7 @@ class CategoryController extends Controller
     public function custom_index($subsidiary_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
-        $categories = Category::paginate(9);
+        $categories = Category::paginate(100);
         $linked_categories = $subsidiary->categories()->get();
 
         $view = view('categories.custom_index', ['categories'=>$categories, 'subsidiary'=>$subsidiary, 'linked_categories'=>$linked_categories]);

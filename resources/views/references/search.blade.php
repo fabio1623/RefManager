@@ -2,7 +2,9 @@
 
 @section('content')
 
-<div class="col-sm-12">
+<div class="container stand-page">
+
+<!-- <div class="col-sm-12"> -->
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">
@@ -265,6 +267,8 @@
 			</form>
 		</div>
 	</div>
+<!-- </div> -->
+
 </div>
 
 <script>

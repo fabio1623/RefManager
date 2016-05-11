@@ -23,7 +23,7 @@ class AccessController extends Controller
      */
     public function index()
     {
-        $access = AccessRequest::paginate(8);
+        $access = AccessRequest::paginate(100);
         $subsidiaries = Subsidiary::all();
 
         $view = view('requests.index', ['access'=>$access, 'subsidiaries'=>$subsidiaries]);
