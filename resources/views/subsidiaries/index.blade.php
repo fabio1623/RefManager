@@ -19,10 +19,12 @@
 
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Name</th>
+								<th class="col-sm-1"></th>
+								<th class="col-sm-8">Name</th>
+								<th class="col-sm-2">Creation date</th>
 						    	<th class="col-sm-1"></th>
 							</tr>
 						</thead>
@@ -30,19 +32,34 @@
 							<form id="form_delete" action="{{ action('SubsidiaryController@destroyMulti') }}" method="POST">
 					      		<?php echo method_field('DELETE'); ?>
 							    <?php echo csrf_field(); ?>
-								@foreach ($subsidiaries as $subsidiary)
-										<tr data-href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+								@for ($i=0; $i < $subsidiaries->count(); $i++)
+										<tr data-href="{{ action('SubsidiaryController@edit', $subsidiaries[$i]->id) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">{{$subsidiary->name}}</a>	
+												<a class="btn btn-link btn-xs">
+												@if ($subsidiaries->currentPage() < 2)
+													{{ $i + 1 }}
+												@else
+													{{ ($subsidiaries->currentPage() - 1) * 100 + $i + 1 }}
+												@endif
+												</a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs">
+												{{$subsidiaries[$i]->name}}
+												</a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs">
+												{{ $subsidiaries[$i]->created_at }}
+												</a>
 											</td>
 											<td class="check">
-												<!-- <input class="checkbox" type="checkbox" value="{{$subsidiary->id}}" name=id[]> -->
-												<a class="btn btn-link center-block" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+												<a class="btn btn-link btn-xs center-block" href="{{ action('SubsidiaryController@edit', $subsidiaries[$i]->id) }}">
 													<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 												</a>
 											</td>
 										</tr>
-								@endforeach
+								@endfor
 								</form>
 						</tbody>
 					</table>

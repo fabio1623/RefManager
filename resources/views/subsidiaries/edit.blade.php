@@ -56,13 +56,19 @@
 						<label class="col-md-4 control-label">Services</label>
 						<div class="col-md-4">
 							<div class="btn-group" role="group" aria-label="...">
-								<a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}" role="button">
+								<!-- <a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> 
 									External
+								</a> -->
+								<a class="btn btn-link btn-md" href="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}">
+									Change external
 								</a>
-								<a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}" role="button">
+								<!-- <a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> 
 									Internal
+								</a> -->
+								<a class="btn btn-link btn-md" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}">
+									Change internal
 								</a>
 							</div>
 						</div>
@@ -71,8 +77,11 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">Domains of expertise</label>
 						<div class="col-md-4">
-								<a class="btn btn-primary btn-sm" href="{{ action('DomainController@custom_index', $subsidiary->id) }}" role="button">
+								<!-- <a class="btn btn-primary btn-sm" href="{{ action('DomainController@custom_index', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span>
+								</a> -->
+								<a class="btn btn-link btn-md" href="{{ action('DomainController@custom_index', $subsidiary->id) }}">
+									Change
 								</a>
 						</div>
 					</div>
@@ -80,8 +89,11 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">Measures</label>
 						<div class="col-md-4">
-								<a class="btn btn-primary btn-sm" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}" role="button">
+								<!-- <a class="btn btn-primary btn-sm" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+								</a> -->
+								<a class="btn btn-link btn-md" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}">
+									Change
 								</a>
 						</div>
 					</div>
@@ -89,8 +101,11 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">Translations</label>
 						<div class="col-md-4">
-								<a class="btn btn-primary btn-sm" href="{{ action('LanguageController@index', $subsidiary->id) }}" role="button">
+								<!-- <a class="btn btn-primary btn-sm" href="{{ action('LanguageController@index', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+								</a> -->
+								<a class="btn btn-link btn-md" href="{{ action('LanguageController@index', $subsidiary->id) }}">
+									Change
 								</a>
 						</div>
 					</div>
@@ -116,9 +131,10 @@
 			</div>
 			<!-- Table -->
 			<div class="table-responsive">
-				<table class="table table-hover table-bordered table-striped table-condensed">
+				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th class="col-sm-1"></th>
 							<th class="col-sm-3">Username</th>
 							<th class="col-sm-4">Email</th>
 							<th class="col-sm-3">Profile</th>
@@ -130,28 +146,39 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($users as $user)
+						@for($i=0; $i < $users->count(); $i++)
 							<tr>
 								<td>
-									{{ $user->username }}
+									<a class="btn btn-link btn-xs">
+									{{ $i + 1 }}
+									</a>
 								</td>
 								<td>
-									{{ $user->email }}
+									<a class="btn btn-link btn-xs">
+									{{ $users[$i]->username }}
+									</a>
 								</td>
 								<td>
+									<a class="btn btn-link btn-xs">
+									{{ $users[$i]->email }}
+									</a>
+								</td>
+								<td>
+									<a class="btn btn-link btn-xs">
 									@foreach ($profiles as $profile)
-										@if ($profile->id == $user->profile_id)
+										@if ($profile->id == $users[$i]->profile_id)
 											{{ $profile->name }}
 										@endif
 									@endforeach
+									</a>
 								</td>
 								<td>
-									<a class="btn btn-link center-block" href="{{ action('UserController@edit', [$subsidiary->id, $user->id]) }}">
+									<a class="btn btn-link btn-xs center-block" href="{{ action('UserController@edit', [$subsidiary->id, $users[$i]->id]) }}">
 										<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 									</a>
 								</td>
 							</tr>
-						@endforeach
+						@endfor
 					</tbody>
 				</table>
 			</div>

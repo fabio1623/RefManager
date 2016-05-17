@@ -32,31 +32,54 @@
 				
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover table-striped table-condensed">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-3">Zones</th>
-								<th class="col-sm-7">Manager</th>
-						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+								<th class="col-sm-1"></th>
+								<th class="col-sm-4">Zones</th>
+								<th class="col-sm-4">Manager</th>
+								<th class="col-sm-2">Creation date</th>
+								<th class="col-sm-1"></th>
+						    	<!-- <th class="col-sm-2"><input type="checkbox" id="select_all"> All</th> -->
 							</tr>
 						</thead>
 						<tbody>
 							<form action="{{ action('ZoneController@destroyMultiple') }}" method="POST" id="form_delete">
 						      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-									@foreach ($zones as $zone)
-											<tr data-href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">
+									@for ($i=0; $i<$zones->count(); $i++)
+											<tr>
 												<td>
-													<a class="btn btn-link" href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">{{$zone->name}}</a>	
+													<a class="btn btn-link btn-xs">
+														@if ($zones->currentPage() < 2)
+															{{ $i + 1 }}
+														@else
+															{{ ($zones->currentPage() - 1) * 100 + $i + 1 }}
+														@endif
+													</a>
 												</td>
 												<td>
-													<a class="btn btn-link" href="{{ action('ZoneController@edit', [$subsidiary->id, $zone->id]) }}">{{ with($m=$zone->manager()->first()) ? $m->name : null }}</a>
+													<a class="btn btn-link btn-xs">
+														{{$zones[$i]->name}}
+													</a>	
 												</td>
-												<td class="check">
-													<input class="checkbox" type="checkbox" value="{{$zone->id}}" name=id[]>
+												<td>
+													<a class="btn btn-link btn-xs">
+														{{ with($m=$zones[$i]->manager()->first()) ? $m->name : null }}
+													</a>
+												</td>
+												<td>
+													<a class="btn btn-link btn-xs">
+														{{ $zones[$i]->created_at }}
+													</a>
+												</td>
+												<td>
+													<a class="btn btn-link btn-xs center-block" href="{{ action('ZoneController@edit', [$subsidiary->id, $zones[$i]->id]) }}">
+														<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+													</a>
 												</td>
 											</tr>
-									@endforeach
+									@endfor
 							</form>
 						</tbody>
 					</table>
