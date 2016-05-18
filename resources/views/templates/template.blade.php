@@ -21,8 +21,7 @@
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"> -->
 
 		<!-- Custom CSS -->
-		<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
-		<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" /> -->
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
 		<link rel="stylesheet" href="/css/bootstrap-select.css">
 		<link rel="stylesheet" href="/css/custom-css.css">
 		<link rel="stylesheet" href="/bower_components/tablesorter/css/theme.bootstrap.min.css">
@@ -45,8 +44,7 @@
 
 		<!-- Custom JS -->
 		<script src="http://malsup.github.com/jquery.form.js"></script>
-		<script src="/js/bootstrap-datetimepicker.min.js"></script>
-		<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script> -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 		<script src="/js/bootstrap-select.js"></script>
 		<script src="/js/bootstrap3-typeahead.js"></script>
 		<script src="/js/bloodhound.js"></script>
