@@ -14,7 +14,7 @@
 
 			<div class="table-responsive">
 
-				<table class="table table-bordered table-hover table-striped table-condensed">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th class="col-sm-7">Email</th>
@@ -32,15 +32,15 @@
 					    	</tr>
 					    @else
 					    	@foreach ($access as $acc)
-								<tr data-href="">
+								<tr>
 									<td>
-										<a class="btn btn-link" href="">{{$acc->email}}</a>
+										<a class="btn btn-link">{{$acc->email}}</a>
 										<input type="text" class="form-control hidden" id="firstName" name="email" value="{{ $acc->email }}">
 									</td>
 									<td>
 										@foreach($subsidiaries as $subsidiary)
 											@if($subsidiary->id == $acc->subsidiary_id)
-													<a class="btn btn-link" href="">{{$subsidiary->name}}</a>
+													<a class="btn btn-link">{{$subsidiary->name}}</a>
 											@endif
 										@endforeach
 									</td>
@@ -50,7 +50,7 @@
 									    </a>
 									</td>
 									<td>
-										<a id="remove_request_btn" class="btn btn-link btn-sm center-block" href="{{ action('AccessController@destroyOne', $acc->id) }}" role="button">
+										<a id="remove_request_btn" class="btn btn-link btn-sm center-block remove_request_btn" href="{{ action('AccessController@destroyOne', $acc->id) }}" role="button">
 									    	<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 									    </a>
 									</td>
@@ -67,11 +67,10 @@
 </div>
 
 <script>
-	$('#remove_request_btn').click( function (e) {
-		e.preventDefault();
+	$('.remove_request_btn').click( function (e) {
 		var confirm_box = confirm("Are you sure ?");
-		if (confirm_box == true) {
-			window.location.href = $('#remove_request_btn').attr('href');
+		if (confirm_box == false) {
+			e.preventDefault();
 		}
 	});
 </script>
