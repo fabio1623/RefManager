@@ -6,7 +6,7 @@
 
 	<div>
 		<h1>References management</h1>
-		<p>The official example template of creating a blog with Bootstrap.</p>
+		<p>Have an eye on your references.</p>
 	</div>
 
 	<div>

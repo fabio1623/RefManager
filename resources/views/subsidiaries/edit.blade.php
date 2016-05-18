@@ -10,13 +10,13 @@
 						<div class="col-sm-6">{{ $subsidiary->name }}</div>
 						<div class="col-sm-6">
 							<div class="btn-group pull-right" role="group" aria-label="...">
-							  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+							  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 							  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 							  </button>
-							  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+							  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
 							  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 							  </button>
-								<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@index') }}">
+								<a class="btn btn-default btn-xs" href="{{ action('SubsidiaryController@index') }}">
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 								</a>
 							</div>

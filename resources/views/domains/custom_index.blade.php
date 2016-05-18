@@ -10,13 +10,13 @@
 							<div class="col-sm-9">List of domains</div>
 							<div class="col-sm-3">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-									<a class="btn btn-default btn-sm" href="{{ action('DomainController@create', $subsidiary->id) }}">
+									<a class="btn btn-default btn-xs" href="{{ action('DomainController@create', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</a>
-									<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+									<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 										<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 									</button>
-									<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+									<a class="btn btn-default btn-xs" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>
@@ -27,30 +27,40 @@
 				
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover table-striped table-condensed">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Domain name</th>
+								<th class="col-sm-1"></th>
+								<th class="col-sm-10">Domain name</th>
 						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
 							<form id="form_save" action="{{ action('DomainController@link_domain', $subsidiary->id) }}" method="POST">
 							    <?php echo csrf_field(); ?>
-								@foreach ($domains as $domain)
-										<tr data-href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domain->id]) }}">
+								@for ($i=0; $i < $domains->count(); $i++)
+										<tr data-href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domains[$i]->id]) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domain->id]) }}">{{$domain->name}}</a>	
+												<a class="btn btn-link btn-xs">
+													@if ($domains->currentPage() < 2)
+														{{ $i + 1 }}
+													@else
+														{{ ($domains->currentPage() - 1) * 100 + $i + 1 }}
+													@endif
+												</a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs" href="{{ action('DomainController@custom_edit', [$subsidiary->id, $domains[$i]->id]) }}">{{$domains[$i]->name}}</a>	
 											</td>
 											<td class="check">
-												@if ($linked_domains->contains($domain))
-													<input class="checkbox" type="checkbox" value="{{ $domain->id }}" name=id[] checked>
+												@if ($linked_domains->contains($domains[$i]))
+													<input class="checkbox" type="checkbox" value="{{ $domains[$i]->id }}" name=id[] checked>
 												@else
-													<input class="checkbox" type="checkbox" value="{{ $domain->id }}" name=id[]>
+													<input class="checkbox" type="checkbox" value="{{ $domains[$i]->id }}" name=id[]>
 												@endif
 											</td>
 										</tr>
-								@endforeach
+								@endfor
 							</form>
 						</tbody>
 					</table>

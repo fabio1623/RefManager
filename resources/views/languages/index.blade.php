@@ -12,10 +12,10 @@
 					</div>
 					<div class="col-sm-2">
 						<div class="btn-group pull-right" role="group" aria-label="...">
-							<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+							<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 								<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 							</button>
-							<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+							<a class="btn btn-default btn-xs" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
 								<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 							</a>
 						</div>
@@ -29,18 +29,19 @@
 			<table> <!-- bootstrap classes added by the uitheme widget -->
 			  <thead>
 			    <tr>
-					<th class="col-sm-2">Codes</th>
-					<th class="col-sm-8">Langages</th>
+			    	<th class="col-sm-1"></th>
+					<th class="col-sm-1">Codes</th>
+					<th class="col-sm-9">Langages</th>
 					@if(count($linked_languages) == count($languages))
-						<th class="col-sm-2"><input type="checkbox" id="select_all" checked> All</th>
+						<th class="col-sm-1"><input type="checkbox" id="select_all" checked> All</th>
 					@else
-						<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
+						<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 					@endif
 				</tr>
 			  </thead>
 			  <tfoot>
 			    <tr>
-			      <th colspan="7" class="ts-pager form-horizontal">
+			      <th colspan="12" class="ts-pager form-horizontal">
 			        <button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 			        <button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 			        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
@@ -59,26 +60,33 @@
 			    </tr>
 			  </tfoot>
 			  <tbody>
-			    <!-- <form id="form_save" action="{{ action('LanguageController@link_languages', $subsidiary->id) }}" method="POST"> -->
-				    <?php echo csrf_field(); ?>
 
-					@foreach ($languages as $language)
-							<tr data-href="">
+					@for ($i=0; $i < $languages->count(); $i++)
+							<tr>
 								<td>
-									{{ $language->code }}
+									<a class="btn btn-link btn-xs">
+										{{ $i+1 }}
+									</a>
 								</td>
 								<td>
-									{{$language->name}}	
+									<a class="btn btn-link btn-xs">
+										{{ $languages[$i]->code }}
+									</a>
+								</td>
+								<td>
+									<a class="btn btn-link btn-xs">
+										{{$languages[$i]->name}}
+									</a>
 								</td>
 								<td class="check">
-									@if ($linked_languages->contains($language))
-										<input class="checkbox" type="checkbox" value="{{ $language->id }}" name=ids[] checked>
+									@if ($linked_languages->contains($languages[$i]))
+										<input class="checkbox" type="checkbox" value="{{ $languages[$i]->id }}" name=ids[] checked>
 									@else
-										<input class="checkbox" type="checkbox" value="{{ $language->id }}" name=ids[]>
+										<input class="checkbox" type="checkbox" value="{{ $languages[$i]->id }}" name=ids[]>
 									@endif
 								</td>
 							</tr>
-					@endforeach
+					@endfor
 				<!-- </form> -->
 			  </tbody>
 			</table>
@@ -98,7 +106,7 @@ $(function() {
   $.tablesorter.themes.bootstrap = {
     // these classes are added to the table. To see other table classes available,
     // look here: http://getbootstrap.com/css/#tables
-    table        : 'table table-bordered table-striped',
+    table        : 'table table-hover',
     caption      : 'caption',
     // header class names
     header       : 'bootstrap-header', // give the header a gradient background (theme.bootstrap_2.css)
@@ -122,7 +130,7 @@ $(function() {
   // call the tablesorter plugin and apply the uitheme widget
   $("table").tablesorter({
   	headers: {
-					2: {
+					3: {
 						sorter:false,
 						filter:false
 					}
@@ -137,7 +145,7 @@ $(function() {
 
     // widget code contained in the jquery.tablesorter.widgets.js file
     // use the zebra stripe widget if you plan on hiding any rows (filter widget)
-    widgets : [ "uitheme", "filter", "zebra" ],
+    widgets : [ "uitheme", "filter" ],
 
     widgetOptions : {
       // using the default zebra striping class name, so it actually isn't included in the theme variable above

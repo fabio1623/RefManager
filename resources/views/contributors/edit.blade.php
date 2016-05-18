@@ -12,13 +12,13 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
-								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
 								  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								  </button>
-								  <a class="btn btn-default btn-sm" href="{{ action('ContributorController@index', [$subsidiary_id, $zone_id]) }}">
+								  <a class="btn btn-default btn-xs" href="{{ action('ContributorController@index', [$subsidiary_id, $zone_id]) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>
@@ -74,10 +74,11 @@
 					</form>
 				</div>
 
-				<table class="table table-bordered table-hover table-striped table-condensed">
+				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-sm-4">Project</th>
+							<th class="col-sm-1"></th>
+							<th class="col-sm-3">Project</th>
 							<th class="col-sm-4">Function</th>
 					    	<th class="col-sm-4">Responsability</th>
 						</tr>
@@ -90,11 +91,14 @@
 								</td>
 							</tr>
 						@else
-							@foreach($contributor_reference_join as $project)
+							@for ($i=0; $i < $contributor_reference_join->count(); $i++)
 								<tr>
 									<td>
+										{{ $i+1 }}
+									</td>
+									<td>
 										@foreach($references as $reference)
-											@if($reference->id == $project->reference_id)
+											@if($reference->id == $contributor_reference_join[$i]->reference_id)
 												<a href="{{ action('ReferenceController@edit', $reference->id) }}">
 													{{ $reference->project_number }}
 												</a>
@@ -102,17 +106,16 @@
 										@endforeach
 									</td>
 									<td>
-										{{ $project->function_on_project }}
+										{{ $contributor_reference_join[$i]->function_on_project }}
 									</td>
 									<td>
-										{{ $project->responsability_on_project }}	
+										{{ $contributor_reference_join[$i]->responsability_on_project }}
 									</td>
 								</tr>
-							@endforeach
+							@endfor
 						@endif
 					</tbody>
 				</table>
-
 			</div>
 	</div>
 	<script>

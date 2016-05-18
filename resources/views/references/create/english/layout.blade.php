@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs nav-justified">
   <li role="presentation" class="active"><a data-toggle="tab" href="#description_menu"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Description</a></li>
   <li id="criteria_pane" role="presentation"><a data-toggle="tab" href="#criteria_menu"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Criteria</a></li>
   <li id="quantities_pane" role="presentation"><a data-toggle="tab" href="#measure_menu"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Quantities</a></li>

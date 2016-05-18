@@ -10,13 +10,13 @@
 							<div class="col-sm-9">List of internal services</div>
 							<div class="col-sm-3">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-									<a class="btn btn-default btn-sm" href="{{ action('ServiceController@internal_create', $subsidiary->id) }}">
+									<a class="btn btn-default btn-xs" href="{{ action('ServiceController@internal_create', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</a>
-									<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+									<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 										<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 									</button>
-									<a class="btn btn-default btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
+									<a class="btn btn-default btn-xs" href="{{ action('SubsidiaryController@edit', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>
@@ -27,10 +27,11 @@
 				
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover table-striped table-condensed">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Service name</th>
+								<th class="col-sm-1"></th>
+								<th class="col-sm-10">Service name</th>
 								<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
@@ -40,26 +41,29 @@
 						<tbody>
 							<form id="form_save" action="{{ action('ServiceController@link_internal_service', $subsidiary->id) }}" method="POST">
 								<?php echo csrf_field(); ?>
-								@foreach ($internal_services as $service)
-										<tr data-href="{{ action('ServiceController@internal_edit', [$subsidiary->id, $service->id]) }}">
+								@for ($i=0; $i < $internal_services->count(); $i++)
+										<tr data-href="{{ action('ServiceController@internal_edit', [$subsidiary->id, $internal_services[$i]->id]) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('ServiceController@internal_edit', [$subsidiary->id, $service->id]) }}">{{$service->name}}</a>	
+												<a class="btn btn-link btn-xs">
+													@if ($internal_services->currentPage() < 2)
+														{{ $i + 1 }}
+													@else
+														{{ ($internal_services->currentPage() - 1) * 100 + $i + 1 }}
+													@endif
+												</a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs" href="{{ action('ServiceController@internal_edit', [$subsidiary->id, $internal_services[$i]->id]) }}">{{ $internal_services[$i]->name }}</a>	
 											</td>
 											<td class="check">
-												@if ($linked_services->contains($service))
-													<!-- <a class="btn btn-link" href="{{ action('ServiceController@detach_internal_service', [$subsidiary->id, $service->id]) }}">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-													</a> -->
-													<input class="checkbox" type="checkbox" value="{{ $service->id }}" name=id[] checked>
+												@if ($linked_services->contains($internal_services[$i]))
+													<input class="checkbox" type="checkbox" value="{{ $internal_services[$i]->id }}" name=id[] checked>
 												@else
-													<!-- <a class="btn btn-link" href="{{ action('ServiceController@link_internal_service', [$subsidiary->id, $service->id]) }}">
-														<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-													</a> -->
-													<input class="checkbox" type="checkbox" value="{{ $service->id }}" name=id[]>
+													<input class="checkbox" type="checkbox" value="{{ $internal_services[$i]->id }}" name=id[]>
 												@endif
 											</td>
 										</tr>
-								@endforeach
+								@endfor
 							</form>
 						</tbody>
 					</table>

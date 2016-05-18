@@ -10,14 +10,14 @@
 							<div class="col-sm-8">{{ $domain->name }}</div>
 							<div class="col-sm-4">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button id="link_btn" form="form_link_expertises" type="submit" class="btn btn-default btn-sm">
+									<button id="link_btn" form="form_link_expertises" type="submit" class="btn btn-default btn-xs">
 										<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> 
 										Save expertises
 									</button>
-									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
 									</button>
-									<a class="btn btn-default btn-sm" href="{{ action('DomainController@custom_index', $subsidiary->id) }}">
+									<a class="btn btn-default btn-xs" href="{{ action('DomainController@custom_index', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>
@@ -92,30 +92,34 @@
 				</div>
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover table-striped table-condensed">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Expertise name</th>
+								<th class="col-sm-1"></th>
+								<th class="col-sm-10">Expertise name</th>
 								<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
 							<form id="form_link_expertises" action="{{ action('ExpertiseController@link_expertise', [$subsidiary->id, $domain->id]) }}" method="POST">
 								<?php echo csrf_field(); ?>
-								@foreach ($expertises as $expertise)
-										<tr data-href="{{ action('ExpertiseController@edit', [$subsidiary->id, $domain->id, $expertise->id]) }}">
+								@for ($i=0; $i < $expertises->count(); $i++)
+										<tr data-href="{{ action('ExpertiseController@edit', [$subsidiary->id, $domain->id, $expertises[$i]->id]) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('ExpertiseController@edit', [$subsidiary->id, $domain->id, $expertise->id]) }}">{{$expertise->name}}</a>
+												<a class="btn btn-link btn-xs">{{ $i + 1 }}</a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs">{{$expertises[$i]->name}}</a>
 											</td>
 											<td class="check">
-												@if ($linked_expertises->contains($expertise))
-													<input class="checkbox" type="checkbox" value="{{ $expertise->id }}" name=id[] checked>
+												@if ($linked_expertises->contains($expertises[$i]))
+													<input class="checkbox" type="checkbox" value="{{ $expertises[$i]->id }}" name=id[] checked>
 												@else
-													<input class="checkbox" type="checkbox" value="{{ $expertise->id }}" name=id[]>
+													<input class="checkbox" type="checkbox" value="{{ $expertises[$i]->id }}" name=id[]>
 												@endif
 											</td>
 										</tr>
-								@endforeach
+								@endfor
 							</form>
 						</tbody>
 					</table>

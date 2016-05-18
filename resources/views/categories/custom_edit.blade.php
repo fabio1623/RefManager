@@ -10,15 +10,14 @@
 							<div class="col-sm-8">{{ $category->name }}</div>
 							<div class="col-sm-4">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-									<button id="link_btn" form="form_link_measures" type="submit" class="btn btn-default btn-sm">
+									<button id="link_btn" form="form_link_measures" type="submit" class="btn btn-default btn-xs">
 										<span class="glyphicon glyphicon-save" aria-hidden="true"></span> 
 										Save measures
 									</button>
-									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
-										Delete
 									</button>
-									<a class="btn btn-default btn-sm" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}">
+									<a class="btn btn-default btn-xs" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>
@@ -75,12 +74,6 @@
 							      </span>
 							    </div>
 							</div>
-							<!-- <div class="col-md-4">
-								<button type="submit" id="add_btn" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-								</button> -->
-								<!-- <input type="hidden" name="category_id_hidden" value="{{ $category->id}}"> -->
-							<!-- </div> -->
 						</div>
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Field Type</label>
@@ -99,36 +92,34 @@
 				<!-- Measures table -->
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover table-striped table-condensed">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Measure name</th>
+								<th class="col-sm-1"></th>
+								<th class="col-sm-10">Measure name</th>
 								<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
 							<form id="form_link_measures" action="{{ action('MeasureController@link_measure', [$subsidiary->id, $category->id]) }}" method="POST">
 								<?php echo csrf_field(); ?>
-								@foreach ($measures as $measure)
-										<tr data-href="{{ action('MeasureController@edit', [$subsidiary->id, $category->id, $measure->id]) }}">
+								@for ($i=0; $i < $measures->count(); $i++)
+										<tr data-href="{{ action('MeasureController@edit', [$subsidiary->id, $category->id, $measures[$i]->id]) }}">
 											<td>
-												<a class="btn btn-link" href="{{ action('MeasureController@edit', [$subsidiary->id, $category->id, $measure->id]) }}">{{$measure->name}}</a>
+												<a class="btn btn-link btn-xs">{{$i+1}}</a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs">{{$measures[$i]->name}}</a>
 											</td>
 											<td class="check">
-												@if ($linked_measures->contains($measure))
-													<!-- <a class="btn btn-link" href="{{ action('MeasureController@detach_measure', [$subsidiary->id, $measure->id]) }}">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-													</a> -->
-													<input class="checkbox" type="checkbox" value="{{ $measure->id }}" name=id[] checked>
+												@if ($linked_measures->contains($measures[$i]))
+													<input class="checkbox" type="checkbox" value="{{ $measures[$i]->id }}" name=id[] checked>
 												@else
-													<!-- <a class="btn btn-link" href="{{ action('MeasureController@link_measure', [$subsidiary->id, $measure->id]) }}">
-														<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-													</a> -->
-													<input class="checkbox" type="checkbox" value="{{ $measure->id }}" name=id[]>
+													<input class="checkbox" type="checkbox" value="{{ $measures[$i]->id }}" name=id[]>
 												@endif
 											</td>
 										</tr>
-								@endforeach
+								@endfor
 							</form>
 						</tbody>
 					</table>

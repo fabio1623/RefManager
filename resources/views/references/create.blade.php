@@ -6,12 +6,12 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<div class="row">
-					<div class="col-sm-8">
+					<div class="col-sm-6 col-xs-6">
 						<h4>New reference</h4>
 					</div>
 					<!-- Button toolbar -->
-					<div class="col-sm-4 pull-right">
-						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+					<div class="col-sm-6 col-xs-6">
+						<div class="btn-toolbar btn-sm pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
 								<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
 									<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>

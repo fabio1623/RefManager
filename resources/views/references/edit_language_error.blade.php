@@ -7,11 +7,11 @@
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h4>{{ $reference->project_number }}</h4>
+						<h4>{{ $reference->project_number }} - {{ $reference->dfac_name }}</h4>
 					</div>
 					<!-- Button toolbar -->
-					<div class="col-sm-6 pull-right">
-						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+					<div class="col-sm-6">
+						<div class="btn-toolbar btn-sm pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
 
 								<!-- If user admin or dcom manager -->

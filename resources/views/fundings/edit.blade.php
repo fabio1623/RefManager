@@ -12,13 +12,13 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
-								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
 								  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								  </button>
-								  <a class="btn btn-default btn-sm" href="{{ action('FundingController@index') }}">
+								  <a class="btn btn-default btn-xs" href="{{ action('FundingController@index') }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>
@@ -66,10 +66,11 @@
 					</form>
 				</div>
 
-				<table class="table table-bordered table-hover table-striped table-condensed">
+				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-sm-4">Project</th>
+							<th class="col-sm-1"></th>
+							<th class="col-sm-3">Project</th>
 							<th class="col-sm-4">Start date</th>
 					    	<th class="col-sm-4">End Date</th>
 						</tr>
@@ -82,21 +83,24 @@
 								</td>
 							</tr>
 						@else
-							@foreach($references as $reference)
+							@for ($i=0; $i < $references->count(); $i++)
 								<tr>
 									<td>
-										<a href="{{ action('ReferenceController@edit', $reference->id) }}">
-											{{ $reference->project_number }}
+										{{ $i+1 }}
+									</td>
+									<td>
+										<a href="{{ action('ReferenceController@edit', $references[$i]->id) }}">
+											{{ $references[$i]->project_number }}
 										</a>
 									</td>
 									<td>
-										{{ $reference->start_date }}
+										{{ $references[$i]->start_date }}
 									</td>
 									<td>
-										{{ $reference->end_date }}	
+										{{ $references[$i]->end_date }}	
 									</td>
 								</tr>
-							@endforeach
+							@endfor
 						@endif
 					</tbody>
 				</table>

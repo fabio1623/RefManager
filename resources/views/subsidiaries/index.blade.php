@@ -9,7 +9,7 @@
 						<div class="row">
 							<div class="col-sm-9">List of entities</div>
 							<div class="col-sm-3">
-								<a class="btn btn-default btn-xs pull-right" href="{{ action('SubsidiaryController@create') }}">
+								<a class="btn btn-success btn-xs pull-right" href="{{ action('SubsidiaryController@create') }}">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</a>
 							</div>
@@ -36,11 +36,11 @@
 										<tr data-href="{{ action('SubsidiaryController@edit', $subsidiaries[$i]->id) }}">
 											<td>
 												<a class="btn btn-link btn-xs">
-												@if ($subsidiaries->currentPage() < 2)
-													{{ $i + 1 }}
-												@else
-													{{ ($subsidiaries->currentPage() - 1) * 100 + $i + 1 }}
-												@endif
+													@if ($subsidiaries->currentPage() < 2)
+														{{ $i + 1 }}
+													@else
+														{{ ($subsidiaries->currentPage() - 1) * 100 + $i + 1 }}
+													@endif
 												</a>
 											</td>
 											<td>

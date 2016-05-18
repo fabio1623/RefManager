@@ -47,7 +47,7 @@
 									@foreach ($domains as $domain)
 											<tr data-href="{{ action('DomainController@edit', $domain->id) }}">
 												<td>
-													<a class="btn btn-link" href="{{ action('DomainController@edit') }}">{{$domain->name}}</a>	
+													<a class="btn btn-link">{{$domain->name}}</a>	
 												</td>
 												<td class="check">
 													<input class="checkbox" type="checkbox" value="{{$domain->id}}" name=id[]>

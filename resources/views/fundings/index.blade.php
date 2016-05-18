@@ -36,8 +36,9 @@
 						<thead>
 							<tr>
 								<th class="col-sm-1"></th>
-								<th class="col-sm-5">English name</th>
-								<th class="col-sm-5">French name</th>
+								<th class="col-sm-4">English name</th>
+								<th class="col-sm-4">French name</th>
+								<th class="col-sm-2">Financed projects</th>
 								<th class="col-sm-1"></th>
 						    	<!-- <th class="col-sm-1"><input type="checkbox" id="select_all"> All</th> -->
 							</tr>
@@ -66,6 +67,11 @@
 													<a class="btn btn-link btn-xs">
 														{{ $fundings[$i]->name_fr }}
 													</a>	
+												</td>
+												<td>
+													<a class="btn btn-link btn-xs">
+													{{ $fundings[$i]->references->count() }}
+													</a>
 												</td>
 												<td>
 													<a class="btn btn-link btn-xs center-block" href="{{ action('FundingController@edit', $fundings[$i]->id) }}">

@@ -1,10 +1,10 @@
-<div class="page-header">
+<!-- <div class="page-header">
   <h3>Uploaded files</h3>
-</div>
+</div> -->
 <table class="table">
 		<thead>
 			<tr>
-				<th class="col-sm-9">File name</th>
+				<th class="col-sm-9">Uploaded files</th>
 				<th class="col-sm-2">Uploaded on</th>
 				<th class="col-sm-1">Size</th>
 			</tr>

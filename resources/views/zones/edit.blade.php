@@ -10,13 +10,13 @@
 							<div class="col-sm-6">{{ $zone->name }}</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
-								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
+								  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
 								  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								  </button>
-								  <a class="btn btn-default btn-sm" href="{{ action('ZoneController@index', $subsidiary_id) }}">
+								  <a class="btn btn-default btn-xs" href="{{ action('ZoneController@index', $subsidiary_id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>
@@ -86,26 +86,30 @@
 					<!-- Countries table -->
 				<div class="table-responsive">
 
-					<table class="table table-bordered table-hover table-striped table-condensed">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="col-sm-11">Countries</th>
+								<th class="col-sm-1"></th>
+								<th class="col-sm-10">Countries</th>
 						    	<th class="col-sm-1"></th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($zone_countries as $zone_country)
-									<tr data-href="">
+							@for ($i=0; $i < $zone->countries->count(); $i++)
+									<tr>
 										<td>
-											<a class="btn btn-link zone_links" href="">{{$zone_country->name}}</a>
+											<a class="btn btn-link btn-xs"> {{ $i+1 }} </a>
 										</td>
 										<td>
-											<a class="btn btn-link center-block" href="{{ action('ZoneController@detach_country', [$zone->id, $zone_country->id]) }}">
+											<a class="btn btn-link btn-xs">{{$zone->countries[$i]->name}}</a>
+										</td>
+										<td>
+											<a class="btn btn-link btn-xs center-block remove_country" id="{{ $zone->countries[$i]->name }}" href="{{ action('ZoneController@detach_country', [$zone->id, $zone->countries[$i]->id]) }}">
 												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 											</a>
 										</td>
 									</tr>
-							@endforeach
+							@endfor
 						</tbody>
 					</table>
 					<!-- #./Expertises table -->
@@ -154,8 +158,11 @@
 			};
 		} );
 
-		$('.zone_links').click( function(e) {
-			e.preventDefault();
+		$('.remove_country').click( function(e) {
+			var confirm_box = confirm("Do you really want to remove " + $(this).attr('id') + " from this zone ?");
+			if (confirm_box == false) {
+				e.preventDefault();
+			}
 		});
 	</script>
 

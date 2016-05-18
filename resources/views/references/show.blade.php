@@ -10,8 +10,8 @@
 						<h4>{{ $reference->project_number }} - {{ $reference->dfac_name }} @if($reference->confidential == 1) : Confidential @endif</h4>
 					</div>
 					<!-- Button toolbar -->
-					<div class="col-sm-6 pull-right">
-						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+					<div class="col-sm-6">
+						<div class="btn-toolbar btn-sm pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
 								<!-- If user admin or dcom manager -->
 								@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
@@ -152,13 +152,16 @@
 			</form>
 		</div>
 	</div>
-	<form id="form_upload" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@upload_file', $reference->id) }}" enctype="multipart/form-data">
-		<?php echo csrf_field(); ?>
-		<label for="import_input">Import file</label>
-		<input type="file" id="import_input" name="file" accept="*">
-		<p class="help-block">Import your file here.</p>
-		<input id="upload_btn" class="btn btn-default" type="submit" value="Submit">
-	</form>
+	<div class="container">
+		<form id="form_upload" class="form-horizontal hidden" role="form" method="POST" action="{{ action('ReferenceController@upload_file', $reference->id) }}" enctype="multipart/form-data">
+			<?php echo csrf_field(); ?>
+			<label for="import_input">Import file</label>
+			<input type="file" id="import_input" name="file" accept="*">
+			<p class="help-block">Import your file here.</p>
+			<input id="upload_btn" class="btn btn-default" type="submit" value="Submit">
+		</form>	
+	</div>
+	
 
 	<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" data-backdrop="static">
 	  <div class="modal-dialog">

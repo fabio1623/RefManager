@@ -36,7 +36,8 @@
 						<thead>
 							<tr>
 								<th class="col-sm-1"></th>
-								<th class="col-sm-8">Contributor name</th>
+								<th class="col-sm-5">Contributor name</th>
+								<th class="col-sm-3">Number of projects</th>
 								<th class="col-sm-2">Creation date</th>
 								<th class="col-sm-1"></th>
 						    	<!-- <th class="col-sm-2"><input type="checkbox" id="select_all"> All</th> -->
@@ -61,6 +62,11 @@
 													<a class="btn btn-link btn-xs">
 														{{ $contributors[$i]->name }}
 													</a>	
+												</td>
+												<td>
+													<a class="btn btn-link btn-xs">
+														{{ $contributors[$i]->references->count() }}
+													</a>
 												</td>
 												<td>
 													<a class="btn btn-link btn-xs">
