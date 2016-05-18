@@ -32,48 +32,31 @@
 				
 				<div class="table-responsive">
 
-					<table class="table table-hover">
+					<table class="table table-bordered table-hover table-striped table-condensed">
 						<thead>
 							<tr>
-								<th class="col-sm-1"></th>
-								<th class="col-sm-5">English name</th>
+								<th class="col-sm-6">English name</th>
 								<th class="col-sm-5">French name</th>
-								<th class="col-sm-1"></th>
-						    	<!-- <th class="col-sm-1"><input type="checkbox" id="select_all"> All</th> -->
+						    	<th class="col-sm-1"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
 							<form action="{{ action('FundingController@destroyMultiple') }}" method="POST" id="form_delete">
 						      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-									@for ($i = 0; $i < $fundings->count(); $i++)
-											<tr>
+									@foreach ($fundings as $funding)
+											<tr data-href="{{ action('FundingController@edit', $funding->id) }}">
 												<td>
-													<a class="btn btn-link btn-xs">
-														@if ($fundings->currentPage() < 2)
-															{{ $i + 1 }}
-														@else
-															{{ ($fundings->currentPage() - 1) * 100 + $i + 1 }}
-														@endif
-													</a>
+													<a class="btn btn-link" href="{{ action('FundingController@edit', $funding->id) }}">{{$funding->name}}</a>	
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
-														{{ $fundings[$i]->name }}
-													</a>	
+													<a class="btn btn-link" href="{{ action('FundingController@edit', $funding->id) }}">{{$funding->name_fr}}</a>	
 												</td>
-												<td>
-													<a class="btn btn-link btn-xs">
-														{{ $fundings[$i]->name_fr }}
-													</a>	
-												</td>
-												<td>
-													<a class="btn btn-link btn-xs center-block" href="{{ action('FundingController@edit', $fundings[$i]->id) }}">
-														<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-													</a>
+												<td class="check">
+													<input class="checkbox" type="checkbox" value="{{$funding->id}}" name=id[]>
 												</td>
 											</tr>
-									@endfor
+									@endforeach
 							</form>
 						</tbody>
 					</table>

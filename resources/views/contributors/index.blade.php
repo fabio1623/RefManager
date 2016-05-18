@@ -32,48 +32,27 @@
 				
 				<div class="table-responsive">
 
-					<table class="table table-hover">
+					<table class="table table-bordered table-hover table-condensed table-striped">
 						<thead>
 							<tr>
-								<th class="col-sm-1"></th>
-								<th class="col-sm-8">Contributor name</th>
-								<th class="col-sm-2">Creation date</th>
-								<th class="col-sm-1"></th>
-						    	<!-- <th class="col-sm-2"><input type="checkbox" id="select_all"> All</th> -->
+								<th class="col-sm-10">Contributor name</th>
+						    	<th class="col-sm-2"><input type="checkbox" id="select_all"> All</th>
 							</tr>
 						</thead>
 						<tbody>
 							<form action="{{ action('ContributorController@destroyMultiple', [$subsidiary_id, 1]) }}" method="POST" id="form_delete">
 						      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-									@for ($i=0; $i<$contributors->count(); $i++)
-											<tr>
+									@foreach ($contributors as $contributor)
+											<tr data-href="{{ action('ContributorController@edit', [$subsidiary_id, 1,$contributor->id]) }}">
 												<td>
-													<a class="btn btn-link btn-xs">
-														@if ($contributors->currentPage() < 2)
-															{{ $i + 1 }}
-														@else
-															{{ ($contributors->currentPage() - 1) * 100 + $i + 1 }}
-														@endif
-													</a>
+													<a class="btn btn-link" href="{{ action('ContributorController@edit', [$subsidiary_id, 1,$contributor->id]) }}">{{$contributor->name}}</a>	
 												</td>
-												<td>
-													<a class="btn btn-link btn-xs">
-														{{ $contributors[$i]->name }}
-													</a>	
-												</td>
-												<td>
-													<a class="btn btn-link btn-xs">
-														{{ $contributors[$i]->created_at }}
-													</a>
-												</td>
-												<td>
-													<a class="btn btn-link btn-xs center-block" href="{{ action('ContributorController@edit', [$subsidiary_id, 1,$contributors[$i]->id]) }}">
-														<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-													</a>
+												<td class="check">
+													<input class="checkbox" type="checkbox" value="{{$contributor->id}}" name=ids[]>
 												</td>
 											</tr>
-									@endfor
+									@endforeach
 							</form>
 						</tbody>
 					</table>
