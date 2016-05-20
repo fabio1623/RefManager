@@ -273,7 +273,7 @@
 
 <script>
 	$('#date_picker_start').datepicker({
-	    format: "mm-yyyy",
+	    format: "yyyy-mm",
 	    viewMode: "months",
 	    minViewMode: "months",
 	    autoclose: true,
@@ -284,7 +284,7 @@
 	});
 
 	$('#date_picker_end').datepicker({
-	    format: "mm-yyyy",
+	    format: "yyyy-mm",
 	    viewMode: "months",
 	    minViewMode: "months",
 	    autoclose: true,

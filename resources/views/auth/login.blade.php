@@ -40,7 +40,11 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Social authentication</label>
                             <div class="col-sm-4">
-                                <a class="btn btn-default" href="{{ url('/auth/google') }}" role="button">Google</a>
+                                <!-- <a class="btn btn-default" href="{{ url('/auth/google') }}" role="button">Google</a> -->
+                                <a class="btn btn-block btn-social btn-google" href="{{ url('/auth/google') }}" role="button">
+                                  <span class="fa fa-google"></span>
+                                  Sign in with Google
+                                </a>
                             </div>
                         </div>
 

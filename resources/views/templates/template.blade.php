@@ -24,11 +24,12 @@
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"> -->
 
 		<!-- Custom CSS -->
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
 		<link rel="stylesheet" href="/css/bootstrap-select.css">
 		<link rel="stylesheet" href="/css/custom-css.css">
 		<link rel="stylesheet" href="/bower_components/tablesorter/css/theme.bootstrap.min.css">
 		<link rel="stylesheet" href="/bower_components/tablesorter/css/jquery.tablesorter.pager.min.css">
+		<link rel="stylesheet" href="/bower_components/bootstrap-social/bootstrap-social.css">
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,6 +47,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 		<!-- Custom JS -->
+		<script src="https://use.fontawesome.com/e58b837649.js"></script>
 		<script src="http://malsup.github.com/jquery.form.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 		<script src="/js/bootstrap-select.js"></script>
@@ -87,6 +89,7 @@
 							            <li><a href="{{ action('ReferenceController@management_page') }}"><span class="glyphicon glyphicon-wrench"></span> Management</a></li>
 										<li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
+							            <li><a href=""><span class="glyphicon glyphicon-export"></span> Export</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>
 									</ul>
