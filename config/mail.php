@@ -15,8 +15,8 @@ return [
     |
     */
 
-    // 'driver' => env('MAIL_DRIVER', 'smtp'),
-    'driver' => env('MAIL_DRIVER', 'mailgun'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
+    // 'driver' => env('MAIL_DRIVER', 'mailgun'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,9 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    // 'host' => env('MAIL_HOST', 'smtp.sparkpostmail.com'),
+    'host' => env('MAIL_HOST', 'mailtrap.io'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +44,8 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    // 'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 2525),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +59,7 @@ return [
     */
 
     // 'from' => ['address' => null, 'name' => null],
-    'from' => ['address' => 'sarmentopedrofabio@gmail.com', 'name' => 'Fabio SARMENTO PEDRO'],
+    'from' => ['address' => 'noreply@seureca.com', 'name' => 'Noreply'],
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +85,8 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME'),
+    'username' => env('MAIL_USERNAME', 'SMTP_Injection'),
+    // 'username' => env('SMTP_Injection'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +99,7 @@ return [
     |
     */
 
-    'password' => env('MAIL_PASSWORD'),
+    'password' => env('MAIL_PASSWORD', '6bd0c20fba9d1abffcd89da86264fca91ae9a0af'),
 
     /*
     |--------------------------------------------------------------------------
@@ -121,6 +125,6 @@ return [
     |
     */
 
-    'pretend' => true,
+    'pretend' => false,
 
 ];

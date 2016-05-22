@@ -921,6 +921,7 @@ class ReferenceController extends Controller
         if ($order == 'client' || $order == 'country' || $order == 'zone') {
             // $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')
             // ->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->paginate(100);
+            // dd(Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->toSql());
             $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->paginate(100);
         }
         else{
@@ -2610,8 +2611,8 @@ class ReferenceController extends Controller
                     // dd($reader->get());
                     $reader->each(function($row){
 
-                        // if ($row->staff_provided_profiles) {
-                        //     $experts = explode('/', $row->staff_provided_profiles);
+                        // if (trim($row->staff_provided_profiles)) {
+                        //     $experts = explode('/', trim($row->staff_provided_profiles));
 
                         //     foreach ($experts as $key => $exp) {
                         //         $exp = trim($exp);
@@ -2621,68 +2622,68 @@ class ReferenceController extends Controller
 
                         // dd($experts);
 
-                        $reference = Reference::where('project_number', $row->no_affaire)->first();
+                        $reference = Reference::where('project_number', trim($row->no_affaire))->first();
 
                         // If reference does not already exists
                         if (!$reference) {
                             //Create new reference
                             $new_reference = new Reference;
-                            if ($row->no_affaire) {
-                                $new_reference->project_number = $row->no_affaire;
+                            if (trim($row->no_affaire)) {
+                                $new_reference->project_number = trim($row->no_affaire);
                             }
-                            if ($row->nom_affaire) {
-                                $new_reference->dfac_name = $row->nom_affaire;
+                            if (trim($row->nom_affaire)) {
+                                $new_reference->dfac_name = trim($row->nom_affaire);
                             }
-                            if ($row->dureemission) {
-                                $new_reference->estimated_duration = $row->dureemission;
+                            if (trim($row->dureemission)) {
+                                $new_reference->estimated_duration = trim($row->dureemission);
                             }
-                            if ($row->project_title) {
-                                $new_reference->project_name = $row->project_title;
+                            if (trim($row->project_title)) {
+                                $new_reference->project_name = trim($row->project_title);
                             }
-                            if ($row->services_title) {
-                                $new_reference->service_name = $row->services_title;
+                            if (trim($row->services_title)) {
+                                $new_reference->service_name = trim($row->services_title);
                             }
-                            if ($row->project_description) {
-                                $new_reference->project_description = $row->project_description;
+                            if (trim($row->project_description)) {
+                                $new_reference->project_description = trim($row->project_description);
                             }
-                            if ($row->services_description) {
-                                $new_reference->service_description = $row->services_description;
+                            if (trim($row->services_description)) {
+                                $new_reference->service_description = trim($row->services_description);
                             }
-                            if ($row->nstaff) {
-                                $new_reference->staff_number = $row->nstaff;
+                            if (trim($row->nstaff)) {
+                                $new_reference->staff_number = trim($row->nstaff);
                             }
-                            if ($row->n_staff_month_total) {
-                                $new_reference->seureca_man_months = $row->n_staff_month_total;
+                            if (trim($row->n_staff_month_total)) {
+                                $new_reference->seureca_man_months = trim($row->n_staff_month_total);
                             }
-                            if ($row->n_staff_month_consultant) {
-                                $new_reference->consultants_man_months = $row->n_staff_month_consultant;
+                            if (trim($row->n_staff_month_consultant)) {
+                                $new_reference->consultants_man_months = trim($row->n_staff_month_consultant);
                             }
-                            if ($row->project_cost_euro) {
-                                $new_reference->total_project_cost = $row->project_cost_euro;
+                            if (trim($row->project_cost_euro)) {
+                                $new_reference->total_project_cost = trim($row->project_cost_euro);
                             }
-                            if ($row->study_cost_euro) {
-                                $new_reference->seureca_services_cost = $row->study_cost_euro;
+                            if (trim($row->study_cost_euro)) {
+                                $new_reference->seureca_services_cost = trim($row->study_cost_euro);
                             }
-                            if ($row->construction_cost_euro) {
-                                $new_reference->work_cost = $row->construction_cost_euro;
+                            if (trim($row->construction_cost_euro)) {
+                                $new_reference->work_cost = trim($row->construction_cost_euro);
                             }
-                            if ($row->autre) {
-                                $new_reference->general_comments = $row->autre;
+                            if (trim($row->autre)) {
+                                $new_reference->general_comments = trim($row->autre);
                             }
 
-                            if ($row->location) {
-                                $new_reference->location = $row->location;
+                            if (trim($row->location)) {
+                                $new_reference->location = trim($row->location);
                             }
 
                             //Link zone
-                            if ($row->code_zone) {
-                                $zone = Zone::where('name', $row->code_zone)->first();
+                            if (trim($row->code_zone)) {
+                                $zone = Zone::where('name', trim($row->code_zone))->first();
                                 if ($zone) {
                                     $new_reference->zone = $zone->id;
                                 }
                                 else {
                                     $new_zone = new Zone;
-                                    $new_zone->name = $row->code_zone;
+                                    $new_zone->name = trim($row->code_zone);
                                     $new_zone->save();
 
                                     $new_reference->zone = $new_zone->id;
@@ -2690,62 +2691,62 @@ class ReferenceController extends Controller
                             }
 
                             //Link country
-                            if ($row->country) {
-                                $country = Country::where('name', $row->country)->first();
+                            if (trim($row->country)) {
+                                $country = Country::where('name', trim($row->country))->first();
                                 if ($country) {
                                     $new_reference->country = $country->id;
                                 }
                                 else {
                                     $new_country = new Country;
-                                    $new_country->name = $row->country;
+                                    $new_country->name = trim($row->country);
                                     $new_country->save();
 
                                     $new_reference->country = $new_country->id;
                                 }
                             }
 
-                            if ($row->start_year) {
-                                if ($row->start_month) {
-                                    if ($row->start_month < 10) {
-                                        // $start_date = '0'.$row->start_month.'-'.$row->start_year;
-                                        $start_date = $row->start_year.'-0'.$row->start_month;
+                            if (trim($row->start_year)) {
+                                if (trim($row->start_month)) {
+                                    if (trim($row->start_month) < 10) {
+                                        // $start_date = '0'.trim($row->start_month).'-'.trim($row->start_year);
+                                        $start_date = trim($row->start_year).'-0'.trim($row->start_month);
                                     }
                                     else {
-                                        // $start_date = $row->start_month.'-'.$row->start_year;
-                                        $start_date = $row->start_year.'-'.$row->start_month;
+                                        // $start_date = trim($row->start_month).'-'.trim($row->start_year);
+                                        $start_date = trim($row->start_year).'-'.trim($row->start_month);
                                     }
                                 }
                                 else {
-                                    // $start_date = '01-'.$row->start_year;
-                                    $start_date = $row->start_year.'-01';
+                                    // $start_date = '01-'.trim($row->start_year);
+                                    $start_date = trim($row->start_year).'-01';
                                 }
                                 $new_reference->start_date = $start_date;
                             }
 
-                            if ($row->end_year) {
-                                if ($row->end_month) {
-                                    if ($row->end_month < 10) {
-                                        // $end_date = '0'.$row->end_month.'-'.$row->end_year;
-                                        $end_date = $row->end_year.'-0'.$row->end_month;
+                            if (trim($row->end_year)) {
+                                if (trim($row->end_month)) {
+                                    if (trim($row->end_month) < 10) {
+                                        // $end_date = '0'.trim($row->end_month).'-'.trim($row->end_year);
+                                        $end_date = trim($row->end_year).'-0'.trim($row->end_month);
                                     }
                                     else {
-                                        // $end_date = $row->end_month.'-'.$row->end_year;
-                                        $end_date = $row->end_year.'-'.$row->end_month;
+                                        // $end_date = trim($row->end_month).'-'.trim($row->end_year);
+                                        $end_date = trim($row->end_year).'-'.trim($row->end_month);
                                     }
                                 }
                                 else {
-                                    // $end_date = '01-'.$row->end_year;
-                                    $end_date = $row->end_year.'-01';
+                                    // $end_date = '01-'.trim($row->end_year);
+                                    $end_date = trim($row->end_year).'-01';
                                 }
                                 $new_reference->end_date = $end_date;
                             }
 
-                            if ($row->nameclient) {
-                                $client = Client::where('name', $row->nameclient)->first();
+                            if (trim($row->nameclient)) {
+                                $client = Client::where('name', trim($row->nameclient))->first();
                                 if ($client) {
                                     if ($client->address == '') {
-                                        if ($row->adress_client) {
-                                            $client->address = $row->adress_client;
+                                        if (trim($row->adress_client)) {
+                                            $client->address = trim($row->adress_client);
                                             $client->save();
                                         }
                                     }
@@ -2753,9 +2754,9 @@ class ReferenceController extends Controller
                                 }
                                 else {
                                     $new_client = new Client;
-                                    $new_client->name = $row->nameclient;
-                                    if ($row->adress_client) {
-                                        $new_client->address = $row->adress_client;
+                                    $new_client->name = trim($row->nameclient);
+                                    if (trim($row->adress_client)) {
+                                        $new_client->address = trim($row->adress_client);
                                     }
                                     $new_client->save();
                                     $new_reference->client = $new_client->id;
@@ -2767,8 +2768,8 @@ class ReferenceController extends Controller
                             $new_reference->save();
 
                             //Link project managers
-                            if($row->chef_projet) {
-                                $managers = explode('/', $row->chef_projet);
+                            if(trim($row->chef_projet)) {
+                                $managers = explode('/', trim($row->chef_projet));
 
                                 foreach ($managers as $key => $name) {
                                     $name = trim($name);
@@ -2788,8 +2789,8 @@ class ReferenceController extends Controller
                             }
 
                             //Link consultants
-                            if ($row->partners) {
-                                $partners = explode('/', $row->partners);
+                            if (trim($row->partners)) {
+                                $partners = explode('/', trim($row->partners));
 
                                 foreach ($partners as $key => $name) {
                                     $name = trim($name);
@@ -2809,8 +2810,8 @@ class ReferenceController extends Controller
                             }
 
                             //Link financings
-                            if ($row->financing) {
-                                $financings = explode('/', $row->financing);
+                            if (trim($row->financing)) {
+                                $financings = explode('/', trim($row->financing));
 
                                 foreach ($financings as $key => $name) {
                                     $name = trim($name);
@@ -2832,11 +2833,11 @@ class ReferenceController extends Controller
 
 
                             //Link project manager (Senior staff)
-                            // if ($row->chefprojet) {
+                            // if (trim($row->chefprojet)) {
                             //     //If there is 2 managers
-                            //     if (str_contains($row->chefprojet, '/')) {
-                            //         $project_manager1 = strstr($row->chefprojet, '/', true);
-                            //         $project_manager2 = substr($row->chefprojet, strpos($row->chefprojet, "/") + 1);
+                            //     if (str_contains(trim($row->chefprojet), '/')) {
+                            //         $project_manager1 = strstr(trim($row->chefprojet), '/', true);
+                            //         $project_manager2 = substr(trim($row->chefprojet), strpos(trim($row->chefprojet), "/") + 1);
 
                             //         //Project manager 1
                             //         $pm1 = Contributor::where('name', $project_manager1)->first();
@@ -2863,13 +2864,13 @@ class ReferenceController extends Controller
                             //         }
                             //     }
                             //     else {
-                            //         $project_manager = Contributor::where('name', $row->chefprojet)->first();
+                            //         $project_manager = Contributor::where('name', trim($row->chefprojet))->first();
                             //         if ($project_manager) {
                             //             $new_reference->contributors()->attach($project_manager->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
                             //         }
                             //         else {
                             //             $new_project_manager = new Contributor;
-                            //             $new_project_manager->name = $row->chefprojet;
+                            //             $new_project_manager->name = trim($row->chefprojet);
                             //             $new_project_manager->save();
                             //             $new_reference->contributors()->attach($new_project_manager->id, ['function_on_project'=>'Senior', 'responsability_on_project'=>'Project Manager']);
                             //         }
@@ -2877,189 +2878,189 @@ class ReferenceController extends Controller
                             // }
 
                             //Measures
-                            if ($row->inhabitants) {
+                            if (trim($row->inhabitants)) {
                                 // $measure = Measure::find(1);
-                                $new_reference->measures()->attach(1, ['value'=>$row->inhabitants]);
+                                $new_reference->measures()->attach(1, ['value'=>trim($row->inhabitants)]);
                             }
-                            if ($row->subscribers_water_supp) {
-                                $new_reference->measures()->attach(2, ['value'=>$row->subscribers_water_supp]);
+                            if (trim($row->subscribers_water_supp)) {
+                                $new_reference->measures()->attach(2, ['value'=>trim($row->subscribers_water_supp)]);
                             }
-                            if ($row->subscribers_waste_water) {
-                                $new_reference->measures()->attach(6, ['value'=>$row->subscribers_waste_water]);
+                            if (trim($row->subscribers_waste_water)) {
+                                $new_reference->measures()->attach(6, ['value'=>trim($row->subscribers_waste_water)]);
                             }
-                            if ($row->subscribers_energie) {
-                                $new_reference->measures()->attach(10, ['value'=>$row->subscribers_energie]);
+                            if (trim($row->subscribers_energie)) {
+                                $new_reference->measures()->attach(10, ['value'=>trim($row->subscribers_energie)]);
                             }
-                            if ($row->capacity) {
-                                $new_reference->measures()->attach(3, ['value'=>$row->capacity, 'unit'=>'m³/d']);
+                            if (trim($row->capacity)) {
+                                $new_reference->measures()->attach(3, ['value'=>trim($row->capacity), 'unit'=>'m³/d']);
                             }
-                            // if ($row->networklength_ws) {
-                            //     $new_reference->measures()->attach(3, ['value'=>$row->networklength_ws, 'unit'=>'m³/d']);
+                            // if (trim($row->networklength_ws)) {
+                            //     $new_reference->measures()->attach(3, ['value'=>trim($row->networklength_ws), 'unit'=>'m³/d']);
                             // }
-                            if ($row->networklength_ww) {
-                                $new_reference->measures()->attach(8, ['value'=>$row->networklength_ww]);
+                            if (trim($row->networklength_ww)) {
+                                $new_reference->measures()->attach(8, ['value'=>trim($row->networklength_ww)]);
                             }
-                            if ($row->networklength_energie) {
-                                $new_reference->measures()->attach(25, ['value'=>$row->networklength_energie]);
+                            if (trim($row->networklength_energie)) {
+                                $new_reference->measures()->attach(25, ['value'=>trim($row->networklength_energie)]);
                             }
-                            if ($row->networklength_energie) {
-                                $new_reference->measures()->attach(25, ['value'=>$row->networklength_energie]);
+                            if (trim($row->networklength_energie)) {
+                                $new_reference->measures()->attach(25, ['value'=>trim($row->networklength_energie)]);
                             }
-                            if ($row->capacity_drinking_water) {
-                                if (!$row->capacity) {
-                                    $new_reference->measures()->attach(3, ['value'=>$row->capacity_drinking_water, 'unit'=>'m³/d']);
+                            if (trim($row->capacity_drinking_water)) {
+                                if (!trim($row->capacity)) {
+                                    $new_reference->measures()->attach(3, ['value'=>trim($row->capacity_drinking_water), 'unit'=>'m³/d']);
                                 }
                             }
-                            if ($row->capacity_wastewater) {
-                                $new_reference->measures()->attach(7, ['value'=>$row->capacity_wastewater, 'unit'=>'m³/d']);
+                            if (trim($row->capacity_wastewater)) {
+                                $new_reference->measures()->attach(7, ['value'=>trim($row->capacity_wastewater), 'unit'=>'m³/d']);
                             }
-                            if ($row->capacity_energie) {
-                                $new_reference->measures()->attach(11, ['value'=>$row->capacity_energie, 'unit'=>'Mw']);
+                            if (trim($row->capacity_energie)) {
+                                $new_reference->measures()->attach(11, ['value'=>trim($row->capacity_energie), 'unit'=>'Mw']);
                             }
 
                             //Expertises
-                            if ($row->watertreatment) {
+                            if (trim($row->watertreatment)) {
                                 $new_reference->expertises()->attach(36);
                             }
-                            if ($row->industrial) {
+                            if (trim($row->industrial)) {
                                 $new_reference->expertises()->attach(25);
                             }
-                            if ($row->seweragesystem) {
+                            if (trim($row->seweragesystem)) {
                                 $new_reference->expertises()->attach(31);
                                 $new_reference->expertises()->attach(32);
                                 $new_reference->expertises()->attach(33);
                                 $new_reference->expertises()->attach(34);
                             }
-                            if ($row->industrial) {
+                            if (trim($row->industrial)) {
                                 $new_reference->expertises()->attach(39);
                             }
-                            if ($row->environment) {
+                            if (trim($row->environment)) {
                                 $new_reference->expertises()->attach(29);
                             }
-                            if ($row->financialtariffinstitutional) {
+                            if (trim($row->financialtariffinstitutional)) {
                                 $new_reference->expertises()->attach(51);
                             }
-                            if ($row->management_environmental_iso14000) {
+                            if (trim($row->management_environmental_iso)14000) {
                                 $new_reference->expertises()->attach(27);
                             }
-                            if ($row->impactassessment) {
+                            if (trim($row->impactassessment)) {
                                 $new_reference->expertises()->attach(26);
                             }
-                            if ($row->customerservice) {
+                            if (trim($row->customerservice)) {
                                 $new_reference->expertises()->attach(49);
                             }
-                            if ($row->solid_waste) {
+                            if (trim($row->solid_waste)) {
                                 $new_reference->expertises()->attach(24);
                             }
-                            if ($row->water_distribution_system_modelisation) {
+                            if (trim($row->water_distribution_system_modelisation)) {
                                 $new_reference->expertises()->attach(35);
                             }
-                            if ($row->pompage_eau_potable) {
+                            if (trim($row->pompage_eau_potable)) {
                                 $new_reference->expertises()->attach(42);
                             }
-                            if ($row->wwtp_filiere_classique) {
+                            if (trim($row->wwtp_filiere_classique)) {
                                 $new_reference->expertises()->attach(37);
                             }
-                            if ($row->wwtp_filiere_biofiltre_mbr) {
+                            if (trim($row->wwtp_filiere_biofiltre_mbr)) {
                                 $new_reference->expertises()->attach(38);
                             }
-                            if ($row->wwtp_reutilisation_eaux_usees) {
+                            if (trim($row->wwtp_reutilisation_eaux_usees)) {
                                 $new_reference->expertises()->attach(40);
                             }
-                            if ($row->gestion_des_boues) {
+                            if (trim($row->gestion_des_boues)) {
                                 $new_reference->expertises()->attach(41);
                             }
-                            if ($row->pompage_relevement) {
+                            if (trim($row->pompage_relevement)) {
                                 $new_reference->expertises()->attach(42);
                             }
-                            if ($row->demographie_socio_eco) {
+                            if (trim($row->demographie_socio_eco)) {
                                 $new_reference->expertises()->attach(54);
                             }
-                            if ($row->urbanisme) {
+                            if (trim($row->urbanisme)) {
                                 $new_reference->expertises()->attach(55);
                             }
-                            if ($row->demande_en_eau) {
+                            if (trim($row->demande_en_eau)) {
                                 $new_reference->expertises()->attach(56);
                             }
-                            if ($row->energie_modelisation_electrique) {
+                            if (trim($row->energie_modelisation_electrique)) {
                                 $new_reference->expertises()->attach(3);
                             }
-                            if ($row->chauffage) {
+                            if (trim($row->chauffage)) {
                                 $new_reference->expertises()->attach(4);
                             }
-                            if ($row->exploitation_maintenance) {
+                            if (trim($row->exploitation_maintenance)) {
                                 $new_reference->expertises()->attach(44);
                             }
-                            if ($row->management_qualite) {
+                            if (trim($row->management_qualite)) {
                                 $new_reference->expertises()->attach(45);
                             }
-                            if ($row->hygiene_et_seurite) {
+                            if (trim($row->hygiene_et_seurite)) {
                                 $new_reference->expertises()->attach(46);
                             }
-                            if ($row->juridique) {
+                            if (trim($row->juridique)) {
                                 $new_reference->expertises()->attach(47);
                             }
-                            if ($row->service_clientele) {
+                            if (trim($row->service_clientele)) {
                                 $new_reference->expertises()->attach(49);
                             }
-                            if ($row->analyse_tarifaire_et_fin) {
+                            if (trim($row->analyse_tarifaire_et_fin)) {
                                 $new_reference->expertises()->attach(50);
                                 $new_reference->expertises()->attach(51);
                             }
-                            if ($row->rh) {
+                            if (trim($row->rh)) {
                                 $new_reference->expertises()->attach(48);
                             }
 
                             //External Services
-                            if ($row->emasterplan) {
+                            if (trim($row->emasterplan)) {
                                 $new_reference->external_services()->attach(1);
                             }
-                            if ($row->efeasibilitystudy) {
+                            if (trim($row->efeasibilitystudy)) {
                                 $new_reference->external_services()->attach(2);
                             }
-                            if ($row->eprelimirarydesign) {
+                            if (trim($row->eprelimirarydesign)) {
                                 $new_reference->external_services()->attach(3);
                             }
-                            if ($row->edetaileddesign) {
+                            if (trim($row->edetaileddesign)) {
                                 $new_reference->external_services()->attach(4);
                             }
-                            if ($row->etenderdocuments) {
+                            if (trim($row->etenderdocuments)) {
                                 $new_reference->external_services()->attach(5);
                             }
-                            if ($row->ebidanalysisevaluation) {
+                            if (trim($row->ebidanalysisevaluation)) {
                                 $new_reference->external_services()->attach(6);
                             }
-                            if ($row->eworksupervision) {
+                            if (trim($row->eworksupervision)) {
                                 $new_reference->external_services()->attach(7);
                                 $new_reference->external_services()->attach(8);
                             }
-                            if ($row->etechnicalassistance) {
+                            if (trim($row->etechnicalassistance)) {
                                 $new_reference->external_services()->attach(9);
                             }
-                            if ($row->etraining) {
+                            if (trim($row->etraining)) {
                                 $new_reference->external_services()->attach(10);
                             }
 
                             //Internal Services
-                            if ($row->vwmanagmentcontract || $row->vwleasecontract || $row->vwconcessioncontract) {
+                            if (trim($row->vwmanagmentcontract) || trim($row->vwleasecontract) || trim($row->vwconcessioncontract)) {
                                 $new_reference->internal_services()->attach(2);
-                                if ($row->vwmanagmentcontract) {
+                                if (trim($row->vwmanagmentcontract)) {
                                     $new_reference->internal_services()->attach(3);
                                 }
-                                if ($row->vwleasecontract) {
+                                if (trim($row->vwleasecontract)) {
                                     $new_reference->internal_services()->attach(4);
                                 }
-                                if ($row->vwconcessioncontract) {
+                                if (trim($row->vwconcessioncontract)) {
                                     $new_reference->internal_services()->attach(5);
                                 }
                             }
-                            if ($row->vwbot) {
+                            if (trim($row->vwbot)) {
                                 $new_reference->internal_services()->attach(8);
                             }
-                            if ($row->vwoperatorstechnicalassistance) {
+                            if (trim($row->vwoperatorstechnicalassistance)) {
                                 $new_reference->internal_services()->attach(1);
                             }
-                            if ($row->etechnicalassistance) {
+                            if (trim($row->etechnicalassistance)) {
                                 $new_reference->internal_services()->attach(9);
                             }
                         }
@@ -3078,13 +3079,24 @@ class ReferenceController extends Controller
         return redirect()->back();
     }
 
-    public function export_page()
-    {
-        
-    }
-
     public function export()
     {
-
+        $references = Reference::all();
+        $data = null;
+        foreach ($references as $ref) {
+            if (is_null($data)) {
+                $data = implode(',', array_keys($ref->toArray())).",x\n";
+            }
+            // $data.= implode(',', $ref->toArray());
+            foreach ($ref->toArray() as $value) {
+                $data.= '"'.str_replace(['"'], ['\\"'], $value).'",';
+                // $data .= '"'.e($value).'",';
+            }
+            $data .= "\n";
+            // break;
+        }
+        
+        return response($data)
+                ->header('Content-Type','text/csv; charset=utf-8');
     }
 }

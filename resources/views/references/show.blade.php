@@ -98,13 +98,13 @@
 								</button>
 								@if (count($linked_languages) > 0)
 									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
-									  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Translations
+									  <i class="fa fa-language" aria-hidden="true"></i> Translations
 									</button>
 								@endif
 								<!-- If Dcom manager, User admin, or creator -->
 								@if (Auth::user()->profile_id == 3 || Auth::user()->profile_id == 5 || Auth::user()->profile_id == $reference->created_by)
 									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										<i class="fa fa-trash" aria-hidden="true"></i>
 									</button>
 								@endif
 								@if(Auth::user()->profile_id == 3)
@@ -210,6 +210,18 @@
 	var measures = {!! $measures_values->toJson() !!};
 	var qualifiers = {!! $qualifiers_values->toJson() !!};
 	var selected_measures = {!! $reference->measures->toJson() !!};
+
+	$(function(){
+	  var hash = window.location.hash;
+	  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+	  $('.nav-tabs a').click(function (e) {
+	    $(this).tab('show');
+	    var scrollmem = $('body').scrollTop() || $('html').scrollTop();
+	    window.location.hash = this.hash;
+	    $('html,body').scrollTop(scrollmem);
+	  });
+	});
 
 	var bar = $('.progress-bar');
 	var percent = $('.percent');

@@ -64,7 +64,7 @@
 			<input type="text" class="form-control involved_staff" id="involved_staff" name="involved_staff[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<i class="fa fa-plus" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -85,7 +85,7 @@
 			<input id="staff_function_fr_0" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button id="clean_staff_fields" class="btn btn-default" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					<i class="fa fa-eraser" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -102,7 +102,7 @@
 	    			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 	    			Name
     			</span>
-	        <input id="involved_staff_temp" class="form-control nameInput" type="text" data-provide="typeahead" autocomplete="off">
+	        	<input id="involved_staff_temp" class="form-control nameInput" type="text" data-provide="typeahead" autocomplete="off">
 			</div>
 	    </div>
 	</div>
@@ -119,7 +119,7 @@
 				<input id="staff_function_fr_temp" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
 				<span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						<i class="fa fa-trash" aria-hidden="true"></i>
 					</button>
 				</span>
 			</div>
@@ -142,7 +142,7 @@
 			<input type="text" class="form-control experts" id="experts" name="experts[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addExpertButton" type="button">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<i class="fa fa-plus" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -163,7 +163,7 @@
 			<input id="expert_function_fr_0" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="experts[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button id="clean_expert_fields" class="btn btn-default" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					<i class="fa fa-eraser" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -197,7 +197,7 @@
 				<input id="expert_function_temp_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
 				<span class="input-group-btn">
 					<button class="btn btn-default removeExpertButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						<i class="fa fa-trash" aria-hidden="true"></i>
 					</button>
 				</span>
 			</div>
@@ -252,14 +252,14 @@
 			<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addConsultantButton" type="button">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<i class="fa fa-plus" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
 	</div>
 	<div class="col-sm-4">
 		<button id="clean_consultant" class="btn btn-default hide" type="button">
-			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+			<i class="fa fa-trash" aria-hidden="true"></i>
 		</button>
 	</div>
 </div>
@@ -275,7 +275,7 @@
 			<input id="involved_consultant_temp" type="text" class="form-control consultantInput" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeConsultantButton" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					<i class="fa fa-trash" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -415,7 +415,7 @@
 			<input id="financ_fr_0" type="text" class="form-control financing_fr" name="financing[0][]" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addFinancingButton" type="button">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<i class="fa fa-plus" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -435,16 +435,14 @@
 	</div>
 	<div class="col-sm-4">
 		<div class="input-group">
-			<div class="input-group">
-				<span class="input-group-addon" id="basic-addon2">
-					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-					Name
-				</span>
-				<input id="financing_fr_input_temp" type="text" class="form-control financingFrInput" data-provide="typeahead" autocomplete="off">
-			</div>
+			<span class="input-group-addon" id="basic-addon2">
+				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+				Name
+			</span>
+			<input id="financing_fr_input_temp" type="text" class="form-control financingFrInput" data-provide="typeahead" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeFinancingButton" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					<i class="fa fa-trash" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>

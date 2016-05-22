@@ -89,7 +89,6 @@
 							            <li><a href="{{ action('ReferenceController@management_page') }}"><span class="glyphicon glyphicon-wrench"></span> Management</a></li>
 										<li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
-							            <li><a href=""><span class="glyphicon glyphicon-export"></span> Export</a></li>
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>
 									</ul>
@@ -120,6 +119,9 @@
 						</ul>
 						<!-- Right side of navbar -->
 						<ul class="nav navbar-nav navbar-right">
+							@if (Auth::user()->avatar != '')
+								<img width="50px" height="50px" src="{{Auth::user()->avatar}}" class="profile-image img-circle hidden-xs">
+							@endif
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{ Auth::user()->username }}
 									<!-- If user admin -->
@@ -144,9 +146,7 @@
 									<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 								</ul>
 							</li>
-							@if (Auth::user()->avatar != '')
-								<img width="50px" height="50px" src="{{Auth::user()->avatar}}" class="profile-image img-circle hidden-xs">
-							@endif
+							
 						</ul>
 					</div><!--/.nav-collapse -->
 		    	</div>

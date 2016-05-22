@@ -13,6 +13,10 @@ body {
   padding-top: 60px;
 }
 
+.export-btn {
+  margin-left: 2px;
+}
+
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */

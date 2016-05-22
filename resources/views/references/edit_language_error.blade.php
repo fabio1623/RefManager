@@ -67,13 +67,13 @@
 								@else
 									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="">
 								@endif
-								  <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Translations
+								  <i class="fa fa-language" aria-hidden="true"></i> Translations
 								</button>
 								<button id='btn_language_selector' type="button" class="btn btn-default btn-sm hidden">
 								  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</button>
 								<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									<i class="fa fa-trash" aria-hidden="true"></i>
 								</button>
 								<a class="btn btn-default btn-sm" href="{{ URL::previous() }}">
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
@@ -146,6 +146,18 @@
 
 <script>
 	var linked_languages = {!! $linked_languages->toJson() !!};
+
+	$(function(){
+	  var hash = window.location.hash;
+	  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+	  $('.nav-tabs a').click(function (e) {
+	    $(this).tab('show');
+	    var scrollmem = $('body').scrollTop() || $('html').scrollTop();
+	    window.location.hash = this.hash;
+	    $('html,body').scrollTop(scrollmem);
+	  });
+	});
 
 	$('#btn_delete').click( function(e) {
 		var confirm_box = confirm("Are you sure ?");

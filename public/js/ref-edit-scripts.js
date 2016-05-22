@@ -321,7 +321,7 @@ if (reference.contact != null) {
 	$('#contact_info').show("fast");
 };
 
-var staff_index = linked_staff.length;
+var staff_index = linked_staff.length+1;
 $('#form_save').on('click', '.addButton', function() {
 	var field1 = 'staff_function_' + staff_index;
 	var field2 = 'staff_function_fr_' + staff_index;
@@ -333,18 +333,24 @@ $('#form_save').on('click', '.addButton', function() {
                         .removeAttr('id')
                         .insertBefore($template)
                         .find('[class="form-control nameInput"]')
-                        .attr('name', 'involved_staff[]')
-                        .on('load', customTypeahead(involved_staff_db, 'nameInput', 'name'));
+                        .attr('name', 'involved_staff[]');
+                        // .on('load', customTypeahead(involved_staff_db, 'nameInput', 'name'));
+
+                        customTypeahead(involved_staff_db, 'nameInput', 'name');
 
     $('#function_input')
     		.attr('name', 'involved_staff_function[]')
-    		.on('load', customTypeahead(senior_profiles, 'functionInput', 'responsability_on_project'))
+    		// .on('load', customTypeahead(senior_profiles, 'functionInput', 'responsability_on_project'))
     		.attr('id', field1);
+
+    		customTypeahead(senior_profiles, 'functionInput', 'responsability_on_project');
 
     $('#function_input_fr')
     		.attr('name', 'involved_staff_function_fr[]')
-    		.on('load', customTypeahead(senior_profiles, 'functionInput_fr', 'responsability_on_project_fr'))
+    		// .on('load', customTypeahead(senior_profiles, 'functionInput_fr', 'responsability_on_project_fr'))
     		.attr('id', field2);
+
+    		customTypeahead(senior_profiles, 'functionInput_fr', 'responsability_on_project_fr');
 
 	$('#' + field1).change( function (e) {
 		getTranslation(field1, senior_profiles, 'responsability_on_project', 'responsability_on_project_fr', field2);
@@ -363,7 +369,7 @@ $('#form_save').on('click', '.addButton', function() {
     $row.remove();
 });
 
-var expert_index = linked_experts.length;
+var expert_index = linked_experts.length+1;
 $('#form_save').on('click', '.addExpertButton', function() {
 	var field1 = 'expert_function_' + expert_index;
 	var field2 = 'expert_function_fr_' + expert_index;
@@ -375,18 +381,25 @@ $('#form_save').on('click', '.addExpertButton', function() {
                         .removeAttr('id')
                         .insertBefore($template)
                         .find('[class="form-control expertNameInput"]')
-                        .attr('name', 'experts[]')
-                        .on('load', customTypeahead(experts_db, 'expertNameInput', 'name'));
+                        .attr('name', 'experts[]');
+                        // .attr('id', field1);
+                        // .on('load', customTypeahead(experts_db, 'expertNameInput', 'name'));
+
+                        customTypeahead(experts_db, 'expertNameInput', 'name');
 
     $('#expert_functions_input')
     	.attr('name', 'expert_functions[]')
-    	.on('load', customTypeahead(expert_profiles, 'expertFunctionInput', 'responsability_on_project'))
+    	// .on('load', customTypeahead(expert_profiles, 'expertFunctionInput', 'responsability_on_project'))
     	.attr('id', field1);
+
+    	customTypeahead(expert_profiles, 'expertFunctionInput', 'responsability_on_project');
 
     $('#expert_functions_input_fr')
     	.attr('name', 'expert_functions_fr[]')
-    	.on('load', customTypeahead(expert_profiles, 'expertFunctionInput_fr', 'responsability_on_project_fr'))
+    	// .on('load', customTypeahead(expert_profiles, 'expertFunctionInput_fr', 'responsability_on_project_fr'))
     	.attr('id', field2);
+
+    	customTypeahead(expert_profiles, 'expertFunctionInput_fr', 'responsability_on_project_fr');
 
 	$('#' + field1).change( function (e) {
 		getTranslation(field1, expert_profiles, 'responsability_on_project', 'responsability_on_project_fr', field2);
@@ -413,8 +426,9 @@ $('#form_save').on('click', '.addConsultantButton', function() {
                         .removeAttr('id')
                         .insertBefore($template)
                         .find('[class="form-control consultantInput"]')
-                        .attr('name', 'consultants[]')
-                        .on('load', customTypeahead(consultants_db, 'consultantInput', 'name'));
+                        .attr('name', 'consultants[]');
+
+                        customTypeahead(consultants_db, 'consultantInput', 'name');
 })
 .on('click', '.removeConsultantButton', function() {
     var $row    = $(this).closest('.consultantsTemplate');
@@ -423,44 +437,45 @@ $('#form_save').on('click', '.addConsultantButton', function() {
     $row.remove();
 });
 
-var financ_index = linked_fundings.length;
+var financ_index = linked_fundings.length+1;
 $('#form_save').on('click', '.addFinancingButton', function() {
-		var field1 = 'financ_' + financ_index;
-		var field2 = 'financ_fr_' + financ_index;
+	var field1 = 'financ_' + financ_index;
+	var field2 = 'financ_fr_' + financ_index;
 
-        var $template = $('#financingsTemplate'),
-            $clone    = $template
-                            .clone()
-                            .removeClass('hide')
-                            .removeAttr('id')
-                            .insertBefore($template)
-                            .find('[class="form-control financingInput"]')
-                            .attr('name', 'financing[' + financ_index +'][]')
-                            .attr('id', field1)
-                            .on('load', customTypeahead(fundings_in_db, 'financingInput', 'name'));
+    var $template = $('#financingsTemplate'),
+        $clone    = $template
+                        .clone()
+                        .removeClass('hide')
+                        .insertBefore($template)
+                        .find('[class="form-control financingInput"]')
+                        .attr('name', 'financing[' + financ_index +'][]')
+                        .attr('id', field1);
 
-            $('#financing_fr_input')
-            			.attr('name', 'financing[' + financ_index + '][]')
-            			.removeAttr('id')
-            			.attr('id', field2)
-            			.on('load', customTypeahead(fundings_in_db, 'financingFrInput', 'name_fr'));
+                        customTypeahead(fundings_in_db, 'financingInput', 'name');
 
-			$('#' + field1).change( function (e) {
-				getTranslation(field1, fundings_in_db, 'name', 'name_fr', field2);
-			});
+        $('#financing_fr_input')
+        			.attr('name', 'financing[' + financ_index + '][]')
+        			.removeAttr('id')
+        			.attr('id', field2);
 
-			$('#' + field2).change( function (e) {
-				getTranslation(field2, fundings_in_db, 'name_fr', 'name', field1);
-			});
+        			customTypeahead(fundings_in_db, 'financingFrInput', 'name_fr');
 
-            financ_index++;
-    })
-	.on('click', '.removeFinancingButton', function() {
-        var $row    = $(this).closest('.financingsTemplate');
+		$('#' + field1).change( function (e) {
+			getTranslation(field1, fundings_in_db, 'name', 'name_fr', field2);
+		});
 
-        // Remove element containing the option
-        $row.remove();
-    });
+		$('#' + field2).change( function (e) {
+			getTranslation(field2, fundings_in_db, 'name_fr', 'name', field1);
+		});
+
+        financ_index++;
+})
+.on('click', '.removeFinancingButton', function() {
+    var $row    = $(this).closest('.financingsTemplate');
+
+    // Remove element containing the option
+    $row.remove();
+});
 
 $('#clean_staff_fields').click( function () {
 	$('#involved_staff').val('');

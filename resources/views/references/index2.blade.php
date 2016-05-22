@@ -8,6 +8,10 @@
 			<div class="row">
 				<div class="col-sm-6 col-xs-6">References</div>
 				<div class="col-sm-6 col-xs-6">
+					<!-- If user admin or dcom manager -->
+					@if(Auth::user()->profile_id == 5)
+						<a class="btn btn-default btn-xs pull-right export-btn" href="{{ action('ReferenceController@export') }}">Export</a>
+					@endif
 					<!-- Extract button -->
 					<div class="btn-group pull-right">
 						<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

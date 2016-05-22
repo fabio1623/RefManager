@@ -55,7 +55,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">Services</label>
 						<div class="col-md-4">
-							<div class="btn-group" role="group" aria-label="...">
+							<!-- <div class="btn-group" role="group" aria-label="..."> -->
 								<!-- <a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> 
 									External
@@ -70,7 +70,7 @@
 								<a class="btn btn-link btn-md" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}">
 									Change internal
 								</a>
-							</div>
+							<!-- </div> -->
 						</div>
 					</div>
 

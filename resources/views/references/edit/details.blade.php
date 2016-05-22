@@ -75,17 +75,18 @@
 				@else
 					<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="">
 				@endif
-				<span class="input-group-btn">
 					@if ($i == 0)
+					<span class="input-group-btn">
 						<button class="btn btn-default addButton" type="button">
-							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							<i class="fa fa-plus" aria-hidden="true"></i>
+							<!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
 						</button>
+					</span>
 					@else
-						<button class="btn btn-default removeButton" type="button">
-							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-						</button>
+						<!-- <button class="btn btn-default removeButton" type="button">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</button> -->
 					@endif
-				</span>
 			</div>
 		</div>
 	</div>
@@ -110,11 +111,18 @@
 					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}" autocomplete="off">
 					<span class="input-group-btn">
 						<button id="clean_staff_fields" class="btn btn-default" type="button">
-							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							<i class="fa fa-eraser" aria-hidden="true"></i>
+							<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
 						</button>
 					</span>
 				@else
 					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}" autocomplete="off">
+					<span class="input-group-btn">
+					<button class="btn btn-default removeButton" type="button">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+						<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
+					</button>
+				</span>
 				@endif
 			</div>
 		</div>
@@ -137,7 +145,8 @@
 			<input type="text" class="form-control involved_staff" id="involved_staff" name="involved_staff[]" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<i class="fa fa-plus" aria-hidden="true"></i>
+					<!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
 				</button>
 			</span>
 		</div>
@@ -156,6 +165,12 @@
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
 			<input id="staff_function_fr_0" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" autocomplete="off">
+			<span class="input-group-btn">
+				<button id="clean_staff_fields" class="btn btn-default" type="button">
+					<i class="fa fa-eraser" aria-hidden="true"></i>
+					<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
+				</button>
+			</span>
 		</div>
 	</div>
 </div>
@@ -172,11 +187,11 @@
 	    			Name
     			</span>
 		        <input id="name_input" class="form-control nameInput" type="text" autocomplete="off">
-		        <span class="input-group-btn">
+		        <!-- <span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						<i class="fa fa-trash" aria-hidden="true"></i>
 					</button>
-				</span>
+				</span> -->
 			</div>
 	    </div>
 	</div>
@@ -191,6 +206,12 @@
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
 				<input id="function_input_fr" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="" autocomplete="off">
+				<span class="input-group-btn">
+					<button class="btn btn-default removeButton" type="button">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+						<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
+					</button>
+				</span>
 			</div>
 	    </div>
 	</div>
@@ -222,17 +243,17 @@
 				@else
 					<input type="text" class="form-control experts" id="experts" name="experts[]" value="" autocomplete="off">
 				@endif
-				<span class="input-group-btn">
 					@if ($i == 0)
+					<span class="input-group-btn">
 						<button class="btn btn-default addExpertButton" type="button">
-							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							<i class="fa fa-plus" aria-hidden="true"></i>
 						</button>
+					</span>
 					@else
-						<button class="btn btn-default removeExpertButton" type="button">
-							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-						</button>
+						<!-- <button class="btn btn-default removeExpertButton" type="button">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</button> -->
 					@endif
-				</span>
 			</div>
 		</div>
 	</div>
@@ -256,11 +277,16 @@
 					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}" autocomplete="off">
 					<span class="input-group-btn">
 						<button id="clean_expert_fields" class="btn btn-default" type="button">
-							<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							<i class="fa fa-eraser" aria-hidden="true"></i>
 						</button>
 					</span>
 				@else
 					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}" autocomplete="off">
+					<span class="input-group-btn">
+						<button class="btn btn-default removeExpertButton" type="button">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</span>
 				@endif
 			</div>
 		</div>
@@ -283,7 +309,7 @@
 			<input type="text" class="form-control experts" id="experts" name="experts[]" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addExpertButton" type="button">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<i class="fa fa-plus" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -302,6 +328,11 @@
 	  <div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">Profile</span>
 			<input id="expert_function_fr_0" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" autocomplete="off">
+			<span class="input-group-btn">
+				<button id="clean_expert_fields" class="btn btn-default" type="button">
+					<i class="fa fa-eraser" aria-hidden="true"></i>
+				</button>
+			</span>
 		</div>
 	</div>
 </div>
@@ -318,11 +349,11 @@
 	    			Name
     			</span>
 		        <input id="expert_name_input" class="form-control expertNameInput" type="text" autocomplete="off">
-		        <span class="input-group-btn">
+		        <!-- <span class="input-group-btn">
 					<button class="btn btn-default removeExpertButton" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						<i class="fa fa-trash" aria-hidden="true"></i>
 					</button>
-				</span>
+				</span> -->
 			</div>
 	    </div>
 	</div>
@@ -337,6 +368,11 @@
 	        <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
 				<input id="expert_functions_input_fr" type="text" class="form-control expertFunctionInput_fr" placeholder="" aria-describedby="" autocomplete="off">
+				<span class="input-group-btn">
+					<button class="btn btn-default removeExpertButton" type="button">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</button>
+				</span>
 			</div>
 	    </div>
 	</div>
@@ -391,14 +427,14 @@
 						<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default addConsultantButton" type="button">
-								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								<i class="fa fa-plus" aria-hidden="true"></i>
 							</button>
 						</span>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<button id="clean_consultant" class="btn btn-default" type="button">
-						<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+						<i class="fa fa-eraser" aria-hidden="true"></i>
 					</button>
 				</div>
 			</div>
@@ -413,7 +449,7 @@
 						<input type="text" class="form-control consultantInput involved_consultants" id="involved_consultants" name="consultants[]" value="{{$consultants[$i]->name}}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default removeConsultantButton" type="button">
-								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+								<i class="fa fa-trash" aria-hidden="true"></i>
 							</button>
 						</span>
 					</div>
@@ -433,14 +469,14 @@
 			<input type="text" class="form-control involved_consultants" id="involved_consultants" name="consultants[]" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default addConsultantButton" type="button">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					<i class="fa fa-plus" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
 	</div>
 	<div class="col-sm-4">
 		<button id="clean_consultant" class="btn btn-default hide" type="button">
-			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+			<i class="fa fa-eraser" aria-hidden="true"></i>
 		</button>
 	</div>
 </div>
@@ -457,7 +493,7 @@
 			<input type="text" class="form-control consultantInput" id="involved_consultants" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeConsultantButton" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					<i class="fa fa-trash" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>
@@ -642,7 +678,7 @@
 						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default addFinancingButton" type="button">
-								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								<i class="fa fa-plus" aria-hidden="true"></i>
 							</button>
 						</span>
 					</div>
@@ -668,7 +704,7 @@
 						<input id="financ_fr_{{$i}}" type="text" class="form-control financing" name="financing[{{$i}}][]" value="{{ $financings[$i]->name_fr }}" autocomplete="off">
 						<span class="input-group-btn">
 							<button class="btn btn-default removeFinancingButton" type="button">
-								<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+								<i class="fa fa-trash" aria-hidden="true"></i>
 							</button>
 						</span>
 					</div>
@@ -697,7 +733,7 @@
 				<input id="financ_fr_0" type="text" class="form-control" name="financing[0][]" autocomplete="off">
 				<span class="input-group-btn">
 					<button class="btn btn-default addFinancingButton" type="button">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+						<i class="fa fa-plus" aria-hidden="true"></i>
 					</button>
 				</span>
 			</div>
@@ -726,7 +762,7 @@
 			<input type="text" class="form-control financingFrInput" id="financing_fr_input" autocomplete="off">
 			<span class="input-group-btn">
 				<button class="btn btn-default removeFinancingButton" type="button">
-					<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+					<i class="fa fa-trash" aria-hidden="true"></i>
 				</button>
 			</span>
 		</div>

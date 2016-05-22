@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Mail;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -67,6 +69,13 @@ class AccessController extends Controller
         $access->subsidiary_id = $request->company;
         
         $access->save();
+
+        $subsidiary = Subsidiary::findOrFail($access->subsidiary_id);
+
+        Mail::queue('emails.request_sent', ['access'=>$access, 'subsidiary'=>$subsidiary], function($message) use ($subsidiary) {
+            $message->from('noreply@seureca.com', 'Refmanager');
+            $message->to('sarmentopedrofabio@gmail.com')->subject('New access request for '.$subsidiary->name);
+        });
 
         // $requests = AccessRequest::where('seen', 0)->get();
 
