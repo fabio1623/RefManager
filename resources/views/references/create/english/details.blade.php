@@ -51,7 +51,7 @@
 <hr>
 
 <div class="form-group">
-	<label class="col-sm-4 control-label">Senior staff</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-users" aria-hidden="true"></i> Senior staff</label>
 </div>
 <div class="form-group">
 	<!-- <label for="involved_staff" class="col-sm-4 control-label">Staff involved</label> -->
@@ -129,7 +129,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Staff provided</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-users" aria-hidden="true"></i> Staff provided</label>
 </div>
 <div class="form-group">
 	<!-- <label for="experts" class="col-sm-4 control-label">Experts employed</label> -->
@@ -239,7 +239,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Partners</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-users" aria-hidden="true"></i> Partners</label>
 </div>
 <div class="form-group">
 	<!-- <label for="involved_consultants" class="col-sm-4 control-label">Name of Partners</label> -->
@@ -358,7 +358,7 @@
 </div>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Client</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-blind" aria-hidden="true"></i> Client</label>
 </div>
 <div class="form-group">
 	<!-- <label for="client_name" class="col-sm-4 control-label">Name</label> -->
@@ -393,7 +393,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Fundings</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-money" aria-hidden="true"></i> Fundings</label>
 </div>
 <div class="form-group">
 	<!-- <label for="financing" class="col-sm-4 control-label">Fundings</label> -->

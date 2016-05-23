@@ -24,7 +24,7 @@
 						{{ $file }}
 					</a>
 					<a id="{{ $language }}" href="{{ action('TemplateController@delete_template', $language) }}" class="btn btn-link deleteFile">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						<i class="fa fa-trash" aria-hidden="true"></i>
 					</a>
 				</p>
 			  @endforeach

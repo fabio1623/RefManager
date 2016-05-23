@@ -97,7 +97,7 @@
 			  	<!-- EO line -->
 			  	<!-- Line -->
 			  	<div class="form-group">
-				    <label class="control-label col-sm-4" for="country">Zone</label>
+				    <label class="control-label col-sm-4" for="zone">Zone</label>
 				    <div class="col-sm-3">
 				    	<select class="form-control selectpicker" multiple data-selected-text-format="count" data-size="8" id="zone" name="zone[]">
 							<optgroup label="Zones">
@@ -113,7 +113,7 @@
 			  	<div class="form-group">
 					    <label class="control-label col-sm-4" for="service_type">Service type</label>
 				    <div class="col-sm-3">
-						<select class="selectpicker" multiple data-selected-text-format="count" data-width="100%" data-size="8" name="service[]">
+						<select id="service_type" class="selectpicker" multiple data-selected-text-format="count" data-width="100%" data-size="8" name="service[]">
 							<optgroup label="External services">
 							  @foreach ($external_services as $service)
 							  	<option value="e{{ $service->id }}">{{ $service->name }}</option>
@@ -201,7 +201,7 @@
 				<!-- EO line -->
 				<!-- Line -->
 				<div class="form-group">
-					<label for="start_date" class="col-sm-4 control-label">Ended</label>
+					<label for="end_date" class="col-sm-4 control-label">Ended</label>
 					<div class="col-sm-3">
 					<label class="radio-inline">
 					  <input type="radio" name="ended_radio" id="" value="<="> Before

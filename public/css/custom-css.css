@@ -17,6 +17,11 @@ body {
   margin-left: 2px;
 }
 
+div.required label.control-label:after {
+    content: " *";
+    color: red;
+}
+
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */

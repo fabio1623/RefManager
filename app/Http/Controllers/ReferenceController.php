@@ -1620,6 +1620,9 @@ class ReferenceController extends Controller
         //     'project_number' => 'required|unique:references',
         //     'country_id'     => 'required',
         // ]);
+        $this->validate($request, [
+            'project_number'    =>  'required|unique:references,project_number,'.$id,
+        ]);
 
         $reference = Reference::find($id);
 
@@ -2940,7 +2943,7 @@ class ReferenceController extends Controller
                             if (trim($row->financialtariffinstitutional)) {
                                 $new_reference->expertises()->attach(51);
                             }
-                            if (trim($row->management_environmental_iso)14000) {
+                            if (trim($row->management_environmental_iso14000)) {
                                 $new_reference->expertises()->attach(27);
                             }
                             if (trim($row->impactassessment)) {

@@ -59,7 +59,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Senior staff</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-users" aria-hidden="true"></i> Senior staff</label>
 </div>
 @if (count($staff_involved) > 0)
 
@@ -108,7 +108,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Staff provided</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-users" aria-hidden="true"></i> Staff provided</label>
 </div>
 @if (count($experts) > 0)
 	@for ($i=0; $i < count($experts); $i++)
@@ -186,7 +186,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Partners</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-users" aria-hidden="true"></i> Partners</label>
 </div>
 @if (count($consultants) > 0)
 	@for ($i=0; $i < count($consultants); $i++)
@@ -263,7 +263,7 @@
 <!-- </div> -->
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Client</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-blind" aria-hidden="true"></i> Client</label>
 </div>
 @if ($client != null)
 	<div class="form-group">
@@ -291,7 +291,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<label class="col-sm-4 control-label">Fundings</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-money" aria-hidden="true"></i> Fundings</label>
 </div>
 @if( count( $financings ) > 0 )
 	@for ($i = 0; $i < count( $financings ); $i++)

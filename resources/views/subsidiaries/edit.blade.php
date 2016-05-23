@@ -14,7 +14,7 @@
 							  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 							  </button>
 							  <button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
-							  	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							  	<i class="fa fa-trash" aria-hidden="true"></i>
 							  </button>
 								<a class="btn btn-default btn-xs" href="{{ action('SubsidiaryController@index') }}">
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
@@ -146,39 +146,50 @@
 						</tr>
 					</thead>
 					<tbody>
-						@for($i=0; $i < $users->count(); $i++)
+						@if($users->count() == 0)
 							<tr>
-								<td>
-									<a class="btn btn-link btn-xs">
-									{{ $i + 1 }}
-									</a>
-								</td>
-								<td>
-									<a class="btn btn-link btn-xs">
-									{{ $users[$i]->username }}
-									</a>
-								</td>
-								<td>
-									<a class="btn btn-link btn-xs">
-									{{ $users[$i]->email }}
-									</a>
-								</td>
-								<td>
-									<a class="btn btn-link btn-xs">
-									@foreach ($profiles as $profile)
-										@if ($profile->id == $users[$i]->profile_id)
-											{{ $profile->name }}
+					    		<td colspan="5">
+					    			No user
+					    		</td>
+					    	</tr>
+						@else
+							@foreach($users as $key => $user)
+								<tr>
+									<td>
+										<a class="btn btn-link btn-xs">
+											{{ $key + 1 }}
+										</a>
+									</td>
+									<td>
+										<a class="btn btn-link btn-xs">
+											{{ $user->username }}
+										</a>
+										@if ($user->password == '')
+											<i class="fa fa-google-plus" aria-hidden="true"></i>
 										@endif
-									@endforeach
-									</a>
-								</td>
-								<td>
-									<a class="btn btn-link btn-xs center-block" href="{{ action('UserController@edit', [$subsidiary->id, $users[$i]->id]) }}">
-										<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-									</a>
-								</td>
-							</tr>
-						@endfor
+									</td>
+									<td>
+										<a class="btn btn-link btn-xs">
+											{{ $user->email }}
+										</a>
+									</td>
+									<td>
+										<a class="btn btn-link btn-xs">
+											@foreach ($profiles as $profile)
+												@if ($profile->id == $user->profile_id)
+													{{ $profile->name }}
+												@endif
+											@endforeach
+										</a>
+									</td>
+									<td>
+										<a class="btn btn-link btn-xs center-block" href="{{ action('UserController@edit', [$subsidiary->id, $user->id]) }}">
+											<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+										</a>
+									</td>
+								</tr>
+							@endforeach
+						@endif
 					</tbody>
 				</table>
 			</div>

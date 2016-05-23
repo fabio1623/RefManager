@@ -1,5 +1,5 @@
 <!-- Line -->
-<div class="form-group">
+<div class="form-group required">
 	<label for="project_number" class="col-sm-4 control-label">Project number</label>
 	<div class="col-sm-4">
 	  <input type="text" class="form-control" id="project_number" name="project_number" value="{{ old('project_number') }}">
@@ -23,7 +23,7 @@
 <div class="form-group">
 	<label for="country" class="col-sm-4 control-label">Country</label>
 	<div class="col-sm-4">
-	    <select class="form-control selectpicker" data-width="100%" data-live-search="true" id="country" name="country">
+	    <select class="form-control selectpicker" data-width="100%" data-live-search="true" id="country" name="country" data-size="5">
 	    	<option id="country_options"></option>
 	    	@foreach ($countries as $country)
 	    		<option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -44,7 +44,7 @@
 <div class="form-group">
 	<label for="zone" class="col-sm-4 control-label">Zone</label>
 	<div class="col-sm-2">
-	  	<select class="form-control selectpicker" data-width="100%" id="zone" name="zone">
+	  	<select class="form-control selectpicker" data-width="100%" id="zone" name="zone" data-size="5">
 	  		<option></option>
 			@foreach($zones as $zone)
 				<option value="{{ $zone->id }}">{{$zone->name}}</option>
@@ -122,7 +122,7 @@
 <!-- Line -->
 <div class="form-group" id="external_div"> 
 	<hr></hr>
-	<label class="col-sm-4 control-label">Type of services</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-refresh" aria-hidden="true"></i> Type of services</label>
 	@foreach($external_services as $service)
 		@if($service->parent_service_id != "")
 			<div class="checkbox col-sm-7 col-sm-offset-5">
@@ -151,7 +151,7 @@
 <!-- Line -->
 <div class="form-group" id="internal_div"> 
 	<hr></hr>
-	<label class="col-sm-4 control-label">Veolia's contract type</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-recycle" aria-hidden="true"></i> Veolia's contract type</label>
 	@foreach($internal_services as $service)
 		@if($service->parent_service_id != "")
 			<div class="checkbox col-sm-7 col-sm-offset-5">

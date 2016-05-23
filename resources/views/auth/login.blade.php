@@ -62,7 +62,9 @@
                             <div class="col-sm-6 col-sm-offset-4">
                                 <button type="submit" class="btn btn-primary">Login</button>
 
-                                <a class="btn btn-link" href="{{ action('AccessController@create') }}">Need To Ask Your Access?</a>
+                                <a class="btn btn-link" href="{{ action('AccessController@create') }}">Need To Ask Your Access ?</a>
+                                /
+                                <a class="btn btn-link" href="">Password lost ?</a>
                             </div>
                         </div>
                     </form>

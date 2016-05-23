@@ -124,7 +124,7 @@
 <!-- Line -->
 <div class="form-group" id="external_div"> 
 	<hr>
-	<label class="col-sm-4 control-label">Type of services</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-refresh" aria-hidden="true"></i> Type of services</label>
 	@if ($external_services->count() > 0)
 		@foreach ($external_services as $service)
 			<div class="col-sm-8 col-sm-offset-4">
@@ -142,7 +142,7 @@
 
 <div class="form-group hidden" id="internal_div"> 
 	<hr>
-	<label class="col-sm-4 control-label">Veolia's contract type</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-recycle" aria-hidden="true"></i> Veolia's contract type</label>
 	@foreach($internal_services as $service)
 		<div class="col-sm-8 col-sm-offset-4">
 			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>

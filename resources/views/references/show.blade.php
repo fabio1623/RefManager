@@ -7,7 +7,7 @@
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h4>{{ $reference->project_number }} - {{ $reference->dfac_name }} @if($reference->confidential == 1) : Confidential @endif</h4>
+						<h4>{{ $reference->project_number }} {{ $reference->dfac_name != '' ? ' - '.$reference->dfac_name : '' }} {{ $reference->confidential == 1 ? '(Confidential)' : '' }}</h4>
 					</div>
 					<!-- Button toolbar -->
 					<div class="col-sm-6">
@@ -93,10 +93,13 @@
 									  </ul>
 									</div>
 								@endif
-								<button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
+								<!-- <button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
 								  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
-								</button>
+								</button> -->
 								@if (count($linked_languages) > 0)
+									<button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
+									  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
+									</button>
 									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
 									  <i class="fa fa-language" aria-hidden="true"></i> Translations
 									</button>
@@ -211,17 +214,17 @@
 	var qualifiers = {!! $qualifiers_values->toJson() !!};
 	var selected_measures = {!! $reference->measures->toJson() !!};
 
-	$(function(){
-	  var hash = window.location.hash;
-	  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+	// $(function(){
+	//   var hash = window.location.hash;
+	//   hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
-	  $('.nav-tabs a').click(function (e) {
-	    $(this).tab('show');
-	    var scrollmem = $('body').scrollTop() || $('html').scrollTop();
-	    window.location.hash = this.hash;
-	    $('html,body').scrollTop(scrollmem);
-	  });
-	});
+	//   $('.nav-tabs a').click(function (e) {
+	//     $(this).tab('show');
+	//     var scrollmem = $('body').scrollTop() || $('html').scrollTop();
+	//     window.location.hash = this.hash;
+	//     $('html,body').scrollTop(scrollmem);
+	//   });
+	// });
 
 	var bar = $('.progress-bar');
 	var percent = $('.percent');

@@ -9,7 +9,7 @@
 					<div class="col-sm-6">{{ $measure->name }}</div>
 					<div class="col-sm-6">								
 						<button id="btn_delete" form="form_delete" type="submit" class="btn btn-danger btn-xs pull-right">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+							<i class="fa fa-trash" aria-hidden="true"></i>
 						</button>
 					</div>
 				</div>

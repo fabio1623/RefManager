@@ -64,7 +64,7 @@
 											    </a> -->
 											    <a class="btn btn-link center-block" href="{{ action('UserController@destroyOne', $user->id) }}">
 											    	<span class="label label-danger">
-											    		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+											    		<i class="fa fa-trash" aria-hidden="true"></i>
 										    		</span>
 											    </a>
 												<!-- <input class="checkbox" type="checkbox" value="{{$user->id}}" name=id[]> -->

@@ -1,9 +1,9 @@
 <!-- Line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Project</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-briefcase" aria-hidden="true"></i> Project</span></h4>
 	<div class="col-sm-8">
 		<a class="btn btn-sm btn-default pull-right remove_translation_btn" href="{{ action('ReferenceController@detach_translation', [$reference->id, $linked_languages[$i]->id]) }}">
-			<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Remove translation
+			<i class="fa fa-trash" aria-hidden="true"></i> Remove translation
 		</a>
 	</div>
 </div>
@@ -25,7 +25,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Services</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-refresh" aria-hidden="true"></i> Services</span></h4>
 </div>
 <div class="form-group">
 	<label for="project_title_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Title</label>
@@ -44,7 +44,7 @@
 <!-- EO line -->
 <hr>
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Location</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-map-marker" aria-hidden="true"></i> Location</span></h4>
 </div>
 <div class="form-group">
 	<!-- <label for="country_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Country</label> -->
@@ -73,7 +73,7 @@
 </div>
 <hr>
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Staff</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-users" aria-hidden="true"></i> Staff</span></h4>
 </div>
 <div class="form-group">
 	<label for="staff_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Staff</label>
@@ -146,7 +146,7 @@
 
 <!-- Line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Client</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-blind" aria-hidden="true"></i> Client</span></h4>
 </div>
 <div class="form-group">
 	<!-- <label for="client_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name of the client</label> -->
@@ -177,7 +177,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Fundings</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-money" aria-hidden="true"></i> Fundings</span></h4>
 </div>
 <div class="form-group">
 	<!-- <label for="financing_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Financing</label> -->

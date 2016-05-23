@@ -15,7 +15,7 @@
 										Save expertises
 									</button>
 									<button id="btn_delete" form="form_delete" type="submit" class="btn btn-default btn-xs">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+										<i class="fa fa-trash" aria-hidden="true"></i>
 									</button>
 									<a class="btn btn-default btn-xs" href="{{ action('DomainController@custom_index', $subsidiary->id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>

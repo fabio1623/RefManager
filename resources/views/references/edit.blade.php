@@ -7,7 +7,7 @@
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h4>{{ $reference->project_number }} - {{ $reference->dfac_name }}</h4>
+						<h4>{{ $reference->project_number }} {{ $reference->dfac_name != '' ? ' - '.$reference->dfac_name : '' }} {{ $reference->confidential == 1 ? '(Confidential)' : '' }}</h4>
 					</div>
 					<!-- Button toolbar -->
 					<div class="col-sm-6">
@@ -64,12 +64,15 @@
 								<button id="base_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#base_menu">
 								  <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
 								</button>
+								<!-- <a data-toggle="tab" href="#description_menu" class="btn btn-default btn-sm">
+									<span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> Base
+								</a> -->
 								@if($linked_languages->count() > 0)
 									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="#language_menu">
 								@else
-									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab" href="">
+									<button id="language_btn" type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="tab">
 								@endif
-								  <i class="fa fa-language" aria-hidden="true"></i> Translations
+								  <i class="fa fa-language" aria-hidden="true"></i> {{ $linked_languages->count() < 1 ? 'Add translation' : 'Translations ('.$linked_languages->count().')' }}
 								</button>
 								<button id='btn_language_selector' type="button" class="btn btn-default btn-sm hidden">
 								  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -209,17 +212,17 @@
 	var measures = {!! $measures_values->toJson() !!};
 	var qualifiers = {!! $qualifiers_values->toJson() !!};
 
-	$(function(){
-	  var hash = window.location.hash;
-	  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+	// $(function(){
+	//   var hash = window.location.hash;
+	//   hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
-	  $('.nav-tabs a').click(function (e) {
-	    $(this).tab('show');
-	    var scrollmem = $('body').scrollTop() || $('html').scrollTop();
-	    window.location.hash = this.hash;
-	    $('html,body').scrollTop(scrollmem);
-	  });
-	});
+	//   $('.nav-tabs a').click(function (e) {
+	//     $(this).tab('show');
+	//     var scrollmem = $('body').scrollTop() || $('html').scrollTop();
+	//     window.location.hash = this.hash;
+	//     $('html,body').scrollTop(scrollmem);
+	//   });
+	// });
 
 	var bar = $('.progress-bar');
 	var percent = $('.percent');

@@ -71,13 +71,13 @@ $('#btn_delete').click( function(e) {
 
 $('#language_btn').click( function (e) {
 	if (linked_languages.length < 1) {
-		var confirm_box = confirm("There is no translation. Do you want to add one ?");
-		if (confirm_box == false) {
-			e.preventDefault();
-		}
-		else {
+		// var confirm_box = confirm("There is no translation. Do you want to add one ?");
+		// if (confirm_box == false) {
+		// 	e.preventDefault();
+		// }
+		// else {
 			$('#select_language_modal').modal();		
-		}
+		// }
 	}
 	else {
 		$('#base_btn').attr("class", "btn btn-default btn-sm");

@@ -6,11 +6,11 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<div class="row">
-				<div class="col-sm-6 col-xs-6">References</div>
+				<div class="col-sm-6 col-xs-6">References ({{ $references->total() }})</div>
 				<div class="col-sm-6 col-xs-6">
 					<!-- If user admin or dcom manager -->
 					@if(Auth::user()->profile_id == 5)
-						<a class="btn btn-default btn-xs pull-right export-btn" href="{{ action('ReferenceController@export') }}">Export</a>
+						<a class="btn btn-default btn-xs pull-right export-btn" href="{{ action('ReferenceController@export') }}">Export (all)</a>
 					@endif
 					<!-- Extract button -->
 					<div class="btn-group pull-right">

@@ -19,7 +19,7 @@
 								    <?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 								    <button type="submit" id="remove_btn" class="btn btn-danger btn-xs pull-right">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+										<i class="fa fa-trash" aria-hidden="true"></i>
 									</button>
 									@if( isset($created_from_request) )
 										<input type="text" class="hidden" name="return_to_access_requests" value="true">

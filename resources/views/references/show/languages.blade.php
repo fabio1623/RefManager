@@ -1,6 +1,6 @@
 <!-- Line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Project</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-briefcase" aria-hidden="true"></i> Project</span></h4>
 </div>
 <div class="form-group">
 	<label for="project_name_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name</label>
@@ -25,7 +25,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Services</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-refresh" aria-hidden="true"></i> Services</span></h4>
 </div>
 <div class="form-group">
 	<label for="project_title_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Title</label>
@@ -50,7 +50,7 @@
 <hr>
 <!-- EO line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Location</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-map-marker" aria-hidden="true"></i> Location</span></h4>
 </div>
 <div class="form-group">
 	<label for="country_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Country</label>
@@ -71,10 +71,10 @@
 </div>
 <hr>
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Staff</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-users" aria-hidden="true"></i> Staff</span></h4>
 </div>
 <div class="form-group">
-	<label for="staff_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Staff</label>
+	<label for="staff_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Senior staff</label>
 	<div class="col-sm-8">
 		<p class="form-control-static">
 	  		{{ $language_reference[$i]->staff }}
@@ -84,7 +84,7 @@
 </div>
 
 <div class="form-group">
-	<label for="consultants_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Consultants</label>
+	<label for="consultants_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Partners</label>
 	<div class="col-sm-8">
 		<p class="form-control-static">
 	  		{{ $language_reference[$i]->consultants }}
@@ -94,7 +94,7 @@
 </div>
 
 <div class="form-group">
-	<label for="experts_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Experts employed</label>
+	<label for="experts_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Staff provided</label>
 	<div class="col-sm-8">
 		<p class="form-control-static">
 	  		{{ $language_reference[$i]->experts }}
@@ -147,7 +147,7 @@
 </div>
 
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Client</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-blind" aria-hidden="true"></i> Client</span></h4>
 </div>
 <!-- Line -->
 <div class="form-group">
@@ -173,7 +173,7 @@
 <hr>
 <!-- Line -->
 <div class="form-group">
-	<h4><span class="label label-default col-sm-2 col-sm-offset-2">Fundings</span></h4>
+	<h4><span class="label label-default col-sm-2 col-sm-offset-2"><i class="fa fa-money" aria-hidden="true"></i> Fundings</span></h4>
 </div>
 <div class="form-group">
 	<!-- <label for="financing_{{ strtolower($linked_languages[$i]->name)}}" class="col-sm-4 control-label">Name</label> -->

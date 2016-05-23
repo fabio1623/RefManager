@@ -47,39 +47,39 @@
 							<form action="{{ action('ContributorController@destroyMultiple', [$subsidiary_id, 1]) }}" method="POST" id="form_delete">
 						      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
-									@for ($i=0; $i<$contributors->count(); $i++)
+									@foreach ($contributors as $key => $cont)
 											<tr>
 												<td>
 													<a class="btn btn-link btn-xs">
 														@if ($contributors->currentPage() < 2)
-															{{ $i + 1 }}
+															{{ $key + 1 }}
 														@else
-															{{ ($contributors->currentPage() - 1) * 100 + $i + 1 }}
+															{{ ($contributors->currentPage() - 1) * 100 + $key + 1 }}
 														@endif
 													</a>
 												</td>
 												<td>
 													<a class="btn btn-link btn-xs">
-														{{ $contributors[$i]->name }}
+														{{ $cont->name }}
 													</a>	
 												</td>
 												<td>
 													<a class="btn btn-link btn-xs">
-														{{ $contributors[$i]->references->count() }}
+														{{ $cont->references->count() }}
 													</a>
 												</td>
 												<td>
 													<a class="btn btn-link btn-xs">
-														{{ $contributors[$i]->created_at }}
+														{{ $cont->created_at }}
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs center-block" href="{{ action('ContributorController@edit', [$subsidiary_id, 1,$contributors[$i]->id]) }}">
+													<a class="btn btn-link btn-xs center-block" href="{{ action('ContributorController@edit', [$subsidiary_id, 1,$cont->id]) }}">
 														<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 													</a>
 												</td>
 											</tr>
-									@endfor
+									@endforeach
 							</form>
 						</tbody>
 					</table>

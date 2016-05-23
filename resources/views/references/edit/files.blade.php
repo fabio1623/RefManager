@@ -19,7 +19,7 @@
 						</a>
 						@if (Auth::user()->profile_id == 3 || Auth::user()->profile_id == 5 || Auth::user()->profile_id == $reference->created_by)
 							<a href="{{ basename($file) }}" class="btn btn-link deleteFile">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								<i class="fa fa-trash" aria-hidden="true"></i>
 							</a>
 						@endif
 					</td>

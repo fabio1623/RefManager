@@ -15,7 +15,7 @@
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
 								<button form="form_delete" type="submit" class="btn btn-primary btn-sm">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+									<i class="fa fa-trash" aria-hidden="true"></i>
 								</button>
 								<a class="btn btn-primary btn-sm" href="{{ action('CategoryController@index') }}" role="button">	
 									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> List
