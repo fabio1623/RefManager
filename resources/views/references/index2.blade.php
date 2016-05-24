@@ -50,49 +50,52 @@
 			<table class="table table-hover">
 		  		<thead>
 					<tr>
-						<th class="col-xs-1"><a id="activity_col" href="">Activity</a></th>
+						<th class=""><a id="activity_col" href="">Activity</a></th>
 						@if($order == 'project_number')
 							{{-- TODO --}}
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Project n°<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Project n°<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'project_number', 'sort_direction'=>'asc'])) }}">Project n°</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'project_number', 'sort_direction'=>'asc'])) }}">Project n°</a></th>
 						@endif
 						@if($order == 'dfac_name')
-							<th class="col-xs-2"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">DFAC name<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">DFAC name<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-2"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'dfac_name', 'sort_direction'=>'asc'])) }}">DFAC name</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'dfac_name', 'sort_direction'=>'asc'])) }}">DFAC name</a></th>
 						@endif
 						@if($order == 'start_date')
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Start date<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Start date<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'start_date', 'sort_direction'=>'asc'])) }}">Start date</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'start_date', 'sort_direction'=>'asc'])) }}">Start date</a></th>
 						@endif
 						@if($order == 'end_date')
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">End date<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">End date<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'end_date', 'sort_direction'=>'asc'])) }}">End date</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'end_date', 'sort_direction'=>'asc'])) }}">End date</a></th>
 						@endif
 						@if($order == 'client')
-							<th class="col-xs-2"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Client<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Client<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-2"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'client', 'sort_direction'=>'asc'])) }}">Client</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'client', 'sort_direction'=>'asc'])) }}">Client</a></th>
 						@endif
 						@if($order == 'country')
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Country<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Country<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'country', 'sort_direction'=>'asc'])) }}">Country</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'country', 'sort_direction'=>'asc'])) }}">Country</a></th>
 						@endif
 						@if($order == 'zone')
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Zone<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Zone<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'zone', 'sort_direction'=>'asc'])) }}">Zone</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'zone', 'sort_direction'=>'asc'])) }}">Zone</a></th>
 						@endif
 						@if($order == 'total_project_cost')
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>$order, 'sort_direction'=>($sort_direction == 'asc' ? 'desc' : 'asc')])) }}">Cost (M€)<span class="glyphicon glyphicon-triangle-{{$sort_direction == 'asc' ? 'top' : 'bottom' }}"></span></a></th>
 						@else
-							<th class="col-xs-1"><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'total_project_cost', 'sort_direction'=>'asc'])) }}">Cost (M€)</a></th>
+							<th class=""><a href="{{ action('ReferenceController@index', array_merge($query, ['order'=>'total_project_cost', 'sort_direction'=>'asc'])) }}">Cost (M€)</a></th>
 						@endif
-				    	<th class="col-xs-1"><input id="select_all" type="checkbox"> <a id="select_all_col" href="">All</a></th>
+				    	<th class="">
+				    		<input id="select_all" type="checkbox">
+				    		<a id="select_all_col">All</a>
+			    		</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -111,16 +114,20 @@
 							</td>
 							<td>
 								@if(strlen($reference->project_number) > 10)
-									<abbr title="{{ $reference->project_number }}">{{ str_limit($reference->project_number, 10) }}</abbr>
+									<a href="{{ action('ReferenceController@show', $reference->id) }}">
+										<abbr title="{{ $reference->project_number }}">{{ str_limit($reference->project_number, 10) }}</abbr>
+									</a>
 								@else
-									{{ $reference->project_number }}
+									<a href="{{ action('ReferenceController@show', $reference->id) }}">{{ $reference->project_number }}</a>
 								@endif
 							</td>
 							<td>
 								@if(strlen($reference->dfac_name) > 20)
-									<abbr title="{{ $reference->dfac_name }}">{{ str_limit($reference->dfac_name, 20) }}</abbr>
+									<a href="{{ action('ReferenceController@show', $reference->id) }}">
+										<abbr title="{{ $reference->dfac_name }}">{{ str_limit($reference->dfac_name, 20) }}</abbr>
+									</a>
 								@else
-									{{ $reference->dfac_name }}
+									<a href="{{ action('ReferenceController@show', $reference->id) }}">{{ $reference->dfac_name }}</a>
 								@endif
 							</td>
 							<td>
@@ -160,9 +167,9 @@
 								@else
 									<input class="box" type="checkbox" value="{{ $reference->id }}" name=ids[]>
 								@endif
-								<a class="btn btn-link btn-xs" href="{{ action('ReferenceController@show', $reference->id) }}">
+								<!-- <a class="btn btn-link btn-xs" href="{{ action('ReferenceController@show', $reference->id) }}">
 									<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-								</a>
+								</a> -->
 								<!-- If creator, admin or dcom profile -->
 								@if (Auth::user()->username == $reference->created_by || Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
 									<a class="btn btn-link btn-xs" href="{{ action('ReferenceController@edit', $reference->id) }}">
@@ -185,7 +192,7 @@
 
 <script>
 	// $('.table > thead > tr').append('<th class="col-sm-1"><input id="select_all" type="checkbox"> All</th>');
-	$("#select_all").change(function(){
+	$("#select_all").change(function(e){
       $(".box").prop("checked", $(this).prop("checked"));
     });
     //If all the references are manually selected, select 'All' checkbox
@@ -204,12 +211,12 @@
     });
 
     $('#select_all_col').click(function(e){
-    	e.preventDefault();
+    	// e.preventDefault();
     	if ($('#select_all').prop('checked') == true) {
-    		$('#select_all').prop('checked', false);
+    		$('#select_all').prop('checked', false).change();
     	}
     	else {
-    		$('#select_all').prop('checked', true);
+    		$('#select_all').prop('checked', true).change();
     	}
     });
 

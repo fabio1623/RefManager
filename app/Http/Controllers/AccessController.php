@@ -83,7 +83,8 @@ class AccessController extends Controller
 
         // view()->share('requests_number', $requests_number);
 
-        return view('auth.loginRequestSent');
+        return redirect()->action('Auth\AuthController@getLogin')->with('status', 'Your request has been sent!');
+        // return view('auth.loginRequestSent');
     }
 
     /**

@@ -23,6 +23,8 @@ Route::get('/', 'Auth\AuthController@getLogin');
 Route::post('login', 'UserController@authenticate');
 Route::get('loginError', 'UserController@getLoginError');
 Route::get('loginError_password', 'UserController@getLoginWrongPassword');
+Route::get('password/lost', 'UserController@change_password_page');
+Route::post('password/retrieve', 'UserController@retrieve_password');
 
 //Google Authentication
 Route::get('auth/google', 'Auth\OAuthController@redirectToProvider');

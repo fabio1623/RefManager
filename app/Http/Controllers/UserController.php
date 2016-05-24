@@ -359,4 +359,20 @@ class UserController extends Controller
         // return $view;
         return redirect()->action('HomeController@index');
     }
+
+    public function change_password_page()
+    {
+        $view = view('auth.password');
+        return $view;
+    }
+
+    public function retrieve_password(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|exists:users,email',
+        ]);
+
+        return redirect()->action('Auth\AuthController@getLogin')->with('status', 'An email was send to you!');
+        // return view('auth.login');
+    }
 }

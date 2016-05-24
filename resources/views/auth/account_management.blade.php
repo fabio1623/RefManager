@@ -65,9 +65,11 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-6 col-sm-offset-4">
-								<button type="submit" class="btn btn-primary btn-sm">
-									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Change password
-								</button>
+								@if(Auth::user()->password != '')
+									<button type="submit" class="btn btn-primary btn-sm">
+										<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Change password
+									</button>
+								@endif
 								<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 								</a>
 							</div>
