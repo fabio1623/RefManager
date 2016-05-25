@@ -52,7 +52,7 @@
 					</div><!-- /.modal -->
 				</div>
 				<div class="col-sm-6">
-					<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_translation') }}" enctype="multipart/form-data">
+					<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_translations') }}" enctype="multipart/form-data">
 						<?php echo csrf_field(); ?>
 
 						<label for="import_trans_input">Import your translations</label>

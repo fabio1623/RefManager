@@ -51,7 +51,7 @@ Route::resource('subsidiaries', 'SubsidiaryController');
 Route::get('references/export', 'ReferenceController@export');
 Route::get('references/import', 'ReferenceController@import_page');
 Route::post('references/upload/references', 'ReferenceController@upload_references');
-Route::post('references/upload/translations', 'ReferenceController@upload_translation');
+Route::post('references/upload/translations', 'ReferenceController@upload_translations');
 Route::post('references/{reference}/delete', 'ReferenceController@delete_file');
 // Route::get('references/{reference}/files/{file}/delete', 'ReferenceController@delete_file');
 Route::post('references/{reference}/download', 'ReferenceController@download_file');

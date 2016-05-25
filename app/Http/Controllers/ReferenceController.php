@@ -2574,13 +2574,47 @@ class ReferenceController extends Controller
 
     public function upload_translations(Request $request)
     {
-        dd('Translation upload');
-
         $file = $request->file('file');
         $file_name = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
 
+        $has_folder = Storage::disk('local')->has('Imports/Translations');
 
+        if ($has_folder == false) {
+            Storage::makeDirectory('Imports/Translations');
+        }
+
+        $destination_path = storage_path('app/Imports/Translations');
+
+        if ($request->hasFile('file')) {
+            if ($file->isValid()) {
+                Excel::load($file, function($reader) {
+                    // $reader->all();
+                    $reader->take(7);
+
+                    $reader->each(function($row){
+                        if (trim($row->idaffaire)) {
+                            $reference = Reference::where('retrieved_id', trim($row->idaffaire))->first();
+
+                            if ($reference) {
+                                if ($reference->languages->contains('name', 'French') == false) {
+                                    $language = Language::where('name', 'French')->first();
+                                    $reference->languages()->attach($language->id, ['project_name' => trim($row->projecttitlefr)]);
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+            else {
+                dd('File not valid');
+            }
+        }
+        else {
+            dd('No file');
+        }
+
+        return redirect()->back();
     }
 
     public function upload_references(Request $request)
@@ -2631,6 +2665,11 @@ class ReferenceController extends Controller
                         if (!$reference) {
                             //Create new reference
                             $new_reference = new Reference;
+
+                            if (trim($row->id_affaire)) {
+                                $new_reference->retrieved_id = trim($row->id_affaire);
+                            }
+
                             if (trim($row->no_affaire)) {
                                 $new_reference->project_number = trim($row->no_affaire);
                             }
