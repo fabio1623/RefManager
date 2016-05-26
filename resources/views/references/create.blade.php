@@ -6,11 +6,11 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<div class="row">
-					<div class="col-sm-6 col-xs-6">
+					<div class="col-xs-5">
 						<h4>New reference</h4>
 					</div>
 					<!-- Button toolbar -->
-					<div class="col-sm-6 col-xs-6">
+					<div class="col-xs-7">
 						<div class="btn-toolbar btn-sm pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
 								<button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">

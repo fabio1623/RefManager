@@ -19,7 +19,7 @@
             <div class="form-group">
               <label for="measure-{{$measure->id}}" class="col-sm-4 col-sm-offset-1 control-label">{{$measure->name}}</label>
               @if($measure->field_type == 'Input')
-                <div class="col-sm-4">
+                <div class="col-sm-6">
 
                 @if(count($measure->units) > 0)
                   <div class="input-group">
@@ -31,7 +31,7 @@
 
                     <input type="text" class="form-control hidden" id="measure-{{$measure->id}}" name="units[{{ $measure->id }}]">
 
-                    <select id="select-{{ $measure->id }}" name="units[{{ $measure->id }}]" class="selectpicker" data-width="22%" data-size="100%">
+                    <select id="select-{{ $measure->id }}" name="units[{{ $measure->id }}]" class="selectpicker" data-width="22%" data-size="5">
                       @foreach($measure->units as $unit)
                         <option value="{{ $unit->name }}">{{ $unit->name }}</option>
                       @endforeach
@@ -48,7 +48,7 @@
                 </div>
 
               @elseif($measure->field_type == 'Checkbox')
-                <div class="col-sm-4 checkbox">
+                <div class="col-sm-6 checkbox">
                   <label>
                     <input type="checkbox" id="measure-{{$measure->id}}" name="categories[{{$categories[$i]->id}}][{{$measure->id}}]">
                   </label>
@@ -59,7 +59,7 @@
             @foreach($measure->qualifiers as $qualifier)
               <div class="form-group">
                 <label for="qualifier-{{ $qualifier->id }}" class="col-sm-4 col-sm-offset-1 control-label">{{$qualifier->name}}</label>
-                <div class="col-sm-4 checkbox">
+                <div class="col-sm-6 checkbox">
                   <label>
                     <input type="checkbox" id="qualifier-{{ $qualifier->id }}" name="qualifiers[{{ $measure->id }}][{{ $qualifier->id }}]">
                   </label>

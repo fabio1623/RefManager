@@ -6,11 +6,11 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<div class="row">
-					<div class="col-sm-6">
+					<div class="col-xs-4">
 						<h4>{{ $reference->project_number }} {{ $reference->dfac_name != '' ? ' - '.$reference->dfac_name : '' }} {{ $reference->confidential == 1 ? '(Confidential)' : '' }}</h4>
 					</div>
 					<!-- Button toolbar -->
-					<div class="col-sm-6">
+					<div class="col-xs-8">
 						<div class="btn-toolbar btn-sm pull-right" role="toolbar" aria-label="...">
 							<div id="toolbar" class="btn-group" role="group" aria-label="...">
 
@@ -29,7 +29,7 @@
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<span class="glyphicon glyphicon-open-file" aria-hidden="true"></span><span class="caret"></span>
-									Extract
+									<!-- Extract -->
 									</button>
 									<ul class="dropdown-menu">
 										<li class="dropdown-header">WB</li>

@@ -54,8 +54,13 @@ class ReferenceController extends Controller
         $nb_total_ref = Reference::all()->count();
         $nb_approved = Reference::where('dcom_approval', 1)->count();
         $nb_not_approved = Reference::where('dcom_approval', 0)->count();
+        $translated_references = Reference::has('languages')->get();
 
-        $view = view('references.management_page', ['nb_total_ref'=>$nb_total_ref, 'nb_approved'=>$nb_approved, 'nb_not_approved'=>$nb_not_approved]);
+        $view = view('references.management_page', ['nb_total_ref'=>$nb_total_ref, 
+                                                    'nb_approved'=>$nb_approved,
+                                                    'nb_not_approved'=>$nb_not_approved,
+                                                    'translated_references'=>$translated_references
+                                                    ]);
         return $view;
     }
 
@@ -1605,6 +1610,17 @@ class ReferenceController extends Controller
         return redirect()->back();
     }
 
+    public function destroy_all_translations()
+    {
+        $references = Reference::has('languages')->get();
+
+        foreach ($references as $ref) {
+            $ref->languages()->detach();
+        }
+
+        return redirect()->back();
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -2568,7 +2584,9 @@ class ReferenceController extends Controller
 
     public function import_page()
     {
-        $view = view('references.import.index', []);
+        $languages = Language::orderBy('name', 'asc')->get();
+
+        $view = view('references.import.index', ['languages'=>$languages]);
         return $view;
     }
 
@@ -2591,6 +2609,7 @@ class ReferenceController extends Controller
                 Excel::load($file, function($reader) {
                     // $reader->all();
                     $reader->take(7);
+                    // dd($reader->take(1)->get());
 
                     $reader->each(function($row){
                         if (trim($row->idaffaire)) {
@@ -2599,8 +2618,82 @@ class ReferenceController extends Controller
                             if ($reference) {
                                 if ($reference->languages->contains('name', 'French') == false) {
                                     $language = Language::where('name', 'French')->first();
-                                    $reference->languages()->attach($language->id, ['project_name' => trim($row->projecttitlefr)]);
+                                    $reference->languages()->attach($language->id, [
+                                        'project_name' => trim($row->projecttitlefr), 
+                                        'project_description' => trim($row->projectdescriptionfr), 
+                                        'service_name' => trim($row->servicestitlefr),
+
+                                        'service_description' => trim($row->servicesdescriptionfr),
+                                        // 'contact_name' => trim($row->),
+                                        // 'contact_department' => trim($row->),
+                                        // 'contact_email' => trim($row->servicestitlefr),
+                                        'client' => trim($row->nameclientfr),
+                                        'customer_address' => trim($row->adressclientfr),
+                                        // 'general_comments' => trim($row->servicestitlefr);
+                                        'country' => trim($row->countryfr),
+                                        'location' => trim($row->locationfr),
+                                        'staff' => trim($row->seniorstaffnamepositionfr),
+                                        'consultants' => trim($row->partnersfr),
+                                        'financing' => trim($row->financingfr),
+                                        'experts' => trim($row->staffprovidedprofilesfr)
+                                    ]);
                                 }
+                            }
+                        }
+                    });
+                });
+            }
+            else {
+                dd('File not valid');
+            }
+        }
+        else {
+            dd('No file');
+        }
+
+        return redirect()->back();
+    }
+
+    public function upload_french_translations(Request $request)
+    {
+        $file = $request->file('file');
+        $file_name = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+
+        $has_folder = Storage::disk('local')->has('Imports/Translations');
+
+        if ($has_folder == false) {
+            Storage::makeDirectory('Imports/Translations');
+        }
+
+        $destination_path = storage_path('app/Imports/Translations');
+
+        if ($request->hasFile('file')) {
+            if ($file->isValid()) {
+                Excel::load($file, function($reader) {
+                    $reader->all();
+                    // $reader->take(7);
+                    // dd($reader->take(1)->get());
+
+                    $reader->each(function($row){
+                        if (trim($row->idaffaire)) {
+                            $reference = Reference::where('retrieved_id', trim($row->idaffaire))->first();
+
+                            if ($reference) {
+                                $reference->project_name_fr = trim($row->projecttitlefr);
+                                $reference->service_name_fr = trim($row->servicestitlefr);
+                                $reference->project_description_fr = trim($row->projectdescriptionfr);
+                                $reference->service_description_fr = trim($row->servicesdescriptionfr);
+
+                                if ($reference->client) {
+                                    $client = Client::find($reference->client);
+                                    if ($client->name_fr == '') {
+                                        $client->name_fr = trim($row->nameclientfr);
+                                        $client->save();
+                                    }
+                                }
+
+                                $reference->save();
                             }
                         }
                     });

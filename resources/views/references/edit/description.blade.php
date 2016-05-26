@@ -43,7 +43,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="continent" class="col-sm-4 control-label">Continent</label>
-	<div class="col-sm-2">
+	<div class="col-sm-4">
 	  	<input type="text" class="form-control" id="continent" readonly>
 	</div>
 </div>
@@ -51,7 +51,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="zone" class="col-sm-4 control-label">Zone</label>
-	<div class="col-sm-2">
+	<div class="col-sm-4">
 	  	<select class="form-control selectpicker" data-width="100%" id="zone" name="zone" data-size="5">
 	  		<option></option>
 			@foreach($zones as $zone)
@@ -84,7 +84,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="start_date" class="col-sm-4 control-label">Project start date</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 	    <div id="date_picker_start" class="input-group input-append date">
 	      <input type="text" class="form-control" id="start_date" name="start_date" value="{{ $reference->start_date }}" readonly>
 	      <span class="input-group-btn">
@@ -99,7 +99,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="end_date" class="col-sm-4 control-label">Project completion</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 	    <div id="date_picker_end" class="input-group input_append date">
 	      <input type="text" class="form-control" id="end_date" name="end_date" value="{{ $reference->end_date }}" readonly>
 	      <span class="input-group-btn">
@@ -114,7 +114,7 @@
 <!-- Line -->
 <div class="form-group">
 	<label for="estimated_duration" class="col-sm-4 control-label">Estimated duration</label>
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 		<div class="input-group">
 		  <input type="text" class="form-control" id="estimated_duration" name="estimated_duration" value="{{ $reference->estimated_duration }}">
 		  <span class="input-group-addon" id="basic-addon2">Months</span>

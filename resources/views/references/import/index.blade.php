@@ -51,15 +51,43 @@
 					  </div><!-- /.modal-dialog -->
 					</div><!-- /.modal -->
 				</div>
+
 				<div class="col-sm-6">
-					<form id="form_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_translations') }}" enctype="multipart/form-data">
+					<form id="form_french_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@upload_french_translations') }}" enctype="multipart/form-data">
 						<?php echo csrf_field(); ?>
 
-						<label for="import_trans_input">Import your translations</label>
-						<input type="file" id="import_trans_input" name="file" accept="*">
+						<label for="import_fr_trans_input">Import your french translations</label>
+						<input type="file" id="import_fr_trans_input" name="file" accept="*">
 						<p class="help-block">Just select your Microsoft Access file and click on import.</p>
 
-						<input id="upload_trans_btn" class="btn btn-default" type="submit" value="Import">
+						<input id="upload_fr_trans_btn" class="btn btn-default" type="submit" value="Import">
+					</form>
+				</div>
+			</div>
+			<hr></hr>
+			<div class="row">
+				<div class="col-sm-6">
+					<form id="form_translations_upload" class="" role="form" method="POST" action="{{ action('ReferenceController@upload_translations') }}" enctype="multipart/form-data">
+						<?php echo csrf_field(); ?>
+
+						<div class="form-group">
+							<label for="import_trans_input">Import your translations in other languages</label>
+							<input type="file" id="import_trans_input" name="file" accept="*">
+							<p class="help-block">Just select your Microsoft Access file and click on import.</p>
+						</div>
+
+						<div class="form-group">
+							<label for="import_trans_input">Select the language</label>
+							<!-- <select class="form-control selectpicker" data-width="100%" data-live-search="true" id="country" name="country" data-size="5"> -->
+							<select class="form-control selectpicker" data-live-search="true" name="language" data-size="5">
+								<option value=""></option>
+								@foreach ($languages as $lang)
+									<option value="{{ $lang->id }}">{{ $lang->name }}</option>
+								@endforeach
+							</select>
+						</div>
+
+						<button id="upload_trans_btn" class="btn btn-default" type="submit">Import</button>
 					</form>
 				</div>
 			</div>
