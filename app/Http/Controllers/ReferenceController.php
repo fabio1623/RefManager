@@ -26,7 +26,7 @@ use App\ExternalService;
 use App\InternalService;
 use App\MeasureValues;
 use App\QualifierValues;
-use App\Language;
+use App\language;
 use App\LanguageReference;
 use App\Client;
 use App\Measure;
@@ -55,11 +55,13 @@ class ReferenceController extends Controller
         $nb_approved = Reference::where('dcom_approval', 1)->count();
         $nb_not_approved = Reference::where('dcom_approval', 0)->count();
         $translated_references = Reference::has('languages')->get();
+        $translations_in_bdd = Language::has('references')->get();
 
-        $view = view('references.management_page', ['nb_total_ref'=>$nb_total_ref, 
-                                                    'nb_approved'=>$nb_approved,
-                                                    'nb_not_approved'=>$nb_not_approved,
-                                                    'translated_references'=>$translated_references
+        $view = view('references.management_page', ['nb_total_ref'=> $nb_total_ref, 
+                                                    'nb_approved'=> $nb_approved,
+                                                    'nb_not_approved'=> $nb_not_approved,
+                                                    'translated_references'=> $translated_references,
+                                                    'translations_in_bdd' => $translations_in_bdd
                                                     ]);
         return $view;
     }
@@ -2592,6 +2594,14 @@ class ReferenceController extends Controller
 
     public function upload_translations(Request $request)
     {
+        $messages = [
+            'required' => 'The language field is required.'
+        ];
+
+        $this->validate($request, [
+            'language_id'    =>  'required'
+        ], $messages);
+
         $file = $request->file('file');
         $file_name = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
@@ -2605,37 +2615,44 @@ class ReferenceController extends Controller
         $destination_path = storage_path('app/Imports/Translations');
 
         if ($request->hasFile('file')) {
+
             if ($file->isValid()) {
-                Excel::load($file, function($reader) {
-                    // $reader->all();
-                    $reader->take(7);
+                
+                /*Remove all translations related to this language*/
+                $language = Language::find($request->language_id);
+                $language->references()->detach();
+
+                Excel::load($file, function($reader) use ($request) {
+
+                    $reader->all();
+                    // $reader->take(7);
                     // dd($reader->take(1)->get());
 
-                    $reader->each(function($row){
+                    $reader->each(function($row) use ($request) {
                         if (trim($row->idaffaire)) {
                             $reference = Reference::where('retrieved_id', trim($row->idaffaire))->first();
 
                             if ($reference) {
-                                if ($reference->languages->contains('name', 'French') == false) {
-                                    $language = Language::where('name', 'French')->first();
-                                    $reference->languages()->attach($language->id, [
-                                        'project_name' => trim($row->projecttitlefr), 
-                                        'project_description' => trim($row->projectdescriptionfr), 
-                                        'service_name' => trim($row->servicestitlefr),
+                                if ($reference->languages->contains('id', $request->language_id) == false) {
+                                    // $language = Language::where('id', $request->language_id)->first();
+                                    $reference->languages()->attach($request->language_id, [
+                                        'project_name' => trim($row->project_title), 
+                                        'project_description' => trim($row->description_of_project), 
+                                        'service_name' => trim($row->servicestitleesp),
 
-                                        'service_description' => trim($row->servicesdescriptionfr),
+                                        'service_description' => trim($row->seureca_space_services),
                                         // 'contact_name' => trim($row->),
                                         // 'contact_department' => trim($row->),
                                         // 'contact_email' => trim($row->servicestitlefr),
-                                        'client' => trim($row->nameclientfr),
-                                        'customer_address' => trim($row->adressclientfr),
+                                        'client' => trim($row->maestro_de_obra),
+                                        'customer_address' => trim($row->adressclientesp),
                                         // 'general_comments' => trim($row->servicestitlefr);
-                                        'country' => trim($row->countryfr),
-                                        'location' => trim($row->locationfr),
-                                        'staff' => trim($row->seniorstaffnamepositionfr),
-                                        'consultants' => trim($row->partnersfr),
-                                        'financing' => trim($row->financingfr),
-                                        'experts' => trim($row->staffprovidedprofilesfr)
+                                        'country' => trim($row->countryesp),
+                                        'location' => trim($row->locationesp),
+                                        'staff' => trim($row->seniorstaffnamepositionesp),
+                                        'consultants' => trim($row->partenarios),
+                                        'financing' => trim($row->financiamiento),
+                                        'experts' => trim($row->staffprovidedprofilesesp)
                                     ]);
                                 }
                             }
@@ -2651,7 +2668,7 @@ class ReferenceController extends Controller
             dd('No file');
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'The translations in '.$language->name.' have been uploaded!');
     }
 
     public function upload_french_translations(Request $request)
@@ -2680,15 +2697,15 @@ class ReferenceController extends Controller
                             $reference = Reference::where('retrieved_id', trim($row->idaffaire))->first();
 
                             if ($reference) {
-                                $reference->project_name_fr = trim($row->projecttitlefr);
+                                $reference->project_name_fr = trim($row->titre_du_projet);
                                 $reference->service_name_fr = trim($row->servicestitlefr);
-                                $reference->project_description_fr = trim($row->projectdescriptionfr);
-                                $reference->service_description_fr = trim($row->servicesdescriptionfr);
+                                $reference->project_description_fr = trim($row->description_du_projet);
+                                $reference->service_description_fr = trim($row->services_fournis);
 
                                 if ($reference->client) {
                                     $client = Client::find($reference->client);
                                     if ($client->name_fr == '') {
-                                        $client->name_fr = trim($row->nameclientfr);
+                                        $client->name_fr = trim($row->maitre_douvrage);
                                         $client->save();
                                     }
                                 }
@@ -2707,7 +2724,7 @@ class ReferenceController extends Controller
             dd('No file');
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'The translations in French have been uploaded!');
     }
 
     public function upload_references(Request $request)
@@ -2722,10 +2739,20 @@ class ReferenceController extends Controller
             Storage::makeDirectory('Imports');
         }
 
-        $destination_path = storage_path('app/Imports/');
+        $destination_path = storage_path('app/Imports');
 
         if ($request->hasFile('file')) {
             if ($file->isValid()) {
+
+                /*Delete all the references*/
+                $references = Reference::all();
+
+                if ($references) {
+                    foreach ($references as $ref) {
+                        ReferenceController::destroy_reference($ref->id);
+                    }
+                }
+
                 // $file->move($destination_path, 'reference_import.xls');
 
                 // $excel = App::make('excel');
@@ -3211,7 +3238,7 @@ class ReferenceController extends Controller
             dd('No file');
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'The references have been uploaded!');
     }
 
     public function export()

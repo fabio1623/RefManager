@@ -27,20 +27,41 @@
 				Not approved references
 			</li>
 			<li class="list-group-item">
+
 				<span class="badge">{{ $translated_references->count() }}</span>
-				References with translation
+				References with translation 
 				<a id="drop_translations_btn" class="" href="{{ action('ReferenceController@destroy_all_translations') }}">
 					<i class="fa fa-trash" aria-hidden="true"></i>
 				</a>
-				<ul>
-				  	@foreach ($translated_references as $ref)
-				  		<li>
-				  			<a href="{{ action('ReferenceController@show', $ref->id) }}">
-				  				{{ $ref->project_number }} ({{ $ref->languages->count() }})
-			  				</a>
-		  				</li>
-				  	@endforeach
-				</ul>
+				<br><br>
+
+
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					@foreach($translations_in_bdd as $key => $lang)
+						<div class="panel panel-default">
+							<div class="panel-heading" role="tab" id="heading_{{ $key }}">
+							  <h4 class="panel-title">
+							    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $key }}" aria-expanded="true" aria-controls="collapse{{ $key }}">
+							      {{ $lang->name }} ({{ $lang->references->count() }})
+							    </a>
+							  </h4>
+							</div>
+							<div id="collapse{{ $key }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ $key }}">
+							  <div class="panel-body">
+							  		<ul>
+									  	@foreach ($translated_references as $ref)
+									  		<li>
+									  			<a href="{{ action('ReferenceController@show', $ref->id) }}">
+									  				{{ $ref->project_number }} ({{ $ref->languages->count() }})
+								  				</a>
+							  				</li>
+									  	@endforeach
+									</ul>
+							  </div>
+							</div>
+						</div>
+					@endforeach
+				</div>
 			</li>
 		</ul>
 	</div>

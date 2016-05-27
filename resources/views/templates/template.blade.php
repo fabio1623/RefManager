@@ -125,8 +125,8 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{ Auth::user()->username }}
 									<!-- If user admin -->
-									@if (Auth::user()->profile_id == 5 && $requests_number > 0)
-										<span class="badge">{{$requests_number}}</span>
+									@if (Auth::user()->profile_id == 5)
+										<span class="badge">{{ $requests_number > 0 ? $requests_number : '' }}</span>
 									@endif
 									<span class="caret"></span>
 								</a>
@@ -136,9 +136,7 @@
 									@if(Auth::user()->profile_id == 5)
 										<li><a href="{{ action('DefaultPasswordController@manage_password') }}"> <span class="glyphicon glyphicon glyphicon-lock"></span> Default password</a></li>
 										<li><a href="{{ action('AccessController@index') }}"> <span class="glyphicon glyphicon-exclamation-sign"></span> Access requests
-											@if ( $requests_number > 0 )
-												<span class="badge">{{$requests_number}}</span>
-											@endif
+												<span class="badge">{{ $requests_number > 0 ? $requests_number : '' }}</span>
 										</a></li>
 									@endif
 
