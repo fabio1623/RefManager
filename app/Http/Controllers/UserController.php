@@ -146,7 +146,7 @@ class UserController extends Controller
 
         //If $request->subsidiary exist, we want to go to the request access page
         // if ($request->subsidiary) {
-            return redirect()->action('UserController@edit', [$subsidiary_id, $user->id]);
+            return redirect()->action('UserController@edit', [$subsidiary_id, $user->id])->with('status', 'User created!');
             // return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
         // }
         // else {
@@ -241,7 +241,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+        return redirect()->action('SubsidiaryController@edit', $subsidiary_id)->with('update', 'User updated!');
     }
 
     /**
@@ -260,10 +260,10 @@ class UserController extends Controller
         User::destroy($user_id);
 
         if ($request->return_to_access_requests) {
-            return redirect()->action('AccessController@index');
+            return redirect()->action('AccessController@index')->with('update', 'User deleted!');
         }
         else {
-            return redirect()->action('SubsidiaryController@edit', $subsidiary_id);
+            return redirect()->action('SubsidiaryController@edit', $subsidiary_id)->with('update', 'User deleted!');
         }
         
         // dd($_POST);

@@ -37,7 +37,7 @@
 
 
 				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-					@foreach($translations_in_bdd as $key => $lang)
+					@foreach($translations_in_db as $key => $lang)
 						<div class="panel panel-default">
 							<div class="panel-heading" role="tab" id="heading_{{ $key }}">
 							  <h4 class="panel-title">
@@ -49,7 +49,7 @@
 							<div id="collapse{{ $key }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ $key }}">
 							  <div class="panel-body">
 							  		<ul>
-									  	@foreach ($translated_references as $ref)
+									  	@foreach ($lang->references as $ref)
 									  		<li>
 									  			<a href="{{ action('ReferenceController@show', $ref->id) }}">
 									  				{{ $ref->project_number }} ({{ $ref->languages->count() }})

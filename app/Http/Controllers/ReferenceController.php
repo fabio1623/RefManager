@@ -51,17 +51,38 @@ class ReferenceController extends Controller
      */
     public function management_page()
     {
-        $nb_total_ref = Reference::all()->count();
-        $nb_approved = Reference::where('dcom_approval', 1)->count();
-        $nb_not_approved = Reference::where('dcom_approval', 0)->count();
+        // $time1 = microtime(true);
+        
+        // $nb_total_ref = Reference::all()->count();
+        // $nb_approved = Reference::where('dcom_approval', 1)->count();
+        // $nb_not_approved = Reference::where('dcom_approval', 0)->count();
+        // $translations_in_bdd = Language::has('references')->get();
+
+        // $time2 = microtime(true) - $time1;
+
+        // $nb_total_ref = Reference::select(\DB::raw('count(*) as ct'))->pluck('ct');
+        // $nb_approved = Reference::select(\DB::raw('count(*) as ct'))->where('dcom_approval', 1)->pluck('ct');
+        // $nb_not_approved = Reference::select(\DB::raw('count(*) as ct'))->where('dcom_approval', 0)->pluck('ct');
+        // $trans_db = Language::has('references')->get();
+
+        // $time3 = microtime(true) - $time1 - $time2;
+
+        // Optimized requests
+        $nb_total_ref = \DB::table('references')->select(\DB::raw('count(*) as ct'))->pluck('ct');
+        $nb_approved = \DB::table('references')->select(\DB::raw('count(*) as ct'))->where('dcom_approval', 1)->pluck('ct');
+        $nb_not_approved = \DB::table('references')->select(\DB::raw('count(*) as ct'))->where('dcom_approval', 0)->pluck('ct');
+
+        // $time4 = microtime(true) - $time3 - $time2 - $time1;
+
+        $translations_in_db = Language::has('references')->get();
+
         $translated_references = Reference::has('languages')->get();
-        $translations_in_bdd = Language::has('references')->get();
 
         $view = view('references.management_page', ['nb_total_ref'=> $nb_total_ref, 
                                                     'nb_approved'=> $nb_approved,
                                                     'nb_not_approved'=> $nb_not_approved,
                                                     'translated_references'=> $translated_references,
-                                                    'translations_in_bdd' => $translations_in_bdd
+                                                    'translations_in_db' => $translations_in_db
                                                     ]);
         return $view;
     }
@@ -1369,7 +1390,7 @@ class ReferenceController extends Controller
 
         Storage::makeDirectory('References/'.$reference->project_number);
 
-        return redirect()->action('ReferenceController@edit', $reference->id);
+        return redirect()->action('ReferenceController@edit', $reference->id)->with('status', 'The reference has been saved!');
     }
 
     /**
@@ -1597,10 +1618,10 @@ class ReferenceController extends Controller
     {
         // dd($_POST);
         $reference = Reference::find($reference_id);
-
+        $language = Language::find($request->language);
         $reference->languages()->attach($request->language);
 
-        return redirect()->back();
+        return redirect()->back()->with('status', $language->name.' page added!');
     }
 
     public function detach_translation($reference_id, $language_id)
@@ -1608,8 +1629,9 @@ class ReferenceController extends Controller
         // dd('Here');
         $reference = Reference::find($reference_id);
         $reference->languages()->detach($language_id);
+        $language = Language::find($language_id);
 
-        return redirect()->back();
+        return redirect()->back()->with('update', $language->name.' page removed!');
     }
 
     public function destroy_all_translations()
@@ -2091,7 +2113,7 @@ class ReferenceController extends Controller
         }
 
         // return redirect()->action('ReferenceController@index');
-        return redirect()->back();
+        return redirect()->back()->with('update', 'The reference has been updated!');
     }
 
     public function approve($id)
@@ -2102,7 +2124,7 @@ class ReferenceController extends Controller
 
         $reference->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('update', 'The reference has been approved!');
     }
 
     public function disapprove($id)
@@ -2113,7 +2135,7 @@ class ReferenceController extends Controller
 
         $reference->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('update', 'The reference has been disapproved!');
     }
 
     /**
@@ -2125,28 +2147,9 @@ class ReferenceController extends Controller
 
     public function destroy($id)
     {
-        // $reference = Reference::find($id);
-
-        // $reference->external_services()->detach();
-        // $reference->internal_services()->detach();
-        // $reference->expertises()->detach();
-        // $reference->measures()->detach();
-        // $reference->qualifiers()->detach();
-        // $reference->languages()->detach();
-        // $reference->fundings()->detach();
-        // $reference->contributors()->detach();
-
-        // $has_folder = Storage::disk('local')->has('References/'.$reference->project_number);
-
-        // if ($has_folder) {
-        //     Storage::deleteDirectory('References/'.$reference->project_number);
-        // }
-
-        // Reference::destroy($id);
-
         ReferenceController::destroy_reference($id);
 
-        return redirect()->action('ReferenceController@index');
+        return redirect()->action('ReferenceController@index')->with('status', 'The reference has been deleted!');
     }
 
     public function destroy_reference($id)

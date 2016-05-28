@@ -26,16 +26,8 @@
 			</h3>
 		</div>
 		<div class="panel-body">
-			@if (count($errors) > 0)
-				<div class="alert alert-danger">
-					<strong>Whoops!</strong> There were some problems with your input.<br><br>
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				</div>
-			@endif
+			@include('errors.validation')
+  			@include('messages.messages')
 
 			<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@store') }}">
 				<?php echo csrf_field(); ?>
