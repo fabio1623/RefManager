@@ -21,7 +21,7 @@
 								</a> -->
 							</div>
 						</div>
-					</div>		
+					</div>
 				</div>
 			</h3>
 		</div>
@@ -39,7 +39,7 @@
 						@include("references.create.english.layout")
 					</div>
 					<!-- /#base menu content -->
-					
+
 				</div>
 				<!-- /#menu content -->
 			</form>
@@ -74,17 +74,17 @@
   		$('#form_save').submit();
   	});
 
-  	$(function(){
-	  var hash = window.location.hash;
-	  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-
-	  $('.nav-tabs a').click(function (e) {
-	    $(this).tab('show');
-	    var scrollmem = $('body').scrollTop() || $('html').scrollTop();
-	    window.location.hash = this.hash;
-	    $('html,body').scrollTop(scrollmem);
-	  });
-	});
+  // 	$(function(){
+	//   var hash = window.location.hash;
+	//   hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+	//
+	//   $('.nav-tabs a').click(function (e) {
+	//     $(this).tab('show');
+	//     var scrollmem = $('body').scrollTop() || $('html').scrollTop();
+	//     window.location.hash = this.hash;
+	//     $('html,body').scrollTop(scrollmem);
+	//   });
+	// });
 </script>
 <script type="text/javascript" src="/js/ref-create-scripts.js"></script>
 @endsection

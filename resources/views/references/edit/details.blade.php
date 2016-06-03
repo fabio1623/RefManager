@@ -101,7 +101,7 @@
 				@else
 					<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}" autocomplete="off">
 				@endif
-				
+
 			</div>
 		</div>
 		<div class="col-sm-4">
@@ -649,7 +649,7 @@
 				<input type="text" class="form-control client_address" id="client_address" name="client_address">
 			</div>
 		</div>
-	</div>	
+	</div>
 	@endif
 <!-- </div> -->
 <!-- EO line -->
@@ -787,7 +787,7 @@
 			</select>
 		</div>
 	</div>
-	@if ($reference->rate != 1)
+	@if ($reference->currency != 'Euros')
 		<div class="col-sm-4 col-sm-offset-2">
 			<div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Contract rate (€)</span>

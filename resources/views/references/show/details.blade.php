@@ -200,7 +200,7 @@
 				</div>
 			</div>
 		</div>
-	@endfor		
+	@endfor
 @else
 	<div class="form-group">
 		<div class="col-sm-8 col-sm-offset-4">
@@ -223,7 +223,7 @@
 		<div class="col-sm-4">
 		  <!-- <input type="text" class="form-control contact_name" id="contact_name_en" value="{{ $contact->name }}" disabled> -->
 		  <p class="form-control-static">{{ $contact->name }}</p>
-		</div>		
+		</div>
 	</div>
 	<!-- EO line -->
 	<!-- Line -->
@@ -259,7 +259,7 @@
 	<!-- EO line -->
 @endif
 	<hr>
-	
+
 <!-- </div> -->
 <!-- Line -->
 <div class="form-group">
@@ -333,7 +333,7 @@
 			@endif
 		</p>
 	</div>
-	@if ($reference->rate != 1)
+	@if ($reference->currency != 'Euros')
 		<label for="project_cost" class="col-sm-4 control-label">Contract rate (€)</label>
 		<div class="col-sm-2">
 			<p class="form-control-static">{{ $reference->rate }}</p>
