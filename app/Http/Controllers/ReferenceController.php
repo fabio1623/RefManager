@@ -2638,7 +2638,9 @@ class ReferenceController extends Controller
                             $reference = Reference::where('retrieved_id', trim($row->idaffaire))->first();
 
                             if ($reference) {
-                                if ($reference->languages->contains('id', $request->language_id) == false) {
+                                $reference->languages()->detach($request->language_id);
+
+                                // if ($reference->languages->contains('id', $request->language_id) == false) {
                                     // $language = Language::where('id', $request->language_id)->first();
                                     $reference->languages()->attach($request->language_id, [
                                         'project_name' => trim($row->project_title),
@@ -2659,7 +2661,7 @@ class ReferenceController extends Controller
                                         'financing' => trim($row->financiamiento),
                                         'experts' => trim($row->staffprovidedprofilesesp)
                                     ]);
-                                }
+                                // }
                             }
                         }
                     });
@@ -2720,16 +2722,32 @@ class ReferenceController extends Controller
                                     }
                                 }
 
+                                //Fundings
                                 if (trim($row->financement)) {
                                   $f = explode('/', trim($row->financement));
                                   foreach ($reference->fundings() as $key => $value) {
                                     if ($f[$key] != '') {
-                                      $fund = Funding::where('id', $value->id)->first();
+                                      $fund = Funding::find($value->id);
                                       $fund->name_fr = $f[$key];
                                       $fund->save();
                                     }
                                   }
                                 }
+
+                                //Staff provided
+                                // if (trim($row->partenaires) && trim($row->partenaires) != 'NA') {
+                                //   $p = explode(',', trim($row->partenaires));
+                                //
+                                //   $parts = ContributorReference::where('reference_id', $reference->id)->where('function_on_project', 'Consultant')->get();
+                                //
+                                //   foreach ($parts as $key => $value) {
+                                //     if ($p[$key] != '') {
+                                //       $partner = Contributor::find($value->contributor_id);
+                                //       $partner->name_fr = $f[$key];
+                                //       $fund->save();
+                                //     }
+                                //   }
+                                // }
 
                                 $reference->save();
                             }
