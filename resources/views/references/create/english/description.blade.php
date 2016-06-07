@@ -2,7 +2,7 @@
 <div class="form-group required">
 	<label for="project_number" class="col-sm-4 control-label">Project number</label>
 	<div class="col-sm-4">
-	  <input type="text" class="form-control" id="project_number" name="project_number" value="{{ old('project_number') }}">
+	  <input type="text" class="form-control" id="project_number" name="project_number" value="{{ old('project_number') }}" required="">
 	</div>
 	<div class="checkbox col-sm-2">
 		<label>
@@ -120,7 +120,7 @@
 
 <!-- List of external services -->
 <!-- Line -->
-<div class="form-group" id="external_div"> 
+<div class="form-group" id="external_div">
 	<hr></hr>
 	<label class="col-sm-4 control-label"><i class="fa fa-refresh" aria-hidden="true"></i> Type of services</label>
 	@foreach($external_services as $service)
@@ -138,7 +138,7 @@
 <!-- EO line -->
 
 <!-- Line -->
-<div class="form-group"> 
+<div class="form-group">
 	<div class="checkbox col-sm-8 col-sm-offset-4">
 	  <label>
 	    <input id="internal_checkbox" name="internal_check" type="checkbox"><b> Veolia's tenders (Internal Market only) ?</b>
@@ -149,7 +149,7 @@
 
 <!-- List of internal services -->
 <!-- Line -->
-<div class="form-group" id="internal_div"> 
+<div class="form-group" id="internal_div">
 	<hr></hr>
 	<label class="col-sm-4 control-label"><i class="fa fa-recycle" aria-hidden="true"></i> Veolia's contract type</label>
 	@foreach($internal_services as $service)
@@ -165,4 +165,3 @@
 	@endforeach
 </div>
 <!-- EO line -->
-

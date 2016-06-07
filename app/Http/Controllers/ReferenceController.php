@@ -2977,7 +2977,7 @@ class ReferenceController extends Controller
 
                 Excel::load($file, function($reader) use ($external_services, $internal_services, $common_fields, $expertises, $dates, $associated_objects, $contributors, $measures) {
                     // reader methods
-                    $reader->take(374);
+                    $reader->take(378);
 
                     // $reader->all();
                     // $reader->take(3);
@@ -3008,10 +3008,10 @@ class ReferenceController extends Controller
 
                       // dd($staff);
 
-                        $reference = Reference::where('project_number', trim($row->no_affaire))->first();
+                        // $reference = Reference::where('retrieved_id', trim($row->no_affaire))->first();
 
                         // If reference does not already exists
-                        if (!$reference) {
+                        // if (!$reference) {
                             //Create new reference
                             $new_reference = new Reference;
 
@@ -3114,8 +3114,6 @@ class ReferenceController extends Controller
                               }
                             }
 
-
-
                             //Get basic contributors (Project managers & partners)
                             foreach ($contributors as $key => $value) {
                               if (trim($row->$key)) {
@@ -3189,7 +3187,7 @@ class ReferenceController extends Controller
                                 $new_reference->internal_services()->attach($key);
                               }
                             }
-                        }
+                        // }
                     });
                 });
             }
