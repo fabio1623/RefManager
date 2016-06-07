@@ -1422,15 +1422,17 @@ class ReferenceController extends Controller
 
         //Get contributors
         $staff_involved = ContributorReference::where('reference_id', $reference->id)
-                                                ->where('function_on_project', 'Senior')->get();
+                                                ->where('function_on_project', 'Senior')->with('contributor')->get();
 
-        $staff_name = $reference->contributors()->where('function_on_project', 'Senior')->get();
+        // dd($staff_involved);
+
+        // $staff_name = $reference->contributors()->where('function_on_project', 'Senior')->get();
         // dd($staff_involved);
 
         $experts = ContributorReference::where('reference_id', $reference->id)
-                                            ->where('function_on_project', 'Expert')->get();
+                                            ->where('function_on_project', 'Expert')->with('contributor')->get();
 
-        $experts_name = $reference->contributors()->where('function_on_project', 'Expert')->get();
+        // $experts_name = $reference->contributors()->where('function_on_project', 'Expert')->get();
 
         $consultants = $reference->contributors()->where('function_on_project', 'Consultant')->get();
 
@@ -1503,7 +1505,7 @@ class ReferenceController extends Controller
             }
         }
 
-        $view = view('references.show', ['languages_with_template'=>$languages_with_template, 'is_creator'=>$is_creator, 'user_profile'=>$user_profile, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'staff_name'=>$staff_name, 'experts'=>$experts, 'experts_name'=>$experts_name, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
+        $view = view('references.show', ['languages_with_template'=>$languages_with_template, 'is_creator'=>$is_creator, 'user_profile'=>$user_profile, 'files'=>$files, 'reference'=>$reference, 'internal_services'=>$internal_services, 'external_services'=>$external_services, 'domains'=>$domains, 'expertises'=>$expertises, 'categories'=>$categories, 'measures'=>$measures, 'country'=>$country, 'countries'=>$countries, 'zones'=>$zones, 'zone'=>$zone, 'zone_manager'=>$zone_manager, 'measures_values'=>$measures_values, 'qualifiers_values'=>$qualifiers_values, 'linked_languages'=>$linked_languages, 'language_reference'=>$language_reference, 'client'=>$client, 'contact'=>$contact, 'staff_involved'=>$staff_involved, 'experts'=>$experts, 'consultants'=>$consultants, 'financings'=>$financings, 'seniors'=>$seniors, 'exps'=>$exps, 'consults'=>$consults, 'senior_profiles'=>$senior_profiles, 'expert_profiles'=>$expert_profiles, 'contacts'=>$contacts, 'clients'=>$clients, 'fundings'=>$fundings]);
 
         return $view;
     }
@@ -2690,20 +2692,25 @@ class ReferenceController extends Controller
 
         if ($request->hasFile('file')) {
             if ($file->isValid()) {
-                Excel::load($file, function($reader) {
+              $common_fields = array(
+                'titre_du_projet' => 'project_name_fr',
+                'servicestitlefr' => 'service_name_fr',
+                'description_du_projet' => 'project_description_fr',
+                'services_fournis' => 'service_description_fr'
+              );
+                Excel::load($file, function($reader) use($common_fields) {
                     $reader->all();
                     // $reader->take(7);
                     // dd($reader->take(1)->get());
 
-                    $reader->each(function($row){
+                    $reader->each(function($row) use($common_fields){
                         if (trim($row->idaffaire)) {
                             $reference = Reference::where('retrieved_id', trim($row->idaffaire))->first();
 
                             if ($reference) {
-                                $reference->project_name_fr = trim($row->titre_du_projet);
-                                $reference->service_name_fr = trim($row->servicestitlefr);
-                                $reference->project_description_fr = trim($row->description_du_projet);
-                                $reference->service_description_fr = trim($row->services_fournis);
+                                foreach ($common_fields as $key => $value) {
+                                  $reference->$value = trim($row->$key);
+                                }
 
                                 if ($reference->client) {
                                     $client = Client::find($reference->client);
@@ -2711,6 +2718,17 @@ class ReferenceController extends Controller
                                         $client->name_fr = trim($row->maitre_douvrage);
                                         $client->save();
                                     }
+                                }
+
+                                if (trim($row->financement)) {
+                                  $f = explode('/', trim($row->financement));
+                                  foreach ($reference->fundings() as $key => $value) {
+                                    if ($f[$key] != '') {
+                                      $fund = Funding::where('id', $value->id)->first();
+                                      $fund->name_fr = $f[$key];
+                                      $fund->save();
+                                    }
+                                  }
                                 }
 
                                 $reference->save();
@@ -2837,7 +2855,7 @@ class ReferenceController extends Controller
                 );
 
                 $contributors = array(
-                  'chef_projet' => array('Manager', 'Senior'),
+                  // 'chef_projet' => array('Manager', 'Senior'),
                   'partners' => array('', 'Consultant')
                 );
 
@@ -2941,35 +2959,36 @@ class ReferenceController extends Controller
 
                 Excel::load($file, function($reader) use ($external_services, $internal_services, $common_fields, $expertises, $dates, $associated_objects, $contributors, $measures) {
                     // reader methods
-                    // $reader->take(374);
+                    $reader->take(374);
 
-                    $reader->take(3);
+                    // $reader->all();
+                    // $reader->take(3);
                     // Skip and take
                     // $reader->skip(24)->take(1);
                     // dd($reader->get());
                     $reader->each(function($row) use ($external_services, $internal_services, $common_fields, $expertises, $dates, $associated_objects, $contributors, $measures){
 
-                      if ($row->senior_staff_name_position) {
-                        $tab = explode('/', trim($row->$key));
-                        foreach ($tab as $key => $unit) {
-                          $staff = explode('-', $unit);
-                          $name = $staff[0];
-                          $staff_db = Contributor::where('name', $name)->first();
-                          if ($staff_db == null) {
-                            $staff_db = new Contributor;
-                            $staff_db->name = $name;
-                            $staff_db->save();
-                          }
-                          $responsabilities = explode(',', $staff[1]);
-                          foreach ($responsabilities as $resp) {
-                            if ($resp != 'Project Manager') {
-                              $new_reference->contributors()->attach($staff_db->id, ['responsability_on_project'=>$resp, 'function_on_project'=>'Senior']);
-                            }
-                          }
-                        }
-                      }
+                      // if ($row->senior_staff_name_position) {
+                      //   $tab = explode('/', trim($row->senior_staff_name_position));
+                      //   foreach ($tab as $key => $unit) {
+                      //     $staff = explode('-', $unit);
+                      //     $name = $staff[0];
+                      //     $staff_db = Contributor::where('name', $name)->first();
+                      //     if ($staff_db == null) {
+                      //       $staff_db = new Contributor;
+                      //       $staff_db->name = $name;
+                      //       $staff_db->save();
+                      //     }
+                      //     $responsabilities = explode(',', $staff[1]);
+                      //     foreach ($responsabilities as $resp) {
+                      //       if ($resp != 'Project Manager') {
+                      //         $new_reference->contributors()->attach($staff_db->id, ['responsability_on_project'=>$resp, 'function_on_project'=>'Senior']);
+                      //       }
+                      //     }
+                      //   }
+                      // }
 
-                      dd($staff);
+                      // dd($staff);
 
                         $reference = Reference::where('project_number', trim($row->no_affaire))->first();
 
@@ -3021,20 +3040,78 @@ class ReferenceController extends Controller
 
                             $new_reference->save();
 
+                            //Get senior staff
+                            if (trim($row->senior_staff_name_position)) {
+                              $tab = explode('/', trim($row->senior_staff_name_position));
+                              foreach ($tab as $key => $unit) {
+                                $staff = explode('-', $unit);
+                                // dd($staff);
+                                $name = trim($staff[0]);
+
+                                $staff_db = Contributor::where('name', $name)->first();
+                                if ($staff_db == null) {
+                                  $staff_db = new Contributor;
+                                  $staff_db->name = $name;
+                                  $staff_db->save();
+                                }
+                                if (count($staff) > 1) {
+                                  $responsabilities = explode(',', trim($staff[1]));
+                                  foreach ($responsabilities as $resp) {
+                                    // if (trim($resp) != 'Project Manager') {
+                                      $new_reference->contributors()->attach($staff_db->id, ['responsability_on_project'=>trim($resp), 'function_on_project'=>'Senior']);
+                                    // }
+                                  }
+                                }
+                              }
+                            }
+
+                            //Get staff provided
+                            if (trim($row->staff_provided_profiles)) {
+                              $tab = explode('/', trim($row->staff_provided_profiles, ' <>'));
+                              if(count($tab) < 2)
+                              {
+                                $tab2 = explode(',', trim($tab[0], ' <>'));
+                                foreach ($tab2 as $key => $value) {
+                                  if (trim($value, ' <>')) {
+                                    $new_link = new ContributorReference;
+                                    $new_link->reference_id = $new_reference->id;
+                                    $new_link->responsability_on_project = trim($value, ' <>');
+                                    $new_link->function_on_project = 'Expert';
+
+                                    $new_link->save();
+                                  }
+                                }
+                              }
+                              else {
+                                foreach ($tab as $key => $value) {
+                                  if (trim($value, ' <>')) {
+                                    $new_link = new ContributorReference;
+                                    $new_link->reference_id = $new_reference->id;
+                                    $new_link->responsability_on_project = trim($value, ' <>');
+                                    $new_link->function_on_project = 'Expert';
+
+                                    $new_link->save();
+                                  }
+                                }
+                              }
+                            }
+
+
+
                             //Get basic contributors (Project managers & partners)
                             foreach ($contributors as $key => $value) {
                               if (trim($row->$key)) {
-                                $contribus = explode('/', trim($row->$key));
+                                $contribus = explode('/', trim($row->$key, ' </'));
 
                                 foreach ($contribus as $name) {
-                                    $contributors_bdd = Contributor::where('name', $name)->first();
+                                    $contributors_bdd = Contributor::where('name', trim($name, ' <>'))->first();
 
                                     if ($contributors_bdd) {
                                         $new_reference->contributors()->attach($contributors_bdd->id, ['responsability_on_project'=>$value[0], 'function_on_project'=>$value[1]]);
                                     }
                                     else {
                                         $new_contributor = new Contributor;
-                                        $new_contributor->name = $name;
+                                        $new_contributor->name = trim($name, ' <>');
                                         $new_contributor->save();
                                         $new_reference->contributors()->attach($new_contributor->id, ['responsability_on_project'=>$value[0], 'function_on_project'=>$value[1]]);
                                     }

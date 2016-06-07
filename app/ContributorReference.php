@@ -19,4 +19,9 @@ class ContributorReference extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function contributor()
+    {
+    	return $this->belongsTo('App\Contributor');
+    }
 }

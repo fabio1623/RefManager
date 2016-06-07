@@ -73,9 +73,7 @@
 							<em>Name</em>
 						</td>
 						<td colspan="2" class="col-sm-10">
-							@if($staff_involved[$i]->contributor_id)
-								{{ $staff_name[$i]['name'] }}
-							@endif
+							{{ with($c=$staff_involved[$i]->contributor()->first()) ? $c->name : null }}
 						</td>
 					</tr>
 					<tr>
@@ -121,9 +119,7 @@
 							<em>Name</em>
 						</td>
 						<td colspan="2" class="col-sm-10">
-							@if($experts[$i]->contributor_id)
-								{{ $experts_name[$i]['name'] }}
-							@endif
+							{{ with($e=$experts[$i]->contributor()->first()) ? $e->name : null }}
 						</td>
 					</tr>
 					<tr>
