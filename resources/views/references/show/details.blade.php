@@ -153,7 +153,7 @@
 <div class="form-group">
 	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
 	<div class="col-sm-2">
-	  <p class="form-control-static">
+		<p class="form-control-static">
 			@if ($reference->staff_number)
 				{{ $reference->staff_number }} persons
 			@endif
@@ -182,7 +182,7 @@
 	    <div class="input-group">
 		  <!-- <input type="text" class="form-control" id="consultants_man_months" aria-describedby="basic-addon2" value="{{ $reference->consultants_man_months }}" disabled>
 		  <span class="input-group-addon" id="basic-addon2">man/months</span> -->
-		  <p class="form-control-static">
+			<p class="form-control-static">
 				@if ($reference->consultants_man_months)
 					{{ $reference->consultants_man_months }} man/months
 				@endif
@@ -341,7 +341,7 @@
 						M €
 					@endif
 			@else
-					N/A
+				N/A
 			@endif
 		</p>
 	</div>
@@ -366,7 +366,7 @@
 						M €
 					@endif
 			@else
-					N/A
+				N/A
 			@endif
 		</p>
 	</div>
@@ -403,7 +403,6 @@
 		</p>
 	</div>
 </div>
-
 <hr>
 <!-- Line -->
 <div class="form-group">
