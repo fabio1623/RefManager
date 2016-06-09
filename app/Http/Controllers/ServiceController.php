@@ -46,7 +46,7 @@ class ServiceController extends Controller
         // dd($linked_services);
 
         $view = view('services.external.subsidiary_index', ['external_services'=>$external_services, 'linked_services'=>$linked_services, 'subsidiary'=>$subsidiary]);
-        return $view;   
+        return $view;
     }
 
     /**
@@ -104,7 +104,7 @@ class ServiceController extends Controller
 
         $subsidiary->external_services()->detach($external_service->id);
 
-        return redirect()->back();   
+        return redirect()->back();
     }
 
     /**
@@ -196,6 +196,11 @@ class ServiceController extends Controller
         $external_service = ExternalService::find($id);
         $external_service->references()->detach();
         $external_service->subsidiaries()->detach();
+        $sub_services = ExternalService::where('parent_service_id', $id)->get();
+        foreach ($sub_services as $value) {
+          $value->parent_service_id = null;
+          $value->save();
+        }
         ExternalService::destroy($id);
 
         return redirect()->action('ServiceController@subsidiary_external_services', $subsidiary_id);
@@ -281,7 +286,7 @@ class ServiceController extends Controller
 
         $subsidiary->internal_services()->detach($internal_service->id);
 
-        return redirect()->back();   
+        return redirect()->back();
     }
 
     public function internal_store(Request $request)
@@ -332,6 +337,12 @@ class ServiceController extends Controller
         $internal_service = InternalService::find($id);
         $internal_service->references()->detach();
         $internal_service->subsidiaries()->detach();
+        $sub_services = InternalService::where('parent_service_id', $id)->get();
+        foreach ($sub_services as $value) {
+          $value->parent_service_id = null;
+          $value->save();
+        }
+        // $internal_service->parent_service()->dissociate();
         InternalService::destroy($id);
 
         return redirect()->action('ServiceController@subsidiary_internal_services', $subsidiary_id);

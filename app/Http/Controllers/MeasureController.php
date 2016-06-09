@@ -30,7 +30,7 @@ class MeasureController extends Controller
         $measures->setPath('index');
 
         $view = view('measures.index')->with('measures', $measures);
-        
+
         return $view;
     }
 
@@ -97,7 +97,7 @@ class MeasureController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->measures()->detach($measure_id);        
+        $subsidiary->measures()->detach($measure_id);
 
         return redirect()->back();
     }
@@ -214,6 +214,7 @@ class MeasureController extends Controller
         $measure->references()->detach();
         $measure->qualifiers()->detach();
         $measure->subsidiaries()->detach();
+        $measure->units()->detach();
 
         Measure::destroy($measure_id);
 

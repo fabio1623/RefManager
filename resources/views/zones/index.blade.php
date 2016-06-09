@@ -29,7 +29,7 @@
 						</div>
 					</h3>
 				</div>
-				
+
 				<div class="table-responsive">
 
 					<table class="table table-hover">
@@ -45,7 +45,7 @@
 						</thead>
 						<tbody>
 							<form action="{{ action('ZoneController@destroyMultiple') }}" method="POST" id="form_delete">
-						      		<?php echo method_field('DELETE'); ?>
+					      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 									@for ($i=0; $i<$zones->count(); $i++)
 											<tr>
@@ -61,7 +61,7 @@
 												<td>
 													<a class="btn btn-link btn-xs">
 														{{$zones[$i]->name}}
-													</a>	
+													</a>
 												</td>
 												<td>
 													<a class="btn btn-link btn-xs">

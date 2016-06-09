@@ -113,7 +113,9 @@
 		  <!-- <input type="text" class="form-control" id="estimated_duration" value="{{ $reference->estimated_duration }}" disabled>
 		  <span class="input-group-addon" id="basic-addon2">Months</span> -->
 		  	<p class="form-control-static">
-	  			{{ $reference->estimated_duration }} Months
+					@if ($reference->estimated_duration)
+	  				{{ $reference->estimated_duration }} Months
+					@endif
   			</p>
 		</div>
 	</div>
@@ -122,14 +124,14 @@
 
 <!-- List of external services -->
 <!-- Line -->
-<div class="form-group" id="external_div"> 
+<div class="form-group" id="external_div">
 	<hr>
 	<label class="col-sm-4 control-label"><i class="fa fa-refresh" aria-hidden="true"></i> Type of services</label>
 	@if ($external_services->count() > 0)
 		@foreach ($external_services as $service)
 			<div class="col-sm-8 col-sm-offset-4">
 				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				{{ $service->name }}	
+				{{ $service->name }}
 			</div>
 		@endforeach
 	@else
@@ -140,13 +142,13 @@
 	@endif
 </div>
 
-<div class="form-group hidden" id="internal_div"> 
+<div class="form-group hidden" id="internal_div">
 	<hr>
 	<label class="col-sm-4 control-label"><i class="fa fa-recycle" aria-hidden="true"></i> Veolia's contract type</label>
 	@foreach($internal_services as $service)
 		<div class="col-sm-8 col-sm-offset-4">
 			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-			{{ $service->name }}	
+			{{ $service->name }}
 		</div>
 	@endforeach
 </div>

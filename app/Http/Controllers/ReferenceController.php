@@ -1211,6 +1211,8 @@ class ReferenceController extends Controller
             $reference->rate = 1;
         }
 
+        $reference->nb_inhabitants = $request->nb_inhabitants;
+
         $reference->subsidiary_id = Auth::user()->subsidiary_id;
         $reference->created_by = Auth::user()->username;
 
@@ -1876,6 +1878,13 @@ class ReferenceController extends Controller
         }
         else {
             $reference->rate = 1;
+        }
+
+        if ($request->nb_inhabitants) {
+          $reference->nb_inhabitants = $request->nb_inhabitants;
+        }
+        else {
+          $reference->nb_inhabitants = null;
         }
 
         $reference->updated_by = Auth::user()->username;
@@ -2854,12 +2863,54 @@ class ReferenceController extends Controller
                 }
 
                 //The array starts at index 1
-                $external_services = array(1 => '3master_plan', '4feasibility_or_identification_study', '5preliminary_design', '6detailed_design', '7preparation_of_tender_documents', '8analysis_and_evaluation_of_tenders', '9site_supervision', '10fidic', '11technical_assistance', '12training', '13reinforcement_of_capacity', '15financial_analysis', '16tariff_analysis', '17institutional_analysis_ppp_study_sectorial_restructuring_regulation', '14environment');
+                $external_services = array(
+                  1 => '3master_plan',
+                  2 => '4feasibility_or_identification_study',
+                  3 => '5preliminary_design',
+                  4 => '6detailed_design',
+                  5 => '7preparation_of_tender_documents',
+                  6 => '8analysis_and_evaluation_of_tenders',
+                  7 => '9site_supervision',
+                  8 => '10fidic',
+                  9 => '11technical_assistance',
+                  10 => '12training',
+                  11 => '13reinforcement_of_capacity',
+                  12 => '15financial_analysis',
+                  14 => '17institutional_analysis_ppp_study_sectorial_restructuring_regulation',
+                  15 => '14environment'
+                );
 
                 //The array starts at index 1
-                $internal_services = array(1 => '19operation_maintenance_om_contract', '26public_private_partnership', '20management_contract', '21lease_contract', '22concession_contract', '23complete_divestiture', '24bot_boot', '25design_build_vws');
+                $internal_services = array(
+                  1 => '19operation_maintenance_om_contract',
+                  2 => '26public_private_partnership',
+                  3 => '20management_contract',
+                  4 => '21lease_contract',
+                  5 => '22concession_contract',
+                  6 => '23complete_divestiture',
+                  8 => '24bot_boot',
+                  9 =>'25design_build_vws'
+                );
 
-                $common_fields = array('id_affaire' => 'retrieved_id', 'no_affaire' => 'project_number', 'nom_affaire' => 'dfac_name', 'mission_length_months' => 'estimated_duration', 'project_title' => 'project_name', 'services_title' => 'service_name', 'project_description' => 'project_description', 'services_description' => 'service_description', 'nstaff' => 'staff_number', 'n_staff_month_total' => 'seureca_man_months', 'n_staff_month_consultant' => 'consultants_man_months', 'project_cost_millions_of_euros' => 'total_project_cost', 'study_cost_millions_of_euros' => 'seureca_services_cost', 'construction_cost_euro' => 'work_cost', 'comments' => 'general_comments', 'location' => 'location');
+                $common_fields = array(
+                  '1confidential' => 'confidential',
+                  'id_affaire' => 'retrieved_id',
+                  'no_affaire' => 'project_number',
+                  'nom_affaire' => 'dfac_name',
+                  'mission_length_months' => 'estimated_duration',
+                  'project_title' => 'project_name',
+                  'services_title' => 'service_name',
+                  'project_description' => 'project_description',
+                  'services_description' => 'service_description',
+                  'nstaff' => 'staff_number',
+                  'n_staff_month_total' => 'seureca_man_months',
+                  'n_staff_month_consultant' => 'consultants_man_months',
+                  'inhabitants' => 'nb_inhabitants',
+                  'project_cost_millions_of_euros' => 'total_project_cost',
+                  'study_cost_millions_of_euros' => 'seureca_services_cost',
+                  'construction_cost_euro' => 'work_cost', 'comments' => 'general_comments',
+                  'location' => 'location'
+                );
 
                 $dates = array(
                   'start_year' => array('start_month', 'start_date'),
@@ -3221,5 +3272,69 @@ class ReferenceController extends Controller
 
         return response($data)
                 ->header('Content-Type','text/csv; charset=utf-8');
+    }
+
+    public function incomplete_page()
+    {
+      $references = Reference::where('project_number', '')
+                                ->orWhere('dfac_name', '')->with('country')->get();
+
+      $view = view('references.incomplete.index', ['references' => $references]);
+
+      return $view;
+    }
+
+    public function save_incomplete(Request $request)
+    {
+      if ($request->references) {
+        $non_saved = array();
+        foreach ($request->references as $key => $ref) {
+          $ref_db = Reference::where('id', '<>', $key);
+          //If project name inserted
+          if (trim($ref[0])) {
+            //If project name & dfac name inserted
+            if (trim($ref[1])) {
+              $ref_db->where(function ($query) use($ref) {
+                $query->where('project_number', trim($ref[0]))
+                        ->orWhere('dfac_name', trim($ref[1]));
+              });
+            }
+            else {
+              $ref_db->where('project_number', trim($ref[0]));
+            }
+          }
+          else {
+            //Otherwise, if just dfac_name inserted
+            if (trim($ref[1])) {
+              $ref_db->where('dfac_name', trim($ref[1]));
+            }
+            else {
+              $ref_db = null;
+            }
+          }
+          //If the reference has at least one of the 2 fields (project name & dfac name)
+          if ($ref_db) {
+            $ref_db = $ref_db->first();
+          }
+
+          if ($ref_db)
+          {
+            $non_saved[$key] = $request->references[$key];
+          }
+          else {
+            $reference = Reference::find($key);
+            $reference->project_number = trim($ref[0]);
+            $reference->dfac_name = trim($ref[1]);
+            $reference->save();
+          }
+        }
+      }
+
+      if (count($non_saved) == 0) {
+        return redirect()->back()->with('status', 'The changes have been saved!');
+      }
+      else {
+        return redirect()->back()->with('status', 'Saved but some changes were ignored because "Project name / Dfac name" already used)');
+      }
     }
 }

@@ -48,6 +48,8 @@ Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti')
 Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
+Route::post('references/save/incomplete', 'ReferenceController@save_incomplete');
+Route::get('references/incomplete_page', 'ReferenceController@incomplete_page');
 Route::post('references/translations/french/upload', 'ReferenceController@upload_french_translations');
 Route::get('references/translations/destroy/all', 'ReferenceController@destroy_all_translations');
 Route::get('references/export', 'ReferenceController@export');

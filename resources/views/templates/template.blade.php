@@ -103,6 +103,7 @@
 										<li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-credit-card"></span> Fundings</a></li>
 										<li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
 										<li><a href="{{ action('TemplateController@index') }}"><span class="glyphicon glyphicon-duplicate"></span> Templates</a></li>
+										<li><a href="{{ action('ReferenceController@incomplete_page') }}"><span class=""></span> Incomplete references</a></li>
 									</ul>
 								</li>
 							@else
@@ -144,7 +145,7 @@
 									<li><a href="{{ url('/auth/logout') }}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 								</ul>
 							</li>
-							
+
 						</ul>
 					</div><!--/.nav-collapse -->
 		    	</div>
@@ -152,7 +153,7 @@
 	    @endif
 
 		@yield('content')
-		
+
 	</body>
 
 <script>

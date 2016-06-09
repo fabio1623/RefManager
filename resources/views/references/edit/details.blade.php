@@ -837,6 +837,16 @@
 	</div>
 </div>
 <!-- EO line -->
+<div class="form-group">
+		<label for="number_inhabitant" class="col-sm-4 control-label">Number of inhabitants</label>
+		<div class="col-sm-2">
+			<div class="input-group">
+				<input type="text" class="form-control" name="nb_inhabitants" value="{{ $reference->nb_inhabitants }}" aria-describedby="basic-addon1">
+				<span class="input-group-addon" id="basic-addon1">Sum</span>
+			</div>
+		</div>
+</div>
+
 <hr>
 <!-- Line -->
 <div class="form-group">

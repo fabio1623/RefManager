@@ -8,7 +8,7 @@ class InternalService extends Model
 {
     public function parent_service()
     {
-        return $this->hasOne('App\ExternalService');
+        return $this->hasOne('App\InternalService');
     }
 
     public function references()

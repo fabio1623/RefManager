@@ -375,8 +375,13 @@
 			<span class="input-group-addon" id="basic-addon2">
 				<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
 			</span>
-	  		<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" autocomplete="off" value="{{ old('client_name_fr') }}">
-  		</div>
+  		<input type="text" class="form-control client_name_fr" id="client_name_fr" name="client_name_fr" autocomplete="off" value="{{ old('client_name_fr') }}">
+			<!-- <span class="input-group-btn">
+				<button class="btn btn-default addClientButton" type="button">
+					<i class="fa fa-plus" aria-hidden="true"></i>
+				</button>
+			</span> -->
+		</div>
 	</div>
 </div>
 <div class="form-group">
@@ -386,10 +391,53 @@
 				<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Address
 			</span>
 			<input type="text" class="form-control client_address" id="client_address" name="client_address" autocomplete="off" value="{{ old('client_address') }}">
+			<!-- <span class="input-group-btn">
+				<button class="btn btn-default removeButton" type="button">
+					<i class="fa fa-eraser" aria-hidden="true"></i>
+				</button>
+			</span> -->
 		</div>
 	</div>
 </div>
 <!-- EO line -->
+
+<!-- The option field template containing an option field and a Remove button -->
+<!-- <div class=" template" id="optionTemplate">
+	<div class="form-group">
+	    <div class="col-sm-offset-4 col-sm-4">
+	        <div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+						</span>
+						<input id="client_name_temp" type="text" class="form-control clientNameInput" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
+					</div>
+	    </div>
+	    <div class="col-sm-4">
+	        <div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span> Name
+						</span>
+						<input id="client_name_fr_temp" type="text" class="form-control functionInput_fr" placeholder="" aria-describedby="" data-provide="typeahead" autocomplete="off">
+					</div>
+	    </div>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-8 col-sm-offset-4">
+	    	<div class="input-group">
+						<span class="input-group-addon" id="basic-addon2">
+							<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Address
+						</span>
+	        	<input id="involved_staff_temp" class="form-control nameInput" type="text" data-provide="typeahead" autocomplete="off">
+						<span class="input-group-btn">
+							<button class="btn btn-default removeButton" type="button">
+								<i class="fa fa-trash" aria-hidden="true"></i>
+							</button>
+						</span>
+				</div>
+	    </div>
+	</div>
+</div> -->
+
 <hr>
 <!-- Line -->
 <div class="form-group">
@@ -494,6 +542,15 @@
 	</div>
 </div>
 <!-- EO line -->
+<div class="form-group">
+		<label for="number_inhabitant" class="col-sm-4 control-label">Number of inhabitants</label>
+		<div class="col-sm-2">
+			<div class="input-group">
+				<input type="text" class="form-control" name="nb_inhabitants" value="{{ old('nb_inhabitants') }}" aria-describedby="basic-addon1">
+				<span class="input-group-addon" id="basic-addon1">Sum</span>
+			</div>
+		</div>
+</div>
 <hr>
 <!-- Line -->
 <div class="form-group">

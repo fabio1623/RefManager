@@ -142,6 +142,67 @@
 				    </div>
 			  	</div>
 			  	<!-- EO line -->
+					<div class="form-group">
+					    <label for="financing" class="control-label col-sm-4" for="financing">Financing</label>
+					    <div class="col-sm-3">
+					    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" data-size="8" name="financings[]" data-live-search="true">
+					    		<option></option>
+					    		@foreach($fundings as $funding)
+					    			<option value="{{ $funding->id }}">{{ $funding->name }}</option>
+					    		@endforeach
+				    		</select>
+					    </div>
+				  	</div>
+						<div class="form-group">
+							<label for="start_date" class="col-sm-4 control-label">Started</label>
+							<div class="col-sm-3">
+								<label class="radio-inline">
+								  <input type="radio" name="started_radio" id="" value="<="> Before
+								</label>
+								<label class="radio-inline">
+								  <input type="radio" name="started_radio" id="" value=">="> After
+								</label>
+								<label class="radio-inline">
+								  <input type="radio" name="started_radio" id="" value="="> On
+								</label>
+							</div>
+							<div class="col-sm-2">
+							    <div id="date_picker_start" class="input-group input-append date">
+							      <input type="text" class="form-control" id="start_date" name="started" readonly>
+							      <span class="input-group-btn">
+							        <button class="btn btn-default" type="button">
+							        	<span class="glyphicon glyphicon glyphicon-calendar" aria-hidden="true"></span>
+							        </button>
+							      </span>
+							    </div>
+							</div>
+						</div>
+						<!-- EO line -->
+						<!-- Line -->
+						<div class="form-group">
+							<label for="end_date" class="col-sm-4 control-label">Ended</label>
+							<div class="col-sm-3">
+							<label class="radio-inline">
+							  <input type="radio" name="ended_radio" id="" value="<="> Before
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" name="ended_radio" id="" value=">="> After
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" name="ended_radio" id="" value="="> On
+							</label>
+						</div>
+							<div class="col-sm-2">
+							    <div id="date_picker_end" class="input-group input_append date">
+							      <input type="text" class="form-control" id="end_date" name="ended" readonly>
+							      <span class="input-group-btn">
+							        <button class="btn btn-default" type="button">
+							        	<span class="glyphicon glyphicon glyphicon-calendar" aria-hidden="true"></span>
+							        </button>
+							      </span>
+							    </div>
+							</div>
+						</div>
 			  	<!-- Line -->
 				<div class="form-group">
 				    <label class="control-label col-sm-4" for="measure">Measure</label>
@@ -174,56 +235,6 @@
 			  	</div>
 			  	<!-- EO line -->
 			  	<!-- Line -->
-				<div class="form-group">
-					<label for="start_date" class="col-sm-4 control-label">Started</label>
-					<div class="col-sm-3">
-						<label class="radio-inline">
-						  <input type="radio" name="started_radio" id="" value="<="> Before
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="started_radio" id="" value=">="> After
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="started_radio" id="" value="="> On
-						</label>
-					</div>
-					<div class="col-sm-2">
-					    <div id="date_picker_start" class="input-group input-append date">
-					      <input type="text" class="form-control" id="start_date" name="started" readonly>
-					      <span class="input-group-btn">
-					        <button class="btn btn-default" type="button">
-					        	<span class="glyphicon glyphicon glyphicon-calendar" aria-hidden="true"></span>
-					        </button>
-					      </span>
-					    </div>
-					</div>
-				</div>
-				<!-- EO line -->
-				<!-- Line -->
-				<div class="form-group">
-					<label for="end_date" class="col-sm-4 control-label">Ended</label>
-					<div class="col-sm-3">
-					<label class="radio-inline">
-					  <input type="radio" name="ended_radio" id="" value="<="> Before
-					</label>
-					<label class="radio-inline">
-					  <input type="radio" name="ended_radio" id="" value=">="> After
-					</label>
-					<label class="radio-inline">
-					  <input type="radio" name="ended_radio" id="" value="="> On
-					</label>
-				</div>
-					<div class="col-sm-2">
-					    <div id="date_picker_end" class="input-group input_append date">
-					      <input type="text" class="form-control" id="end_date" name="ended" readonly>
-					      <span class="input-group-btn">
-					        <button class="btn btn-default" type="button">
-					        	<span class="glyphicon glyphicon glyphicon-calendar" aria-hidden="true"></span>
-					        </button>
-					      </span>
-					    </div>
-					</div>
-				</div>
 				<!-- EO line -->
 				<!-- Line -->
 				<div class="form-group">
@@ -253,17 +264,6 @@
 			  	</div>
 			  	<!-- EO line -->
 			  	<!-- Line -->
-				<div class="form-group">
-				    <label for="financing" class="control-label col-sm-4" for="financing">Financing</label>
-				    <div class="col-sm-3">
-				    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" data-size="8" name="financings[]" data-live-search="true">
-				    		<option></option>
-				    		@foreach($fundings as $funding)
-				    			<option value="{{ $funding->id }}">{{ $funding->name }}</option>
-				    		@endforeach
-			    		</select>
-				    </div>
-			  	</div>
 			</form>
 		</div>
 	</div>

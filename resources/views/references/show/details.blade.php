@@ -153,7 +153,11 @@
 <div class="form-group">
 	<label for="staff_number" class="col-sm-4 control-label">Total number of staff</label>
 	<div class="col-sm-2">
-	  <p class="form-control-static">{{ $reference->staff_number }} persons</p>
+	  <p class="form-control-static">
+			@if ($reference->staff_number)
+				{{ $reference->staff_number }} persons
+			@endif
+		</p>
 	</div>
 </div>
 <!-- EO line -->
@@ -162,7 +166,11 @@
 	<label for="seureca_man_months" class="col-sm-4 control-label">Total number man/months (Seureca)</label>
 	<div class="col-sm-3">
 		<div class="input-group">
-			<p class="form-control-static">{{ $reference->seureca_man_months }} man/months</p>
+			<p class="form-control-static">
+				@if ($reference->seureca_man_months)
+					{{ $reference->seureca_man_months }} man/months
+				@endif
+			</p>
 		</div>
 	</div>
 </div>
@@ -174,7 +182,11 @@
 	    <div class="input-group">
 		  <!-- <input type="text" class="form-control" id="consultants_man_months" aria-describedby="basic-addon2" value="{{ $reference->consultants_man_months }}" disabled>
 		  <span class="input-group-addon" id="basic-addon2">man/months</span> -->
-		  <p class="form-control-static">{{ $reference->consultants_man_months }} man/months</p>
+		  <p class="form-control-static">
+				@if ($reference->consultants_man_months)
+					{{ $reference->consultants_man_months }} man/months
+				@endif
+			</p>
 		</div>
 	  </div>
 </div>
@@ -321,11 +333,15 @@
 	<label for="project_cost" class="col-sm-4 control-label">Total project cost</label>
 	<div class="col-sm-2">
 		<p class="form-control-static">
-			{{ $reference->total_project_cost }}
-			@if ($reference->currency == 'Dollars')
-				M $
+			@if ($reference->total_project_cost)
+					{{ $reference->total_project_cost }}
+					@if ($reference->currency == 'Dollars')
+						M $
+					@else
+						M €
+					@endif
 			@else
-				M €
+					N/A
 			@endif
 		</p>
 	</div>
@@ -342,11 +358,15 @@
 	<label for="services_cost" class="col-sm-4 control-label">Cost of services provided by Seureca</label>
 	<div class="col-sm-2">
 		<p class="form-control-static">
-			{{ $reference->seureca_services_cost }}
-			@if ($reference->currency == 'Dollars')
-				M $
+			@if ($reference->seureca_services_cost)
+					{{ $reference->seureca_services_cost }}
+					@if ($reference->currency == 'Dollars')
+						M $
+					@else
+						M €
+					@endif
 			@else
-				M €
+					N/A
 			@endif
 		</p>
 	</div>
@@ -357,16 +377,33 @@
 	<label for="works_cost" class="col-sm-4 control-label">Works cost</label>
 	<div class="col-sm-2">
 		<p class="form-control-static">
-			{{ $reference->work_cost }}
-			@if ($reference->currency == 'Dollars')
-				M $
+			@if ($reference->work_cost)
+				{{ $reference->work_cost }}
+				@if ($reference->currency == 'Dollars')
+					M $
+				@else
+					M €
+				@endif
 			@else
-				M €
+				N/A
 			@endif
 		</p>
 	</div>
 </div>
 <!-- EO line -->
+<div class="form-group">
+	<label class="col-sm-4 control-label">Number of inhabitants</label>
+	<div class="col-sm-2">
+		<p class="form-control-static">
+			@if ($reference->nb_inhabitants)
+				{{ $reference->nb_inhabitants }} persons
+			@else
+				N/A
+			@endif
+		</p>
+	</div>
+</div>
+
 <hr>
 <!-- Line -->
 <div class="form-group">
