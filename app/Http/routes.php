@@ -148,12 +148,14 @@ Route::resource('subsidiaries.zones', 'ZoneController');
 Route::resource('zones.countries', 'CountryController');
 
 //Contributors
+Route::get('contributors/destroy/unsigned', 'ContributorController@destroy_unsigned');
 Route::delete('subsidiaries/{subsidiary}/zones/{zone}/contributors/destroy_multiple', 'ContributorController@destroyMultiple');
 Route::get('subsidiaries/{subsidiary}/contributors/custom_create', 'ContributorController@custom_create');
 Route::post('subsidiaries/{subsidiary}/zones/{zone}/contributors/custom_store', 'ContributorController@custom_store');
 Route::resource('subsidiaries.zones.contributors', 'ContributorController');
 
 //Fundings
+Route::get('fundings/destroy/unsigned', 'FundingController@destroy_unsigned');
 Route::delete('fundings/destroy_multiple', 'FundingController@destroyMultiple');
 Route::resource('fundings', 'FundingController');
 

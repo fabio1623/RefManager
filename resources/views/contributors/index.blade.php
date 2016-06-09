@@ -8,7 +8,7 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<!-- Left column -->
-							<div class="col-sm-4">List of contributors</div>
+							<div class="col-sm-4">List of contributors ({{ $contributors->total() }})</div>
 							<!-- #./Left column -->
 							<!-- Center column -->
 							<div class="col-sm-8">
@@ -29,7 +29,7 @@
 						</div>
 					</h3>
 				</div>
-				
+
 				<div class="table-responsive">
 
 					<table class="table table-hover">
@@ -61,7 +61,7 @@
 												<td>
 													<a class="btn btn-link btn-xs">
 														{{ $cont->name }}
-													</a>	
+													</a>
 												</td>
 												<td>
 													<a class="btn btn-link btn-xs">

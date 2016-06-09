@@ -8,7 +8,7 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<!-- Left column -->
-							<div class="col-sm-4">Zones</div>
+							<div class="col-sm-4">Zones ({{ $zones->total() }})</div>
 							<!-- #./Left column -->
 							<!-- Center column -->
 							<div class="col-sm-8">
@@ -36,8 +36,9 @@
 						<thead>
 							<tr>
 								<th class="col-sm-1"></th>
-								<th class="col-sm-4">Zones</th>
+								<th class="col-sm-2">Zones</th>
 								<th class="col-sm-4">Manager</th>
+								<th class="col-sm-2">References</th>
 								<th class="col-sm-2">Creation date</th>
 								<th class="col-sm-1"></th>
 						    	<!-- <th class="col-sm-2"><input type="checkbox" id="select_all"> All</th> -->
@@ -66,6 +67,11 @@
 												<td>
 													<a class="btn btn-link btn-xs">
 														{{ with($m=$zones[$i]->manager()->first()) ? $m->name : null }}
+													</a>
+												</td>
+												<td>
+													<a class="btn btn-link btn-xs">
+														{{ with($r=$zones[$i]->references()->get()) ? count($r) : null }}
 													</a>
 												</td>
 												<td>

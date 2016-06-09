@@ -13,11 +13,11 @@ class Zone extends Model
 
     public function manager()
     {
-    	return $this->belongsTo('App\Contributor', 'manager');
+    	return $this->belongsTo('App\Contributor', 'manager', 'id');
     }
 
     public function references()
     {
-    	return $this->hasMany('App\Reference', 'zone');	
+    	return $this->hasMany('App\Reference', 'zone');
     }
 }

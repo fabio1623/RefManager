@@ -165,6 +165,21 @@ class ContributorController extends Controller
         return redirect()->action('ContributorController@index', [$subsidiary_id, $zone_id]);
     }
 
+    public function destroy_contributor($id)
+    {
+      $contributor = Contributor::find($id);
+
+      if (count($contributor->zones) > 0) {
+        foreach ($contributor->zones as $zone) {
+          $zone->manager()->dissociate();
+          $zone->save();
+        }
+      }
+      $contributor->references()->detach();
+
+      Contributor::destroy($id);
+    }
+
     public function destroyMultiple(Request $request, $subsidiary_id, $zone_id)
     {
         // dd($_POST);
@@ -179,6 +194,21 @@ class ContributorController extends Controller
 
         Contributor::destroy($id);
 
-        return redirect()->action('ContributorController@index', [$subsidiary_id, $zone_id]);  
+        return redirect()->action('ContributorController@index', [$subsidiary_id, $zone_id]);
+    }
+
+    public function destroy_unsigned()
+    {
+      $unsigned_contr = Contributor::has('references', '<', 1)->orWhere('name', '')->get();
+
+      if ($unsigned_contr->count() > 0) {
+        foreach ($unsigned_contr as $contr) {
+          ContributorController::destroy_contributor($contr->id);
+        }
+        return redirect()->action('ReferenceController@management_page')->with('status', 'Unsigned contributors removed!');
+      }
+      else {
+        return redirect()->action('ReferenceController@management_page')->with('caution', 'Nothing to remove..');
+      }
     }
 }

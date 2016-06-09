@@ -122,6 +122,29 @@ class FundingController extends Controller
         return redirect()->action('FundingController@index');
     }
 
+    public function destroy_funding($id)
+    {
+      $funding = Funding::find($id);
+      $funding->references()->detach();
+
+      Funding::destroy($id);
+    }
+
+    public function destroy_unsigned()
+    {
+      $unsigned_fund = Funding::has('references', '<', 1)->orWhere('name', '')->get();
+
+      if (count($unsigned_fund) > 0) {
+        foreach ($unsigned_fund as $fund) {
+          FundingController::destroy_funding($fund->id);
+        }
+        return redirect()->action('ReferenceController@management_page')->with('status', 'Unsigned fundings removed!');
+      }
+      else {
+        return redirect()->action('ReferenceController@management_page')->with('caution', 'Nothing to remove..');
+      }
+    }
+
     // public function destroyMultiple(Request $request)
     // {
     //     // dd($_POST);
@@ -135,6 +158,6 @@ class FundingController extends Controller
 
     //     // Zone::destroy($ids);
 
-    //     return redirect()->action('ZoneController@index');  
+    //     return redirect()->action('ZoneController@index');
     // }
 }

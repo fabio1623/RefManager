@@ -26,7 +26,7 @@ class ZoneController extends Controller
     public function index($subsidiary_id)
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
-        $zones = Zone::orderBy('name', 'asc')->with('manager')->paginate(100);
+        $zones = Zone::orderBy('name', 'asc')->with('manager')->with('references')->paginate(100);
 
         // dd($zones);
 
@@ -66,7 +66,7 @@ class ZoneController extends Controller
         if ($request->manager != '') {
             $zone->manager = $request->manager;
         }
-    
+
         $zone->save();
 
         return redirect()->action('ZoneController@index', $subsidiary_id);
@@ -200,6 +200,6 @@ class ZoneController extends Controller
 
         Zone::destroy($ids);
 
-        return redirect()->action('ZoneController@index');  
+        return redirect()->action('ZoneController@index');
     }
 }

@@ -9,6 +9,10 @@
 		<p>Have an eye on your references.</p>
 	</div>
 
+	@include('messages.messages')
+	@include('messages.caution')
+	@include('errors.validation')
+
 	<div>
 		<ul class="list-group">
 			<li class="list-group-item">
@@ -29,7 +33,7 @@
 			<li class="list-group-item">
 
 				<span class="badge">{{ $translated_references->count() }}</span>
-				References with translation 
+				References with translation
 				<a id="drop_translations_btn" class="" href="{{ action('ReferenceController@destroy_all_translations') }}">
 					<i class="fa fa-trash" aria-hidden="true"></i>
 				</a>
@@ -63,6 +67,20 @@
 					@endforeach
 				</div>
 			</li>
+			<li class="list-group-item">
+				<span class="badge">{{ count($unsigned_contr) }}</span>
+				Unsigned contributors
+				<a id="drop_contributors_btn" class="" href="{{ action('ContributorController@destroy_unsigned') }}">
+					<i class="fa fa-trash" aria-hidden="true"></i>
+				</a>
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{ count($unsigned_fund) }}</span>
+				Unsigned fundings
+				<a id="drop_fund_btn" class="" href="{{ action('FundingController@destroy_unsigned') }}">
+					<i class="fa fa-trash" aria-hidden="true"></i>
+				</a>
+			</li>
 		</ul>
 	</div>
 
@@ -74,13 +92,24 @@
 		if (confirm_box == false) {
 			e.preventDefault();
 		}
-		else {
-			
-		}
 	});
 
 	$('#drop_translations_btn').click(function(e) {
 		var confirm_box = confirm("Do you really want to delete the translations ? ");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
+
+	$('#drop_contributors_btn').click(function(e) {
+		var confirm_box = confirm("Do you really want to delete all unsigned contributors ? ");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
+
+	$('#drop_fund_btn').click(function(e) {
+		var confirm_box = confirm("Do you really want to delete all unsigned fundings ? ");
 		if (confirm_box == false) {
 			e.preventDefault();
 		}

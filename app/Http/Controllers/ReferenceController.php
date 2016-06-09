@@ -78,11 +78,16 @@ class ReferenceController extends Controller
 
         $translated_references = Reference::has('languages')->get();
 
+        $unsigned_contr = Contributor::has('references', '<', 1)->orWhere('name', '')->get();
+        $unsigned_fund = Funding::has('references', '<', 1)->orWhere('name', '')->get();
+
         $view = view('references.management_page', ['nb_total_ref'=> $nb_total_ref,
                                                     'nb_approved'=> $nb_approved,
                                                     'nb_not_approved'=> $nb_not_approved,
                                                     'translated_references'=> $translated_references,
-                                                    'translations_in_db' => $translations_in_db
+                                                    'translations_in_db' => $translations_in_db,
+                                                    'unsigned_contr' => $unsigned_contr,
+                                                    'unsigned_fund' => $unsigned_fund
                                                     ]);
         return $view;
     }
