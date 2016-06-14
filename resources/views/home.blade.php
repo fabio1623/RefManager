@@ -58,13 +58,8 @@
         <div class="row">
             <div class="col-md-3">
               <div class="center-block">
-                <h2>In progress</h2>
-                <!-- If user admin or dcom manager -->
-                @if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
-                  <p><a class="btn btn-default" href="{{ action('ReferenceController@index') }}" role="button">Follow references in progress &raquo;</a></p>
-                @else
-                  <p><a class="btn btn-default" href="{{ action('ReferenceController@index', ['approval'=>'on']) }}" role="button">Follow references in progress &raquo;</a></p>
-                @endif
+                <h2>All references</h2>
+                  <p><a class="btn btn-default" href="{{ action('ReferenceController@index', ['approval'=>'on']) }}" role="button">Follow references &raquo;</a></p>
               </div>
             </div>
             <div class="col-md-3">

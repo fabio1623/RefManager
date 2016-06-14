@@ -71,7 +71,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="start_date" class="col-sm-4 control-label">Project start date</label>
+	<label for="start_date" class="col-sm-4 control-label">Project start</label>
 	<div class="col-sm-2">
 		<!-- <div class='input-group date' id='date_picker_start'>
             <input type='text' class="form-control" id="start_date" name="start_date" value="{{ old('start_date') }}" />
@@ -93,7 +93,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="end_date" class="col-sm-4 control-label">Project completion</label>
+	<label for="end_date" class="col-sm-4 control-label">Project end</label>
 	<div class="col-sm-2">
 	    <div id="date_picker_end" class="input-group input_append date">
 	      <input type="text" class="form-control" id="end_date" name="end_date" value="{{ old('end_date') }}" readonly>

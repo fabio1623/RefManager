@@ -83,9 +83,10 @@
 								<li class="dropdown">
 								  	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list"></span> References <span class="caret"></span></a>
 									<ul class="dropdown-menu">
-										<li><a href="{{ action('ReferenceController@index') }}"><span class="glyphicon glyphicon-list"></span> All</a></li>
-										<li><a href="{{ action('ReferenceController@index', ['approval'=>'off']) }}"><span class="glyphicon glyphicon-list"></span> To approve</a></li>
-							            <li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><span class="glyphicon glyphicon-list"></span> Approved</a></li>
+										<li><a href="{{ action('ReferenceController@index') }}"><i class="fa fa-bars" aria-hidden="true"></i> All</a></li>
+										<li><a href="{{ action('ReferenceController@index', ['approval'=>'off']) }}"><i class="fa fa-square-o" aria-hidden="true"></i> To approve</a></li>
+							            <li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved</a></li>
+													<li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-refresh"></span> My references</a></li>
 													<li role="separator" class="divider"></li>
 													@if(Auth::user()->email == 'sarmentopedrofabio@gmail.com')
 							            	<li><a href="{{ action('ReferenceController@management_page') }}"><span class="glyphicon glyphicon-wrench"></span> Management</a></li>
@@ -107,16 +108,19 @@
 										@if(Auth::user()->email == 'sarmentopedrofabio@gmail.com')
 											<li><a href="{{ action('TemplateController@index') }}"><span class="glyphicon glyphicon-duplicate"></span> Templates</a></li>
 										@endif
-										<li><a href="{{ action('ReferenceController@incomplete_page') }}"><span class=""></span> Incomplete references</a></li>
+										<li><a href="{{ action('ReferenceController@incomplete_page') }}"><i class="fa fa-question-circle" aria-hidden="true"></i> Incomplete references</a></li>
+										<li><a href="{{ action('ReferenceController@duplicate_page') }}"><i class="fa fa-files-o" aria-hidden="true"></i> Duplicate references</a></li>
 									</ul>
 								</li>
 							@else
 								<li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><span class="glyphicon glyphicon-list"></span> References</a></li>
+								<!-- If reference administrator -->
 								@if(Auth::user()->profile_id == 2)
+									<li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-refresh"></span> My references</a></li>
 									<li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>
 								@endif
 							@endif
-							<li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Research</a></li>
+							<li><a href="{{ action('ReferenceController@search') }}"><span class="glyphicon glyphicon-search"></span> Search</a></li>
 						</ul>
 						<!-- Center of the navbar -->
 						<ul class="nav navbar-nav navbar-middle">

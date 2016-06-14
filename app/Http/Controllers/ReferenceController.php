@@ -92,6 +92,33 @@ class ReferenceController extends Controller
         return $view;
     }
 
+    public function index_created_by_me()
+    {
+      $references = Reference::where('created_by', Auth::user()->username)
+                      ->with('client')
+                      ->with('country')
+                      ->with('zone')
+                      ->orderBy('created_at', 'desc')
+                      ->paginate(100);
+
+      $activities = array();
+
+      foreach ($references as $key => $reference) {
+          // Get linked activities
+          $cat_array = array();
+          foreach ($reference->measures as $measure) {
+              $category = Category::find($measure->category_id);
+              if (in_array($category->name, $cat_array) == false) {
+                  array_push($cat_array, $category->name);
+              }
+          }
+          $activities[$reference->id] = $cat_array;
+      }
+
+      $view = view('references.index_created_by_me', ['references'=>$references, 'activities'=>$activities]);
+      return $view;
+    }
+
     public function index(Request $request)
     {
         // $order = $request->get('sort', 'created_at');
@@ -705,17 +732,13 @@ class ReferenceController extends Controller
 
     public function search()
     {
-        $zones = Zone::all();
         $external_services = ExternalService::all();
         $internal_services = InternalService::all();
-        $domains = Domain::orderBy('name', 'asc')->get();
-        // $countries = Country::all();
-        // $countries = Country::has('zones')->orderBy('name', 'asc')->get();
-        $countries = Country::has('references')->orderBy('name', 'asc')->get();
         $categories = Category::all();
-        // $zones = Zone::orderBy('name', 'asc')->get();
         $zones = Zone::has('references')->orderBy('name', 'asc')->get();
-        // $fundings = Funding::orderBy('name', 'asc')->get();
+        $domains = Domain::orderBy('name', 'asc')->get();
+        $countries = Country::has('references')->orderBy('name', 'asc')->get();
+        $zones = Zone::has('references')->orderBy('name', 'asc')->get();
         $fundings = Funding::has('references')->orderBy('name', 'asc')->get();
 
         $view = view('references.search', ['zones'=>$zones, 'external_services'=>$external_services, 'internal_services'=>$internal_services, 'domains'=>$domains, 'countries'=>$countries, 'categories'=>$categories, 'zones'=>$zones, 'fundings'=>$fundings]);
@@ -724,30 +747,29 @@ class ReferenceController extends Controller
 
     public function results(Request $request)
     {
-        // dd($request->all());
         $page = 'search_results';
 
         //Get right references
         $references = with(new Reference)->newQuery();
         if ($request->keyword) {
             $references->where(function ($query) use ($request) {
-                                        $countries = Country::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-                                        $contacts = Contact::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-                                        $clients = Client::where('name', 'LIKE', '%'.$request->keyword.'%')->get();
-                                        $query->where('project_number', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('estimated_duration', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('project_name', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('service_name', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('project_description', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('service_description', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('general_comments', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('location', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('project_name_fr', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('service_name_fr', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('project_description_fr', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('service_description_fr', 'LIKE', '%'.$request->keyword.'%')
-                                              ->orWhere('dfac_name', 'LIKE', '%'.$request->keyword.'%');
+                                        $countries = Country::where('name', 'LIKE', '%'.trim($request->keyword).'%')->get();
+                                        $contacts = Contact::where('name', 'LIKE', '%'.trim($request->keyword).'%')->get();
+                                        $clients = Client::where('name', 'LIKE', '%'.trim($request->keyword).'%')->get();
+                                        $query->where('project_number', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('dfac_name', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('estimated_duration', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('project_name', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('service_name', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('project_description', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('service_description', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('general_comments', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('location', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('project_name_fr', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('service_name_fr', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('project_description_fr', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('service_description_fr', 'LIKE', '%'.trim($request->keyword).'%')
+                                              ->orWhere('dfac_name', 'LIKE', '%'.trim($request->keyword).'%');
                                               if ($countries) {
                                                 foreach ($countries as $country) {
                                                     $query->orWhere('country', $country->id);
@@ -774,20 +796,6 @@ class ReferenceController extends Controller
         elseif ($request->approval == 'off') {
             $references->where('dcom_approval', false);
         }
-        // If not admin
-        // if (Auth::user()->profile_id != 3 && Auth::user()->profile_id != 5) {
-        //     $references->where('dcom_approval', true);
-        // }
-        // else {
-        //     if ($request->approval == 'off') {
-        //         $references->where('dcom_approval', false);
-        //     }
-        //     else {
-        //         $references->where('dcom_approval', true);
-        //     }
-        // }
-
-        // $references->orWhere('created_by', Auth::user()->username); // FIXME
 
         if ($request->continent) {
             $countries = Country::all();
@@ -798,11 +806,7 @@ class ReferenceController extends Controller
                         $countries_tab[] = $country->id;
                     }
                 }
-                // if (array_has($request->continent, $country->continent)) {
-                //     $countries_tab[] = $country->id;
-                // }
             }
-            // dd($countries_tab);
             $references->whereIn('country', $countries_tab);
         }
 
@@ -880,7 +884,6 @@ class ReferenceController extends Controller
 
         //Get the references corresponding to the selected measure value
         if ($request->measure != '') {
-            // $measure_type;
             $references->whereHas('measures', function ($query) use ($request) {
                 $query->where('measure_id', $request->measure_type)
                         ->where('value', $request->measure_symbol, $request->measure);
@@ -944,40 +947,23 @@ class ReferenceController extends Controller
             }
         }
 
-        // dd($references->toSql());
-
         // Default order is 'end_date'
         $order = $request->get('order', 'end_date');
         $sort_direction = $request->get('sort_direction', 'desc');
 
         // If needed to sort from foreign key column
         if ($order == 'client' || $order == 'country' || $order == 'zone') {
-            // $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')
-            // ->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->paginate(100);
-            // dd(Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->toSql());
-            $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->paginate(100);
+            $references = Reference::leftJoin(str_plural($order), 'references.'.$order, '=', str_plural($order).'.id')->select('references.*', str_plural($order).'.name')->orderBy(str_plural($order).'.name', $sort_direction)->with('zone')->paginate(100);
         }
         else{
-            $references = $references->orderBy($order, $sort_direction)->paginate(100);
+            $references = $references->orderBy($order, $sort_direction)->with('zone')->with('client')->with('country')->paginate(100);
         }
-
         // dd($references->url(2));
 
         $activities = array();
-        $clients = array();
-        $countries = array();
-        $zones = array();
         $languages = Language::has('references')->get();
 
         foreach ($references as $key => $reference) {
-            // Get client name
-            if ($reference->client) {
-                $client_ref = Client::find($reference->client);
-                $clients[$reference->id] = $client_ref->name;
-            }
-            else {
-                $clients[$reference->id] = '';
-            }
             // Get linked activities
             $cat_array = array();
             foreach ($reference->measures as $measure) {
@@ -987,25 +973,16 @@ class ReferenceController extends Controller
                 }
             }
             $activities[$reference->id] = $cat_array;
-            // Get country name
-            if ($reference->country) {
-                $country_ref = Country::find($reference->country);
-                $countries[$reference->id] = $country_ref->name;
-            }
-            else {
-                $countries[$reference->id] = '';
-            }
-            // Get zone name
-            if ($reference->zone) {
-                $zone_ref = Zone::find($reference->zone);
-                $zones[$reference->id] = $zone_ref->name;
-            }
-            else {
-                $zones[$reference->id] = '';
-            }
         }
 
-        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'clients'=>$clients, 'countries'=>$countries, 'zones'=>$zones,'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction, 'query'=>$request->query()]);
+        // Replace the '.' with a space
+        $username = str_replace('.', ' ', Auth::user()->username);
+
+        $user_zones = Zone::whereHas('manager', function ($query) use($username) {
+          $query->where('name', $username);
+        })->get();
+
+        $view = view('references.index2', ['page'=>$page, 'references'=>$references, 'activities'=>$activities, 'languages'=>$languages, 'order'=>$order, 'sort_direction'=>$sort_direction, 'query'=>$request->query(), 'user_zones'=>$user_zones]);
         return $view;
     }
 
@@ -1187,12 +1164,12 @@ class ReferenceController extends Controller
         }
 
         //Costs & currency infos
-        if ($request->seureca_services_cost) {
-            $reference->seureca_services_cost = $request->seureca_services_cost;
+        if ($request->services_cost) {
+            $reference->seureca_services_cost = $request->services_cost;
         }
-        $reference->total_project_cost = $request->input('total_project_cost');
+        $reference->total_project_cost = $request->project_cost;
         // $reference->seureca_services_cost = $request->input('seureca_services_cost');
-        $reference->work_cost = $request->input('work_cost');
+        $reference->work_cost = $request->works_cost;
 
         if ($request->project_currency == 'M $') {
             $reference->currency = 'Dollars';
@@ -1216,14 +1193,20 @@ class ReferenceController extends Controller
             $reference->rate = 1;
         }
 
-        $reference->nb_inhabitants = $request->nb_inhabitants;
+        if ($request->nb_inhabitants) {
+          $reference->nb_inhabitants = $request->nb_inhabitants;
+        }
+        else {
+          $reference->nb_inhabitants = null;
+        }
+
+        $reference->general_comments = $request->general_comments;
+        $reference->general_comments_fr = $request->general_comments_fr;
 
         $reference->subsidiary_id = Auth::user()->subsidiary_id;
         $reference->created_by = Auth::user()->username;
 
         $reference->save();
-
-        // dd($_POST);
 
         //Attach the external services
         if($request->input('external')) {
@@ -3285,6 +3268,42 @@ class ReferenceController extends Controller
                                 ->orWhere('dfac_name', '')->with('country')->get();
 
       $view = view('references.incomplete.index', ['references' => $references]);
+
+      return $view;
+    }
+
+    public function duplicate_page()
+    {
+      // $references = DB::table('references')
+      //             ->select('*')
+      //             ->groupBy('project_number')
+      //             ->havingRaw('COUNT(*) > 1')
+      //             ->get();
+
+      $entity['columns'] = ['project_number'];
+
+      $groupBy = implode(',', $entity['columns']);
+
+      $subQuery = DB::table('references')
+          ->select('*')
+          ->groupBy($groupBy)
+          ->havingRaw('(count(id) > 1)');
+
+      $references = DB::table('references')
+          ->select('*')
+          ->join(
+              DB::raw("({$subQuery->toSql()}) dup"), function($join) use ($entity) {
+                  foreach ($entity['columns'] as $column) {
+                      $join->on('references.'.$column, '=', 'dup.'.$column);
+                  }
+              })
+              ->join('countries', 'references.country', '=', 'countries.id')
+          ->get();
+          // or ->get(); obviously
+
+          // dd($references);
+
+      $view = view('references.duplicates.index', ['references' => $references]);
 
       return $view;
     }

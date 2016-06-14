@@ -26,8 +26,8 @@
 			</div>
 			<div class="panel-body">
 				@include('errors.validation')
-	  			@include('messages.messages')
-	  			@include('messages.update')
+  			@include('messages.messages')
+  			@include('messages.update')
 
 				<form id="form_delete" action="{{ action('SubsidiaryController@destroy', $subsidiary->id) }}" method="POST">
 					<?php echo method_field('DELETE'); ?>
@@ -50,14 +50,14 @@
 						<div class="col-md-4">
 							<!-- <div class="btn-group" role="group" aria-label="..."> -->
 								<!-- <a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}" role="button">
-									<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> 
+									<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
 									External
 								</a> -->
 								<a class="btn btn-link btn-md" href="{{ action('ServiceController@subsidiary_external_services', $subsidiary->id) }}">
 									Change external
 								</a>
 								<!-- <a class="btn btn-primary btn-sm" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}" role="button">
-									<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> 
+									<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
 									Internal
 								</a> -->
 								<a class="btn btn-link btn-md" href="{{ action('ServiceController@subsidiary_internal_services', $subsidiary->id) }}">
@@ -68,7 +68,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-4 control-label">Domains of expertise</label>
+						<label class="col-md-4 control-label">Field of expertise</label>
 						<div class="col-md-4">
 								<!-- <a class="btn btn-primary btn-sm" href="{{ action('DomainController@custom_index', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span>
@@ -80,7 +80,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-4 control-label">Measures</label>
+						<label class="col-md-4 control-label">Measurement</label>
 						<div class="col-md-4">
 								<!-- <a class="btn btn-primary btn-sm" href="{{ action('CategoryController@custom_index', $subsidiary->id) }}" role="button">
 									<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
@@ -212,5 +212,3 @@
 	  	});
 	</script>
 @endsection
-
-

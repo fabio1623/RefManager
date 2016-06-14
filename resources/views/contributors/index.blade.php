@@ -50,7 +50,7 @@
 									@foreach ($contributors as $key => $cont)
 											<tr>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														@if ($contributors->currentPage() < 2)
 															{{ $key + 1 }}
 														@else
@@ -59,17 +59,17 @@
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ $cont->name }}
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ $cont->references->count() }}
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ $cont->created_at }}
 													</a>
 												</td>

@@ -83,7 +83,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="start_date" class="col-sm-4 control-label">Project start date</label>
+	<label for="start_date" class="col-sm-4 control-label">Project start</label>
 	<div class="col-sm-3">
 	    <div id="date_picker_start" class="input-group input-append date">
 	      <input type="text" class="form-control" id="start_date" name="start_date" value="{{ $reference->start_date }}" readonly>
@@ -98,7 +98,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="end_date" class="col-sm-4 control-label">Project completion</label>
+	<label for="end_date" class="col-sm-4 control-label">Project end</label>
 	<div class="col-sm-3">
 	    <div id="date_picker_end" class="input-group input_append date">
 	      <input type="text" class="form-control" id="end_date" name="end_date" value="{{ $reference->end_date }}" readonly>
@@ -125,7 +125,7 @@
 
 <!-- List of external services -->
 <!-- Line -->
-<div class="form-group" id="external_div"> 
+<div class="form-group" id="external_div">
 	<hr>
 	<label class="col-sm-4 control-label"><i class="fa fa-refresh" aria-hidden="true"></i> Type of services</label>
 	@foreach($external_services as $service)
@@ -143,7 +143,7 @@
 <!-- EO line -->
 
 <!-- Line -->
-<div class="form-group"> 
+<div class="form-group">
 	<div class="checkbox col-sm-8 col-sm-offset-4">
 	  <label>
 	    <input id="internal_checkbox" name="internal_check" type="checkbox"><b> Veolia's tenders (Internal Market only) ?</b>
@@ -154,7 +154,7 @@
 
 <!-- List of internal services -->
 <!-- Line -->
-<div class="form-group hidden" id="internal_div"> 
+<div class="form-group hidden" id="internal_div">
 	<hr>
 	<label class="col-sm-4 control-label"><i class="fa fa-recycle" aria-hidden="true"></i> Veolia's contract type</label>
 	@foreach($internal_services as $service)

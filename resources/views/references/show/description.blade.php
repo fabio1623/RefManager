@@ -85,7 +85,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="start_date" class="col-sm-4 control-label">Project start date</label>
+	<label for="start_date" class="col-sm-4 control-label">Project start</label>
 	<div class="col-sm-2">
 		<!-- <input type="text" class="form-control" id="start_date" value="{{ $reference->start_date }}" disabled> -->
 		<p class="form-control-static">
@@ -96,7 +96,7 @@
 <!-- EO line -->
 <!-- Line -->
 <div class="form-group">
-	<label for="end_date" class="col-sm-4 control-label">Project completion</label>
+	<label for="end_date" class="col-sm-4 control-label">Project end</label>
 	<div class="col-sm-2">
 		<!-- <input type="text" class="form-control" id="end_date" value="{{ $reference->end_date }}" disabled> -->
 		<p class="form-control-static">

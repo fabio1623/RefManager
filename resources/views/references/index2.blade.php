@@ -145,17 +145,21 @@
 									{{ $reference->end_date }}
 								</td>
 								<td>
-									@if(strlen($clients[$reference->id]) > 20)
-									<abbr title="{{ $clients[$reference->id] }}">{{ str_limit($clients[$reference->id], 20) }}</abbr>
-									@else
-										{{ $clients[$reference->id] }}
+									@if ($c = $reference->client()->first())
+											@if(strlen($c->name) > 20)
+												<abbr title="{{ $c->name }}">{{ str_limit($c->name, 20) }}</abbr>
+											@else
+												{{ $c->name }}
+											@endif
 									@endif
 								</td>
 								<td>
-									@if(strlen($countries[$reference->id]) >10)
-										<abbr title="{{ $countries[$reference->id] }}">{{ str_limit($countries[$reference->id], 10) }}</abbr>
-									@else
-										{{ $countries[$reference->id] }}
+									@if ($c = $reference->country()->first())
+											@if(strlen($c->name) > 10)
+												<abbr title="{{ $c->name }}">{{ str_limit($c->name, 10) }}</abbr>
+											@else
+												{{ $c->name }}
+											@endif
 									@endif
 								</td>
 								<td>
@@ -175,11 +179,8 @@
 									@else
 										<input class="box" type="checkbox" value="{{ $reference->id }}" name=ids[]>
 									@endif
-									<!-- <a class="btn btn-link btn-xs" href="{{ action('ReferenceController@show', $reference->id) }}">
-										<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-									</a> -->
 									<!-- If creator, admin or dcom profile -->
-									@if (Auth::user()->username == $reference->created_by || Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
+									@if (Auth::user()->username == $reference->created_by || Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3 || $user_zones->contains('name', $reference->zone()->first()->name))
 										<a class="btn btn-link btn-xs" href="{{ action('ReferenceController@edit', $reference->id) }}">
 											<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 										</a>

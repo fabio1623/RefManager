@@ -10,7 +10,7 @@
 			<h3 class="panel-title">
 				<div class="row">
 					<div class="col-sm-4">
-						Search a reference
+						Reference search
 					</div>
 					<div class="col-sm-8">
 						<button id="search_btn" form="form_search" type="submit" class="btn btn-default btn-xs pull-right">
@@ -41,7 +41,7 @@
 			<form id="form_search" class="form-horizontal" role="form" method="GET" action="{{ action('ReferenceController@results') }}">
 				<!-- Line -->
 				<div class="form-group">
-				    <label class="control-label col-sm-4" for="keyword">Keyword</label>
+				    <label class="control-label col-sm-4" for="keyword">Key word</label>
 				    <div class="col-sm-5">
 				    	<input type="text" class="form-control" id="keyword" name="keyword" placeholder="Ex: Title, description or services">
 				    </div>
@@ -111,7 +111,7 @@
 			  	<!-- EO line -->
 			  	<!-- Line -->
 			  	<div class="form-group">
-					    <label class="control-label col-sm-4" for="service_type">Service type</label>
+					    <label class="control-label col-sm-4" for="service_type">Type of services</label>
 				    <div class="col-sm-3">
 						<select id="service_type" class="selectpicker" multiple data-selected-text-format="count" data-width="100%" data-size="8" name="service[]">
 							<optgroup label="External services">
@@ -130,7 +130,7 @@
 			  	<!-- EO line -->
 			  	<!-- Line -->
 			  	<div class="form-group">
-				    <label class="control-label col-sm-4" for="domain">Domain of expertise</label>
+				    <label class="control-label col-sm-4" for="domain">Field of expertise</label>
 				    <div class="col-sm-3">
 				    	<select class="form-control selectpicker" multiple data-selected-text-format="count" id="domain" name="domain[]">
 							<optgroup label="Domains">
@@ -143,7 +143,7 @@
 			  	</div>
 			  	<!-- EO line -->
 					<div class="form-group">
-					    <label for="financing" class="control-label col-sm-4" for="financing">Financing</label>
+					    <label for="financing" class="control-label col-sm-4" for="financing">Funding</label>
 					    <div class="col-sm-3">
 					    	<select id="financing" class="selectpicker" data-width="100%" multiple data-selected-text-format="count" data-size="8" name="financings[]" data-live-search="true">
 					    		<option></option>
@@ -154,7 +154,7 @@
 					    </div>
 				  	</div>
 						<div class="form-group">
-							<label for="start_date" class="col-sm-4 control-label">Started</label>
+							<label for="start_date" class="col-sm-4 control-label">Project start</label>
 							<div class="col-sm-3">
 								<label class="radio-inline">
 								  <input type="radio" name="started_radio" id="" value="<="> Before
@@ -180,7 +180,7 @@
 						<!-- EO line -->
 						<!-- Line -->
 						<div class="form-group">
-							<label for="end_date" class="col-sm-4 control-label">Ended</label>
+							<label for="end_date" class="col-sm-4 control-label">Project end</label>
 							<div class="col-sm-3">
 							<label class="radio-inline">
 							  <input type="radio" name="ended_radio" id="" value="<="> Before
@@ -205,7 +205,7 @@
 						</div>
 			  	<!-- Line -->
 				<div class="form-group">
-				    <label class="control-label col-sm-4" for="measure">Measure</label>
+				    <label class="control-label col-sm-4" for="measure">Measurement</label>
 				    <div class="col-sm-3">
 			    		<select id="" class="selectpicker" data-size="11" data-width="100%" data-show-subtext="true" name="measure_type">
 			    			<option></option>
