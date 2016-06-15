@@ -39,7 +39,7 @@
 					<?php echo csrf_field(); ?>
 
 					<div class="form-group">
-						<label class="col-md-4 control-label">Subsidiary Name</label>
+						<label class="col-md-4 control-label">Subsidiary</label>
 						<div class="col-md-4">
 							<input type="text" class="form-control" name="name" value="{{$subsidiary->name}}">
 						</div>

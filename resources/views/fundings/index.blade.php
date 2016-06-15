@@ -29,10 +29,10 @@
 						</div>
 					</h3>
 				</div>
-				
+
 				<div class="table-responsive">
 
-					<table class="table table-hover">
+					<table class="table table-hover table-condensed">
 						<thead>
 							<tr>
 								<th class="col-sm-1"></th>
@@ -50,7 +50,7 @@
 									@for ($i = 0; $i < $fundings->count(); $i++)
 											<tr>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														@if ($fundings->currentPage() < 2)
 															{{ $i + 1 }}
 														@else
@@ -59,17 +59,17 @@
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ $fundings[$i]->name }}
-													</a>	
+													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ $fundings[$i]->name_fr }}
-													</a>	
+													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 													{{ $fundings[$i]->references->count() }}
 													</a>
 												</td>

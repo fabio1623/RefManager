@@ -51,7 +51,7 @@
 									@for ($i=0; $i<$zones->count(); $i++)
 											<tr>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														@if ($zones->currentPage() < 2)
 															{{ $i + 1 }}
 														@else
@@ -60,22 +60,22 @@
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{$zones[$i]->name}}
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ with($m=$zones[$i]->manager()->first()) ? $m->name : null }}
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ with($r=$zones[$i]->references()->get()) ? count($r) : null }}
 													</a>
 												</td>
 												<td>
-													<a class="btn btn-link btn-xs">
+													<a>
 														{{ $zones[$i]->created_at }}
 													</a>
 												</td>

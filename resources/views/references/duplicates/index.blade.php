@@ -16,12 +16,12 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Project number</th>
-              <th>Dfac name</th>
-              <th>Project name</th>
-              <th>Services name</th>
-              <th>Country</th>
-              <th>Location</th>
+              <th class="col-sm-1">Project number</th>
+              <th class="col-sm-1">Dfac name</th>
+              <th class="col-sm-4">Project name</th>
+              <th class="col-sm-4">Services name</th>
+              <th class="col-sm-1">Country</th>
+              <th class="col-sm-1">Location</th>
             </tr>
           </thead>
           <tbody>
@@ -29,12 +29,14 @@
               @foreach ($references as $ref)
               <tr>
                 <td>
-                  <!-- <a href="{{ action('ReferenceController@edit', $ref->id) }}"> -->
+                  <a href="{{ action('ReferenceController@edit', $ref->id) }}">
                     {{ $ref->project_number }}
-                  <!-- </a> -->
+                  </a>
                 </td>
                 <td>
-                  {{ $ref->dfac_name }}
+                  <a href="{{ action('ReferenceController@edit', $ref->id) }}">
+                    {{ $ref->dfac_name }}
+                  </a>
                 </td>
                 <td>
                   {{ $ref->project_name }}
@@ -43,7 +45,7 @@
                   {{ $ref->service_name }}
                 </td>
                 <td>
-                  {{ $ref->name }}
+                  {{ with($c=$ref->country()->first()) ? $c->name : null }}
                 </td>
                 <td>
                   {{ $ref->location }}

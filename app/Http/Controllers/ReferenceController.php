@@ -1526,7 +1526,7 @@ class ReferenceController extends Controller
         }
 
         // $translation_languages = Language::orderBy('name', 'asc')->whereNotIn('id', $linked_languages_tab)->get();
-        $translation_languages = $subsidiary->languages()->whereNotIn('id', $linked_languages_tab)->get();
+        $translation_languages = $subsidiary->languages()->orderBy('name')->whereNotIn('id', $linked_languages_tab)->get();
         // dd($translation_languages);
         // $languagesValues = LanguageReference::where('reference_id', $id)->get();
         $language_reference = LanguageReference::where('reference_id', $id)->get();
@@ -3280,28 +3280,39 @@ class ReferenceController extends Controller
       //             ->havingRaw('COUNT(*) > 1')
       //             ->get();
 
-      $entity['columns'] = ['project_number'];
+      // Get references having duplicates
+      $subQuery = Reference::select('project_number')
+                        ->where('project_number', '<>', '')
+                        ->groupBy('project_number')
+                        ->havingRaw('(count(id) > 1)')
+                        ->get();
 
-      $groupBy = implode(',', $entity['columns']);
 
-      $subQuery = DB::table('references')
-          ->select('*')
-          ->groupBy($groupBy)
-          ->havingRaw('(count(id) > 1)');
+      // $subQuery = DB::table('references')
+      //               ->select('project_number')
+      //               ->where('project_number', '<>', '')
+      //               ->groupBy('project_number')
+      //               ->havingRaw('(count(id) > 1)')->get();
 
-      $references = DB::table('references')
-          ->select('*')
-          ->join(
-              DB::raw("({$subQuery->toSql()}) dup"), function($join) use ($entity) {
-                  foreach ($entity['columns'] as $column) {
-                      $join->on('references.'.$column, '=', 'dup.'.$column);
-                  }
-              })
-              ->join('countries', 'references.country', '=', 'countries.id')
-          ->get();
-          // or ->get(); obviously
+      // Create a string with distinct duplicates project_number separated by ','
+      $project_number_list = '';
+      foreach ($subQuery as $pn) {
+        $project_number_list = $project_number_list."'".$pn->project_number."',";
+      }
 
-          // dd($references);
+      // $references = DB::table('references')
+      //                 ->select('*')
+      //                 // ->whereIn('project_number', $subQuery)
+      //                 ->whereRaw("project_number in (".trim($project_number_list, ' ,').")")
+      //                 ->orderBy('project_number')
+      //                 ->orderBy('id')->get();
+
+      // Retrieve duplicate references with their duplicates
+      $references = Reference::select('*')
+                      ->whereRaw("project_number in (".trim($project_number_list, ' ,').")")
+                      ->orderBy('project_number')
+                      ->orderBy('id')
+                      ->with('country')->get();
 
       $view = view('references.duplicates.index', ['references' => $references]);
 

@@ -32,7 +32,7 @@
 
 				<div class="table-responsive">
 
-					<table class="table table-hover">
+					<table class="table table-hover table-condensed">
 						<thead>
 							<tr>
 								<th class="col-sm-1"></th>

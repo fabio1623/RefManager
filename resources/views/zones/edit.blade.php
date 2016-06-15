@@ -71,7 +71,7 @@
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</a>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="countries" class="col-sm-4 control-label">Countries</label>
 							<div class="col-sm-4">
@@ -95,21 +95,29 @@
 							</tr>
 						</thead>
 						<tbody>
-							@for ($i=0; $i < $zone->countries->count(); $i++)
-									<tr>
-										<td>
-											<a class="btn btn-link btn-xs"> {{ $i+1 }} </a>
-										</td>
-										<td>
-											<a class="btn btn-link btn-xs">{{$zone->countries[$i]->name}}</a>
-										</td>
-										<td>
-											<a class="btn btn-link btn-xs center-block remove_country" id="{{ $zone->countries[$i]->name }}" href="{{ action('ZoneController@detach_country', [$zone->id, $zone->countries[$i]->id]) }}">
-												<i class="fa fa-trash" aria-hidden="true"></i>
-											</a>
-										</td>
-									</tr>
-							@endfor
+							@if (count($zone->countries) > 0)
+								@for ($i=0; $i < $zone->countries->count(); $i++)
+										<tr>
+											<td>
+												<a class="btn btn-link btn-xs"> {{ $i+1 }} </a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs">{{$zone->countries[$i]->name}}</a>
+											</td>
+											<td>
+												<a class="btn btn-link btn-xs center-block remove_country" id="{{ $zone->countries[$i]->name }}" href="{{ action('ZoneController@detach_country', [$zone->id, $zone->countries[$i]->id]) }}">
+													<i class="fa fa-trash" aria-hidden="true"></i>
+												</a>
+											</td>
+										</tr>
+								@endfor
+							@else
+								<tr>
+									<td colspan="3">
+										No country associated.
+									</td>
+								</tr>
+							@endif
 						</tbody>
 					</table>
 					<!-- #./Expertises table -->
@@ -121,6 +129,7 @@
 	<script>
 		var all_countries = {!! $countries->toJson() !!};
 		var linked_countries = {!! $zone_countries->toJson() !!};
+		var nb_references = {!! $zone->references->toJson() !!};
 
 		var index = [];
 
@@ -133,17 +142,23 @@
 				$('#countries').append('<option value="' + all_countries[i].id + '"selected>' + all_countries[i].name + '</option>');
 			}
 			else {
-				$('#countries').append('<option value="' + all_countries[i].id + '">' + all_countries[i].name + '</option>');	
+				$('#countries').append('<option value="' + all_countries[i].id + '">' + all_countries[i].name + '</option>');
 			}
 		}
 
 		$('#btn_delete').click( function(e) {
-			var confirm_box = confirm("Are you sure ?");
-			if (confirm_box == false) {
+			if (nb_references.length > 0) {
 				e.preventDefault();
+				alert('Some references are in this zone [' + nb_references.length + ' zone(s)]. You have do change it in order to delete the zone.');
 			}
 			else {
-				$('#form_delete').submit();
+				var confirm_box = confirm("Are you sure ?");
+				if (confirm_box == false) {
+					e.preventDefault();
+				}
+				else {
+					$('#form_delete').submit();
+				}
 			}
 		});
 

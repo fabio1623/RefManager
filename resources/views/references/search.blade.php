@@ -258,7 +258,7 @@
 							  <option value=">="> &ge; </option>
 							  <option value="="> &#61; </option>
 							</select>
-							<input type="text" class="form-control" id="cost" name="cost" placeholder="Ex: 10M$">
+							<input type="text" class="form-control" id="cost" name="cost" placeholder="Ex: 10M€">
 				    	</div>
 				    </div>
 			  	</div>

@@ -8,7 +8,7 @@
     <div class="panel-heading">
       <div class="row">
         <div class="col-sm-6">
-          <h3 class="panel-title">Incomplete references</h3>
+          <h3 class="panel-title">Incomplete references  ({{ count($references) }})</h3>
         </div>
         <div class="col-sm-6">
           <button type="submit" form="form_save" class="btn btn-primary btn-xs pull-right">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="panel-body">
+    <!-- <div class="panel-body"> -->
       <form class="form-horizontal" method="post" id="form_save" action="{{ action('ReferenceController@save_incomplete') }}">
         <?php echo csrf_field(); ?>
         <div class="table-responsive">
@@ -62,7 +62,7 @@
         </div>
 
       </form>
-    </div>
+    <!-- </div> -->
   </div>
 </div>
 

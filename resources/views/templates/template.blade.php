@@ -87,8 +87,8 @@
 										<li><a href="{{ action('ReferenceController@index', ['approval'=>'off']) }}"><i class="fa fa-square-o" aria-hidden="true"></i> To approve</a></li>
 							            <li><a href="{{ action('ReferenceController@index', ['approval'=>'on']) }}"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approved</a></li>
 													<li><a href="{{ action('ReferenceController@index_created_by_me') }}"><span class="glyphicon glyphicon-refresh"></span> My references</a></li>
-													<li role="separator" class="divider"></li>
 													@if(Auth::user()->email == 'sarmentopedrofabio@gmail.com')
+														<li role="separator" class="divider"></li>
 							            	<li><a href="{{ action('ReferenceController@management_page') }}"><span class="glyphicon glyphicon-wrench"></span> Management</a></li>
 							            	<li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
 													@endif
@@ -104,8 +104,8 @@
 										<li><a href="{{ action('ZoneController@index', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-globe"></span> Zones</a></li>
 										<li><a href="{{ action('ContributorController@index', [Auth::user()->subsidiary_id, 1]) }}"><span class="glyphicon glyphicon-user"></span> Contributors</a></li>
 										<li><a href="{{ action('FundingController@index') }}"><span class="glyphicon glyphicon-credit-card"></span> Fundings</a></li>
-										<li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
 										@if(Auth::user()->email == 'sarmentopedrofabio@gmail.com')
+											<li><a id="" href="{{ action('ReferenceController@match_page', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-duplicate"></span> Export template</a></li>
 											<li><a href="{{ action('TemplateController@index') }}"><span class="glyphicon glyphicon-duplicate"></span> Templates</a></li>
 										@endif
 										<li><a href="{{ action('ReferenceController@incomplete_page') }}"><i class="fa fa-question-circle" aria-hidden="true"></i> Incomplete references</a></li>

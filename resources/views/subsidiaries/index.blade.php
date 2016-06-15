@@ -35,7 +35,7 @@
 								@for ($i=0; $i < $subsidiaries->count(); $i++)
 										<tr data-href="{{ action('SubsidiaryController@edit', $subsidiaries[$i]->id) }}">
 											<td>
-												<a class="btn btn-link btn-xs">
+												<a>
 													@if ($subsidiaries->currentPage() < 2)
 														{{ $i + 1 }}
 													@else
@@ -44,12 +44,12 @@
 												</a>
 											</td>
 											<td>
-												<a class="btn btn-link btn-xs">
+												<a>
 												{{$subsidiaries[$i]->name}}
 												</a>
 											</td>
 											<td>
-												<a class="btn btn-link btn-xs">
+												<a>
 												{{ $subsidiaries[$i]->created_at }}
 												</a>
 											</td>

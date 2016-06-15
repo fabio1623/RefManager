@@ -177,8 +177,6 @@ class ZoneController extends Controller
      */
     public function destroy($subsidiary_id, $zone_id)
     {
-        // dd($_POST);
-
         $zone = Zone::find($zone_id);
         $zone->countries()->detach();
 

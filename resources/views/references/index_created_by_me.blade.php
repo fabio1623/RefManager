@@ -7,7 +7,7 @@
   @include('messages.update')
 
   <div class="container-fluid stand-page">
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">My references ({{ count($references) }})</h3>
       </div>
