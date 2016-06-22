@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Country;
+use DB;
+
 class CountryController extends Controller
 {
     public function __construct()
@@ -20,7 +23,10 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+      $countries = Country::orderBy('name')->paginate(100);
+
+      $view = view('countries.index', ['countries'=>$countries]);
+      return $view;
     }
 
     /**
@@ -63,7 +69,17 @@ class CountryController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $country = Country::find($id);
+        $country = Country::find($id);
+        // $continents = DB::table('countries')->select('continent')->where('continent', '<>', '')->distinct()->get();
+        $continents = Country::select('continent')
+                        ->where('continent', '<>', '')
+                        ->orderBy('continent')
+                        ->distinct()->get();
+        // dd($continents);
+
+        $view = view('countries.edit', ['country'=>$country, 'continents'=>$continents]);
+        return $view;
     }
 
     /**

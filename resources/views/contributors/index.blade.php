@@ -45,7 +45,7 @@
 						</thead>
 						<tbody>
 							<form action="{{ action('ContributorController@destroyMultiple', [$subsidiary_id, 1]) }}" method="POST" id="form_delete">
-						      		<?php echo method_field('DELETE'); ?>
+					      		<?php echo method_field('DELETE'); ?>
 								    <?php echo csrf_field(); ?>
 									@foreach ($contributors as $key => $cont)
 											<tr>

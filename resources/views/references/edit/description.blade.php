@@ -127,7 +127,7 @@
 <!-- Line -->
 <div class="form-group" id="external_div">
 	<hr>
-	<label class="col-sm-4 control-label"><i class="fa fa-refresh" aria-hidden="true"></i> Type of services</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-refresh" aria-hidden="true"></i> Type of services (External market)</label>
 	@foreach($external_services as $service)
 			@if($service->parent_service_id != "")
 				<div class="checkbox col-sm-7 col-sm-offset-5">
@@ -143,20 +143,20 @@
 <!-- EO line -->
 
 <!-- Line -->
-<div class="form-group">
+<!-- <div class="form-group">
 	<div class="checkbox col-sm-8 col-sm-offset-4">
 	  <label>
 	    <input id="internal_checkbox" name="internal_check" type="checkbox"><b> Veolia's tenders (Internal Market only) ?</b>
 	  </label>
 	</div>
-</div>
+</div> -->
 <!-- EO line -->
 
 <!-- List of internal services -->
 <!-- Line -->
-<div class="form-group hidden" id="internal_div">
+<!-- <div class="form-group hidden" id="internal_div"> -->
 	<hr>
-	<label class="col-sm-4 control-label"><i class="fa fa-recycle" aria-hidden="true"></i> Veolia's contract type</label>
+	<label class="col-sm-4 control-label"><i class="fa fa-recycle" aria-hidden="true"></i> Veolia's contract type (Internal market only)</label>
 	@foreach($internal_services as $service)
 		@if($service->parent_service_id != "")
 			<div class="checkbox col-sm-7 col-sm-offset-5">
@@ -168,5 +168,5 @@
 		  </label>
 		</div>
 	@endforeach
-</div>
+<!-- </div> -->
 <!-- EO line -->

@@ -147,7 +147,9 @@ Route::delete('zones/destroy_multiple', 'ZoneController@destroyMultiple');
 Route::resource('subsidiaries.zones', 'ZoneController');
 
 //Countries
-Route::resource('zones.countries', 'CountryController');
+
+Route::resource('countries', 'CountryController');
+// Route::resource('zones.countries', 'CountryController');
 
 //Contributors
 Route::get('contributors/destroy/unsigned', 'ContributorController@destroy_unsigned');

@@ -3,6 +3,7 @@
   <li id="criteria_pane" role="presentation"><a data-toggle="tab" href="#criteria_menu"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Criterias</a></li>
   <li id="quantities_pane" role="presentation"><a data-toggle="tab" href="#measure_menu"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Quantities</a></li>
   <li id="details_pane" role="presentation"><a data-toggle="tab" href="#detail_menu"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Details</a></li>
+  <li id="files_pane" role="presentation"><a data-toggle="tab" href="#files_menu"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Files</a></li>
 </ul>
 
 <!-- Content menu -->
@@ -24,6 +25,10 @@
 	<div id="detail_menu" class="tab-pane fade">
 		<h3></h3>
 		@include("references.create.english.details")
+	</div>
+  <div id="files_menu" class="tab-pane fade">
+		<h3></h3>
+		@include("references.create.english.files")
 	</div>
 
 </div>
