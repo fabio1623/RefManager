@@ -23,7 +23,7 @@
 						<thead>
 							<tr>
 								<th class="col-sm-1"></th>
-								<th class="col-sm-8">Name</th>
+								<th class="col-sm-8">Entities</th>
 								<th class="col-sm-2">Creation date</th>
 						    	<th class="col-sm-1"></th>
 							</tr>

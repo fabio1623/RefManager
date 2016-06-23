@@ -27,7 +27,7 @@
 
 				<form id="form_delete" action="{{ action('ZoneController@destroy', [$subsidiary_id, $zone->id]) }}" method="POST">
 					<?php echo method_field('DELETE'); ?>
-				    <?php echo csrf_field(); ?>
+			    <?php echo csrf_field(); ?>
 				</form>
 
 				<div class="panel-body">
@@ -44,7 +44,7 @@
 
 					<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ZoneController@update', [$subsidiary_id, $zone->id]) }}">
 						<?php echo method_field('PUT'); ?>
-					    <?php echo csrf_field(); ?>
+				    <?php echo csrf_field(); ?>
 
 						<div class="form-group">
 							<label for="name" class="col-md-4 control-label">Rename</label>
@@ -149,7 +149,7 @@
 		$('#btn_delete').click( function(e) {
 			if (nb_references.length > 0) {
 				e.preventDefault();
-				alert('Some references are in this zone [' + nb_references.length + ' zone(s)]. You have do change it in order to delete the zone.');
+				alert('Some references are in this zone [' + nb_references.length + ' reference(s)]. You have do change it in order to delete the zone.');
 			}
 			else {
 				var confirm_box = confirm("Are you sure ?");

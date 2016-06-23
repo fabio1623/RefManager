@@ -23,7 +23,7 @@
 						<?php echo csrf_field(); ?>
 
 						<div class="form-group">
-							<label class="col-sm-4 control-label">Entity Name</label>
+							<label class="col-sm-4 control-label">Entity</label>
 							<div class="col-sm-6">
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
 							</div>

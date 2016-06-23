@@ -16,6 +16,9 @@
           </div>
         </h3>
       </div>
+
+      @include('messages.messages')
+
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
           <thead>

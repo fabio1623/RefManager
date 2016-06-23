@@ -8,10 +8,10 @@
 					<h3 class="panel-title">
 						<div class="row">
 							<div class="col-sm-6">
-								@if ($user->password != '')
-									Created account
-								@else
+								@if ($user->google_auth)
 									Google authentication
+								@else
+									Created account
 								@endif
 							</div>
 							<div class="col-sm-6">
@@ -51,7 +51,7 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-sm-4 control-label">E-Mail Address</label>
+							<label class="col-sm-4 control-label">E-Mail</label>
 							<div class="col-sm-6">
 								@if ($user->password != '')
 									<input type="email" class="form-control" name="email" value="{{ $user->email }}">
@@ -77,13 +77,28 @@
 						</div>
 
 						<div class="form-group">
+						  <label for="entity" class="col-sm-4 control-label">Entity</label>
+						  <div class="col-sm-6">
+							  <select class="form-control selectpicker" name="entity">
+							  	@foreach ($entities as $ent)
+							  		@if ($user->subsidiary_id == $ent->id)
+							  			<option value="{{ $ent->id }}" selected>{{ $ent->name }}</option>
+							  		@else
+							  			<option value="{{ $ent->id }}">{{ $ent->name }}</option>
+							  		@endif
+							  	@endforeach
+							  </select>
+							</div>
+						</div>
+
+						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary btn-sm">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Update
 								</button>
 								@if (isset($created_from_request) == false)
 									<a class="btn btn-primary btn-sm" href="{{ action('SubsidiaryController@edit', $subsidiary_id) }}" role="button">
-										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 	
+										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 										Back
 									</a>
 								@else

@@ -15,15 +15,29 @@
 					<form class="form-horizontal" role="form" method="POST" action="{{ action('UserController@store', $subsidiary_id) }}">
 						<?php echo csrf_field(); ?>
 
-						<div class="form-group hidden">
+						<!-- <div class="form-group hidden">
 							<label class="col-sm-4 control-label">Username</label>
 							<div class="col-sm-6">
 								<input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" readonly>
 							</div>
+						</div> -->
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">First name</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
+							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-sm-4 control-label">E-Mail Address</label>
+							<label class="col-sm-4 control-label">Last name</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-4 control-label">E-Mail</label>
 							<div class="col-sm-6">
 								<input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
 							</div>
@@ -40,9 +54,11 @@
 							<label for="subsidiary" class="col-sm-4 control-label">Subsidiary</label>
 							<div class="col-sm-6">
 								@if( isset($subsidiary_id) )
-									<select class="form-control selectpicker" id="subsidiary" name="subsidiary" disabled>
+									<select class="form-control selectpicker" id="subsidiary" name="subsidiary">
 										@foreach ($subsidiaries as $subsidiary)
 											@if ($subsidiary->id == $subsidiary_id)
+												<option value="{{ $subsidiary->id }}" selected>{{ $subsidiary->name }}</option>
+											@else
 												<option value="{{ $subsidiary->id }}">{{ $subsidiary->name }}</option>
 											@endif
 										@endforeach
@@ -57,14 +73,14 @@
 								@endif
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 						  	<label for="profile_type" class="col-sm-4 control-label">Profile</label>
 						  	<div class="col-sm-6">
 								<select id="profile_type" class="form-control selectpicker" data-width="100%" name="profile">
 									<option></option>
 									@foreach ($profiles as $profile)
-										<option value="{{ $profile->id }}">{{ $profile->name }}</option>	
+										<option value="{{ $profile->id }}">{{ $profile->name }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -84,16 +100,16 @@
 	</div>
 <script>
 	$('#email').keyup(function () {
-		
+
 		$('#username').val($('#email').val());
 	});
 
 	$('#firstName').bind('keypress keyup blur', function() {
 		if($('#lastName').val() != ""){
-    		$('#user_name').val($(this).val() + "." + $('#lastName').val());	
+    		$('#user_name').val($(this).val() + "." + $('#lastName').val());
     	}
     	else{
-    		$('#user_name').val($(this).val());	
+    		$('#user_name').val($(this).val());
     	}
 	});
 	$('#lastName').bind('keypress keyup blur', function() {
@@ -101,7 +117,7 @@
     		$('#user_name').val($('#firstName').val() + "." + $(this).val());
     	}
     	else{
-    		$('#user_name').val($(this).val());		
+    		$('#user_name').val($(this).val());
     	}
 	});
 </script>

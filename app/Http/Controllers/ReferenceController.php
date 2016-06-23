@@ -80,6 +80,7 @@ class ReferenceController extends Controller
 
         $unsigned_contr = Contributor::has('references', '<', 1)->orWhere('name', '')->get();
         $unsigned_fund = Funding::has('references', '<', 1)->orWhere('name', '')->get();
+        $unsigned_countries = Country::has('references', '<', 1)->orWhere('name', '')->get();
 
         $view = view('references.management_page', ['nb_total_ref'=> $nb_total_ref,
                                                     'nb_approved'=> $nb_approved,
@@ -87,7 +88,8 @@ class ReferenceController extends Controller
                                                     'translated_references'=> $translated_references,
                                                     'translations_in_db' => $translations_in_db,
                                                     'unsigned_contr' => $unsigned_contr,
-                                                    'unsigned_fund' => $unsigned_fund
+                                                    'unsigned_fund' => $unsigned_fund,
+                                                    'unsigned_countries' => $unsigned_countries
                                                     ]);
         return $view;
     }
@@ -95,6 +97,7 @@ class ReferenceController extends Controller
     public function index_created_by_me()
     {
       $references = Reference::where('created_by', Auth::user()->username)
+                      ->orWhere('updated_by', Auth::user()->username)
                       ->with('client')
                       ->with('country')
                       ->with('zone')

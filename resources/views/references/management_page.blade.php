@@ -51,17 +51,37 @@
 							  </h4>
 							</div>
 							<div id="collapse{{ $key }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ $key }}">
-							  <div class="panel-body">
-							  		<ul>
-									  	@foreach ($lang->references as $ref)
-									  		<li>
-									  			<a href="{{ action('ReferenceController@show', $ref->id) }}">
+
+								<table class="table table-hover table-condensed">
+									<thead>
+										<tr>
+				              <th>Project number</th>
+				              <th>Country</th>
+				              <th>Project start</th>
+				              <th>Project end</th>
+				            </tr>
+									</thead>
+									<tbody>
+										@foreach ($lang->references as $ref)
+											<tr>
+												<td>
+													<a href="{{ action('ReferenceController@show', $ref->id) }}">
 									  				{{ $ref->project_number }} ({{ $ref->languages->count() }})
 								  				</a>
-							  				</li>
-									  	@endforeach
-									</ul>
-							  </div>
+												</td>
+												<td>
+													{{ with($c=$ref->country()->first()) ? $c->name : null }}
+												</td>
+												<td>
+													{{ $ref->start_date }}
+												</td>
+												<td>
+													{{ $ref->end_date }}
+												</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
 							</div>
 						</div>
 					@endforeach
@@ -78,6 +98,13 @@
 				<span class="badge">{{ count($unsigned_fund) }}</span>
 				Unsigned fundings
 				<a id="drop_fund_btn" class="" href="{{ action('FundingController@destroy_unsigned') }}">
+					<i class="fa fa-trash" aria-hidden="true"></i>
+				</a>
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{ count($unsigned_countries) }}</span>
+				Unsigned countries
+				<a id="drop_countries_btn" class="" href="{{ action('CountryController@destroy_unsigned') }}">
 					<i class="fa fa-trash" aria-hidden="true"></i>
 				</a>
 			</li>

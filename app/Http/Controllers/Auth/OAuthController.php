@@ -40,13 +40,13 @@ class OAuthController extends Controller
             $ddb_user = User::where('email', $user->email)->first();
             if ($ddb_user) {
                 Auth::login($ddb_user);
-                
+
                 $ddb_user->avatar = $user->avatar;
                 //Temporary functionality
-                if ($ddb_user->username == '') {
-                    $username = strstr($user->email, '@', true);
-                    $ddb_user->username = $username;
-                }
+                // if ($ddb_user->username == '') {
+                //     $username = strstr($user->email, '@', true);
+                //     $ddb_user->username = $username;
+                // }
                 //Temporary functionality
                 $ddb_user->save();
 
@@ -54,7 +54,7 @@ class OAuthController extends Controller
                 //     return redirect()->action('ReferenceController@index');
                 // }
                 // else {
-                //     return redirect()->intended('home');   
+                //     return redirect()->intended('home');
                 // }
                 return redirect()->intended('home');
             }

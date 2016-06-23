@@ -15,10 +15,16 @@ use App\Profile;
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => [
+            'authenticate',
+            'getLoginError',
+            'getLoginWrongPassword',
+            'retrieve_password',
+            'change_password_page',
+        ]]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +59,7 @@ class UserController extends Controller
         });
 
         $users = $users->paginate(20);
-        
+
         $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users, 'search_inp'=>$request->search_inp, 'profiles'=>$profiles]);
 
         return $view;
@@ -68,14 +74,13 @@ class UserController extends Controller
     {
         $subsidiaries = Subsidiary::orderBy('name', 'asc')->get();
         $profiles = Profile::all();
-        
+
         $view = view('auth.register', ['subsidiary_id'=>$subsidiary_id, 'subsidiaries'=>$subsidiaries, 'profiles'=>$profiles]);
         return $view;
     }
 
     public function create_by_request($request_id)
     {
-        // dd($id);
         $request = AccessRequest::find($request_id);
         $username = strstr($request->email, '@', true);
         $profiles = Profile::all();
@@ -115,7 +120,7 @@ class UserController extends Controller
         }
         $user = new User;
         $username = strstr($request->email, '@', true);
-        
+
         $nb_users_in_db = User::where('username', 'like', $username.'%')->count();
         if ($nb_users_in_db > 0) {
             $user->username = $username.$nb_users_in_db;
@@ -128,14 +133,14 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password  = bcrypt($request->password);
         $user->profile_id = $request->profile;
-        
+
         if ($request->subsidiary) {
             $user->subsidiary_id = $request->subsidiary;
         }
         else {
             $user->subsidiary_id = $subsidiary_id;
         }
-        
+
         $user->save();
 
         $access_request = AccessRequest::where('email', $request->email)->first();
@@ -167,7 +172,7 @@ class UserController extends Controller
         $user = new User;
         // $user->username = $request->username;
         $username = strstr($request->email, '@', true);
-        
+
         $nb_users_in_db = User::where('username', 'like', $username.'%')->count();
         if ($nb_users_in_db > 0) {
             $user->username = $username.$nb_users_in_db;
@@ -179,7 +184,7 @@ class UserController extends Controller
         $user->password  = bcrypt($request->password);
         $user->profile_id = $request->profile;
         $user->subsidiary_id = $request->subsidiary;
-        
+
         $user->save();
 
         $access_request = AccessRequest::where('email', $request->email)->first();
@@ -215,7 +220,8 @@ class UserController extends Controller
     {
         $user = User::find($user_id);
         $profiles = Profile::all();
-        $view = view('auth.edit', ['subsidiary_id'=>$subsidiary_id, 'user'=>$user, 'profiles'=>$profiles]);
+        $entities = Subsidiary::orderBy('name')->get();
+        $view = view('auth.edit', ['subsidiary_id'=>$subsidiary_id, 'user'=>$user, 'profiles'=>$profiles, 'entities'=>$entities]);
         return $view;
     }
 
@@ -238,6 +244,7 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->profile_id = $request->profile;
+        $user->subsidiary_id = $request->entity;
 
         $user->save();
 
@@ -265,7 +272,7 @@ class UserController extends Controller
         else {
             return redirect()->action('SubsidiaryController@edit', $subsidiary_id)->with('update', 'User deleted!');
         }
-        
+
         // dd($_POST);
         // $ids = $request->input('id');
         // User::destroy($ids);
@@ -322,7 +329,7 @@ class UserController extends Controller
     public function getLoginWrongPassword()
     {
         $view = view('auth.loginWrongPassword');
-        return $view;   
+        return $view;
     }
 
     public function manageAccount($id)
@@ -353,7 +360,7 @@ class UserController extends Controller
             dd('No');
         }
 
-        
+
         // $view = view('home');
 
         // return $view;
@@ -372,7 +379,7 @@ class UserController extends Controller
             'email' => 'required|exists:users,email',
         ]);
 
-        return redirect()->action('Auth\AuthController@getLogin')->with('status', 'An email was send to you!');
+        return redirect()->action('Auth\AuthController@getLogin')->with('status', 'An email was sent to you!');
         // return view('auth.login');
     }
 }

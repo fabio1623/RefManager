@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Country;
-use DB;
+use App\Zone;
 
 class CountryController extends Controller
 {
@@ -23,7 +23,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-      $countries = Country::orderBy('name')->paginate(100);
+      $countries = Country::orderBy('continent')->orderBy('name')->paginate(100);
 
       $view = view('countries.index', ['countries'=>$countries]);
       return $view;
@@ -36,7 +36,14 @@ class CountryController extends Controller
      */
     public function create()
     {
-        //
+      $continents = Country::select('continent')
+                      ->where('continent', '<>', '')
+                      ->orderBy('continent')
+                      ->distinct()->get();
+      $zones = Zone::orderBy('name')->get();
+
+      $view = view('countries.create', ['continents'=>$continents, 'zones'=>$zones]);
+      return $view;
     }
 
     /**
@@ -47,7 +54,24 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request, [
+          'name' => 'required|max:255|unique:countries,name',
+      ]);
+
+      $country = new Country;
+      $country->name = trim($request->name);
+      $country->continent = $request->continent;
+
+      $country->save();
+
+      if ($request->zones)
+      {
+        foreach ($request->zones as $z_id) {
+          $country->zones()->attach($z_id);
+        }
+      }
+
+      return redirect()->action('CountryController@index')->with('status', $country->name.' added!');
     }
 
     /**
@@ -69,17 +93,14 @@ class CountryController extends Controller
      */
     public function edit($id)
     {
-        // $country = Country::find($id);
-        $country = Country::find($id);
-        // $continents = DB::table('countries')->select('continent')->where('continent', '<>', '')->distinct()->get();
-        $continents = Country::select('continent')
-                        ->where('continent', '<>', '')
-                        ->orderBy('continent')
-                        ->distinct()->get();
-        // dd($continents);
+      $country = Country::find($id);
+      $continents = Country::select('continent')
+                      ->where('continent', '<>', '')
+                      ->orderBy('continent')
+                      ->distinct()->get();
 
-        $view = view('countries.edit', ['country'=>$country, 'continents'=>$continents]);
-        return $view;
+      $view = view('countries.edit', ['country'=>$country, 'continents'=>$continents]);
+      return $view;
     }
 
     /**
@@ -91,7 +112,16 @@ class CountryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, [
+          'name' => 'required|max:255|unique:countries,name,'.$id,
+      ]);
+
+      $country = Country::find($id);
+      $country->name = trim($request->name);
+      $country->continent = $request->continent;
+      $country->save();
+
+      return redirect()->action('CountryController@edit', $id)->with('update', 'Changes saved!');
     }
 
     /**
@@ -102,6 +132,33 @@ class CountryController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $country = Country::find($id);
+      $country_name = $country->name;
+      $country->zones()->detach();
+      Country::destroy($id);
+
+      return redirect()->action('CountryController@index')->with('status', $country_name.' removed!');
+    }
+
+    public function destroy_country($id)
+    {
+      $country = Country::find($id);
+      $country->zones()->detach();
+      Country::destroy($id);
+    }
+
+    public function destroy_unsigned()
+    {
+      $unsigned_countries = Country::has('references', '<', 1)->orWhere('name', '')->get();
+
+      if (count($unsigned_countries) > 0) {
+        foreach ($unsigned_countries as $c) {
+          CountryController::destroy_country($c->id);
+        }
+        return redirect()->action('ReferenceController@management_page')->with('status', 'Unsigned countries removed!');
+      }
+      else {
+        return redirect()->action('ReferenceController@management_page')->with('caution', 'Nothing to remove..');
+      }
     }
 }

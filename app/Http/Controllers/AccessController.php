@@ -14,10 +14,13 @@ use App\Subsidiary;
 
 class AccessController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => [
+            'create',
+            'store',
+        ]]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -67,7 +70,7 @@ class AccessController extends Controller
         $access = new AccessRequest;
         $access->email = $request->email;
         $access->subsidiary_id = $request->company;
-        
+
         $access->save();
 
         $subsidiary = Subsidiary::findOrFail($access->subsidiary_id);

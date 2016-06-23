@@ -27,7 +27,7 @@
 		</div>
 		<div class="panel-body">
 			@include('errors.validation')
-  			@include('messages.messages')
+  		@include('messages.messages')
 
 			<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@store') }}">
 				<?php echo csrf_field(); ?>

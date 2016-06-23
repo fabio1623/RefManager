@@ -91,6 +91,14 @@ Route::get('user/create_by_request/{request}', 'UserController@create_by_request
 Route::post('users/create_by_request/store_by_request', 'UserController@store_by_request');
 Route::get('user/account_management/{id}', 'UserController@manageAccount');
 Route::post('user/account_update/{id}', 'UserController@updateAccount');
+// Route::get('subsidiaries/{subsidiary}/users/{user}/edit', ['middleware' => 'auth', function($subsidiary, $user) {
+// 	return view('auth.edit', ['subsidiary_id'=>$subsidiary, 'user'=>$user]);
+// }]);
+// Route::get('subsidiaries/{subsidiary}/users/{user}/edit', [
+//     'middleware' => 'auth',
+//     'uses' => 'UserController@edit'
+// ]);
+// 'UserController@edit');
 Route::resource('subsidiaries.users', 'UserController');
 
 //Middleware
@@ -147,7 +155,7 @@ Route::delete('zones/destroy_multiple', 'ZoneController@destroyMultiple');
 Route::resource('subsidiaries.zones', 'ZoneController');
 
 //Countries
-
+Route::get('countries/destroy/unsigned', 'CountryController@destroy_unsigned');
 Route::resource('countries', 'CountryController');
 // Route::resource('zones.countries', 'CountryController');
 

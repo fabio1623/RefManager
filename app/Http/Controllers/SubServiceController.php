@@ -11,6 +11,10 @@ use App\SubService;
 
 class SubServiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -56,9 +60,9 @@ class SubServiceController extends Controller
     {
         $view = view('services.internal.create');
         return $view;
-    }    
+    }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         // dd($_POST);
 
@@ -82,7 +86,7 @@ class SubServiceController extends Controller
         return redirect()->action('SubServiceController@index');
     }
 
-    public function search(Request $request) 
+    public function search(Request $request)
     {
         $subservices = Service::where('subsidiary', 'Seureca')
                                 ->where('service_type', 'external')
