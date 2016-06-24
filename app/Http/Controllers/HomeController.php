@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -39,31 +39,31 @@ class HomeController extends Controller {
 	public function index()
 	{
 		$subsidiary = Subsidiary::find(Auth::user()->subsidiary_id);
-		
+
 		$view = view('home')->with('subsidiary', $subsidiary);
 		return $view;
 	}
 
-	public function upload_file(Request $request)
-	{
-		// dd($_POST);
-
-		$destinationPath = 'imports';
-		$fileName = 'ref_import.pdf';
-
-		// dd($_FILES);
-
-		if ($request->hasFile('file')) {
-			// dd('Has file');
-			if ($request->file('file')->isValid()) {
-				// dd('Is valid');
-			    // $file = $request->file('file');
-			    $request->file('file')->move($destinationPath, $fileName);
-			}
-		}
-
-		return redirect()->back();
-	}
+	// public function upload_file(Request $request)
+	// {
+	// 	// dd($_POST);
+	//
+	// 	$destinationPath = 'imports';
+	// 	$fileName = 'ref_import.pdf';
+	//
+	// 	// dd($_FILES);
+	//
+	// 	if ($request->hasFile('file')) {
+	// 		// dd('Has file');
+	// 		if ($request->file('file')->isValid()) {
+	// 			// dd('Is valid');
+	// 		    // $file = $request->file('file');
+	// 		    $request->file('file')->move($destinationPath, $fileName);
+	// 		}
+	// 	}
+	//
+	// 	return redirect()->back();
+	// }
 
 	public function contact_us()
 	{

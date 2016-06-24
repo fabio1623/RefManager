@@ -10,12 +10,19 @@ use App\Http\Controllers\Controller;
 use App\Subsidiary;
 use App\User;
 use App\Profile;
+use Auth;
 
 class SubsidiaryController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id);
+        }
     }
     /**
      * Display a listing of the resource.
@@ -56,7 +63,7 @@ class SubsidiaryController extends Controller
 
         $subsidiary = new Subsidiary;
         $subsidiary->name = $request->input('name');
-        
+
         $subsidiary->save();
 
         return redirect()->action('SubsidiaryController@index');
@@ -85,7 +92,7 @@ class SubsidiaryController extends Controller
         // $users = $subsidiary->users()->get();
         $users = $subsidiary->users()->paginate(20);
         $profiles = Profile::all();
-        
+
         $view = view('subsidiaries.edit', ['subsidiary'=>$subsidiary, 'users'=>$users, 'profiles'=>$profiles]);
         return $view;
     }
@@ -122,7 +129,7 @@ class SubsidiaryController extends Controller
         // dd($_POST);
 
         $subsidiary = Subsidiary::find($id);
-        
+
         if ($subsidiary->users()->count() > 0) {
             $subsidiary->users()->detach();
         }

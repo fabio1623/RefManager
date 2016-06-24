@@ -180,7 +180,7 @@
 										<input class="box" type="checkbox" value="{{ $reference->id }}" name=ids[]>
 									@endif
 									<!-- If creator, admin or dcom profile -->
-									@if (Auth::user()->username == $reference->created_by || Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3 || $user_zones->contains('name', $reference->zone()->first()->name))
+									@if (Auth::user()->username == $reference->created_by || Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3 || $user_zones->contains('id', $reference->zone))
 										<a class="btn btn-link btn-xs" href="{{ action('ReferenceController@edit', $reference->id) }}">
 											<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 										</a>

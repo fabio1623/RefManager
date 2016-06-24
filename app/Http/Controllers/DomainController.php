@@ -11,11 +11,19 @@ use App\Expertise;
 use App\Reference;
 use App\Subsidiary;
 
+use Auth;
+
 class DomainController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id);
+        }
     }
     /**
      * Display a listing of the resource.
@@ -37,7 +45,7 @@ class DomainController extends Controller
         $linked_domains = $subsidiary->domains()->get();
 
         $view = view('domains.custom_index', ['domains'=>$domains, 'subsidiary'=>$subsidiary, 'linked_domains'=>$linked_domains]);
-        return $view;   
+        return $view;
     }
 
     /**
@@ -94,13 +102,13 @@ class DomainController extends Controller
                         if ($linked_domain->id == $domain_in_db->id) {
                             $found = 1;
                         }
-                    }   
+                    }
                     if ($found == 0) {
                         $subsidiary->domains()->attach($domain_in_db->id);
                         foreach ($domain_in_db->expertises as $expertise_in_db) {
                             $subsidiary->expertises()->attach($expertise_in_db->id);
                         }
-                    }   
+                    }
                 }
             }
         }
@@ -122,7 +130,7 @@ class DomainController extends Controller
 
         foreach ($domain->expertises as $expertise) {
             $subsidiary->expertises()->detach($expertise->id);
-        }      
+        }
 
         return redirect()->back();
     }
@@ -190,7 +198,7 @@ class DomainController extends Controller
         $parent_expertises = Expertise::whereNull('parent_expertise_id')->where('domain_id', $domain_id)->get();
 
         $view = view('domains.custom_edit', ['subsidiary'=>$subsidiary, 'domain' => $domain, 'expertises' => $expertises, 'linked_expertises'=>$linked_expertises, 'parent_expertises'=>$parent_expertises]);
-        return $view;   
+        return $view;
     }
 
     /**

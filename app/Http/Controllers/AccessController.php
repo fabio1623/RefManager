@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 
 use App\AccessRequest;
 use App\Subsidiary;
+use Auth;
 
 class AccessController extends Controller
 {
@@ -20,6 +21,15 @@ class AccessController extends Controller
             'create',
             'store',
         ]]);
+
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id,  ['except' => [
+              'create',
+              'store',
+          ]]);
+        }
     }
     /**
      * Display a listing of the resource.

@@ -9,14 +9,21 @@ use App\Http\Controllers\Controller;
 use App\DefaultPassword;
 
 use Hash;
+use Auth;
 
 class DefaultPasswordController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id);
+        }
     }
-    
+
     public function manage_password()
     {
         $view = view('default_password.manage_password');

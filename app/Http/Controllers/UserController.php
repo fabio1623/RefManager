@@ -24,6 +24,12 @@ class UserController extends Controller
             'retrieve_password',
             'change_password_page',
         ]]);
+
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id);
+        }
     }
     /**
      * Display a listing of the resource.
@@ -119,6 +125,9 @@ class UserController extends Controller
             ]);
         }
         $user = new User;
+        // $username = str_replace(' ', '', trim($request->first_name)).'.'.str_replace(' ', '', trim($request->last_name));
+        // $username = strtolower($username);
+        // dd($username);
         $username = strstr($request->email, '@', true);
 
         $nb_users_in_db = User::where('username', 'like', $username.'%')->count();

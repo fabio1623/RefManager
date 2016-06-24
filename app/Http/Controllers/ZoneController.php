@@ -12,11 +12,19 @@ use App\Country;
 use App\Contributor;
 use App\Subsidiary;
 
+use Auth;
+
 class ZoneController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id);
+        }
     }
     /**
      * Display a listing of the resource.

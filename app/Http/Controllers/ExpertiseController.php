@@ -11,11 +11,19 @@ use App\Domain;
 use App\Reference;
 use App\Subsidiary;
 
+use Auth;
+
 class ExpertiseController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id);
+        }
     }
     /**
      * Display a listing of the resource.
@@ -96,7 +104,7 @@ class ExpertiseController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->expertises()->detach($expertise_id);        
+        $subsidiary->expertises()->detach($expertise_id);
 
         return redirect()->back();
     }
@@ -141,7 +149,7 @@ class ExpertiseController extends Controller
         //     $expertise = new expertise;
         //     $expertise->name = $request->input('name');
 
-        //     $expertise->save();    
+        //     $expertise->save();
         //     $domain->expertises()->attach($expertise->id);
         // }
 

@@ -13,11 +13,18 @@ use App\Reference;
 use App\Qualifier;
 use App\Subsidiary;
 
+use Auth;
+
 class CategoryController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        // If user logged
+        if(Auth::user())
+        {
+          $this->middleware('profile:'.Auth::user()->profile_id);
+        }
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +37,7 @@ class CategoryController extends Controller
         $categories->setPath('index');
 
         $view = view('categories.index')->with('categories', $categories);
-        
+
         return $view;
     }
 
@@ -41,7 +48,7 @@ class CategoryController extends Controller
         $linked_categories = $subsidiary->categories()->get();
 
         $view = view('categories.custom_index', ['categories'=>$categories, 'subsidiary'=>$subsidiary, 'linked_categories'=>$linked_categories]);
-        return $view;   
+        return $view;
     }
 
     /**
@@ -52,7 +59,7 @@ class CategoryController extends Controller
     public function create($subsidiary_id)
     {
         $view = view('categories.create', ['subsidiary_id'=>$subsidiary_id]);
-        
+
         return $view;
     }
 
@@ -99,13 +106,13 @@ class CategoryController extends Controller
                         if ($linked_category->id == $category_in_db->id) {
                             $found = 1;
                         }
-                    } 
+                    }
                     if ($found == 0) {
                         $subsidiary->categories()->attach($category_in_db->id);
                         foreach ($category_in_db->measures as $measure_in_db) {
                             $subsidiary->measures()->attach($measure_in_db->id);
                         }
-                    }   
+                    }
                 }
             }
         }
@@ -122,13 +129,13 @@ class CategoryController extends Controller
     {
         $subsidiary = Subsidiary::find($subsidiary_id);
 
-        $subsidiary->categories()->detach($category_id);  
+        $subsidiary->categories()->detach($category_id);
 
         $category = Category::find($category_id);
 
         foreach ($category->measures as $measure) {
                  $subsidiary->measures()->detach($measure->id);
-             }     
+             }
 
         return redirect()->back();
     }
@@ -148,7 +155,7 @@ class CategoryController extends Controller
 
         $new_category = new Category;
         $new_category->name = $request->name;
-        
+
         $new_category->save();
 
         $subsidiary = Subsidiary::find($subsidiary_id);
@@ -180,7 +187,7 @@ class CategoryController extends Controller
         $measures = $category->measures()->orderBy('name', 'asc')->get();
 
         $view = view('categories.edit', ['category'=>$category, 'measures'=>$measures]);
-        
+
         return $view;
     }
 
@@ -196,7 +203,7 @@ class CategoryController extends Controller
         $linked_measures = $subsidiary->measures()->get();
 
         $view = view('categories.custom_edit', ['subsidiary'=>$subsidiary, 'category'=>$category, 'measures'=>$measures, 'linked_measures'=>$linked_measures]);
-        return $view;   
+        return $view;
     }
 
     /**
@@ -233,7 +240,7 @@ class CategoryController extends Controller
     public function destroy(Request $request, $subsidiary_id, $category_id)
     {
         // dd($_POST);
-        
+
         $category = Category::find($category_id);
 
         //Delete all related measures

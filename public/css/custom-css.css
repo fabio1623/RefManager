@@ -22,6 +22,28 @@ div.required label.control-label:after {
     color: red;
 }
 
+.center-title {
+  padding: 30px 15px;
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.custom-hr {
+  margin-bottom: 1.25em;
+  margin-top: 2.25em;
+  font-size: 0.9em;
+  color: #7f7f7f;
+  z-index: 0;
+  position: relative;
+  text-align: center;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #eee;
+}
+
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
@@ -130,7 +152,7 @@ footer {
 -------------------------------------------------- */
 
 .big-screen-brand {
-  position: absolute; 
+  position: absolute;
   left: 45%;
   top: -15px;
 }
