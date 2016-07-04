@@ -26,7 +26,7 @@ use App\ExternalService;
 use App\InternalService;
 use App\MeasureValues;
 use App\QualifierValues;
-use App\language;
+use App\Language;
 use App\LanguageReference;
 use App\Client;
 use App\Measure;

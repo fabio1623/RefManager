@@ -18,7 +18,7 @@
         <div class="carousel-inner">
             <div class="item active">
                 <!-- Set the first background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('{{ asset('/img/carousel/carousel1.png') }}');"></div>
+                <div class="fill" style="background-image:url('{{ asset('/img/Carousel/carousel1.png') }}');"></div>
                 <div class="carousel-caption">
                     <h2>Welcome to the new Seureca Reference Database.</h2>
                     <p class="lead">
@@ -28,14 +28,14 @@
             </div>
             <div class="item">
                 <!-- Set the second background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('{{ asset('/img/carousel/carousel2.png') }}');"></div>
+                <div class="fill" style="background-image:url('{{ asset('/img/Carousel/carousel2.png') }}');"></div>
                 <div class="carousel-caption">
                     <h2>Search and download references and supporting documents easily.</h2>
                 </div>
             </div>
             <div class="item">
                 <!-- Set the third background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('{{ asset('/img/carousel/carousel3.png') }}');"></div>
+                <div class="fill" style="background-image:url('{{ asset('/img/Carousel/carousel3.png') }}');"></div>
                 <div class="carousel-caption">
                     <h2>A reliable source of information to support your commercial and tendering process.</h2>
                 </div>
