@@ -62,7 +62,7 @@
 	<div class="form-group">
 		<label for="contact_email_{{ strtolower($languages[$i]->name)}}" class="col-sm-4 control-label">Email</label>
 		<div class="col-sm-4">
-		  <input type="text" class="form-control" id="contact_email_{{ strtolower($languages[$i]->name)}}" name="languages[{{ $languages[$i]->name }}][]">
+		  <input type="email" class="form-control" id="contact_email_{{ strtolower($languages[$i]->name)}}" name="languages[{{ $languages[$i]->name }}][]">
 		</div>
 	</div>
 	<!-- EO line -->
@@ -98,7 +98,7 @@
 	<button type="submit" class="btn btn-primary btn-sm col-sm-offset-10">
 		<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Create
 	</button>
-	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">	
+	<a class="btn btn-primary btn-sm" href="{{ URL::previous() }}" role="button">
 		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
 	</a>
 </div>

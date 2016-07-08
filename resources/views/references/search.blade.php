@@ -66,17 +66,12 @@
 					@if(Auth::user()->profile_id == 5 || Auth::user()->profile_id == 3)
 					<label for="continent" class="col-sm-2 control-label">Approved</label>
 					<div class="col-sm-3">
-						<!-- <div class="checkbox"> -->
-							<!-- <label>
-							  <input type="checkbox" name="approval" checked> Approved
-							</label> -->
 							<label class="radio-inline">
 							  <input type="radio" name="approval" value="on" checked> On
 							</label>
 							<label class="radio-inline">
 							  <input type="radio" name="approval" value="off"> Off
 							</label>
-						<!-- </div> -->
 					</div>
 					@endif
 				</div>
@@ -141,6 +136,16 @@
 						</select>
 				    </div>
 			  	</div>
+			  	<!-- EO line -->
+					<!-- Line -->
+			  	<!-- <div class="form-group">
+				    <label class="control-label col-sm-4" for="expertises">Expertises</label>
+				    <div class="col-sm-3">
+				    	<select class="form-control selectpicker" multiple data-selected-text-format="count" id="expertises" name="expertises[]" data-size="8">
+							</select>
+				    </div>
+						<input id="load_expertises_btn" class="btn btn-default" type="button" value="Load">
+			  	</div> -->
 			  	<!-- EO line -->
 					<div class="form-group">
 					    <label for="financing" class="control-label col-sm-4" for="financing">Funding</label>
@@ -207,15 +212,15 @@
 				<div class="form-group">
 				    <label class="control-label col-sm-4" for="measure">Measurement</label>
 				    <div class="col-sm-3">
-			    		<select id="" class="selectpicker" data-size="11" data-width="100%" data-show-subtext="true" name="measure_type">
+			    		<select id="measure_type" class="selectpicker" data-size="11" data-width="100%" data-show-subtext="true" name="measure_type">
 			    			<option></option>
-							@foreach ($categories as $category)
-								<optgroup label="{{ $category->name }}">
-									@foreach ($category->measures as $measure)
-										<option value="{{ $measure->id }}" data-subtext="/ {{ $category->name }}"> {{ $measure->name }} </option>
-									@endforeach
-								</optgroup>
-							@endforeach
+								@foreach ($categories as $category)
+									<optgroup label="{{ $category->name }}">
+										@foreach ($category->measures as $measure)
+											<option value="{{ $measure->id }}" data-subtext="/ {{ $category->name }}"> {{ $measure->name }} </option>
+										@endforeach
+									</optgroup>
+								@endforeach
 						</select>
 				    </div>
 			  	</div>
@@ -225,11 +230,11 @@
 				    <div class="col-sm-3 col-sm-offset-4">
 				    	<div class="input-group">
 				    		<select id="" class="selectpicker" name="measure_symbol">
-							  <option value="<="> &le; </option>
-							  <option value=">="> &ge; </option>
-							  <option value="="> &#61; </option>
+							  <option value="&le;"> &le; </option>
+							  <option value="&ge;"> &ge; </option>
+							  <option value="&#61;"> &#61; </option>
 							</select>
-							<input type="text" class="form-control" id="measure" name="measure" placeholder="Ex: 10M$">
+							<input type="text" class="form-control" id="measure" name="measure" placeholder="Ex: 10M$" disabled>
 				    	</div>
 				    </div>
 			  	</div>
@@ -240,11 +245,11 @@
 				<div class="form-group">
 				    <label class="control-label col-sm-4" for="cost">Cost</label>
 				    <div class="col-sm-3">
-			    		<select id="" class="selectpicker" data-width="100%" name="cost_type">
+			    		<select id="cost_type" class="selectpicker" data-width="100%" name="cost_type">
 			    			<option></option>
-							<option>Total cost</option>
-							<option>Seureca services</option>
-							<option>Works</option>
+								<option>Total cost</option>
+								<option>Seureca services</option>
+								<option>Works</option>
 						</select>
 				    </div>
 			  	</div>
@@ -254,11 +259,11 @@
 				    <div class="col-sm-3 col-sm-offset-4">
 				    	<div class="input-group">
 				    		<select id="" class="selectpicker" name="cost_symbol">
-							  <option value="<="> &le; </option>
-							  <option value=">="> &ge; </option>
-							  <option value="="> &#61; </option>
+							  <option value="&le;"> &le; </option>
+							  <option value="&ge;"> &ge; </option>
+							  <option value="&#61;"> &#61; </option>
 							</select>
-							<input type="text" class="form-control" id="cost" name="cost" placeholder="Ex: 10M€">
+							<input type="text" class="form-control" id="cost" name="cost" placeholder="Ex: 10M€" disabled>
 				    	</div>
 				    </div>
 			  	</div>
@@ -272,6 +277,15 @@
 </div>
 
 <script>
+	//On load
+	if ($('#cost_type').val() != '') {
+		$('#cost').removeAttr('disabled');
+	}
+
+	if ($('#measure_type').val() != '') {
+		$('#measure').removeAttr('disabled');
+	}
+
 	$('#date_picker_start').datepicker({
 	    format: "yyyy-mm",
 	    viewMode: "months",
@@ -294,7 +308,44 @@
 	});
 
 	$('#search_btn').click(function(e){
-  		$('#form_search').submit();
-  	});
+		$('#form_search').submit();
+	});
+
+	// Cost field
+	$('#cost_type').change(function () {
+		if ($(this).val() != '') {
+			$('#cost').removeAttr('disabled');
+		}
+		else {
+			$('#cost').val('');
+			$('#cost').attr('disabled', '0');
+		}
+	});
+
+	// Measure field
+	$('#measure_type').change(function () {
+		if ($(this).val() != '') {
+			$('#measure').removeAttr('disabled');
+		}
+		else {
+			$('#measure').val('');
+			$('#measure').attr('disabled', '0');
+		}
+	});
+
+	// $('#load_expertises_btn').click(function (e) {
+	// 	$.get("/expertises/load/" + $('#domain').val(), function(data) {
+	// 		if (!data) {
+	// 			console.log('Cannot retrieve the list of expertises');
+	// 		}
+	// 		else {
+	// 			console.log('List of expertises retrieved!');
+	// 		}
+	// 	}, "json").done(function(data) {
+	// 		$.each(data, function(key, exp) {
+	// 			$('#expertises').append('<option value="' + exp.id + '">' + exp.name + '</option>').selectpicker('refresh');
+	// 		})
+	// 	});
+	// });
 </script>
 @endsection

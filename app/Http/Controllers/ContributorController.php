@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Contributor;
 use App\Subsidiary;
 use App\Zone;
+use App\Country;
+use App\Funding;
 use App\ContributorReference;
 
 use Auth;
@@ -218,5 +220,38 @@ class ContributorController extends Controller
       else {
         return redirect()->action('ReferenceController@management_page')->with('caution', 'Nothing to remove..');
       }
+    }
+
+    public function trim()
+    {
+      $contributors = Contributor::all();
+      foreach ($contributors as $cont) {
+        $cont->name = trim($cont->name, ' <>');
+        $cont->save();
+      }
+      $responsabilities = ContributorReference::all();
+      foreach ($responsabilities as $resp) {
+        $resp->responsability_on_project = trim($resp->responsability_on_project, ' <>');
+        $resp->responsability_on_project_fr = trim($resp->responsability_on_project_fr, ' <>');
+        $resp->save();
+      }
+      $zones = Zone::all();
+      foreach ($zones as $zone) {
+        $zone->name = trim($zone->name, ' <>');
+        $zone->save();
+      }
+      $countries = Country::all();
+      foreach ($countries as $country) {
+        $country->name = trim($country->name, ' <>');
+        $country->save();
+      }
+      $fundings = Funding::all();
+      foreach ($fundings as $funding) {
+        $funding->name = trim($funding->name, ' <>');
+        $funding->name_fr = trim($funding->name_fr, ' <>');
+        $funding->save();
+      }
+
+      return redirect()->action('ReferenceController@management_page')->with('status', 'Objects trimed!');
     }
 }

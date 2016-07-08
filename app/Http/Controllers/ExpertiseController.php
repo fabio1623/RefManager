@@ -252,4 +252,11 @@ class ExpertiseController extends Controller
 
         return redirect()->action('DomainController@edit', $domain_id);
     }
+
+    public function load_expertises($domain_id)
+    {
+      $expertises = Expertise::where('domain_id', $domain_id)->orderBy('name')->get();
+
+      return $expertises;
+    }
 }

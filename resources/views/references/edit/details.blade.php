@@ -53,6 +53,9 @@
 <div class="form-group">
 	<label class="col-sm-4 control-label"><i class="fa fa-users" aria-hidden="true"></i> Senior staff</label>
 </div>
+<!-- <div class="col-sm-8 col-sm-offset-4"> -->
+	
+<!-- </div> -->
 @if (count($staff_involved) > 0)
 
 @for ($i=0; $i < count($staff_involved); $i++)
@@ -70,22 +73,13 @@
 					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 					Name
 				</span>
-				@if($staff_involved[$i]->contributor_id)
-					<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="{{ $staff_name[$i]['name'] }}">
-				@else
-					<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="">
-				@endif
+				<input type="text" class="form-control involved_staff" id="involved_staff" autocomplete="off" data-provide="typeahead" name="involved_staff[]" value="{{ with($s=$staff_involved[$i]->contributor()->first()) ? $s->name : null }}">
 					@if ($i == 0)
 					<span class="input-group-btn">
 						<button class="btn btn-default addButton" type="button">
 							<i class="fa fa-plus" aria-hidden="true"></i>
-							<!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
 						</button>
 					</span>
-					@else
-						<!-- <button class="btn btn-default removeButton" type="button">
-							<i class="fa fa-trash" aria-hidden="true"></i>
-						</button> -->
 					@endif
 			</div>
 		</div>
@@ -96,34 +90,27 @@
 		<div class="col-sm-4 col-sm-offset-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
-				@if ($i == 0)
-					<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}" autocomplete="off">
-				@else
-					<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]['responsability_on_project'] }}" autocomplete="off">
-				@endif
-
+				<input id="staff_function_{{$i}}" type="text" class="form-control staff_function" placeholder="" aria-describedby="" name="involved_staff_function[]" value="{{ $staff_involved[$i]->responsability_on_project }}" autocomplete="off">
 			</div>
 		</div>
 		<div class="col-sm-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Responsabilities</span>
+				<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]->responsability_on_project_fr }}" autocomplete="off">
+				<span class="input-group-btn">
 				@if ($i == 0)
-					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}" autocomplete="off">
-					<span class="input-group-btn">
 						<button id="clean_staff_fields" class="btn btn-default" type="button">
 							<i class="fa fa-eraser" aria-hidden="true"></i>
-							<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
 						</button>
-					</span>
+					<!-- </span> -->
 				@else
-					<input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}" autocomplete="off">
-					<span class="input-group-btn">
+					<!-- <input id="staff_function_fr_{{$i}}" type="text" class="form-control staff_function_fr" placeholder="" aria-describedby="" name="involved_staff_function_fr[]" value="{{ $staff_involved[$i]['responsability_on_project_fr'] }}" autocomplete="off"> -->
+					<!-- <span class="input-group-btn"> -->
 					<button class="btn btn-default removeButton" type="button">
 						<i class="fa fa-trash" aria-hidden="true"></i>
-						<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
 					</button>
-				</span>
 				@endif
+				</span>
 			</div>
 		</div>
 	</div>
@@ -135,7 +122,6 @@
 @else
 
 <div class="form-group">
-	<!-- <label for="involved_staff" class="col-sm-4 control-label">Senior staff</label> -->
 	<div class="col-sm-4 col-sm-offset-4">
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">
@@ -146,7 +132,6 @@
 			<span class="input-group-btn">
 				<button class="btn btn-default addButton" type="button">
 					<i class="fa fa-plus" aria-hidden="true"></i>
-					<!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
 				</button>
 			</span>
 		</div>
@@ -168,7 +153,6 @@
 			<span class="input-group-btn">
 				<button id="clean_staff_fields" class="btn btn-default" type="button">
 					<i class="fa fa-eraser" aria-hidden="true"></i>
-					<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
 				</button>
 			</span>
 		</div>
@@ -187,11 +171,6 @@
 	    			Name
     			</span>
 		        <input id="name_input" class="form-control nameInput" type="text" autocomplete="off">
-		        <!-- <span class="input-group-btn">
-					<button class="btn btn-default removeButton" type="button">
-						<i class="fa fa-trash" aria-hidden="true"></i>
-					</button>
-				</span> -->
 			</div>
 	    </div>
 	</div>
@@ -209,7 +188,6 @@
 				<span class="input-group-btn">
 					<button class="btn btn-default removeButton" type="button">
 						<i class="fa fa-trash" aria-hidden="true"></i>
-						<!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
 					</button>
 				</span>
 			</div>
@@ -238,21 +216,13 @@
 					<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
 					Name
 				</span>
-				@if($experts[$i]->contributor_id)
-					<input type="text" class="form-control experts" id="experts" name="experts[]" value="{{ $experts_name[$i]['name'] }}" autocomplete="off">
-				@else
-					<input type="text" class="form-control experts" id="experts" name="experts[]" value="" autocomplete="off">
-				@endif
+				<input type="text" class="form-control experts" id="experts" name="experts[]" value="{{ with($e=$experts[$i]->contributor()->first()) ? $e->name : null }}" autocomplete="off">
 					@if ($i == 0)
 					<span class="input-group-btn">
 						<button class="btn btn-default addExpertButton" type="button">
 							<i class="fa fa-plus" aria-hidden="true"></i>
 						</button>
 					</span>
-					@else
-						<!-- <button class="btn btn-default removeExpertButton" type="button">
-							<i class="fa fa-trash" aria-hidden="true"></i>
-						</button> -->
 					@endif
 			</div>
 		</div>
@@ -263,31 +233,27 @@
 		<div class="col-sm-4 col-sm-offset-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				@if ($i == 0)
-					<input id="expert_function_{{$i}}" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}" autocomplete="off">
-				@else
-					<input id="expert_function_{{$i}}" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]['responsability_on_project'] }}" autocomplete="off">
-				@endif
+					<input id="expert_function_{{$i}}" type="text" class="form-control expert_function" placeholder="" aria-describedby="" name="expert_functions[]" value="{{ $experts[$i]->responsability_on_project }}" autocomplete="off">
 			</div>
 		</div>
 		<div class="col-sm-4">
 		  <div class="input-group">
 				<span class="input-group-addon" id="basic-addon2">Profile</span>
-				@if ($i == 0)
-					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}" autocomplete="off">
+				<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]->responsability_on_project_fr }}" autocomplete="off">
 					<span class="input-group-btn">
+				@if ($i == 0)
 						<button id="clean_expert_fields" class="btn btn-default" type="button">
 							<i class="fa fa-eraser" aria-hidden="true"></i>
 						</button>
-					</span>
+					<!-- </span> -->
 				@else
-					<input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]['responsability_on_project_fr'] }}" autocomplete="off">
-					<span class="input-group-btn">
+					<!-- <input id="expert_function_fr_{{$i}}" type="text" class="form-control expert_function_fr" placeholder="" aria-describedby="" name="expert_functions_fr[]" value="{{ $experts[$i]->responsability_on_project_fr }}" autocomplete="off"> -->
+					<!-- <span class="input-group-btn"> -->
 						<button class="btn btn-default removeExpertButton" type="button">
 							<i class="fa fa-trash" aria-hidden="true"></i>
 						</button>
-					</span>
 				@endif
+					</span>
 			</div>
 		</div>
 	</div>

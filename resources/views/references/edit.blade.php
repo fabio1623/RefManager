@@ -88,7 +88,7 @@
 
 							</div>
 						</div>
-					</div>				
+					</div>
 				</div>
 			</h3>
 		</div>
@@ -100,12 +100,12 @@
 			<form id="form_delete" role="form" method="POST" action="{{ action('ReferenceController@destroy', $reference->id) }}">
 				<?php echo method_field('DELETE'); ?>
 			    <?php echo csrf_field(); ?>
-			</form>	
+			</form>
 
 			<form id="form_add_translation" role="form" method="POST" action="{{ action('ReferenceController@link_translation', $reference->id) }}">
 			    <?php echo csrf_field(); ?>
 			    @include("references.create.english.modals.select_language_modal")
-			</form>	
+			</form>
 
 			<form id="form_save" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@update', $reference->id) }}">
 				{{ method_field('PUT') }}
@@ -196,8 +196,7 @@
 	var contacts = {!! $contacts->toJson() !!}
 	var clients = {!! $clients->toJson() !!}
 	var linked_fundings = {!! $financings->toJson() !!}
-	var linked_staff = {!! $staff_name->toJson() !!}
-	var linked_experts = {!! $experts_name->toJson() !!}
+
 	var language_reference = {!! $language_reference->toJson() !!}
 	var reference = {!! $reference->toJson() !!}
 
@@ -219,7 +218,7 @@
 
 	var bar = $('.progress-bar');
 	var percent = $('.percent');
-	   
+
 	$('#form_upload').ajaxForm({
 	    beforeSend: function(event) {
 	        var percentVal = '0%';
@@ -253,7 +252,7 @@
 			}
 			$('#upload_modal_cancel').removeClass('canceled');
 		}
-	});  
+	});
 </script>
 <script type="text/javascript" src="/js/ref-edit-scripts.js"></script>
 

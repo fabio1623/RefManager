@@ -82,7 +82,7 @@
 </div>
 <!-- EO line -->
 <!-- Line -->
-<div class="form-group">
+<div class="form-group required">
 	<label for="start_date" class="col-sm-4 control-label">Project start</label>
 	<div class="col-sm-3">
 	    <div id="date_picker_start" class="input-group input-append date">
@@ -97,7 +97,7 @@
 </div>
 <!-- EO line -->
 <!-- Line -->
-<div class="form-group">
+<div class="form-group required">
 	<label for="end_date" class="col-sm-4 control-label">Project end</label>
 	<div class="col-sm-3">
 	    <div id="date_picker_end" class="input-group input_append date">

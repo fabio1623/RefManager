@@ -3,8 +3,14 @@
 @section('content')
 
     <div class="container stand-page">
-            <div class="center-title">
+            <!-- For big screens -->
+            <div class="center-title hidden-xs">
               <img alt="Brand" src="{{ asset('/img/LOGO_SEURECA_COLOR.png') }}" height="40">
+            </div>
+            <!-- For small screens -->
+            <div class="center-text visible-xs">
+              <img alt="Brand" src="{{ asset('/img/LOGO_SEURECA_COLOR.png') }}" height="25">
+              <br><br>
             </div>
 
             <div class="row">
@@ -19,9 +25,9 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <div class="col-sm-10 col-sm-offset-1">
-                          <a class="btn btn-default col-sm-12" href="{{ url('/auth/google') }}" role="button">
-                            <strong>Use my <img src="{{ asset('/img/LOGO_SEURECA_COLOR.png') }}" height="18"> account</strong>
+                        <div class="col-sm-10 col-sm-offset-1 center-text">
+                          <a class="btn btn-default col-sm-12 col-xs-12" href="{{ url('/auth/google') }}" role="button">
+                            <strong>Use my <img src="{{ asset('/img/LOGO_SEURECA_COLOR.png') }}" height="15"> account</strong>
                           </a>
                         </div>
                       </div>

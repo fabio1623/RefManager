@@ -43,11 +43,15 @@ Route::post('upload', 'HomeController@upload_file');
 Route::get('home/contact_us', 'HomeController@contact_us');
 Route::get('home', 'HomeController@index');
 
+//Management page
+Route::get('references/management/trim', 'ContributorController@trim');
+
 //Subsidiaries
 Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti');
 Route::resource('subsidiaries', 'SubsidiaryController');
 
 //References
+Route::get('references/export/excel', 'ReferenceController@export_to_excel');
 Route::get('references/duplicates', 'ReferenceController@duplicate_page');
 Route::get('references/created/me', 'ReferenceController@index_created_by_me');
 Route::post('references/save/incomplete', 'ReferenceController@save_incomplete');
@@ -132,6 +136,7 @@ Route::get('subsidiaries/{subsidiary}/domains', 'DomainController@custom_index')
 Route::resource('subsidiaries.domains', 'DomainController');
 
 //Expertises
+Route::get('expertises/load/{domain_id}', 'ExpertiseController@load_expertises');
 Route::post('subsidiaries/{subsidiary}/domains/{domain}/link_expertise', 'ExpertiseController@link_expertise');
 Route::get('subsidiaries/{subsidiary}/expertises/{expertise}/detach_expertise', 'ExpertiseController@detach_expertise');
 Route::resource('subsidiaries.domains.expertises', 'ExpertiseController');

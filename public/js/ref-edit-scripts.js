@@ -30,7 +30,7 @@ $('#content_menu > li').click(function(e){
 	}
 	else {
 		if ($('#form_upload').hasClass('hidden') == false) {
-			$('#form_upload').addClass('hidden');		
+			$('#form_upload').addClass('hidden');
 		}
 	}
 });
@@ -41,7 +41,7 @@ $('.deleteFile').click(function(e){
 		e.preventDefault();
 	}
 	else {
-		e.preventDefault();	
+		e.preventDefault();
 		$('#file_input_delete').val($(this).attr('href'));
 		$('#form_delete_file').submit();
 	}
@@ -76,7 +76,7 @@ $('#language_btn').click( function (e) {
 		// 	e.preventDefault();
 		// }
 		// else {
-			$('#select_language_modal').modal();		
+			$('#select_language_modal').modal();
 		// }
 	}
 	else {
@@ -105,7 +105,7 @@ getContinent($('#country').val());
 
 $('#date_picker_start').datepicker({
     format: "yyyy-mm",
-    viewMode: "months", 
+    viewMode: "months",
     minViewMode: "months",
     autoclose: true,
     clearBtn: true,
@@ -116,7 +116,7 @@ $('#date_picker_start').datepicker({
 
 $('#date_picker_end').datepicker({
     format: "yyyy-mm",
-    viewMode: "months", 
+    viewMode: "months",
     minViewMode: "months",
     autoclose: true,
     clearBtn: true,
@@ -321,7 +321,7 @@ if (reference.contact != null) {
 	$('#contact_info').show("fast");
 };
 
-var staff_index = linked_staff.length+1;
+var staff_index = involved_staff_db.length+1;
 $('#form_save').on('click', '.addButton', function() {
 	var field1 = 'staff_function_' + staff_index;
 	var field2 = 'staff_function_fr_' + staff_index;
@@ -369,7 +369,7 @@ $('#form_save').on('click', '.addButton', function() {
     $row.remove();
 });
 
-var expert_index = linked_experts.length+1;
+var expert_index = experts.length+1;
 $('#form_save').on('click', '.addExpertButton', function() {
 	var field1 = 'expert_function_' + expert_index;
 	var field2 = 'expert_function_fr_' + expert_index;
@@ -502,7 +502,7 @@ $('#clean_consultant').click( function () {
 	$('#involved_consultants').val('');
 });
 
-// $('#nav_tab').hover( 
+// $('#nav_tab').hover(
 // 	function() {
 // 		$('#test').removeClass('hidden');
 // 	},
@@ -518,7 +518,7 @@ $('.nav_tab').hover(
 	},
 	function() {
 		// $('#test').addClass('hidden');
-	}	
+	}
 );
 
 $('.remove_translation_btn').click( function(e) {

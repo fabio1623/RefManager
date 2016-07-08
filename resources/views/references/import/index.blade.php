@@ -11,7 +11,7 @@
 		</p>
 	</div> -->
 	<div>
-		<h1>Reference importation</h1>
+		<h1>Reference importation / exportation</h1>
 		<p>Select your Microsoft Access database file (Excel) and upload it to import your references.</p>
 	</div>
 
@@ -70,7 +70,7 @@
 					</form>
 				</div>
 			</div>
-			<hr></hr>
+			<hr>
 			<div class="row">
 				<div class="col-sm-6">
 					<form id="form_translations_upload" class="" role="form" method="POST" action="{{ action('ReferenceController@upload_translations') }}" enctype="multipart/form-data">
@@ -100,6 +100,18 @@
 					</form>
 				</div>
 			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<a href="{{ action('ReferenceController@export_to_excel') }}">Export your references</a>					
+				</div>
+				<div class="col-sm-6">
+
+				</div>
+			</div>
+
 		</div>
 	</div>
 
@@ -130,7 +142,7 @@
 	    </div>
 	  </div>
 	</div>
-	
+
 
 </div>
 
@@ -212,6 +224,6 @@
 	// 		}
 	// 		$('#upload_modal_cancel').removeClass('canceled');
 	// 	}
-	// }); 
+	// });
 </script>
 @endsection('content')

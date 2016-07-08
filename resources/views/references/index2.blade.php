@@ -117,7 +117,16 @@
 								@endif
 								<td>
 									@foreach($activities[$reference->id] as $activity)
-										{{ $activity }} /<br>
+										@if ($activity == 'Drinking Water' || $activity == 'Wastewater')
+											<img alt="wastewater" src="{{ asset('/img/Activities_icons/water.jpg') }}" height="20"> /
+										@endif
+										@if ($activity == 'Waste management' || $activity == 'Wastewater')
+											<img alt="wastewater" src="{{ asset('/img/Activities_icons/waste.jpg') }}" height="20"> /
+										@endif
+										@if ($activity == 'Energy')
+											<img alt="energy" src="{{ asset('/img/Activities_icons/energy.jpg') }}" height="20"> /
+										@endif
+										<!-- {{ $activity }} /<br> -->
 									@endforeach
 								</td>
 								<td>

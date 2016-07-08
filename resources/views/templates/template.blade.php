@@ -90,7 +90,7 @@
 													@if(Auth::user()->email == 'sarmentopedrofabio@gmail.com')
 														<li role="separator" class="divider"></li>
 							            	<li><a href="{{ action('ReferenceController@management_page') }}"><span class="glyphicon glyphicon-wrench"></span> Management</a></li>
-							            	<li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import</a></li>
+							            	<li><a href="{{ action('ReferenceController@import_page') }}"><span class="glyphicon glyphicon-import"></span> Import / Export</a></li>
 													@endif
 							            <li role="separator" class="divider"></li>
 							            <li><a href="{{ action('ReferenceController@create') }}"><span class="glyphicon glyphicon-plus"></span> New reference</a></li>

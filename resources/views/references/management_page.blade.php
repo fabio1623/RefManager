@@ -108,6 +108,12 @@
 					<i class="fa fa-trash" aria-hidden="true"></i>
 				</a>
 			</li>
+			<li class="list-group-item">
+				Trim (Zones, Countries, Contributors & Fundings)
+				<a id="trim_btn" class="" href="{{ action('ContributorController@trim') }}">
+					<i class="fa fa-magic" aria-hidden="true"></i>
+				</a>
+			</li>
 		</ul>
 	</div>
 
@@ -137,6 +143,13 @@
 
 	$('#drop_fund_btn').click(function(e) {
 		var confirm_box = confirm("Do you really want to delete all unsigned fundings ? ");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
+
+	$('#trim_btn').click(function(e) {
+		var confirm_box = confirm("Do you really want to trim ? ");
 		if (confirm_box == false) {
 			e.preventDefault();
 		}
