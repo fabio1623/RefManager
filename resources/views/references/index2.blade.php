@@ -120,7 +120,7 @@
 										@if ($activity == 'Drinking Water' || $activity == 'Wastewater')
 											<img alt="wastewater" src="{{ asset('/img/Activities_icons/water.jpg') }}" height="20"> /
 										@endif
-										@if ($activity == 'Waste management' || $activity == 'Wastewater')
+										@if ($activity == 'Waste management' || $activity == 'Type of waste')
 											<img alt="wastewater" src="{{ asset('/img/Activities_icons/waste.jpg') }}" height="20"> /
 										@endif
 										@if ($activity == 'Energy')

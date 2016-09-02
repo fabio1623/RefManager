@@ -44,10 +44,11 @@ class CountryController extends Controller
      */
     public function create()
     {
-      $continents = Country::select('continent')
-                      ->where('continent', '<>', '')
-                      ->orderBy('continent')
-                      ->distinct()->get();
+      // $continents = Country::select('continent')
+      //                 ->where('continent', '<>', '')
+      //                 ->orderBy('continent')
+      //                 ->distinct()->get();
+      $continents = array('', 'Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America');
       $zones = Zone::orderBy('name')->get();
 
       $view = view('countries.create', ['continents'=>$continents, 'zones'=>$zones]);
@@ -102,10 +103,11 @@ class CountryController extends Controller
     public function edit($id)
     {
       $country = Country::find($id);
-      $continents = Country::select('continent')
-                      ->where('continent', '<>', '')
-                      ->orderBy('continent')
-                      ->distinct()->get();
+      // $continents = Country::select('continent')
+      //                 ->where('continent', '<>', '')
+      //                 ->orderBy('continent')
+      //                 ->distinct()->get();
+      $continents = array('', 'Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America');
 
       $view = view('countries.edit', ['country'=>$country, 'continents'=>$continents]);
       return $view;
@@ -168,5 +170,23 @@ class CountryController extends Controller
       else {
         return redirect()->action('ReferenceController@management_page')->with('caution', 'Nothing to remove..');
       }
+    }
+
+    public function clean_continents()
+    {
+      $countries = Country::all();
+
+      foreach ($countries as $country) {
+        if($country->continent == 'America')
+        {
+          $country->continent_new = 'South America';
+        }
+        else {
+          $country->continent_new = $country->continent;
+        }
+        $country->save();
+      }
+
+      return redirect()->action('ReferenceController@management_page')->with('status', 'Column "continent_new" updated!');
     }
 }

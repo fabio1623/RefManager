@@ -35,8 +35,9 @@ class OAuthController extends Controller
         $gmail = 'sarmentopedrofabio@gmail.com';
         $seureca = ends_with($user->email, '@seureca.com');
         $veolia = ends_with($user->email, '@veolia.com');
+        $epas = ends_with($user->email, '@epas.be');
 
-        if ($user->email == $gmail || $seureca || $veolia) {
+        if ($user->email == $gmail || $seureca || $veolia || $epas) {
             $ddb_user = User::where('email', $user->email)->first();
             if ($ddb_user) {
                 Auth::login($ddb_user);

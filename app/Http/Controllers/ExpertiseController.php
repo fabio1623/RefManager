@@ -253,9 +253,20 @@ class ExpertiseController extends Controller
         return redirect()->action('DomainController@edit', $domain_id);
     }
 
-    public function load_expertises($domain_id)
+    public function load_expertises($domains)
     {
-      $expertises = Expertise::where('domain_id', $domain_id)->orderBy('name')->get();
+      $expertises = Expertise::all();
+      // if($domains)
+      // {
+      //   $expertises->where(function ($query) use ($domains)) {
+      //     foreach ($domains as $key => $domain) {
+      //       $query->orWhere('domain_id', $domain);
+      //     }
+      //   }
+      // }
+      //
+      // $expertises = $expertises->orderBy('domain_id')->orderBy('name')->get();
+      // $expertises = Expertise::where('domain_id', $domain_id)->orderBy('name')->get();
 
       return $expertises;
     }

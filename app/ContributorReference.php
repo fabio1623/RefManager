@@ -24,4 +24,9 @@ class ContributorReference extends Model
     {
     	return $this->belongsTo('App\Contributor');
     }
+
+    public function reference()
+    {
+    	return $this->belongsTo('App\Reference');
+    }
 }

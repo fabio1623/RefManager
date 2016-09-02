@@ -48,11 +48,7 @@
             <select id="continent" name="continent" class="form-control selectpicker" data-width="100%">
               <option value=""></option>
               @foreach ($continents as $cont)
-                @if ($cont->continent == $country->continent)
-                  <option value="{{ $cont->continent }}" selected>{{ $cont->continent }}</option>
-                @else
-                  <option value="{{ $cont->continent }}">{{ $cont->continent }}</option>
-                @endif
+                <option value="{{ $cont }}" {{ ($country->continent == $cont) ? 'selected' : null }}>{{ $cont }}</option>
               @endforeach
             </select>
           </div>

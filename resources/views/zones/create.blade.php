@@ -7,15 +7,15 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<div class="row">
-							<div class="col-sm-6"> 
+							<div class="col-sm-6">
 								New zone
 							</div>
 							<div class="col-sm-6">
 								<div class="btn-group pull-right" role="group" aria-label="...">
-								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-sm">
+								  <button id="save_btn" form="form_save" type="submit" class="btn btn-default btn-xs">
 								  	<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 								  </button>
-									<a class="btn btn-default btn-sm" href="{{ action('ZoneController@index', $subsidiary_id) }}">
+									<a class="btn btn-default btn-xs" href="{{ action('ZoneController@index', $subsidiary_id) }}">
 										<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
 									</a>
 								</div>

@@ -100,7 +100,8 @@
 								  	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-wrench"></span> Management <span class="caret"></span></a>
 									<ul class="dropdown-menu">
 										<li><a href="{{ action('SubsidiaryController@edit', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-wrench"></span> My entity</a></li>
-											<li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-briefcase"></span> Entities</a></li>
+										<li><a href="{{ action('SubsidiaryController@index') }}"><span class="glyphicon glyphicon-briefcase"></span> Entities</a></li>
+										<li><a href="{{ action('ActivityController@index') }}"><i class="fa fa-code-fork fa-lg" aria-hidden="true"></i>  Activities</a></li>
 										<li><a href="{{ action('ZoneController@index', Auth::user()->subsidiary_id) }}"><span class="glyphicon glyphicon-globe"></span> Zones</a></li>
 										<li><a href="{{ action('CountryController@index') }}"><span class="glyphicon glyphicon-globe"></span> Countries</a></li>
 										<li><a href="{{ action('ContributorController@index', [Auth::user()->subsidiary_id, 1]) }}"><span class="glyphicon glyphicon-user"></span> Contributors</a></li>

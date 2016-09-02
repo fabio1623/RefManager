@@ -36,9 +36,8 @@
           <label for="continent" class="col-sm-2 col-sm-offset-2 control-label">Continent</label>
           <div class="col-sm-4">
             <select id="continent" name="continent" class="form-control selectpicker" data-width="100%">
-              <option value=""></option>
               @foreach ($continents as $cont)
-                <option value="{{ $cont->continent }}">{{ $cont->continent }}</option>
+                <option value="{{ $cont }}">{{ $cont }}</option>
               @endforeach
             </select>
           </div>

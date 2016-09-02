@@ -105,10 +105,28 @@
 
 			<div class="row">
 				<div class="col-sm-6">
-					<a href="{{ action('ReferenceController@export_to_excel') }}">Export your references</a>					
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="export_new_db" class="col-sm-4 control-label">Export to new format</label>
+							<div class="col-sm-8">
+								<!-- <input type="email" class="form-control" id="inputEmail3" placeholder="Email"> -->
+									<a class="btn btn-link download" href="{{ action('ReferenceController@export_to_excel') }}">Download</a>
+							</div>
+						</div>
+					</form>
+					<!-- <a href="{{ action('ReferenceController@export_to_excel') }}">Export your references (new DB format)</a> -->
 				</div>
 				<div class="col-sm-6">
+					<form id="form_custom_upload" class="form-horizontal" role="form" method="POST" action="{{ action('ReferenceController@import_from_excel') }}" enctype="multipart/form-data">
+						<?php echo csrf_field(); ?>
 
+						<label for="import_input">Import your references from new DB format</label>
+
+						<input type="file" id="import_new_db" class="file_input" name="file" accept=".xlsx">
+						<p class="help-block">Select the excel format file and click on import.</p>
+
+						<button id="upload_ref_btn" class="btn btn-default upload_btn" type="submit">Import</button>
+					</form>
 				</div>
 			</div>
 
@@ -187,6 +205,13 @@
 
 	$('#upload_modal_cancel').click(function(){
 	  $(this).addClass('canceled');
+	});
+
+	$('.download').click(function(e) {
+		var confirm_box = confirm("Export the references ? ");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
 	});
 
 	// var bar = $('.progress-bar');

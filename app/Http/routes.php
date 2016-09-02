@@ -50,7 +50,11 @@ Route::get('references/management/trim', 'ContributorController@trim');
 Route::delete('subsidiaries/destroy_multi', 'SubsidiaryController@destroyMulti');
 Route::resource('subsidiaries', 'SubsidiaryController');
 
+//Activities
+Route::resource('activities', 'ActivityController');
+
 //References
+Route::post('references/upload/custom', 'ReferenceController@import_from_excel');
 Route::get('references/export/excel', 'ReferenceController@export_to_excel');
 Route::get('references/duplicates', 'ReferenceController@duplicate_page');
 Route::get('references/created/me', 'ReferenceController@index_created_by_me');
@@ -160,6 +164,7 @@ Route::delete('zones/destroy_multiple', 'ZoneController@destroyMultiple');
 Route::resource('subsidiaries.zones', 'ZoneController');
 
 //Countries
+Route::get('countries/clean', 'CountryController@clean_continents');
 Route::get('countries/destroy/unsigned', 'CountryController@destroy_unsigned');
 Route::resource('countries', 'CountryController');
 // Route::resource('zones.countries', 'CountryController');

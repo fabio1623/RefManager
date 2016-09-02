@@ -36,6 +36,7 @@ use App\Funding;
 use App\ContributorReference;
 use App\Subsidiary;
 use App\CountryZone;
+use App\Activity;
 
 use \PhpOffice\PhpWord\TemplateProcessor;
 
@@ -657,11 +658,11 @@ class ReferenceController extends Controller
         // $internal_services = InternalService::all();
         $internal_services = $subsidiary->internal_services()->get();
         // $domains = Domain::all();
-        $domains = $subsidiary->domains()->get();
+        $domains = $subsidiary->domains()->orderBy('name')->get();
         // $expertises = Expertise::all();
         $expertises = $subsidiary->expertises()->get();
         // $categories = Category::all();
-        $categories = $subsidiary->categories()->get();
+        $categories = $subsidiary->categories()->orderBy('name')->get();
         $measures = $subsidiary->measures()->get();
         // $countries = Country::orderBy('name', 'asc')->get();
         $countries = Country::has('zones')->orderBy('name', 'asc')->get();
@@ -1016,7 +1017,35 @@ class ReferenceController extends Controller
             foreach ($reference->expertises as $expertise) {
               $domain = Domain::find($expertise->domain_id);
               if (in_array($domain->name, $cat_array) == false) {
-                array_push($cat_array, $domain->name);
+                switch ($domain->name) {
+                  case 'Waste management':
+                    if (in_array('Type of waste',$cat_array) == false) {
+                      array_push($cat_array, $domain->name);
+                    }
+                    break;
+                  case 'Type of waste':
+                    if (in_array('Waste management',$cat_array) == false) {
+                      array_push($cat_array, $domain->name);
+                    }
+                    break;
+                  case 'Wastewater':
+                    if (in_array('Drinking Water',$cat_array) == false) {
+                      array_push($cat_array, $domain->name);
+                    }
+                    break;
+                  case 'Drinking Water':
+                    if (in_array('Wastewater',$cat_array) == false) {
+                      array_push($cat_array, $domain->name);
+                    }
+                    break;
+                  case 'Energy':
+                    array_push($cat_array, $domain->name);
+                    break;
+                  default:
+                    # code...
+                    break;
+                }
+                // array_push($cat_array, $domain->name);
               }
             }
             $activities[$reference->id] = $cat_array;
@@ -1058,7 +1087,7 @@ class ReferenceController extends Controller
     public function store(Request $request)
     {
         // Trim input fields
-        Input::merge(array_map('trim', Input::except('categories', 'units', 'involved_staff', 'experts', 'consultants', 'financing')));
+        Input::merge(array_map('trim', Input::except('categories', 'units', 'involved_staff', 'experts', 'consultants', 'financing', 'involved_staff_function', 'involved_staff_function_fr', 'expert_functions', 'expert_functions_fr', 'linked_languages', 'external', 'domains')));
 
         // Validation
         $this->validate($request, [
@@ -1489,11 +1518,11 @@ class ReferenceController extends Controller
         // $internal_services = $subsidiary->internal_services()->get();
         $internal_services = $reference->internal_services()->get();
         // $domains = Domain::all();
-        $domains = $subsidiary->domains()->get();
+        $domains = $subsidiary->domains()->orderBy('name')->get();
         // $expertises = Expertise::all();
         $expertises = $subsidiary->expertises()->get();
         // $categories = Category::all();
-        $categories = $subsidiary->categories()->get();
+        $categories = $subsidiary->categories()->orderBy('name')->get();
         $measures = $subsidiary->measures()->get();
         $countries = Country::orderBy('name', 'asc')->get();
         $country = Country::find($reference->country);
@@ -1614,11 +1643,11 @@ class ReferenceController extends Controller
         // $internal_services = InternalService::all();
         $internal_services = $subsidiary->internal_services()->get();
         // $domains = Domain::all();
-        $domains = $subsidiary->domains()->get();
+        $domains = $subsidiary->domains()->orderBy('name')->get();
         // $expertises = Expertise::all();
         $expertises = $subsidiary->expertises()->get();
         // $categories = Category::all();
-        $categories = $subsidiary->categories()->get();
+        $categories = $subsidiary->categories()->orderBy('name')->get();
         $measures = $subsidiary->measures()->get();
         // $countries = Country::orderBy('name', 'asc')->get();
         $countries = Country::has('zones')->orderBy('name', 'asc')->get();
@@ -1705,7 +1734,8 @@ class ReferenceController extends Controller
     public function update(Request $request, $id)
     {
         // Trim input fields
-        Input::merge(array_map('trim', Input::except('categories', 'units', 'involved_staff', 'experts', 'consultants', 'financing', 'involved_staff_function', 'involved_staff_function_fr', 'expert_functions', 'expert_functions_fr', 'linked_languages')));
+        // dd(Input::all());
+        Input::merge(array_map('trim', Input::except('categories', 'units', 'involved_staff', 'experts', 'consultants', 'financing', 'involved_staff_function', 'involved_staff_function_fr', 'expert_functions', 'expert_functions_fr', 'linked_languages', 'external', 'domains', 'internal')));
 
         // Validation
         $this->validate($request, [
@@ -3366,11 +3396,18 @@ class ReferenceController extends Controller
       //                 ->orderBy('id')->get();
 
       // Retrieve duplicate references with their duplicates
-      $references = Reference::select('*')
-                      ->whereRaw("project_number in (".trim($project_number_list, ' ,').")")
-                      ->orderBy('project_number')
-                      ->orderBy('id')
-                      ->with('country')->get();
+      if ($project_number_list != "")
+      {
+        $references = Reference::select('*')
+        ->whereRaw("project_number in (".trim($project_number_list, ' ,').")")
+        ->orderBy('project_number')
+        ->orderBy('id')
+        ->with('country')->get();
+      }
+      else {
+        // If no duplicates, create empty collection
+        $references = new \Illuminate\Database\Eloquent\Collection;
+      }
 
       $view = view('references.duplicates.index', ['references' => $references]);
 
@@ -3433,14 +3470,135 @@ class ReferenceController extends Controller
 
     public function export_to_excel()
     {
-      $references = Reference::orderBy('project_number')->get();
+      $references = Reference::orderBy('id')->get();
+      $expertises = Expertise::orderBy('name')->get();
+      $activities = Activity::orderBy('name')->get();
+      $zones = Zone::orderBy('name')->get();
+      $countries = Country::orderBy('name')->get();
+      $contributors = Contributor::orderBy('name')->get();
+      $fundings = Funding::orderBy('name')->get();
+      $references_contributors = ContributorReference::orderBy('reference_id')->get();
+
       $file_name = 'Export_'.date('m-d-y');
-      Excel::create($file_name, function($excel) use($references) {
+      Excel::create($file_name, function($excel) use($references, $expertises, $activities, $zones, $countries, $contributors, $fundings, $references_contributors) {
         $excel->sheet('References table', function($sheet) use($references) {
             $sheet->fromModel($references);
         });
-      })->export('xlsx');
+        $excel->sheet('Expertises table', function($sheet) use($expertises) {
+          $sheet->fromModel($expertises);
+        });
+        $excel->sheet('Activities table', function($sheet) use($activities) {
+          $sheet->fromModel($activities);
+        });
+        $excel->sheet('Zone table', function($sheet) use($zones) {
+          $sheet->fromModel($zones);
+        });
+        $excel->sheet('Country table', function($sheet) use($countries) {
+          $sheet->fromModel($countries);
+        });
+        $excel->sheet('Contributor table', function($sheet) use($contributors) {
+          $sheet->fromModel($contributors);
+        });
+        $excel->sheet('Funding table', function($sheet) use($fundings) {
+          $sheet->fromModel($fundings);
+        });
+        $excel->sheet('References + contributors', function($sheet) use($references, $references_contributors) {
+          $row_number = 1;
+          $contrib_number = 0;
+          $r = 0;
+          $sheet->row($row_number, array(
+            'Reference_id', 'Project_number', 'Contributor', 'Contributor_type', 'Function_or_responsability'
+          ));
+          foreach ($references as $key => $ref) {
+            $position = $key + 2 + $contrib_number;
 
-      // return redirect()->back();
+            $contributors = ContributorReference::where('reference_id', $ref->id)->with('contributor')->get();
+            $first_contr = '';
+            $first_function = '';
+            $first_responsability = '';
+
+            if (count($contributors) > 0) {
+              $first_function = $contributors[0]->function_on_project;
+              $first_responsability = $contributors[0]->responsability_on_project;
+              if ($contributors[0]->contributor()->first()) {
+                  $first_contr = $contributors[0]->contributor->name;
+              }
+            }
+
+            $sheet->row($position, function($row) {
+              $row->setBackground('#5cb85c');
+            });
+
+            $sheet->row($position, array(
+                $ref->id, $ref->project_number, $first_contr, $first_function, $first_responsability
+            ));
+
+            if (count($contributors) > 1) {
+              // foreach ($contributors as $key2 => $cont) {
+              for ($i = 1; $i < count($contributors); $i++) {
+                $contr_name = '';
+                if ($contributors[$i]->contributor()->first()) {
+                  $contr_name = $contributors[$i]->contributor->name;
+                }
+                $sheet->row($position + $i, array(
+                  '', '', $contr_name, $contributors[$i]->function_on_project, $contributors[$i]->responsability_on_project
+                ));
+              }
+            }
+
+            $contrib_number = $contrib_number + ContributorReference::where('reference_id', $ref->id)->count() - 1;
+
+            // $contributors = ContributorReference::where('reference_id', $ref->id)->with('contributor')->get();
+            // $first_contr = '';
+            // $first_function = '';
+            // $first_responsability = '';
+            //
+            // if (count($contributors) > 0) {
+            //   $first_function = $contributors[0]->function_on_project;
+            //   $first_responsability = $contributors[0]->responsability_on_project;
+            //   if ($contributors[0]->contributor()->first()) {
+            //       $first_contr = $contributors[0]->contributor->name;
+            //   }
+            // }
+            //
+            // $sheet->row($key + 2, array(
+            //   $ref->id, $ref->project_number, $first_contr, $first_function, $first_responsability
+            // ));
+            //
+            // if (count($contributors) > 1) {
+            //   foreach ($contributors as $key2 => $cont) {
+            //     $sheet->appendRow()
+            //   }
+            // }
+          }
+        });
+      })->export('xlsx');
+    }
+
+    public function import_from_excel(Request $request)
+    {
+      $file = $request->file('file');
+      $file_name = $file->getClientOriginalName();
+
+      if ($request->hasFile('file')) {
+          if ($file->isValid()) {
+            Excel::load($file, function($reader) {
+              $results = $reader->all();
+
+              foreach ($results as $row) {
+                foreach ($row as $key => $col) {
+
+                }
+              }
+            });
+            return redirect()->back()->with('status', 'References are now up-to-date!');
+          }
+          else {
+            return redirect()->back()->with('status', 'This file is not valid.');
+          }
+      }
+      else {
+        return redirect()->back()->with('status', 'No file detected.');
+      }
     }
 }

@@ -334,6 +334,7 @@
 	});
 
 	// $('#load_expertises_btn').click(function (e) {
+	// 	console.log($('#domain').val());
 	// 	$.get("/expertises/load/" + $('#domain').val(), function(data) {
 	// 		if (!data) {
 	// 			console.log('Cannot retrieve the list of expertises');

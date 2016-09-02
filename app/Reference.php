@@ -64,4 +64,9 @@ class Reference extends Model
     {
         return $this->belongsTo('App\Zone', 'zone');
     }
+
+    public function activities()
+    {
+      return $this->belongsToMany('App\Activity');
+    }
 }

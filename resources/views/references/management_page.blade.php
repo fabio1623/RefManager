@@ -114,6 +114,12 @@
 					<i class="fa fa-magic" aria-hidden="true"></i>
 				</a>
 			</li>
+			<li class="list-group-item">
+				Clean continents on countries table
+				<a id="contients_btn" class="" href="{{ action('CountryController@clean_continents') }}">
+					<i class="fa fa-magic" aria-hidden="true"></i>
+				</a>
+			</li>
 		</ul>
 	</div>
 
@@ -150,6 +156,13 @@
 
 	$('#trim_btn').click(function(e) {
 		var confirm_box = confirm("Do you really want to trim ? ");
+		if (confirm_box == false) {
+			e.preventDefault();
+		}
+	});
+
+	$('#contients_btn').click(function(e) {
+		var confirm_box = confirm("Do you really want to clean the countries table ? ");
 		if (confirm_box == false) {
 			e.preventDefault();
 		}
